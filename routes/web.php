@@ -24,7 +24,7 @@ use App\Http\Controllers\KontrakController;
 // route::dia mau nampilin apa ngirim apa hapus ? nama controller::class, nama methodnya
 
 // Login
-Route::get('/', [LoginController::class, 'index'])->name('login');
+Route::get('/', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/loadLogin', [LoginController::class, 'loadLogin'])->name('loadLogin');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
@@ -35,59 +35,67 @@ Route::middleware('auth')->group(
         Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
         // Route::group(['prefix' => 'admin'], function () {
-        Route::prefix('admin')->group(function () {
-            Route::resource('integrate', App\Http\Controllers\KontrakController::class);
-            Route::get('/syncData', [KontrakController::class, 'syncron']);
-            Route::get('/dataSOP',  [KontrakController::class, 'getdataSOP']);
-            Route::get('/dataBarang', [KontrakController::class, 'dataBarang'])->name('dataBarang');
-            Route::get('/dataVendor/{no_vendor}', [KontrakController::class, 'vendor_data'])->name('Vendordata');
+        // Route::prefix('admin')->group(function () {
 
-            // Input Kontrak & Lampiran
-            Route::get('/addKontrak', [KontrakController::class, 'addKontrak'])->name('creatKontrak');
-            Route::post('/loadKontrak', [KontrakController::class, 'storeKontrak'])->name('loadKontrak');
-            // input lampiran
-            Route::get('/addLampiran/{id}', [KontrakController::class, 'addLampiran'])->name('createLampiran');
-            // Route::post('addLampiran/{id}', [KontrakController::class, 'storeLampiran1'])->name('storeLampiran1');
-            Route::post('/Lampiran1', [KontrakController::class, 'storeLampiran1'])->name('submitLampiran1');
-            Route::post('/Lampiran2', [KontrakController::class, 'storeLampiran2'])->name('submitLampiran2');
-            Route::post('/Lampiran3', [KontrakController::class, 'storeLampiran3'])->name('submitLampiran3');
-            Route::post('/Lampiran4', [KontrakController::class, 'storeLampiran4'])->name('submitLampiran4');
-            Route::post('/Lampiran5', [KontrakController::class, 'storeLampiran5'])->name('submitLampiran5');
-            Route::post('/Lampiran6', [KontrakController::class, 'storeLampiran6'])->name('submitLampiran6');
-            Route::post('/Lampiran7', [KontrakController::class, 'storeLampiran7'])->name('submitLampiran7');
+        // });
+        Route::resource('integrate', App\Http\Controllers\KontrakController::class);
+        Route::get('/syncData', [KontrakController::class, 'syncron']);
+        Route::get('/dataSOP',  [KontrakController::class, 'getdataSOP']);
+        Route::get(
+            '/dataBarang',
+            [KontrakController::class, 'dataBarang']
+        )->name('dataBarang');
+        Route::get('/dataVendor/{no_vendor}', [KontrakController::class, 'vendor_data'])->name('Vendordata');
 
-            // MANAGE USER
-            // tampil user
-            Route::get('/user', [HomeController::class, 'index'])->name('index');
-            // Tambah Data User
-            Route::get('/addUser', [HomeController::class, 'addUser'])->name('createUser');
-            Route::post('/loadUser', [HomeController::class, 'loadUser'])->name('loadUser');
-            // Edit Data User
-            Route::get('/editUser/{id}', [HomeController::class, 'editUser'])->name('editUser');
-            Route::put('/updateUser/{id}', [HomeController::class, 'updateUser'])->name('updateUser');
-            // Hapus Data User
-            Route::delete('/deleteUser/{id}', [HomeController::class, 'deleteUser'])->name('deleteUser');
+        // Input Kontrak & Lampiran
+        Route::get('/addKontrak', [KontrakController::class, 'addKontrak'])->name('creatKontrak');
+        Route::post('/loadKontrak', [KontrakController::class, 'storeKontrak'])->name('loadKontrak');
+        // input lampiran
+        Route::get('/addLampiran/{id}', [KontrakController::class, 'addLampiran'])->name('createLampiran');
+        // Route::post('addLampiran/{id}', [KontrakController::class, 'storeLampiran1'])->name('storeLampiran1');
+        Route::post('/Lampiran1', [KontrakController::class, 'storeLampiran1'])->name('submitLampiran1');
+        Route::post('/Lampiran2', [KontrakController::class, 'storeLampiran2'])->name('submitLampiran2');
+        Route::post('/Lampiran3', [KontrakController::class, 'storeLampiran3'])->name('submitLampiran3');
+        Route::post('/Lampiran4', [KontrakController::class, 'storeLampiran4'])->name('submitLampiran4');
+        Route::post('/Lampiran5', [KontrakController::class, 'storeLampiran5'])->name('submitLampiran5');
+        Route::post('/Lampiran6', [KontrakController::class, 'storeLampiran6'])->name('submitLampiran6');
+        Route::post('/Lampiran7', [KontrakController::class, 'storeLampiran7'])->name('submitLampiran7');
+
+        // MANAGE USER
+        // tampil user
+        Route::get('/user', [HomeController::class, 'index'])->name('index');
+        // Tambah Data User
+        Route::get('/addUser', [HomeController::class, 'addUser'])->name('createUser');
+        Route::post('/loadUser', [HomeController::class, 'loadUser'])->name('loadUser');
+        // Edit Data User
+        Route::get('/editUser/{id}', [HomeController::class, 'editUser'])->name('editUser');
+        Route::put('/updateUser/{id}', [HomeController::class, 'updateUser'])->name('updateUser');
+        // Hapus Data User
+        Route::delete('/deleteUser/{id}', [HomeController::class, 'deleteUser'])->name('deleteUser');
 
 
-            // MANAGE MENU PASAL
-            Route::get('/pasal', [HomeController::class, 'vPasal'])->name('vPasal');
-            Route::get('/addPasal', [HomeController::class, 'addPasal'])->name('createPasal');
-            Route::post('/loadPasal', [HomeController::class, 'loadPasal'])->name('loadPasal');
-            // Edit Data Pasal
-            Route::get('/editPasal/{id}', [HomeController::class, 'editPasal'])->name('editPasal');
-            Route::put('/updatePasal/{id}', [HomeController::class, 'updatePasal'])->name('updatePasal');
-            // Hapus Data Pasal
-            Route::delete('/deletePasal/{id}', [HomeController::class, 'deletePasal'])->name('deletePasal');
-            // tampilkan hasil revisi yang dibuat oleh kasek,kadept,kadiv
-            Route::get('/showRevisi/{id}', [KontrakController::class, 'showRevisi'])->name('viewRevisi');
-            // edit lampiran
-            Route::get('/updateLampiran/{id}', [KontrakController::class, 'updateLampiran'])->name('editLampiran');
-            Route::post('/editLampiran1', [KontrakController::class, 'editLampiran1'])->name('submitEditLampiran1');
-        });
+        // MANAGE MENU PASAL
+        Route::get('/pasal', [HomeController::class, 'vPasal'])->name('vPasal');
+        Route::get('/addPasal', [HomeController::class, 'addPasal'])->name('createPasal');
+        Route::post('/loadPasal', [HomeController::class, 'loadPasal'])->name('loadPasal');
+        // Edit Data Pasal
+        Route::get('/editPasal/{id}', [HomeController::class, 'editPasal'])->name('editPasal');
+        Route::put('/updatePasal/{id}', [HomeController::class, 'updatePasal'])->name('updatePasal');
+        // Hapus Data Pasal
+        Route::delete('/deletePasal/{id}', [HomeController::class, 'deletePasal'])->name('deletePasal');
+        // tampilkan hasil revisi yang dibuat oleh kasek,kadept,kadiv
+        Route::get(
+            '/showRevisi/{id}',
+            [KontrakController::class, 'showRevisi']
+        )->name('viewRevisi');
+        // edit lampiran
+        Route::get('/updateLampiran/{id}', [KontrakController::class, 'updateLampiran'])->name('editLampiran');
+        Route::post('/editLampiran1', [KontrakController::class, 'editLampiran1'])->name('submitEditLampiran1');
 
 
         // Monitoring Kontrak
-        Route::get('/kontrak', [KontrakController::class, 'indexKontrak'])->name('indexKontrak');
+        Route::get('/kontrak', [KontrakController::class, 'indexKontrak'])->name('indexKontrak')
+            ->middleware('role:admin'); //ini middleware pengecekan permission, pemisahnya dengan , misal role:admin,writer,dll
         Route::get('/Printkontrak', [KontrakController::class, 'printKontrak'])->name('printKontrak');
 
         // Review Kontrak
