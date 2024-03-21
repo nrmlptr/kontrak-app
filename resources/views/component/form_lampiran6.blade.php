@@ -64,11 +64,8 @@
         </div>
     </form>
 </div>
-
-<!-- jQuery -->
-<script src="{{ asset('lte/plugins/jquery/jquery.js') }}"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="{{ asset('lte/plugins/jquery-ui/jquery-ui.js') }}"></script>
+@push('scripts')
+    
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
         // Ambil elemen radio button
@@ -148,3 +145,4 @@
         });
     }
 </script>
+@endpush

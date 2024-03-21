@@ -52,11 +52,8 @@
         </div>
     </form>
 </div>
-
-<!-- jQuery -->
-<script src="{{ asset('lte/plugins/jquery/jquery.js') }}"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="{{ asset('lte/plugins/jquery-ui/jquery-ui.js') }}"></script>
+@push('scripts')
+    
 
 <script type="text/javascript">
     // Fungsi untuk mendapatkan data barang dan menampilkan ke form saat halaman dimuat
@@ -130,3 +127,4 @@
         });
     }
 </script>
+@endpush

@@ -189,7 +189,3 @@
     <!-- /.content -->
 </div>
 @endsection
-<!-- jQuery -->
-<script src="{{ asset('lte/plugins/jquery/jquery.js') }}"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="{{ asset('lte/plugins/jquery-ui/jquery-ui.js') }}"></script>

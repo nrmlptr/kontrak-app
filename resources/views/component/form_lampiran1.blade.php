@@ -157,10 +157,8 @@
 
 <!-- JAVASCRIPT -->
 <!-- jQuery -->
-<script src="{{ asset('lte/plugins/jquery/jquery.js') }}"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="{{ asset('lte/plugins/jquery-ui/jquery-ui.js') }}"></script>
-<script type="text/javascript">
+@push('scripts')
+    <script type="text/javascript">
     jQuery(document).ready(function($) {
         counting_container();
     });
@@ -236,3 +234,4 @@
         submitLampiran1()
     }
 </script>
+@endpush

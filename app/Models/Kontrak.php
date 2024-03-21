@@ -22,4 +22,9 @@ class Kontrak extends Model
     {
         return $query->where('unit_kerja', auth()->user()->unit_kerja);
     }
+
+    public function logs()
+    {
+        return $this->hasMany(LogContract::class, 'kontraks_id');
+    }
 }

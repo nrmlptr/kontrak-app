@@ -22,59 +22,54 @@
             </div>
         </div>
         <div class="row">
-            <div class="form-group" id="formGambar" style="display: none;">
-                <div class="mb-3">
-                    <label for="gambar">Upload Spesifikasi (Image Only)</label>
-                    <input type="file" name="gambar" id="gambar" multiple class="form-control" >
-                </div>
-
-
-                {{-- <label for="gambar">Upload Spesifikasi (Image Only)</label>
-                <div class="input-group">
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input col-sm-15" id="gambar" name="gambar[]" multiple>
-                        <label class="custom-file-label" for="gambar">Choose file</label>
+                <div id="formGambar">
+                    <div class="form-group">
+                    <div class="mb-3">
+                        <label for="gambar">Upload Spesifikasi (Image Only)</label>
+                        <input type="file" name="gambar[]" id="gambar[]" multiple class="form-control" >
                     </div>
-                </div> --}}
-               
-            </div>
+                </div>
+                
+            <div id="validationErrors" style="color: red;"></div>
+                </div>
+                
+            
         </div>
        
-        <div class="row">
-            <div class="form-group col-2" id="formText" style="display: none;">
-                <label for="inputNOSPPB">Nomor SPPB</label>
-                <input type="text" name="no_sppb" class="form-control">
-            </div>
-            <div class="form-group col-2" id="formText2" style="display: none;">
-                <label for="inputKodeBarang">Kode Barang</label>
-                <input type="text" name="kode_barang" class="form-control">
-            </div>
-            <div class="form-group col-6" id="formText4" style="display: none;">
-                <label for="jenisBarang">Nama Barang</label>
-                <input type="text" name="nama_barang" class="form-control">
-            </div>
-            <div class="form-group mr-5 col-6" id="formText5" style="display: none;">
-                <label for="inputText">Keterangan Non Spesifikasi Lab</label>
-                <textarea class="form-control" rows="3" style="width: auto;" placeholder="Masukkan Spesifikasi" name="spesifikasi_teknis"></textarea>
-            </div>
-        </div>
+        
+        <div class="row d-none" id="loadnonstandar"></div>
         <div class=" card-footer">
-            <button type="button" class="btn btn-block btn-secondary btn-lg" onclick="submit_Lampiran3()">Submit</button>
+            <button type="submit" class="btn btn-block btn-secondary btn-lg" >Submit</button>
         </div>
     </form>
 </div>
-
+@push('scripts')
+    
 <script type="text/javascript">
     // Memanggil fungsi untuk mengisi nilai input form dengan data barang
     function isiNilaiForm3(dataBarang) {
-        // console.log(dataBarang);
-        // Pastikan dataBarang tidak kosong
         if (dataBarang) {
-            // Mengisi nilai input form dengan data barang
-            $('input[name="kode_barang"]').val(dataBarang.material_number);
-            $('input[name="nama_barang"]').val(dataBarang.material_name);
+            var fields = ``;
+            dataBarang.forEach(function(row) {
+                fields+=`<div class="form-group col-2">
+                <label for="inputNOSPPB">Nomor SPPB</label>
+                    <input type="text" name="no_sppb[]" class="form-control">
+                </div>
+                <div class="form-group col-2">
+                    <label for="inputKodeBarang">Kode Barang</label>
+                    <input type="text" name="kode_barang[]" class="form-control" value="${row.material_number}">
+                </div>
+                <div class="form-group col-6">
+                    <label for="jenisBarang">Nama Barang</label>
+                    <input type="text" name="nama_barang[]" class="form-control" value="${row.material_name}">
+                </div>
+                <div class="form-group mr-5 col-6">
+                    <label for="inputText">Keterangan Non Spesifikasi Lab</label>
+                    <textarea class="form-control" rows="3" style="width: auto;" placeholder="Masukkan Spesifikasi" name="spesifikasi_teknis[]"></textarea>
+                </div>`;
+            });
 
-            // console.log(dataBarang.material_number);
+            $('#loadnonstandar').html(fields);
         }
     }
 
@@ -85,21 +80,13 @@
 
         // Ambil elemen form gambar dan form teks
         var formGambar = document.getElementById('formGambar');
-        var formText = document.getElementById('formText');
-        var formText2 = document.getElementById('formText2');
-        // var formText3 = document.getElementById('formText3');
-        var formText4 = document.getElementById('formText4');
-        var formText5 = document.getElementById('formText5');
+        
 
         // Tambahkan event listener untuk setiap perubahan pada radio button
         standarLabRadio.addEventListener('change', function() {
             // Jika standarLabRadio dipilih, tampilkan formGambar dan sembunyikan formText
             if (this.checked) {
                 formGambar.style.display = 'block';
-                formText.style.display = 'none';
-                formText2.style.display = 'none';
-                formText4.style.display = 'none';
-                formText5.style.display = 'none';
             }
         });
 
@@ -107,16 +94,8 @@
             // Jika nonStandarLabRadio dipilih, tampilkan formText dan sembunyikan formGambar
             if (this.checked) {
                 formGambar.style.display = 'none';
-                formText.style.display = 'block';
-                formText2.style.display = 'block';
-                formText4.style.display = 'block';
-                formText5.style.display = 'block';
+                $('#loadnonstandar').removeClass('d-none');
 
-                // Tampilkan semua elemen dalam formText container
-                var formTextElements = formText.querySelectorAll('.form-group');
-                formTextElements.forEach(function(element) {
-                    element.style.display = 'block';
-                });
 
                 $(document).ready(function() {
                     var nomor_sop = "{{ $data->nomor_sop }}";
@@ -129,10 +108,10 @@
                             po: nomor_sop
                         },
                         success: function(response) {
-                            // console.log(response[0]);
+                            console.log(response);
                             if (response[0].id) {
                                 // $('#kontraks_id').val(response.kontraks.id);
-                                isiNilaiForm3(response[0]);
+                                isiNilaiForm3(response);
                             } else {
                                 console.log("Kontrak tidak ditemukan");
                             }
@@ -148,34 +127,33 @@
         // Setelah DOM dimuat, periksa status awal radio button
         if (nonStandarLabRadio.checked) {
             formGambar.style.display = 'none';
-            formText.style.display = 'block';
-            formText2.style.display = 'block';
-            formText4.style.display = 'block';
-            formText5.style.display = 'block';
+           $('#loadnonstandar').addClass('d-none');
         }
     });
 
 
-
-    function submitLampiran3() {
-        var form = $('#inputLampiran3');
-        console.log(form.serialize())
+     $('#inputLampiran3').submit(function(e) {
+        e.preventDefault();
+        
+        let formData = new FormData(this);
+        
         $.ajax({
-            method: "POST",
             url: "{{ route('submitLampiran3') }}",
-            data: form.serialize(),
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
             success: function(result) {
                 $(".collapse").removeClass('show');
                 $('#collapseLampiran4').addClass('show');
                 console.log(result.message);
-                // if (result.redirect) {
-                //     window.location.href = result.redirect; // Mengarahkan ulang halaman ke halaman monitoring
-                // }
+            },
+            error: function(xhr, status, error) {
+                var err = JSON.parse(xhr.responseText);
+                $('#validationErrors').html(err.message);
             }
         });
-    }
-
-    function submit_Lampiran3() {
-        submitLampiran3();
-    }
+    });
+ 
 </script>
+@endpush

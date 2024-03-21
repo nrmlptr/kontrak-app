@@ -26,11 +26,8 @@
     </form>
 </div>
 
-
-<!-- jQuery -->
-<script src="{{ asset('lte/plugins/jquery/jquery.js') }}"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="{{ asset('lte/plugins/jquery-ui/jquery-ui.js') }}"></script>
+@push('scripts')
+    
 
 <script type="text/javascript">
     function submitLampiran4() {
@@ -55,3 +52,4 @@
         submitLampiran4();
     }
 </script>
+@endpush

@@ -251,15 +251,20 @@ class KontrakController extends Controller
 
         // Menggunakan tahun tersebut dalam pembuatan string
         $detailNumber = 'SP-' . $request->number . '/VIII/' . $tahunSekarang;
-
+        $status = 'draft';
         $validated['detail_number'] = $detailNumber;
         $validated['pembuat']       = Auth::user()->name;
         $validated['jenis_kontrak'] = $jenisKontrakValue;
-        $validated['status']        = 'draft';
+        $validated['status']        = $status;
         $validated['unit_kerja']    = Auth::user()->unit_kerja;
 
         // dd($validated);
-        Kontrak::updateOrCreate($validated);
+        $save = Kontrak::create($validated);
+        // insert log Kontrak
+        $save->logs()->create([
+            'status' => $status,
+            'user_id' => auth()->id(),
+        ]);
 
         // Mengembalikan respons JSON yang memberitahu bahwa data berhasil disimpan
         // return response()->json(['message' => 'Kontrak Berhasil Dibuat.']);
@@ -340,7 +345,7 @@ class KontrakController extends Controller
     public function storeLampiran2(Request $request)
     {
         // dd($request->all());
-
+        extract($request->all());
         // Validasi data
         $validatedData = $request->validate([
             'kontraks_id'   => 'required',
@@ -354,9 +359,15 @@ class KontrakController extends Controller
         $data['perihal']            = $request->perihal;
         $data['nomor_sop']          = $request->nomor_sop;
         $data['tanggal_sop']        = $request->tanggal_sop;
-
+        // cek dulu sini
+        $lampiran2 = Lampiran2::where('kontraks_id', $kontraks_id);
+        // return $lampiran2;
+        $chek = $lampiran2->exists();
+        if ($chek) {
+            $lampiran2->delete();
+        }
         // Simpan data ke database
-        Lampiran2::updateOrCreate($data);
+        Lampiran2::create($data);
 
         // Mengembalikan respons JSON yang memberitahu bahwa data berhasil disimpan
         return response()->json(['message' => 'Lampiran 2 Berhasil Dibuat']);
@@ -366,72 +377,68 @@ class KontrakController extends Controller
 
     public function storeLampiran3(Request $request)
     {
-        dd($request->file());
+        extract($request->all());
+
         // Validasi data
         $validatedData = $request->validate([
             'kontraks_id'           => 'required',
             'jspek'                 => 'required',
-            'gambar'                => 'required_if:jspek,1|array',
-            // 'gambar.*'              => 'image|mimes:png,jpg,peg,webp',
+            'gambar.*'                => 'required_if:jspek,1|image|mimes:jpeg,png,jpg|max:2048',
             'spesifikasi_teknis'    => 'required_if:jspek,2',
-            'no_sppb'               => 'required',
-            'kode_barang'           => 'required',
-            'nama_barang'           => 'required',
+            'no_sppb'               => 'required_if:jspek,2',
+            'kode_barang'           => 'required_if:jspek,2',
+            'nama_barang'           => 'required_if:jspek,2',
+        ], [
+            'gambar.required_if'           => 'file image Wajib di isi',
         ]);
 
         $kontraksId = $validatedData['kontraks_id'];
         $jenisSpesifikasi = $validatedData['jspek'];
-        $gambar = $validatedData['gambar'];
         $spesifikasiTeknis = $validatedData['spesifikasi_teknis'];
-        $noSppb = $validatedData['no_sppb'];
-        $kodeBarang = $validatedData['kode_barang'];
-        $namaBarang = $validatedData['nama_barang'];
-
         // Simpan nilai dari radio button
         $Jspek = $jenisSpesifikasi;
 
-        $data = [
-            'kontraks_id'       => $request->$kontraksId,
-            'jenis_spesifikasi' => $Jspek,
-            'spesifikasi_teknis' => $request->$spesifikasiTeknis,
-            'no_sppb'           => $request->$noSppb,
-            'kode_barang'       => $request->$kodeBarang,
-            'jenis_barang'      => $request->$namaBarang
-        ];
 
-        $dataGambar = [];
+        // cek dulu sini
+        $lampiran3 = Lampiran3::where('kontraks_id', $kontraks_id);
+        // return $lampiran3;
+        $chek = $lampiran3->exists();
+        if ($chek) {
+            $lampiran3->delete();
+        }
+        $paths = [];
         // Jika jenis spesifikasi adalah standar lab
         if ($Jspek == 1) {
-            if ($files = $gambar) {
-                foreach ($files as $file) {
-                    $extension = $file->getClientOriginalExtension();
-                    $filename = time() . '' . $extension;
-
-                    $path = "uploads/spesifikasi_teknis/";
-
-                    $file->move($path, $filename);
-
-                    $dataGambar[] = [
-                        'kontraks_id'         => $request->$kontraksId,
+            // Upload gambar ke direktori tertentu
+            if ($request->hasfile('gambar')) {
+                foreach ($request->file('gambar') as $image) {
+                    $imageName = time() . '_' . $image->getClientOriginalName();
+                    $path = $image->storeAs('public/uploads/spesifikasi_teknis', $imageName);
+                    $paths[] = $path;
+                    Lampiran3::create([
+                        'kontraks_id'         => $kontraksId,
                         'jenis_spesifikasi'   => $Jspek,
-                        'gambar'              => $path . $filename,
-                    ];
+                        'gambar'              => $path,
+                    ]);
                 }
-
-                Lampiran3::insert($dataGambar);
             }
         } elseif ($request->jspek == 2) {
-            // Masukkan data spesifikasi teknis dari form textarea
-            $data = [
-                'kontraks_id'         => $request->$kontraksId,
-                'jenis_spesifikasi'   => $Jspek,
-                'spesifikasi_teknis'  => $request->$spesifikasiTeknis,
-                'no_sppb'             => $request->$noSppb,
-                'kode_barang'         => $request->$kodeBarang,
-                'jenis_barang'        => $request->$namaBarang,
-            ];
-
-            Lampiran3::insert($data);
+            $datanya = [];
+            foreach ($no_sppb as $key => $r) {
+                $datanya[] = [
+                    'kontraks_id'         => $kontraksId,
+                    'jenis_spesifikasi'   => $Jspek,
+                    'spesifikasi_teknis'  => $spesifikasiTeknis[$key],
+                    'no_sppb'             => $r,
+                    'kode_barang'         => $kode_barang[$key],
+                    'jenis_barang'        => $nama_barang[$key],
+                    'created_at'        => now(),
+                    'updated_at'        => now(),
+                ];
+            };
+            if (!empty($datanya)) {
+                Lampiran3::insert($datanya);
+            }
         }
 
         // Mengembalikan respons JSON yang memberitahu bahwa data berhasil disimpan

@@ -94,8 +94,9 @@ Route::middleware('auth')->group(
 
 
         // Monitoring Kontrak
-        Route::get('/kontrak', [KontrakController::class, 'indexKontrak'])->name('indexKontrak')
-            ->middleware('role:admin'); //ini middleware pengecekan permission, pemisahnya dengan , misal role:admin,writer,dll
+        Route::get('/kontrak', [KontrakController::class, 'indexKontrak'])->name('indexKontrak');
+
+        // ->middleware('role:admin'); //ini middleware pengecekan permission, pemisahnya dengan , misal role:admin,writer,dll
         Route::get('/Printkontrak', [KontrakController::class, 'printKontrak'])->name('printKontrak');
 
         // Review Kontrak
