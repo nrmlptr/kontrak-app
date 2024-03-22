@@ -206,6 +206,10 @@
                 if (response[0].id) {
                     isiNilaiForm3(response);
                     isiNilaiForm4(response);
+                    isiNilaiForm5(response);
+                    $.get(`/dataVendor/${response[0].registration_no}`,function(data){
+                        $('textarea[name="alamat_vendor"]').val(data.alamat)
+                     });
                 } else {
                     console.log("Kontrak tidak ditemukan");
                 }
@@ -214,6 +218,8 @@
                 console.log("error");
             }
         });
+
+        
     });
 
     </script>

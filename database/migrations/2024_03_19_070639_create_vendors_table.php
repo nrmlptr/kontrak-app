@@ -12,7 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('vendors', function (Blueprint $table) {
-            $table->id();
+            $table->string('registration_no')->primary();
+            $table->string('sap_code')->nullable();
+            $table->string('alamat')->nullable();
+            $table->string('kode_pos')->nullable();
+            $table->string('kota')->nullable();
+            $table->string('provinsi')->nullable();
+            $table->string('board_type')->nullable();
+            $table->string('primary_data')->nullable();
+            $table->string('full_name')->nullable();
+            $table->string('citizenship')->nullable();
+            $table->string('position')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone_number')->nullable();
             $table->timestamps();
         });
     }

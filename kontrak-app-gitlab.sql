@@ -1672,7 +1672,7 @@ INSERT INTO `kontraks` (`id`, `number`, `detail_number`, `perihal`, `date_kontra
 	(15, '880', 'SP-880/VIII/2024', 'PENGADAAN SOLUTION, CAUSTIC SODA (NaOH, SPEC:33%)', '2024-03-20', '4100006105', '2023-01-02', 'Mba Endar', '41A30', 1, 'reviewkasek', '2024-03-19 18:02:57', '2024-03-19 18:36:11'),
 	(16, '1000', 'SP-1000/VIII/2024', 'PENGADAAN PNEUMATIC CYLINDER CKD STSM-2540', '2024-03-20', '4100006120', '2023-01-09', 'Heru Update', '41A40', 1, 'draft', '2024-03-20 00:23:52', '2024-03-20 00:23:52'),
 	(17, '123232322', 'SP-123232322/VIII/2024', 'PENGADAAN TREAD SEAL ANTI SODA 30 %', '2024-03-21', '4100006104', '2023-01-02', 'Heru Update', '41A40', 1, 'draft', '2024-03-21 08:13:36', '2024-03-21 08:13:36'),
-	(18, '1001', 'SP-1001/VIII/2024', 'PENGADAAN SABUN CAIR WANGI/HAND SOAP, PULPEN JOYCO GEL GP-265 BLUE, PULPEN JOYCO GEL GP-256 BLACK, PULPEN KENKO EASY GEL HITAM, PULPEN KENKO EASY GEL BIRU, SABUN CUCI PIRING CAIR @ 400 ML, SABUN CUCI BUBUK BERAT 400 GRM RINSO, SABUN BUBUK B-29 600 GR/BOTO', '2024-03-22', '4300003429', '2024-03-08', 'Annisa D', '41A20', 1, 'draft', '2024-03-22 00:56:57', '2024-03-22 00:56:57');
+	(18, '1001', 'SP-1001/VIII/2024', 'PENGADAAN SABUN CAIR WANGI/HAND SOAP, PULPEN JOYCO GEL GP-265 BLUE, PULPEN JOYCO GEL GP-256 BLACK, PULPEN KENKO EASY GEL HITAM, PULPEN KENKO EASY GEL BIRU, SABUN CUCI PIRING CAIR @ 400 ML, SABUN CUCI BUBUK BERAT 400 GRM RINSO, SABUN BUBUK B-29 600 GR/BOTO', '2024-03-22', '4300003429', '2024-03-08', 'Annisa D', '41A20', 1, 'reviewkasek', '2024-03-22 00:56:57', '2024-03-22 07:10:14');
 
 -- Dumping structure for table kontrak-app-gitlab.lampiran1s
 CREATE TABLE IF NOT EXISTS `lampiran1s` (
@@ -1809,13 +1809,17 @@ CREATE TABLE IF NOT EXISTS `lampiran5s` (
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `kontraks_id` (`kontraks_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table kontrak-app-gitlab.lampiran5s: ~3 rows (approximately)
 INSERT INTO `lampiran5s` (`id`, `kontraks_id`, `no_sppb`, `nama_barang`, `satuan`, `harga_awal`, `qty`, `ppn`, `harga_akhir`, `created_at`, `updated_at`) VALUES
 	(1, 9, '12345', 'ARRESTER', '', 6003000, 3, 11, 19989990, '2024-03-18 20:08:59', '2024-03-18 20:08:59'),
 	(2, 15, '1111239', 'SOLUTION, CAUSTIC SODA (NaOH, SPEC:33%)', '', 1190, 18000, 11, 23776200, '2024-03-19 18:25:05', '2024-03-19 18:25:05'),
-	(3, 14, '9000002', 'RUBBER PACKING STEEL FILTER WTG (PLAN 1)', '', 1980, 6, 11, 13187, '2024-03-19 23:21:40', '2024-03-19 23:21:40');
+	(3, 14, '9000002', 'RUBBER PACKING STEEL FILTER WTG (PLAN 1)', '', 1980, 6, 11, 13187, '2024-03-19 23:21:40', '2024-03-19 23:21:40'),
+	(4, 18, 'e333', '(K)SABUN ANTISEPTIK BATANGAN', 'BH', 390, 205, 11, 88745, '2024-03-22 06:13:31', '2024-03-22 06:13:31'),
+	(5, 18, 'e55', '(K)BLANGKO KWITANSI PAPERLINE ISI 50 LBR', 'BK', 430, 30, 11, 14319, '2024-03-22 06:13:31', '2024-03-22 06:13:31'),
+	(6, 18, 'e66', '(K) PULPEN JOYCO GEL GP-256 BLACK', 'PAK', 2720, 449, 11, 1355621, '2024-03-22 06:13:31', '2024-03-22 06:13:31'),
+	(7, 18, 'r334', '(K) PULPEN JOYCO GEL GP-265 BLUE', 'PAK', 2720, 433, 11, 1307314, '2024-03-22 06:13:31', '2024-03-22 06:13:31');
 
 -- Dumping structure for table kontrak-app-gitlab.lampiran6s
 CREATE TABLE IF NOT EXISTS `lampiran6s` (
@@ -1831,13 +1835,14 @@ CREATE TABLE IF NOT EXISTS `lampiran6s` (
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `kontraks_id` (`kontraks_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table kontrak-app-gitlab.lampiran6s: ~3 rows (approximately)
 INSERT INTO `lampiran6s` (`id`, `kontraks_id`, `nomor_sop`, `tanggal_sop`, `no_kontrak`, `date_kontrak`, `jenis_pembayaran`, `lama_pembayaran`, `created_at`, `updated_at`) VALUES
 	(1, 9, '4100006517', '2023-06-05', 'SP-2003/VIII/2024', '2024-03-18', 1, '20', '2024-03-18 23:55:40', '2024-03-18 23:55:40'),
 	(2, 15, '4100006105', '2023-01-02', 'SP-880/VIII/2024', '2024-03-20', 1, '20', '2024-03-19 18:26:55', '2024-03-19 18:26:55'),
-	(3, 14, 'PBP4100006568', '2023-06-12', 'SP-409/VIII/2024', '2024-03-20', 2, '60', '2024-03-19 23:21:56', '2024-03-19 23:21:56');
+	(3, 14, 'PBP4100006568', '2023-06-12', 'SP-409/VIII/2024', '2024-03-20', 2, '60', '2024-03-19 23:21:56', '2024-03-19 23:21:56'),
+	(5, 18, 'PUB244300003429', '2024-03-08', 'SP-1001/VIII/2024', '2024-03-22', 2, '22', '2024-03-22 06:29:00', '2024-03-22 06:29:00');
 
 -- Dumping structure for table kontrak-app-gitlab.lampiran7s
 CREATE TABLE IF NOT EXISTS `lampiran7s` (
@@ -1849,13 +1854,14 @@ CREATE TABLE IF NOT EXISTS `lampiran7s` (
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `kontraks_id` (`kontraks_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table kontrak-app-gitlab.lampiran7s: ~3 rows (approximately)
+-- Dumping data for table kontrak-app-gitlab.lampiran7s: ~4 rows (approximately)
 INSERT INTO `lampiran7s` (`id`, `kontraks_id`, `alamat_vendor`, `alamat_peruri`, `created_at`, `updated_at`) VALUES
 	(1, 9, 'Rukan Artha Gading Niaga Blok G No.1-2 KOTA ADM. JAKARTA UTARA DKI JAKARTA 14240', 'PERUM PERCETAKAN UANG REPUBLIK INDONESIA\r\n                    Jalan Palatehan No.4 Blok K-V\r\n                    Kebayoran Baru\r\n                    Jakarta Selatan 12160\r\n                    Indonesia', '2024-03-19 00:35:12', '2024-03-19 00:35:12'),
 	(2, 15, 'Ruko Terraz Galuh Mas, Blok IXC no.39, Jl. Arteri Galuh Mas KAB.KARAWANG JAWA BARAT 41361', 'PERUM PERCETAKAN UANG REPUBLIK INDONESIA\r\n                    Jalan Palatehan No.4 Blok K-V\r\n                    Kebayoran Baru\r\n                    Jakarta Selatan 12160\r\n                    Indonesia', '2024-03-19 18:36:11', '2024-03-19 18:36:11'),
-	(3, 14, 'JL. INDUSTRI SELATAN IV BLOK GG NO 5B CIKARANG SELATAN PASIRSARI BEKASI 17530 KOTA BEKASI JAWA BARAT 17530', 'PERUM PERCETAKAN UANG REPUBLIK INDONESIA\r\n                    Jalan Palatehan No.4 Blok K-V\r\n                    Kebayoran Baru\r\n                    Jakarta Selatan 12160\r\n                    Indonesia', '2024-03-19 23:22:39', '2024-03-19 23:22:39');
+	(3, 14, 'JL. INDUSTRI SELATAN IV BLOK GG NO 5B CIKARANG SELATAN PASIRSARI BEKASI 17530 KOTA BEKASI JAWA BARAT 17530', 'PERUM PERCETAKAN UANG REPUBLIK INDONESIA\r\n                    Jalan Palatehan No.4 Blok K-V\r\n                    Kebayoran Baru\r\n                    Jakarta Selatan 12160\r\n                    Indonesia', '2024-03-19 23:22:39', '2024-03-19 23:22:39'),
+	(4, 18, 'tes', 'PERUM PERCETAKAN UANG REPUBLIK INDONESIA\r\n                    Jalan Palatehan No.4 Blok K-V\r\n                    Kebayoran Baru\r\n                    Jakarta Selatan 12160\r\n                    Indonesia', '2024-03-22 07:10:14', '2024-03-22 07:10:14');
 
 -- Dumping structure for table kontrak-app-gitlab.log_contracts
 CREATE TABLE IF NOT EXISTS `log_contracts` (
@@ -2139,10 +2145,22 @@ INSERT INTO `users` (`id`, `name`, `username`, `email`, `unit_kerja`, `email_ver
 
 -- Dumping structure for table kontrak-app-gitlab.vendors
 CREATE TABLE IF NOT EXISTS `vendors` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `registration_no` varchar(225) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sap_code` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `alamat` text COLLATE utf8mb4_unicode_ci,
+  `kode_pos` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `kota` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `provinsi` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `board_type` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `primary_data` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `full_name` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `citizenship` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `position` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone_number` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`registration_no`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table kontrak-app-gitlab.vendors: ~0 rows (approximately)
