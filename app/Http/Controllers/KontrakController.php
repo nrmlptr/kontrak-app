@@ -36,6 +36,7 @@ class KontrakController extends Controller
     }
 
     // methode untuk sinkron data dari sistem lain
+    // BENERIN KOLOM DI METHOD SYNCRON BUAT TABEL INTEGRATENYA 
     public function syncron()
     {
         $url        = 'https://scm.peruri.co.id/Api/getsiapda';
@@ -49,33 +50,42 @@ class KontrakController extends Controller
 
         foreach ($collection as $col) {
             // dd($col);
+            $tanggalWaktu = $col->tgl_sp3_approve; // Ambil nilai tanggal dan waktu dari kolom tgl_sp3_approve
+            $tanggalWaktuMySQL = date('Y-m-d H:i:s', strtotime($tanggalWaktu)); // Format nilai ke dalam format yang sesuai dengan MySQL
+
             $inputData = [
-                'no_spph'                         => $col->no_spph,
-                'tender_name'                     => $col->tender_name,
-                'purchasing_document_number'      => $col->purchasing_document_number,
-                'document_date'                   => $col->document_date,
-                'po_delivery_date'                => $col->po_delivery_date,
-                'vendors_account_number'          => $col->vendors_account_number,
-                'registration_no'                 => $col->registration_no,
-                'vendor_name'                     => $col->vendor_name,
-                'purchasing_group'                => $col->purchasing_group,
-                'material_number'                 => $col->material_number,
-                'material_name'                   => $col->material_name,
-                'purchase_order_quantity'         => (int)$col->purchase_order_quantity,
-                'purchase_order_unit_of_measure'  => $col->purchase_order_unit_of_measure,
-                'purchase_requisition_number'     => $col->purchase_requisition_number,
-                'net_price'                       => (int)$col->net_price * 10,
-                'alamat'                          => $col->alamat,
-                'kode_pos'                        => $col->kode_pos,
-                'kota'                            => $col->kota,
-                'provinsi'                        => $col->provinsi
+                'no_spph'                            => $col->no_spph,
+                'no_sp3'                             => $col->no_sp3,
+                'tgl_sp3_approve'                    => $tanggalWaktuMySQL,
+                'schedule_from_time'                 => $col->schedule_from_time,
+                'schedule_thru_time'                 => $col->schedule_thru_time,
+                'tender_name'                        => $col->tender_name,
+                'purchasing_document_number'         => $col->purchasing_document_number,
+                'document_date'                      => $col->document_date,
+                'po_delivery_date'                   => $col->po_delivery_date,
+                'vendors_account_number'             => $col->vendors_account_number,
+                'registration_no'                    => $col->registration_no,
+                'vendor_name'                        => $col->vendor_name,
+                'purchasing_document_type'           => $col->purchasing_document_type,
+                'purchasing_group'                   => $col->purchasing_group,
+                'material_group'                     => $col->material_group,
+                'material_number'                    => $col->material_number,
+                'material_name'                      => $col->material_name,
+                'purchase_requisition_number'        => $col->purchase_requisition_number,
+                'item_number_of_purchasing_document' => $col->item_number_of_purchasing_document,
+                'purchase_order_quantity'            => (int)$col->purchase_order_quantity,
+                'purchase_order_unit_of_measure'     => $col->purchase_order_unit_of_measure,
+                'net_price'                          => (int)$col->net_price * 10,
+                'condition_value'                    => $col->condition_value,
+                'alamat'                             => $col->alamat,
+                'kode_pos'                           => $col->kode_pos,
+                'kota'                               => $col->kota,
+                'provinsi'                           => $col->provinsi
             ];
 
             // dd($inputData);
             Integrate::updateOrCreate($inputData);
         }
-
-        // return redirect('/dashboard');
     }
 
 
@@ -277,22 +287,31 @@ class KontrakController extends Controller
     // METHOD TAMPIL VIEW LAMPIRAN INPUT
     public function addLampiran(Request $request, $id)
     {
-        // echo 'form add lampiran';
-        // if (auth()->user()->can('view_input')) {
-        // $data = Kontrak::get();
-        // dd($data);
-        // return view('addLampiran', compact('id', 'data'));
-        // }
-
-        // return abort(403);
-
-        $data = Kontrak::find($id);
+        //    dd($id);
+        // $data = Kontrak::find($id);
         // $data2 = $this->vendor_data($no_vendor); 
         // $api=Integrates::where('puca', $data->nomosop);
-        // dd($data->id);
 
-        return view('addLampiran')->with('data', $data);
+        // TAMBAHIN QUERY BUAT NGAMBIL BEBERAPA DATA DARI API UNTUK INPUT DI LAMPIRAN 1
+        $data = Kontrak::join('integrates', 'kontraks.nomor_sop', '=', 'integrates.purchasing_document_number')
+            ->where('kontraks.id', $id)
+            ->select('kontraks.*', 'integrates.no_spph', 'integrates.no_sp3', 'integrates.tgl_sp3_approve', 'integrates.purchasing_group')
+            ->first();
+
+        // dd($data);
+
+        // Mengambil dua angka terakhir dari tahun tanggal_sop
+        $tahunSop = date('y', strtotime($data->tanggal_sop));
+
+        // Gabungkan nilai nomor_sop, purchasing_group, dan tahunSop/tahunDocument
+        $valueNomorSop = $data->purchasing_group . $tahunSop . $data->nomor_sop;
+
+        // return view('addLampiran')->with('data', $data);
         // return view('addLampiran', compact('data','api'));
+        return view('addLampiran', [
+            'data' => $data,
+            'valueNomorSop' => $valueNomorSop
+        ]);
     }
 
 
@@ -345,7 +364,7 @@ class KontrakController extends Controller
     public function storeLampiran2(Request $request)
     {
         // dd($request->all());
-        extract($request->all());
+        // extract($request->all());
         // Validasi data
         $validatedData = $request->validate([
             'kontraks_id'   => 'required',
@@ -360,7 +379,7 @@ class KontrakController extends Controller
         $data['nomor_sop']          = $request->nomor_sop;
         $data['tanggal_sop']        = $request->tanggal_sop;
         // cek dulu sini
-        $lampiran2 = Lampiran2::where('kontraks_id', $kontraks_id);
+        $lampiran2 = Lampiran2::where('kontraks_id', $request->kontraks_id);
         // return $lampiran2;
         $chek = $lampiran2->exists();
         if ($chek) {
@@ -388,6 +407,7 @@ class KontrakController extends Controller
             'no_sppb'               => 'required_if:jspek,2',
             'kode_barang'           => 'required_if:jspek,2',
             'nama_barang'           => 'required_if:jspek,2',
+            'satuan'                => 'required_if:jspek,2',
         ], [
             'gambar.required_if'           => 'file image Wajib di isi',
         ]);
@@ -432,6 +452,7 @@ class KontrakController extends Controller
                     'no_sppb'             => $r,
                     'kode_barang'         => $kode_barang[$key],
                     'jenis_barang'        => $nama_barang[$key],
+                    'satuan'              => $satuan[$key],
                     'created_at'        => now(),
                     'updated_at'        => now(),
                 ];
@@ -445,8 +466,6 @@ class KontrakController extends Controller
         return response()->json(['message' => 'Lampiran 3 Berhasil Dibuat']);
     }
 
-
-
     public function storeLampiran4(Request $request)
     {
         // dd($request->all());
@@ -457,6 +476,7 @@ class KontrakController extends Controller
             'nomor_sop'                 => 'required',
             'tanggal_sop'               => 'required',
             'lokasi'                    => 'required',
+            'satuan'                    => 'required',
             'jadwal_penyerahan_barang'  => 'required',
         ]);
 
@@ -465,6 +485,7 @@ class KontrakController extends Controller
         $data['nomor_sop']                 = $request->nomor_sop;
         $data['tanggal_sop']               = $request->tanggal_sop;
         $data['lokasi']                    = $request->lokasi;
+        $data['satuan']                    = $request->satuan;
         $data['jadwal_penyerahan_barang']  = $request->jadwal_penyerahan_barang;
 
 
@@ -485,6 +506,7 @@ class KontrakController extends Controller
             'kontraks_id'       => 'required',
             'no_sppb'           => 'required',
             'nama_barang'       => 'required',
+            'satuan'            => 'required',
             'harga_awal'        => 'required',
             'jumlah'            => 'required',
             'ppn'               => 'required',
@@ -497,6 +519,7 @@ class KontrakController extends Controller
         $data['kontraks_id']    = $request->kontraks_id;
         $data['no_sppb']        = $request->no_sppb;
         $data['nama_barang']    = $request->nama_barang;
+        $data['satuan']         = $request->satuan;
         $data['harga_awal']     = $request->harga_awal;
         $data['qty']            = $request->jumlah;
         $data['ppn']            = $request->ppn;

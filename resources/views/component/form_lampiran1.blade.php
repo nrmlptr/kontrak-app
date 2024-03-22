@@ -68,7 +68,7 @@
                                 <input type="text" name="perihal[]" placeholder="Nama Header" class="form-control" value="Surat Permintaan Penawaran Harga dari PIHAK PERTAMA">
                             </div>
                             <div class="form-group col-6">
-                                <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control">
+                                <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control"  value="{{ $data->no_spph }}" readonly>
                             </div>
                             <div class="form-group col-6">
                                 <input type="date" name="tanggal_surat[]" class="form-control">
@@ -138,10 +138,44 @@
                                 <input type="text" name="perihal[]" placeholder="Nama Header" class="form-control" value="Surat Pemberitahuan Pemenang Pengadaan">
                             </div>
                             <div class="form-group col-6">
-                                <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control">
+                                <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control"  value="{{ $data->no_sp3 }}" readonly>
                             </div>
                             <div class="form-group col-6">
-                                <input type="date" name="tanggal_surat[]" class="form-control">
+                                <input type="date" name="tanggal_surat[]" class="form-control" value="{{ $data->tgl_sp3_approve }}" readonly>
+                            </div>
+                        </div>
+                    </li>
+
+                     <!-- header 6 -->
+                    <li class="ui-state-default">
+                        <input class="numbering" name="numbering[]">
+                        <a href="#" type="button" style="color: red;" class="btn-deleterow"><i class="fa fa-trash"></i></a>
+                        <div class="row">
+                            <div class="form-group col-12">
+                                <input type="text" name="perihal[]" placeholder="Nama Header" class="form-control" value="Surat Order Pembelian">
+                            </div>
+                            <div class="form-group col-6">
+                                <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control" value="{{ $valueNomorSop }}" readonly>
+                            </div>
+                            <div class="form-group col-6">
+                                <input type="date" name="tanggal_surat[]" class="form-control" value="{{ $data->tanggal_sop }}" readonly>
+                            </div>
+                        </div>
+                    </li>
+
+                     <!-- header 7 -->
+                    <li class="ui-state-default">
+                        <input class="numbering" name="numbering[]">
+                        <a href="#" type="button" style="color: red;" class="btn-deleterow"><i class="fa fa-trash"></i></a>
+                        <div class="row">
+                            <div class="form-group col-12">
+                                <input type="text" name="perihal[]" placeholder="Nama Header" class="form-control" value="Perjanjian">
+                            </div>
+                            <div class="form-group col-6">
+                                <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control" value="{{ $data->detail_number }}" readonly>
+                            </div>
+                            <div class="form-group col-6">
+                                <input type="date" name="tanggal_surat[]" class="form-control" value="{{ $data->date_kontrak }}" readonly>
                             </div>
                         </div>
                     </li>
@@ -201,7 +235,7 @@
     $('#btn-addrow').on('click', function() {
         $('#sortable').append(fieldadd)
         counting_container();
-        submitLampiran1()
+        // submitLampiran1()
     })
 
     $('body').on('click', '.btn-deleterow', function() {

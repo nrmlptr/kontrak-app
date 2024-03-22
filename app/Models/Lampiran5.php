@@ -9,6 +9,6 @@ class Lampiran5 extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id', 'kontraks_id', 'no_sppb', 'nama_barang', 'harga_awal', 'qty', 'ppn', 'harga_akhir'];
+    protected $fillable = ['id', 'kontraks_id', 'no_sppb', 'nama_barang', 'satuan', 'harga_awal', 'qty', 'ppn', 'harga_akhir'];
 
 }

@@ -17,7 +17,14 @@
                 <small style="color: red;">{{ $message }}</small>
                 @enderror
             </div>
-            <div class="form-group col-3">
+            <div class="form-group col-1">
+                <label for="satuan">Satuan</label>
+                <input type="text" name="satuan" class="form-control" required readonly>
+                @error('satuan')
+                    <small style="color: red;">{{ $message }}</small>
+                @enderror
+            </div>
+            <div class="form-group col-2">
                 <label for="harga_awal">Harga Sebelum PPN</label>
                 <input type="text" name="harga_awal" class="form-control" required>
                 @error('harga_awal')
@@ -88,6 +95,7 @@
         if (dataBarang) {
             // Mengisi nilai input form dengan data barang
             $('input[name="nama_barang"]').val(dataBarang.material_name);
+             $('input[name="satuan"]').val(dataBarang.purchase_order_unit_of_measure);
             $('input[name="jumlah"]').val(dataBarang.purchase_order_quantity);
             $('input[name="harga_awal"]').val(dataBarang.net_price);
         }

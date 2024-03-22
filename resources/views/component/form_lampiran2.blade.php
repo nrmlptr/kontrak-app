@@ -5,20 +5,20 @@
             <input type="hidden" name="kontraks_id" value="{{ $data->id }}">
             <div class="form-group col-6">
                 <label for="nomor_sop">Nomor SOP</label>
-                <input type="text" name="nomor_sop" placeholder="Nomor SOP" class="form-control" value="{{ $data->nomor_sop }}">
+                <input type="text" name="nomor_sop" placeholder="Nomor SOP" class="form-control" value="{{ $valueNomorSop }}" readonly required>
             </div>
             <div class=" form-group col-6">
                 <label for="tanggal_sop">Tanggal SOP</label>
-                <input type="date" name="tanggal_sop" class="form-control" value="{{ $data->tanggal_sop }}" readonly>
+                <input type="date" name="tanggal_sop" class="form-control" value="{{ $data->tanggal_sop }}" readonly required>
             </div>
             <div class="form-group col-12">
                 <label for="perihal">Perihal</label>
-                <input type="text" name="perihal" placeholder="Perihal" class="form-control" value="{{ $data->perihal }}">
+                <input type="text" name="perihal" placeholder="Perihal" class="form-control" value="{{ $data->perihal }}" required>
             </div>
 
         </div>
         <div class=" card-footer">
-            <button type="button" class="btn btn-block btn-secondary btn-lg" onclick="submit_Lampiran2()">Submit</button>
+            <button type="button" class="btn btn-block btn-secondary btn-lg" onclick="submitLampiran2()">Submit</button>
         </div>
     </form>
 </div>
@@ -62,8 +62,8 @@
         });
     }
 
-    function submit_Lampiran2() {
-        submitLampiran2();
-    }
+    // function submit_Lampiran2() {
+    //     submitLampiran2();
+    // }
 </script>
 @endpush

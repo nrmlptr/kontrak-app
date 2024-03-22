@@ -57,15 +57,19 @@
                 </div>
                 <div class="form-group col-2">
                     <label for="inputKodeBarang">Kode Barang</label>
-                    <input type="text" name="kode_barang[]" class="form-control" value="${row.material_number}">
+                    <input type="text" name="kode_barang[]" class="form-control" value="${row.material_number}" readonly>
                 </div>
                 <div class="form-group col-6">
                     <label for="jenisBarang">Nama Barang</label>
-                    <input type="text" name="nama_barang[]" class="form-control" value="${row.material_name}">
+                    <input type="text" name="nama_barang[]" class="form-control" value="${row.material_name}" readonly>
                 </div>
-                <div class="form-group mr-5 col-6">
+                <div class="form-group col-2">
+                    <label for="jenisBarang">Nama Barang</label>
+                    <input type="text" name="satuan[]" class="form-control" value="${row.purchase_order_unit_of_measure}" readonly>
+                </div>
+                <div class="form-group col-12">
                     <label for="inputText">Keterangan Non Spesifikasi Lab</label>
-                    <textarea class="form-control" rows="3" style="width: auto;" placeholder="Masukkan Spesifikasi" name="spesifikasi_teknis[]"></textarea>
+                    <textarea class="form-control" rows="3" placeholder="Masukkan Spesifikasi" name="spesifikasi_teknis[]"></textarea>
                 </div>`;
             });
 
