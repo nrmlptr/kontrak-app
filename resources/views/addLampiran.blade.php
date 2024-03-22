@@ -189,3 +189,32 @@
     <!-- /.content -->
 </div>
 @endsection
+@push('scripts')
+    <script>
+            $(document).ready(function() {
+        var nomor_sop = "{{ $data->nomor_sop }}";
+
+        $.ajax({
+            type: 'GET',
+            url: "{{route('dataBarang')}}",
+            data: {
+                _token: $("input[name='_token']").val(),
+                po: nomor_sop
+            },
+            success: function(response) {
+                console.log(response);
+                if (response[0].id) {
+                    isiNilaiForm3(response);
+                    isiNilaiForm4(response);
+                } else {
+                    console.log("Kontrak tidak ditemukan");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log("error");
+            }
+        });
+    });
+
+    </script>
+@endpush

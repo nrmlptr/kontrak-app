@@ -467,7 +467,7 @@ class KontrakController extends Controller
 
     public function storeLampiran4(Request $request)
     {
-        // dd($request->all());
+        extract($request->all());
 
         // Validasi data
         $validatedData = $request->validate([
@@ -479,17 +479,31 @@ class KontrakController extends Controller
             'jadwal_penyerahan_barang'  => 'required',
         ]);
 
-        // yang berada dalam index array merupakan field yg ada di db
-        $data['kontraks_id']               = $request->kontraks_id;
-        $data['nomor_sop']                 = $request->nomor_sop;
-        $data['tanggal_sop']               = $request->tanggal_sop;
-        $data['lokasi']                    = $request->lokasi;
-        $data['satuan']                    = $request->satuan;
-        $data['jadwal_penyerahan_barang']  = $request->jadwal_penyerahan_barang;
-
-
+        // cek dulu sini
+        $lampiran4 = Lampiran4::where('kontraks_id', $kontraks_id);
+        // return $lampiran4;
+        $chek = $lampiran4->exists();
+        if ($chek) {
+            $lampiran4->delete();
+        }
+        $datax = [];
+        foreach ($nomor_sop as $key => $r) {
+            $datax[] = [
+                'kontraks_id' => $kontraks_id,
+                'nomor_sop' => $r,
+                'no_sppb' => $no_sppb[$key],
+                'kode_barang' => $kode_barang[$key],
+                'nama_barang' => $nama_barang[$key],
+                'tanggal_sop' => $tanggal_sop[$key],
+                'lokasi' => $lokasi[$key],
+                'satuan' => $satuan[$key],
+                'jadwal_penyerahan_barang' => $jadwal_penyerahan_barang[$key],
+                'created_at'        => now(),
+                'updated_at'        => now(),
+            ];
+        }
         // Simpan data ke database
-        Lampiran4::updateOrCreate($data);
+        Lampiran4::insert($datax);
 
         // Mengembalikan respons JSON yang memberitahu bahwa data berhasil disimpan
         return response()->json(['message' => 'Lampiran 4 Berhasil Dibuat']);

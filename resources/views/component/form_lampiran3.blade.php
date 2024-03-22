@@ -102,30 +102,6 @@
                 $('#loadnonstandar').removeClass('d-none');
 
 
-                $(document).ready(function() {
-                    var nomor_sop = "{{ $data->nomor_sop }}";
-
-                    $.ajax({
-                        type: 'GET',
-                        url: "{{route('dataBarang')}}",
-                        data: {
-                            _token: $("input[name='_token']").val(),
-                            po: nomor_sop
-                        },
-                        success: function(response) {
-                            console.log(response);
-                            if (response[0].id) {
-                                // $('#kontraks_id').val(response.kontraks.id);
-                                isiNilaiForm3(response);
-                            } else {
-                                console.log("Kontrak tidak ditemukan");
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            console.log("error");
-                        }
-                    });
-                });
             }
         });
 
