@@ -12,7 +12,7 @@
             <input type="hidden" name="kontraks_id" value="{{ $data->id }}">
             <div class="form-group col-12">
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="jspek" id="standarLab" value="1">
+                    <input class="form-check-input" type="radio" name="jspek" id="standarLab" value="1" checked>
                     <label class="form-check-label" for="standarLab">Standar Lab</label>
                 </div>
                 <div class="form-check col-12">
@@ -91,6 +91,7 @@
             // Jika standarLabRadio dipilih, tampilkan formGambar dan sembunyikan formText
             if (this.checked) {
                 formGambar.style.display = 'block';
+                $('#loadnonstandar').addClass('d-none');
             }
         });
 

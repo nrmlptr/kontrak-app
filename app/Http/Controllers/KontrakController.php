@@ -414,7 +414,6 @@ class KontrakController extends Controller
 
         $kontraksId = $validatedData['kontraks_id'];
         $jenisSpesifikasi = $validatedData['jspek'];
-        $spesifikasiTeknis = $validatedData['spesifikasi_teknis'];
         // Simpan nilai dari radio button
         $Jspek = $jenisSpesifikasi;
 
@@ -448,7 +447,7 @@ class KontrakController extends Controller
                 $datanya[] = [
                     'kontraks_id'         => $kontraksId,
                     'jenis_spesifikasi'   => $Jspek,
-                    'spesifikasi_teknis'  => $spesifikasiTeknis[$key],
+                    'spesifikasi_teknis'  => $spesifikasi_teknis[$key],
                     'no_sppb'             => $r,
                     'kode_barang'         => $kode_barang[$key],
                     'jenis_barang'        => $nama_barang[$key],
