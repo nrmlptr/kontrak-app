@@ -71,9 +71,9 @@
 $(document).on('input', 'input[name="jumlah[]"], input[name="harga_awal[]"], input[name="ppn[]"]', function() {
     // Mendapatkan nilai input jumlah, harga_awal, dan ppn pada baris yang terkait
     var row = $(this).closest('.row');
-    var jumlah = parseFloat(row.find('input[name="jumlah[]"]').val()) || 0;
-    var hargaAwal = parseFloat(row.find('input[name="harga_awal[]"]').val()) || 0;
-    var ppn = parseFloat(row.find('input[name="ppn[]"]').val()) || 0;
+    var jumlah = parseInt(row.find('input[name="jumlah[]"]').val()) || 0;
+    var hargaAwal = parseInt(row.find('input[name="harga_awal[]"]').val()) || 0;
+    var ppn = parseInt(row.find('input[name="ppn[]"]').val()) || 0;
 
     // Melakukan perhitungan total harga + PPN
     var totalHarga = (jumlah * hargaAwal) + ((jumlah * hargaAwal) * (ppn / 100));

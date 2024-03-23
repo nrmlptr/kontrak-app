@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `integrates` (
   `item_number_of_purchasing_document` bigint NOT NULL DEFAULT '0',
   `purchase_order_quantity` int NOT NULL,
   `purchase_order_unit_of_measure` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `net_price` float NOT NULL,
+  `net_price` int NOT NULL DEFAULT (0),
   `condition_value` float NOT NULL,
   `alamat` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `kode_pos` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `integrates` (
   KEY `no_spph` (`no_spph`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1561 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table kontrak-app-gitlab.integrates: ~1.521 rows (approximately)
+-- Dumping data for table kontrak-app-gitlab.integrates: ~1.519 rows (approximately)
 INSERT INTO `integrates` (`id`, `no_spph`, `no_sp3`, `tgl_sp3_approve`, `schedule_from_time`, `schedule_thru_time`, `tender_name`, `purchasing_document_number`, `document_date`, `po_delivery_date`, `vendors_account_number`, `registration_no`, `vendor_name`, `purchasing_document_type`, `purchasing_group`, `material_group`, `material_number`, `material_name`, `purchase_requisition_number`, `item_number_of_purchasing_document`, `purchase_order_quantity`, `purchase_order_unit_of_measure`, `net_price`, `condition_value`, `alamat`, `kode_pos`, `kota`, `provinsi`, `created_at`, `updated_at`) VALUES
 	(1, 'PUB/2024/00047', 'SP3/PUB/2024/00047', '2024-03-08', '2024-02-28 18:00:00', '2024-03-04 23:59:00', 'PENGADAAN ACCU ZUUR ELECTROLITE YUASA', '4300003423', '2024-03-08', '2024-04-19', '0010000122', '00000232', 'PT. SATRIA SAKTI PERKASA', 'ZSOU', 'PUB', 42, '242-000130', 'ACCU ZUUR ELECTROLITE YUASA', '0012008548', 10, 1000, 'L', 1050, 105000, 'Jalan Bintara Raya VII Nomor 21 RT : 001 RW : 002, Bintara, Bekasi Barat, Bekasi', '17134', ' KAB. BEKASI', ' JAWA BARAT', '2024-03-22 00:55:30', '2024-03-22 00:55:30'),
 	(2, 'PUB/2024/00043', 'SP3/PUB/2024/00043', '2024-03-05', '2024-02-15 18:00:00', '2024-02-23 23:59:00', 'PENGADAAN WHITE BOARD BERKAKI UK.90X180CM V-TEC, PENSIL FABER CASTELL 2 B ISI 12, PULPEN STANDARD BIRU ISI 12, PULPEN STANDARD MERAH ISI 12, PULPEN STANDARD HITAM ISI 12, SPIDOL KECIL STANDARD ISI 12, WHITE BOARD UK. 120X240CM V-TEC, WHITE BOARD 90X180 CM', '4300003425', '2024-03-08', '2024-04-19', '0010000152', '00000164', 'PT. JASAREKA INDUSTRI', 'ZSOU', 'PUB', 36, '236-020028', '(K)PENSIL FABER CASTELL 2 B ISI 12', '0012008369', 10, 31, 'PAK', 4150, 12865, 'Jl. Kramat Pulo Raya No. 4', '10450', 'KOTA ADM. JAKARTA PUSAT', 'DKI JAKARTA', '2024-03-22 00:55:30', '2024-03-22 00:55:30'),
@@ -1784,7 +1784,7 @@ CREATE TABLE IF NOT EXISTS `lampiran4s` (
   KEY `kontraks_id` (`kontraks_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table kontrak-app-gitlab.lampiran4s: ~3 rows (approximately)
+-- Dumping data for table kontrak-app-gitlab.lampiran4s: ~7 rows (approximately)
 INSERT INTO `lampiran4s` (`id`, `kontraks_id`, `nomor_sop`, `tanggal_sop`, `jadwal_penyerahan_barang`, `lokasi`, `satuan`, `kode_barang`, `nama_barang`, `no_sppb`, `created_at`, `updated_at`) VALUES
 	(1, 9, '4100006517', '2023-06-05', '- Tahap 1 : Tanggal 15 Maret 2024 (3.000 Liter)\r\n- Tahap 2 : Tanggal 19 April 2024 (3.000 Liter)\r\n- Tahap 3 : Tanggal 17 Mei 2024 (3.000 Liter)', 'UTAS', NULL, NULL, NULL, NULL, '2024-03-17 20:42:39', '2024-03-17 20:42:39'),
 	(3, 15, '4100006105', '2023-01-02', '- jadwal penyerahan barang pertama bulan april 2024\r\n- jadwal penyerahan barang kedua bulan mei 2024', 'umum', NULL, NULL, NULL, NULL, '2024-03-19 18:16:39', '2024-03-19 18:16:39'),
@@ -1811,7 +1811,7 @@ CREATE TABLE IF NOT EXISTS `lampiran5s` (
   KEY `kontraks_id` (`kontraks_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table kontrak-app-gitlab.lampiran5s: ~3 rows (approximately)
+-- Dumping data for table kontrak-app-gitlab.lampiran5s: ~7 rows (approximately)
 INSERT INTO `lampiran5s` (`id`, `kontraks_id`, `no_sppb`, `nama_barang`, `satuan`, `harga_awal`, `qty`, `ppn`, `harga_akhir`, `created_at`, `updated_at`) VALUES
 	(1, 9, '12345', 'ARRESTER', '', 6003000, 3, 11, 19989990, '2024-03-18 20:08:59', '2024-03-18 20:08:59'),
 	(2, 15, '1111239', 'SOLUTION, CAUSTIC SODA (NaOH, SPEC:33%)', '', 1190, 18000, 11, 23776200, '2024-03-19 18:25:05', '2024-03-19 18:25:05'),
@@ -1856,7 +1856,7 @@ CREATE TABLE IF NOT EXISTS `lampiran7s` (
   KEY `kontraks_id` (`kontraks_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table kontrak-app-gitlab.lampiran7s: ~4 rows (approximately)
+-- Dumping data for table kontrak-app-gitlab.lampiran7s: ~3 rows (approximately)
 INSERT INTO `lampiran7s` (`id`, `kontraks_id`, `alamat_vendor`, `alamat_peruri`, `created_at`, `updated_at`) VALUES
 	(1, 9, 'Rukan Artha Gading Niaga Blok G No.1-2 KOTA ADM. JAKARTA UTARA DKI JAKARTA 14240', 'PERUM PERCETAKAN UANG REPUBLIK INDONESIA\r\n                    Jalan Palatehan No.4 Blok K-V\r\n                    Kebayoran Baru\r\n                    Jakarta Selatan 12160\r\n                    Indonesia', '2024-03-19 00:35:12', '2024-03-19 00:35:12'),
 	(2, 15, 'Ruko Terraz Galuh Mas, Blok IXC no.39, Jl. Arteri Galuh Mas KAB.KARAWANG JAWA BARAT 41361', 'PERUM PERCETAKAN UANG REPUBLIK INDONESIA\r\n                    Jalan Palatehan No.4 Blok K-V\r\n                    Kebayoran Baru\r\n                    Jakarta Selatan 12160\r\n                    Indonesia', '2024-03-19 18:36:11', '2024-03-19 18:36:11'),
@@ -1932,7 +1932,7 @@ CREATE TABLE IF NOT EXISTS `model_has_roles` (
   CONSTRAINT `model_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table kontrak-app-gitlab.model_has_roles: ~0 rows (approximately)
+-- Dumping data for table kontrak-app-gitlab.model_has_roles: ~7 rows (approximately)
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 	(1, 'App\\Models\\User', 1),
 	(2, 'App\\Models\\User', 3),
@@ -2028,7 +2028,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
   UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table kontrak-app-gitlab.permissions: ~0 rows (approximately)
+-- Dumping data for table kontrak-app-gitlab.permissions: ~2 rows (approximately)
 INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
 	(1, 'view_input', 'web', '2024-03-06 23:59:31', '2024-03-06 23:59:31'),
 	(2, 'view_user', 'web', '2024-03-07 00:16:22', '2024-03-07 00:16:22');
@@ -2077,7 +2077,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   UNIQUE KEY `roles_name_guard_name_unique` (`name`,`guard_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table kontrak-app-gitlab.roles: ~0 rows (approximately)
+-- Dumping data for table kontrak-app-gitlab.roles: ~5 rows (approximately)
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
 	(1, 'admin', 'web', '2024-03-06 23:46:09', '2024-03-06 23:46:09'),
 	(2, 'writer', 'web', '2024-03-06 23:46:09', '2024-03-06 23:46:09'),
@@ -2095,7 +2095,7 @@ CREATE TABLE IF NOT EXISTS `role_has_permissions` (
   CONSTRAINT `role_has_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table kontrak-app-gitlab.role_has_permissions: ~0 rows (approximately)
+-- Dumping data for table kontrak-app-gitlab.role_has_permissions: ~3 rows (approximately)
 INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 	(1, 1),
 	(2, 1),
@@ -2130,7 +2130,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `permission` (`permission`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table kontrak-app-gitlab.users: ~0 rows (approximately)
+-- Dumping data for table kontrak-app-gitlab.users: ~10 rows (approximately)
 INSERT INTO `users` (`id`, `name`, `username`, `email`, `unit_kerja`, `email_verified_at`, `password`, `remember_token`, `permission`, `created_at`, `updated_at`) VALUES
 	(1, 'Nuramalia Putri Update', 'nramalptr', 'nuramaliaap24update@gmail.com', '41A', NULL, '$2y$12$29rhJQKihZnI8CvoQdQ9n.88DrHWHqdUtMAw4zW7nbwCFhxV6H7VK', NULL, 'admin', '2024-03-05 05:59:44', '2024-03-05 08:37:55'),
 	(3, 'Mas Rezki', 'Lrezki', 'writer@gmail.com', '41A30', NULL, '$2y$12$0vmEpW2snip2pwT8Dm9.2uMYos3lwoRV78aAWISea6Sm6lZQyVV0q', NULL, 'writer', '2024-03-05 17:58:15', '2024-03-14 18:54:22'),
@@ -2145,6 +2145,7 @@ INSERT INTO `users` (`id`, `name`, `username`, `email`, `unit_kerja`, `email_ver
 
 -- Dumping structure for table kontrak-app-gitlab.vendors
 CREATE TABLE IF NOT EXISTS `vendors` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `registration_no` varchar(225) COLLATE utf8mb4_unicode_ci NOT NULL,
   `sap_code` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `alamat` text COLLATE utf8mb4_unicode_ci,
@@ -2160,7 +2161,8 @@ CREATE TABLE IF NOT EXISTS `vendors` (
   `phone_number` varchar(225) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`registration_no`) USING BTREE
+  PRIMARY KEY (`id`),
+  KEY `registration_no` (`registration_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table kontrak-app-gitlab.vendors: ~0 rows (approximately)

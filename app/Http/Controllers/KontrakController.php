@@ -75,9 +75,9 @@ class KontrakController extends Controller
                 'material_name'                      => $col->material_name,
                 'purchase_requisition_number'        => $col->purchase_requisition_number,
                 'item_number_of_purchasing_document' => $col->item_number_of_purchasing_document,
-                'purchase_order_quantity'            => (int)$col->purchase_order_quantity,
+                'purchase_order_quantity'            => (int) str_replace(['.', ','], '', $col->purchase_order_quantity),
                 'purchase_order_unit_of_measure'     => $col->purchase_order_unit_of_measure,
-                'net_price'                          => (int)$col->net_price * 10,
+                'net_price'                          => (int) str_replace(['.', ','], '', $col->net_price),
                 'condition_value'                    => $col->condition_value,
                 'alamat'                             => $col->alamat,
                 'kode_pos'                           => $col->kode_pos,
@@ -86,7 +86,7 @@ class KontrakController extends Controller
             ];
 
             // dd($inputData);
-            Integrate::updateOrCreate($inputData);
+            Integrate::create($inputData);
         }
     }
 
@@ -135,27 +135,32 @@ class KontrakController extends Controller
                 ->get("https://scm.peruri.co.id/Api/getsiapdainfo/$no_vendor"), true);
 
             // return $dataVendor;
-            extract($dataVendor);
-            $datares = [
-                'registration_no' => $registration_no,
-                'sap_code' => $sap_code,
-                'alamat' => $alamat,
-                'kode_pos' => $kode_pos,
-                'kota' => $kota,
-                'provinsi' => $provinsi,
-                'board_type' => $board_type,
-                'primary_data' => $primary_data,
-                'full_name' => $full_name,
-                'citizenship' => $citizenship,
-                'position' => $position,
-                'email' => $email,
-                'phone_number' => $phone_number,
-            ];
-            $save = Vendor::insertOrIgnore($datares);
-            $alamatnya = $alamat . "Provinsi " . $provinsi . ", Kota : " . $kota . ", Kode pos : " . $kode_pos;
+            $dataSave = [];
+            foreach ($dataVendor as $v) {
+                $dataSave[] = [
+                    'registration_no' => $v['registration_no'],
+                    'sap_code' => $v['sap_code'],
+                    'alamat' => $v['alamat'],
+                    'kode_pos' => $v['kode_pos'],
+                    'kota' => $v['kota'],
+                    'provinsi' => $v['provinsi'],
+                    'board_type' => $v['board_type'],
+                    'primary_data' => $v['primary_data'],
+                    'full_name' => $v['full_name'],
+                    'citizenship' => $v['citizenship'],
+                    'position' => $v['position'],
+                    'email' => $v['email'],
+                    'phone_number' => $v['phone_number'],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+
+            $save = Vendor::insert($dataSave);
+            $alamatnya = $dataVendor[0]['alamat'] . " Provinsi " . $dataVendor[0]['provinsi'] . ", Kota : " . $dataVendor[0]['kota'] . ", Kode pos : " . $dataVendor[0]['kode_pos'];
         } else {
             $row = $cek->first();
-            $alamatnya = $row->alamat . "Provinsi " . $row->provinsi . ", Kota : " . $row->kota . ", Kode pos : " . $row->kode_pos;
+            $alamatnya = $row->alamat . " Provinsi " . $row->provinsi . ", Kota : " . $row->kota . ", Kode pos : " . $row->kode_pos;
         }
         return response()->json(['alamat' => $alamatnya]);
         // return $data;
