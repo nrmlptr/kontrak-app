@@ -28,7 +28,7 @@
                     <a href="{{ route('editLampiran', ['id' => $revisi->kontraks_id]) }}" class="btn btn-primary mb-3">Edit Lampiran</a>
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Pesan Revisi</h3>
+                            <h3 class="card-title">Pesan Revisi oleh : {{ $revisi->user->name }} sebagai {{ $revisi->user->permission }}</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">

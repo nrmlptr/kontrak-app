@@ -10,6 +10,5 @@ class Lampiran6 extends Model
     use HasFactory;
 
 
-    protected $fillable = ['id', 'kontraks_id', 'nomor_sop', 'tanggal_sop', 'no_kontrak', 'date_kontrak', 'jenis_pembayaran', 'lama_pembayaran'];
-
+    protected $guarded = ['id',];
 }

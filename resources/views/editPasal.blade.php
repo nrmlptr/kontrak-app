@@ -27,15 +27,13 @@
                 @method('PUT')
                 <div class="row">
                     <!-- left column -->
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <!-- general form elements -->
                         <div class="card card-primary">
                             <div class="card-header">
                                 <h3 class="card-title">Edit Data Pasal</h3>
                             </div>
                             <!-- /.card-header -->
-                            <!-- form start -->
-                            <form>
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="nama_pasal">Nama Pasal</label>
@@ -51,31 +49,27 @@
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>
-                                    <div class="form-group">
-                                        <label for="isi_pasal">Isi Pasal</label>
-                                        <input type="text" class="form-control" name="isi_pasal" value="{{ $data->isi_pasal }}" id="isi_pasal">
-                                        @error('isi_pasal')
-                                        <small style="color: red;">{{ $message }}</small>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
+                                     <div class="form-group">
                                         <label for="jenis_pasal">Jenis Kontrak</label>
                                         <select name="jenis_pasal" id="jenis_pasal" class="form-control">
-                                            <option value="{{ $data->jenis_pasal }}" selected>
-                                                @if($data->jenis_pasal == '1')
-                                                Jaminan
-                                                @else
-                                                Tanpa Jaminan
-                                                @endif
-                                            </option>
-                                            <option value=''>-- Pilih --</option>
+                                            
                                             <option value="1">Jaminan</option>
-                                            <option value="2">Tanpa Jaminan</option>
+                                            <option value="2" @if ($data->jenis_pasal=='2')
+                                                selected
+                                            @endif>Tanpa Jaminan</option>
                                         </select>
                                         @error('jenis_pasal')
                                         <small style=" color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>
+                                    <div class="form-group">
+                                        <label for="isi_pasal">Isi Pasal</label>
+                                        <textarea type="text" class="form-control" name="isi_pasal" id="isi_pasal">{!! $data->isi_pasal !!}</textarea>
+                                        @error('isi_pasal')
+                                        <small style="color: red;">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                   
                                 </div>
                                 <!-- /.card-body -->
 
@@ -83,7 +77,6 @@
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                     <a href="{{ route('vPasal') }}" class="btn btn-danger">Cancel</a>
                                 </div>
-                            </form>
                         </div>
                         <!-- /.card -->
                     </div>
@@ -98,3 +91,14 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script>
+        
+        $(document).ready(function() {
+            $('#isi_pasal').summernote();
+            
+        });
+    </script>
+@endpush

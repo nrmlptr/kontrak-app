@@ -11,5 +11,5 @@ class PasalKontrak extends Model
 
     protected $table = 'pasal-kontrak';
 
-    protected $fillable = ['id', 'nama_pasal', 'keterangan_pasal', 'isi_pasal', 'jenis_pasal'];
+    protected $guarded = ['id'];
 }

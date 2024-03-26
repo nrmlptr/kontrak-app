@@ -82,7 +82,7 @@
                                 <!-- ISI KONTEN LAMPIRAN 2 -->
                                 <div id="collapseLampiran2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                                     <div class="card-body">
-                                   
+                                   @include('update/lampiran2')
                                     </div>
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                                 <!-- ISI KONTEN LAMPIRAN 3 -->
                                 <div id="collapseLampiran3" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                                     <div class="card-body">
-                                      
+                                      @include('update/lampiran3')
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +116,7 @@
                                 <!-- ISI KONTEN LAMPIRAN 4 -->
                                 <div id="collapseLampiran4" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
                                     <div class="card-body">
-                             
+                                         @include('update/lampiran4')
                                     </div>
                                 </div>
                             </div>
@@ -133,7 +133,7 @@
                                 <!-- ISI KONTEN LAMPIRAN 5 -->
                                 <div id="collapseLampiran5" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
                                     <div class="card-body">
-                                      
+                                      @include('update/lampiran5')
                                     </div>
                                 </div>
                             </div>
@@ -150,7 +150,7 @@
                                 <!-- ISI KONTEN LAMPIRAN 6 -->
                                 <div id="collapseLampiran6" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
                                     <div class="card-body">
-                                   
+                                   @include('update/lampiran6')
                                     </div>
                                 </div>
                             </div>
@@ -167,7 +167,7 @@
                                 <!-- ISI KONTEN LAMPIRAN 7 -->
                                 <div id="collapseLampiran7" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
                                     <div class="card-body">
-                                   
+                                    @include('update/lampiran7')
                                     </div>
                                 </div>
                             </div>
@@ -189,7 +189,42 @@
     <!-- /.content -->
 </div>
 @endsection
-<!-- jQuery -->
-<script src="{{ asset('lte/plugins/jquery/jquery.js') }}"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="{{ asset('lte/plugins/jquery-ui/jquery-ui.js') }}"></script>
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script>
+            $(document).ready(function() {
+        var nomor_sop = "{{ $data->nomor_sop }}";
+
+        $.ajax({
+            type: 'GET',
+            url: "{{route('dataBarang')}}",
+            data: {
+                _token: $("input[name='_token']").val(),
+                po: nomor_sop
+            },
+            success: function(response) {
+                console.log(response);
+                if (response[0].id) {
+                    // isiNilaiForm4(response);
+                    // isiNilaiForm5(response);
+                    // $.get(`/dataVendor/${response[0].registration_no}`,function(data){
+                    //     $('textarea[name="alamat_vendor"]').val(data.alamat)
+                    //  });
+                } else {
+                    console.log("Kontrak tidak ditemukan");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log("error");
+            }
+        });
+
+
+   
+            $('.summernote').summernote();
+          
+    });
+
+    </script>
+@endpush

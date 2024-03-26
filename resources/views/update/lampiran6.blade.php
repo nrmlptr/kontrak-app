@@ -1,3 +1,6 @@
+@php
+    $lampiran6=$data->lampiran6;
+@endphp
 <div class="row">
     <form id="inputLampiran6">
         @csrf
@@ -5,11 +8,15 @@
             <input type="hidden" name="kontraks_id" value="{{ $data->id }}">
             <div class="form-group col-12">
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="jpemb" id="langsung" value="1" checked>
+                    <input class="form-check-input" type="radio" name="jpemb" id="langsung" value="1" @if (@$lampiran6->jenis_pembayaran=='1')
+                        checked
+                    @endif>
                     <label class="form-check-label" for="langsung">Langsung</label>
                 </div>
                 <div class="form-check col-12">
-                    <input class="form-check-input" type="radio" name="jpemb" id="bertahap" value="2">
+                    <input class="form-check-input" type="radio" name="jpemb" id="bertahap" value="2" @if (@$lampiran6->jenis_pembayaran=='2')
+                        checked
+                    @endif>
                     <label class="form-check-label" for="bertahap">Bertahap</label>
                 </div>
             </div>
@@ -17,23 +24,23 @@
         <div class="row">
             <div class="form-group col-2" id="formLangsung">
                 <label for="nomor_sop">Nomor SOP</label>
-                <input type="text" name="nomor_sop" class="form-control" value="{{ $valueNomorSop }}" readonly>
+                <input type="text" name="nomor_sop" class="form-control" value="{{ @$lampiran6->nomor_sop }}" readonly>
             </div>
             <div class="form-group col-2" id="formLangsung2">
                 <label for="tanggal_sop">Tanggal SOP</label>
-                <input type="date" name="tanggal_sop" class="form-control" value="{{ $data->tanggal_sop }}" readonly>
+                <input type="date" name="tanggal_sop" class="form-control" value="{{ @$lampiran6->tanggal_sop }}" readonly>
             </div>
             <div class="form-group col-2" id="formLangsung3">
                 <label for="no_kontrak">No Kontrak</label>
-                <input type="text" name="no_kontrak" class="form-control" value="{{ $data->detail_number }}" readonly>
+                <input type="text" name="no_kontrak" class="form-control" value="{{ @$lampiran6->no_kontrak }}" readonly>
             </div>
             <div class="form-group col-2" id="formLangsung4">
                 <label for="date_kontrak">Tanggal Kontrak</label>
-                <input type="date" name="date_kontrak" class="form-control" value="{{ $data->date_kontrak }}" readonly>
+                <input type="date" name="date_kontrak" class="form-control" value="{{ @$lampiran6->date_kontrak }}" readonly>
             </div>
             <div class="form-group col-3" id="formLangsung5">
                 <label for="lama_pembayaran">Waktu Pembayaran (Hari)</label>
-                <input type="text" name="lama_pembayaran" class="form-control">
+                <input type="text" name="lama_pembayaran" class="form-control" value="{{ @$lampiran6->lama_pembayaran }}">
             </div>
         </div>
 
@@ -60,9 +67,6 @@
                 $(".collapse").removeClass('show');
                 $('#collapseLampiran7').addClass('show');
                 console.log(result.message);
-                // if (result.redirect) {
-                //     window.location.href = result.redirect; // Mengarahkan ulang halaman ke halaman monitoring
-                // }
             }
         });
     }

@@ -90,3 +90,14 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script>
+        
+        $(document).ready(function() {
+            $('#isi_pasal').summernote();
+            
+        });
+    </script>
+@endpush

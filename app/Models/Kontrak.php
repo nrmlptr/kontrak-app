@@ -9,13 +9,37 @@ class Kontrak extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'number', 'detail_number', 'perihal', 'date_kontrak', 'nomor_sop', 'tanggal_sop', 'pembuat', 'unit_kerja', 'jenis_kontrak', 'status'
+    protected $guarded = [
+        'id'
     ];
 
     public function lampiran1()
     {
-        return $this->hasMany(Lampiran1::class, 'kontraks_id'); // Menentukan kunci asing secara eksplisit
+        return $this->hasOne(Lampiran1::class, 'kontraks_id'); // Menentukan kunci asing secara eksplisit
+    }
+    public function lampiran2()
+    {
+        return $this->hasOne(Lampiran2::class, 'kontraks_id'); // Menentukan kunci asing secara eksplisit
+    }
+    public function lampiran3()
+    {
+        return $this->hasMany(Lampiran3::class, 'kontraks_id'); // Menentukan kunci asing secara eksplisit
+    }
+    public function lampiran4()
+    {
+        return $this->hasMany(Lampiran4::class, 'kontraks_id'); // Menentukan kunci asing secara eksplisit
+    }
+    public function lampiran5()
+    {
+        return $this->hasMany(Lampiran5::class, 'kontraks_id'); // Menentukan kunci asing secara eksplisit
+    }
+    public function lampiran6()
+    {
+        return $this->hasOne(Lampiran6::class, 'kontraks_id'); // Menentukan kunci asing secara eksplisit
+    }
+    public function lampiran7()
+    {
+        return $this->hasOne(Lampiran7::class, 'kontraks_id'); // Menentukan kunci asing secara eksplisit
     }
 
     public function scopeUnitkerja($query)
@@ -26,5 +50,13 @@ class Kontrak extends Model
     public function logs()
     {
         return $this->hasMany(LogContract::class, 'kontraks_id');
+    }
+    public function pasal()
+    {
+        return $this->hasMany(PasalKontrak::class, 'jenis_pasal', 'jenis_kontrak');
+    }
+    public function integrates()
+    {
+        return $this->hasMany(Integrate::class, 'purchasing_document_number', 'nomor_sop');
     }
 }

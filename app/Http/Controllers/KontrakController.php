@@ -139,20 +139,20 @@ class KontrakController extends Controller
             foreach ($dataVendor as $v) {
                 $dataSave[] = [
                     'registration_no' => $v['registration_no'],
-                    'sap_code' => $v['sap_code'],
-                    'alamat' => $v['alamat'],
-                    'kode_pos' => $v['kode_pos'],
-                    'kota' => $v['kota'],
-                    'provinsi' => $v['provinsi'],
-                    'board_type' => $v['board_type'],
-                    'primary_data' => $v['primary_data'],
-                    'full_name' => $v['full_name'],
-                    'citizenship' => $v['citizenship'],
-                    'position' => $v['position'],
-                    'email' => $v['email'],
-                    'phone_number' => $v['phone_number'],
-                    'created_at' => now(),
-                    'updated_at' => now(),
+                    'sap_code'        => $v['sap_code'],
+                    'alamat'          => $v['alamat'],
+                    'kode_pos'        => $v['kode_pos'],
+                    'kota'            => $v['kota'],
+                    'provinsi'        => $v['provinsi'],
+                    'board_type'      => showEncodeChar($v['board_type']),
+                    'primary_data'    => $v['primary_data'],
+                    'full_name'       => $v['full_name'],
+                    'citizenship'     => $v['citizenship'],
+                    'position'        => $v['position'],
+                    'email'           => $v['email'],
+                    'phone_number'    => $v['phone_number'],
+                    'created_at'      => now(),
+                    'updated_at'      => now(),
                 ];
             }
 
@@ -165,43 +165,6 @@ class KontrakController extends Controller
         return response()->json(['alamat' => $alamatnya]);
         // return $data;
     }
-
-    // public function vendor_data(Request $request){
-    //     $dataVendor     = DB::table('integrates')
-    //     ->join('kontraks', 'integrates.purchasing_document_number', '=', 'kontraks.nomor_sop')
-    //     ->where('kontraks.nomor_sop', $request->po)
-    //         ->select('integrates.*')
-    //         ->get();
-
-    //     return response()->json($dataVendor);
-    // }
-
-    // public function dataBarang(Request $request)
-    // {
-    //     $data = Integrate::where('purchasing_document_number', $request->po)->get();
-
-    //     return response()->json($data);
-    // }
-
-    // public function dataBarang(Request $request)
-    // {
-    //     try {
-    //         // Mendapatkan data kontrak berdasarkan nomor SOP
-    //         $kontrak = Kontrak::where('nomor_sop', $request->po)->firstOrFail();
-
-    //         // Mendapatkan data barang berdasarkan nomor PO
-    //         $dataBarang = Integrate::where('purchasing_document_number', $request->po)->first();
-
-    //         // Jika data barang ditemukan, kirim sebagai response JSON
-    //         return response()->json([
-    //             'kontrak' => $kontrak,
-    //             'dataBarang' => $dataBarang
-    //         ]);
-    //     } catch (ModelNotFoundException $exception) {
-    //         // Jika kontrak atau data barang tidak ditemukan, kirim pesan error
-    //         return response()->json(['error' => 'Data tidak ditemukan'], 404);
-    //     }
-    // }
 
     public function dataBarang(Request $request)
     {
@@ -220,13 +183,6 @@ class KontrakController extends Controller
         // $data = Kontrak::get();
         $data = Kontrak::Unitkerja()->orderBy('date_kontrak', 'desc')->get();
         // "select * from contracts where unit_kerja='4120'";
-
-
-        // // cek apakah dalam tabel lampiran7 sudah input lampiran7 dengan nomor id tersebut belum?
-        // $DLampiran7 = Lampiran7::where('kontraks_id', $request->kontraks_id);
-        // // return $DLampiran7;
-        // // kalau sudah nanti hilangkan tombol add lampirannya
-        // $cekDataLampiran7 = $DLampiran7->doesntExist();
 
         return view('indexKontrak', compact('data'));
     }
@@ -415,14 +371,14 @@ class KontrakController extends Controller
         $validatedData = $request->validate([
             'kontraks_id'           => 'required',
             'jspek'                 => 'required',
-            'gambar.*'                => 'required_if:jspek,1|image|mimes:jpeg,png,jpg|max:2048',
+            'gambar.*'              => 'required_if:jspek,1|image|mimes:jpeg,png,jpg|max:2048',
             'spesifikasi_teknis'    => 'required_if:jspek,2',
             'no_sppb'               => 'required_if:jspek,2',
             'kode_barang'           => 'required_if:jspek,2',
             'nama_barang'           => 'required_if:jspek,2',
             'satuan'                => 'required_if:jspek,2',
         ], [
-            'gambar.required_if'           => 'file image Wajib di isi',
+            'gambar.required_if'    => 'file image Wajib di isi',
         ]);
 
         $kontraksId = $validatedData['kontraks_id'];
@@ -445,8 +401,8 @@ class KontrakController extends Controller
             if ($request->hasfile('gambar')) {
                 foreach ($request->file('gambar') as $image) {
                     $imageName = time() . '_' . $image->getClientOriginalName();
-                    $path = $image->storeAs('public/uploads/spesifikasi_teknis', $imageName);
-                    $paths[] = $path;
+                    $path      = $image->storeAs('public/uploads/spesifikasi_teknis', $imageName);
+                    $paths[]   = $path;
                     Lampiran3::create([
                         'kontraks_id'         => $kontraksId,
                         'jenis_spesifikasi'   => $Jspek,
@@ -465,8 +421,8 @@ class KontrakController extends Controller
                     'kode_barang'         => $kode_barang[$key],
                     'jenis_barang'        => $nama_barang[$key],
                     'satuan'              => $satuan[$key],
-                    'created_at'        => now(),
-                    'updated_at'        => now(),
+                    'created_at'          => now(),
+                    'updated_at'          => now(),
                 ];
             };
             if (!empty($datanya)) {
@@ -502,17 +458,17 @@ class KontrakController extends Controller
         $datax = [];
         foreach ($nomor_sop as $key => $r) {
             $datax[] = [
-                'kontraks_id' => $kontraks_id,
-                'nomor_sop' => $r,
-                'no_sppb' => $no_sppb[$key],
-                'kode_barang' => $kode_barang[$key],
-                'nama_barang' => $nama_barang[$key],
-                'tanggal_sop' => $tanggal_sop[$key],
-                'lokasi' => $lokasi[$key],
-                'satuan' => $satuan[$key],
+                'kontraks_id'              => $kontraks_id,
+                'nomor_sop'                => $r,
+                'no_sppb'                  => $no_sppb[$key],
+                'kode_barang'              => $kode_barang[$key],
+                'nama_barang'              => $nama_barang[$key],
+                'tanggal_sop'              => $tanggal_sop[$key],
+                'lokasi'                   => $lokasi[$key],
+                'satuan'                   => $satuan[$key],
                 'jadwal_penyerahan_barang' => $jadwal_penyerahan_barang[$key],
-                'created_at'        => now(),
-                'updated_at'        => now(),
+                'created_at'               => now(),
+                'updated_at'               => now(),
             ];
         }
         // Simpan data ke database
@@ -527,16 +483,19 @@ class KontrakController extends Controller
 
     public function storeLampiran5(Request $request)
     {
+        // dd($request->all());
         extract($request->all());
         $validatedData = $request->validate([
             'kontraks_id'       => 'required',
             'no_sppb'           => 'required',
             'nama_barang'       => 'required',
             'satuan'            => 'required',
+            'lokasi'            => 'required',
             'harga_awal'        => 'required',
             'jumlah'            => 'required',
             'ppn'               => 'required',
             'harga_akhir'       => 'required',
+            'total_keseluruhan' => 'required',
         ]);
 
         // cek dulu sini
@@ -549,20 +508,28 @@ class KontrakController extends Controller
         $datax = [];
         foreach ($no_sppb as $key => $r) {
             $datax[] = [
-                'kontraks_id' => $kontraks_id,
-                'no_sppb' => $r,
-                'nama_barang' => $nama_barang[$key],
-                'satuan' => $satuan[$key],
-                'harga_awal' => $harga_awal[$key],
-                'qty' => $jumlah[$key],
-                'ppn' => $ppn[$key],
-                'harga_akhir' => $harga_akhir[$key],
+                'kontraks_id'       => $kontraks_id,
+                'no_sppb'           => $r,
+                'nama_barang'       => $nama_barang[$key],
+                'satuan'            => $satuan[$key],
+                'lokasi'            => $lokasi[$key],
+                'harga_awal'        => $harga_awal[$key],
+                'qty'               => $jumlah[$key],
+                'ppn'               => $ppn[$key],
+                'harga_akhir'       => $harga_akhir[$key],
                 'created_at'        => now(),
                 'updated_at'        => now(),
             ];
         }
         if (!empty($datax)) {
             Lampiran5::insert($datax);
+        }
+
+        // isi kolom total_keseluruhan di tabel kontraks
+        $kontrak = Kontrak::find($request->kontraks_id);
+        if ($kontrak) {
+            $kontrak->total_keseluruhan = $request->total_keseluruhan;
+            $kontrak->save();
         }
 
         return response()->json(['message' => 'Lampiran 5 Berhasil Dibuat']);
@@ -574,12 +541,12 @@ class KontrakController extends Controller
         extract($request->all());
         $validatedData = $request->validate([
             'kontraks_id'       => 'required',
-            'nomor_sop'           => 'required',
+            'nomor_sop'         => 'required',
             'tanggal_sop'       => 'required',
-            'no_kontrak'            => 'required',
-            'date_kontrak'        => 'required',
-            'jpemb'            => 'required',
-            'lama_pembayaran'               => 'required',
+            'no_kontrak'        => 'required',
+            'date_kontrak'      => 'required',
+            'jpemb'             => 'required',
+            'lama_pembayaran'   => 'required',
         ]);
         // Simpan nilai dari radio button
         $jenis_pembayaran = $request->jpemb;
@@ -613,14 +580,49 @@ class KontrakController extends Controller
         extract($request->all());
         $validatedData = $request->validate([
             'kontraks_id'       => 'required',
-            'alamat_peruri'           => 'required',
-            'alamat_vendor'       => 'required',
+            'alamat_peruri'     => 'required',
+            'alamat_vendor'     => 'required',
 
         ]);
         // Simpan data ke dalam tabel Lampiran7
         $data['kontraks_id']   = $kontraks_id;
         $data['alamat_peruri'] = $alamat_peruri;
         $data['alamat_vendor'] = $alamat_vendor;
+        if (isset($nextstatus) && $nextstatus == 'edited') {
+            // ambil row revisi terakhir
+            $revisi = revisiKontrak::with('user')
+                ->latest()->take(1)
+                ->where('kontraks_id', $kontraks_id)->first();
+            $status = "edited" . $revisi->user->permission;
+        } else {
+            // created
+            $status = "reviewkasek";
+            // cek dulu lampiran 1-6 sudah ada
+            $ceklamp1 = Lampiran1::where('kontraks_id', $kontraks_id)->doesntExist();
+            if ($ceklamp1) {
+                return response()->json(['message' => 'Lampiran 1 belum Dibuat',  'status' => 'error']);
+            }
+            $ceklamp2 = Lampiran2::where('kontraks_id', $kontraks_id)->doesntExist();
+            if ($ceklamp2) {
+                return response()->json(['message' => 'Lampiran 2 belum Dibuat',  'status' => 'error']);
+            }
+            $ceklamp3 = Lampiran3::where('kontraks_id', $kontraks_id)->doesntExist();
+            if ($ceklamp3) {
+                return response()->json(['message' => 'Lampiran 3 belum Dibuat',  'status' => 'error']);
+            }
+            $ceklamp4 = Lampiran4::where('kontraks_id', $kontraks_id)->doesntExist();
+            if ($ceklamp4) {
+                return response()->json(['message' => 'Lampiran 4 belum Dibuat',  'status' => 'error']);
+            }
+            $ceklamp5 = Lampiran5::where('kontraks_id', $kontraks_id)->doesntExist();
+            if ($ceklamp5) {
+                return response()->json(['message' => 'Lampiran 5 belum Dibuat',  'status' => 'error']);
+            }
+            $ceklamp6 = Lampiran6::where('kontraks_id', $kontraks_id)->doesntExist();
+            if ($ceklamp6) {
+                return response()->json(['message' => 'Lampiran 6 belum Dibuat',  'status' => 'error']);
+            }
+        }
         // cek dulu sini
         $lampiran7 = Lampiran7::where('kontraks_id', $kontraks_id);
         // return $lampiran7;
@@ -629,7 +631,8 @@ class KontrakController extends Controller
             $lampiran7->delete();
         }
         Lampiran7::create($data);
-        $status = "reviewkasek";
+
+
         // Perbarui status kontrak menjadi 'reviewkasek'
         $kontrak = Kontrak::find($request->kontraks_id);
         if ($kontrak) {
@@ -637,12 +640,12 @@ class KontrakController extends Controller
             $kontrak->save();
         }
         $kontrak->logs()->create([
-            'status' => $status,
-            'user_id' => auth()->id(),
+            'status'    => $status,
+            'user_id'   => auth()->id(),
         ]);
 
         // Response JSON dengan pesan sukses dan redirect ke halaman monitoring
-        return response()->json(['message' => 'Lampiran 7 Berhasil Dibuat', 'redirect' => route('rKontrak')]);
+        return response()->json(['message' => 'Lampiran 7 Berhasil Dibuat', 'redirect' => route('rKontrak'), 'status' => 'success']);
     }
 
 
@@ -680,14 +683,12 @@ class KontrakController extends Controller
     // method detail kontrak
     public function showKontrak(Request $request, $id)
     {
-        // AMBIL DATA PASAL
-        $dataPasal = PasalKontrak::get();
-        // dd($dataPasal);
-
         // Mengambil data kontrak berdasarkan ID yang diberikan
-        $data = Kontrak::findOrFail($id);
-
-        return view('showKontrak', compact('data', 'dataPasal'));
+        $data = Kontrak::with(['integrates', 'pasal', 'lampiran1', 'lampiran2', 'lampiran3', 'lampiran4', 'lampiran5', 'lampiran6', 'lampiran7'])->findOrFail($id);
+        // return $data;
+        $pihak2name = 'Cecep Hidayat';
+        $pihak1name = 'Rezi Syahputra';
+        return view('showKontrakcoba', compact('data', 'pihak2name', 'pihak1name'));
     }
 
 
@@ -712,6 +713,7 @@ class KontrakController extends Controller
         // Simpan data ke dalam tabel Lampiran7
         $data['kontraks_id']   = $request->kontraks_id;
         $data['revisi']        = $request->revisi;
+        $data['user_id']        = auth()->id();
 
         revisiKontrak::create($data);
 
@@ -722,7 +724,9 @@ class KontrakController extends Controller
     public function showRevisi($id)
     {
         // Ambil data revisi berdasarkan kontraks_id
-        $revisi = revisiKontrak::where('kontraks_id', $id)->first();
+        $revisi = revisiKontrak::with('user')
+            ->latest()->take(1)
+            ->where('kontraks_id', $id)->first();
 
         // Tampilkan view untuk menampilkan data revisi
         return view('viewRevisi', compact('revisi'));
@@ -730,21 +734,16 @@ class KontrakController extends Controller
 
     public function updateLampiran(Request $request, $id)
     {
-        // echo 'form edit lampiran';
-        // if (auth()->user()->can('view_input')) {
-        // $data = Kontrak::get();
-        // dd($data);
-        // return view('addLampiran', compact('id', 'data'));
-        // }
+        // cek dul ada ga revisi, kalo ga ada tolak
+        $cek = revisiKontrak::with('user')
+            ->latest()->take(1)
+            ->where('kontraks_id', $id)->exists();
+        if ($cek) {
+            $data = Kontrak::with(['lampiran1', 'lampiran2', 'lampiran3', 'lampiran4', 'lampiran5', 'lampiran6', 'lampiran7'])->find($id);
 
-        // return abort(403);
-
-        $data = Kontrak::find($id);
-        // $data2 = $this->vendor_data($no_vendor); 
-        // $api=Integrates::where('puca', $data->nomosop);
-        // dd($data->id);
-
-        return view('editLampiran')->with('data', $data);
+            return view('editLampiran')->with('data', $data);
+        }
+        return "belum ada revisi dari pihak manapun..";
     }
 
 

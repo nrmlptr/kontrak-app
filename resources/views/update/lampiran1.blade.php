@@ -51,57 +51,40 @@
         color: white;
     }
 </style>
+@php
+    $lampiran1=json_decode($data->lampiran1->data_json,true);
+    
+@endphp
 <div class="row">
-    <form class="editLampiran1" id="editLampiran1">
+    <form class="inputlampiran1" id="inputlampiran1">
         @csrf
-        <div class="form-group editLampiran1">
+        <div class=" form-group forminput_lampiran1">
             <input type="hidden" name="kontraks_id" value='{{ $data->id }}'>
-            {{-- Check if data lampiran 1 tidak ada for this kontraks_id --}}
-           <?php
-                // Ambil data JSON dari model Lampiran1 berdasarkan kontraks_id
-                   $lampiran1Data = \App\Models\Lampiran1::where('kontraks_id', $data->id)->first();
-                // Jika data JSON ditemukan
-                if($lampiran1Data) {
-                    // Konversi data JSON menjadi array PHP
-                    $lampiran1Array = json_decode($lampiran1Data->data_json, true);
-                ?>
+            <div class="ListContainer">
+                <a class="btn btn-primary text-white" type="button" id="btn-addrow">Add</a>
+                <br><br>
+                <ul id="sortable">
+                    @foreach ($lampiran1 as $l)
+                    <li class="ui-state-default">
+                        <input class="numbering" name="numbering[]">
+                        <a href="#" type="button" style="color: red;" class="btn-deleterow"><i class="fa fa-trash"></i></a>
+                        <div class="row">
+                            <div class="form-group col-12">
+                                <input type="text" name="perihal[]" value="{{ $l['perihal'] }}" placeholder="Nama Header" class="form-control" >
+                            </div>
+                            <div class="form-group col-6">
+                                <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control"  value="{{ $l['nomor_surat'] }}" readonly>
+                            </div>
+                            <div class="form-group col-6">
+                                <input type="date" name="tanggal_surat[]" class="form-control"  value="{{ $l['tanggal_surat'] }}">
+                            </div>
+                        </div>
+                    </li>
+                    @endforeach
 
-                    <!-- Tampilkan tombol Add -->
-                    <div class="ListContainer">
-                        <a class="btn btn-primary text-white" type="button" id="btn-addrow">Add</a>
-                        <br><br>
-                        <!-- Menampilkan data lampiran1 yang telah ada dalam form -->
-                        <ul id="sortable">
-                            <?php foreach($lampiran1Array as $item): ?>
-                                <li class="ui-state-default">
-                                    <!-- Input numbering (jika diperlukan) -->
-                                    <input class="numbering" name="numbering[]" value="<?= $item['nomor_urut'] ?>">
-                                    <!-- Isi nilai input perihal, nomor surat, dan tanggal surat sesuai dengan data lampiran1 yang telah ada -->
-                                    <div class="row">
-                                        <div class="form-group col-12">
-                                            <input type="text" name="perihal[]" placeholder="Nama Header" class="form-control" value="<?= $item['perihal'] ?>">
-                                        </div>
-                                        <div class="form-group col-6">
-                                            <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control" value="<?= $item['nomor_surat'] ?>">
-                                        </div>
-                                        <div class="form-group col-6">
-                                            <input type="date" name="tanggal_surat[]" class="form-control" value="<?= $item['tanggal_surat'] ?>">
-                                        </div>
-                                    </div>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </div>
-
-                <?php
-                } else {
-                    // Jika data JSON tidak ditemukan
-                ?>
-                    <td><span class="badge badge-info">Tidak Ada Data Lampiran 1 dalam Kontrak ini</span></td>
-                <?php
-                }
-                ?>
-
+                   
+                </ul>
+            </div>
         </div>
         <div class="card-footer">
             <button type="button" class="btn btn-block btn-secondary btn-lg" onclick="submit_Lampiran1()">Submit</button>
@@ -112,10 +95,8 @@
 
 <!-- JAVASCRIPT -->
 <!-- jQuery -->
-<script src="{{ asset('lte/plugins/jquery/jquery.js') }}"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="{{ asset('lte/plugins/jquery-ui/jquery-ui.js') }}"></script>
-<script type="text/javascript">
+@push('scripts')
+    <script type="text/javascript">
     jQuery(document).ready(function($) {
         counting_container();
     });
@@ -158,7 +139,7 @@
     $('#btn-addrow').on('click', function() {
         $('#sortable').append(fieldadd)
         counting_container();
-        submitLampiran1()
+        // submitLampiran1()
     })
 
     $('body').on('click', '.btn-deleterow', function() {
@@ -169,16 +150,13 @@
 
     function submitLampiran1() {
 
-        var form2 = $('#editLampiran1').serializeArray();
+        var form2 = $('#inputlampiran1').serializeArray();
         // console.log(form2);
         $.ajax({
             method: 'POST',
-            url: "{{ route('submitEditLampiran1') }}",
+            url: "{{ route('submitLampiran1') }}",
             dataType: 'json',
-            data: {
-                _token: $("input[name='_token']").val(),
-                form2
-            },
+            data: form2,
             success: function(result) {
                 $(".collapse").removeClass('show');
                 $('#collapseLampiran2').addClass('show');
@@ -194,3 +172,4 @@
         submitLampiran1()
     }
 </script>
+@endpush

@@ -11,8 +11,8 @@ class Lampiran1 extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'id', 'kontraks_id', 'data_json'
+    protected $guarded = [
+        'id',
     ];
 
     public function kontrak()

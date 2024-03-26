@@ -9,5 +9,10 @@ class revisiKontrak extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id', 'kontraks_id', 'revisi'];
+    protected $guarded = ['id',];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

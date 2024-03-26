@@ -9,5 +9,5 @@ class Lampiran2 extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id','kontraks_id', 'perihal', 'nomor_sop', 'tanggal_sop'];
+    protected $guarded = ['id',];
 }

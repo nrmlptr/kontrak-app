@@ -48,7 +48,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $d->nama_pasal }}</td>
                                         <td>{{ $d->keterangan_pasal }}</td>
-                                        <td>{{ $d->isi_pasal }}</td>
+                                        <td>{!! $d->isi_pasal !!}</td>
                                         <td>
                                             @if($d->jenis_pasal == '1')
                                             <span class="badge badge-success">Jaminan</span>

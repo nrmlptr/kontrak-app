@@ -1,11 +1,51 @@
+@php
+    $lampiran4=$data->lampiran4;
+@endphp
 <div class="row">
     <form id="inputLampiran4">
         @csrf
         <div class="row" id="loadinputlampiran4">
             <input type="hidden" name="kontraks_id" value="{{ $data->id }}">
+            @foreach ($lampiran4 as $l)
+                
+            
+            <div class="form-group col-2">
+                <label for="nomor_sop">Nomor SOP</label>
+                <input type="text" name="nomor_sop[]" placeholder="Nomor SOP" class="form-control" value="{{ $l->nomor_sop }}" readonly required>
+            </div>
+            <div class=" form-group col-2">
+                <label for="tanggal_sop">Tanggal SOP</label>
+                <input type="date" name="tanggal_sop[]" class="form-control" value="{{ $l->tanggal_sop }}" readonly required>
+            </div>
+            <div class=" form-group col-2">
+                <label for="tanggal_sop">Gudang</label>
+                <input type="text" name="lokasi[]" class="form-control" value="{{ $l->lokasi }}" required>
+            </div>
+           
+            <div class=" form-group col-1">
+                <label for="no_sppb">Nomor SPPB</label>
+                <input type="text" name="no_sppb[]" class="form-control" value="{{ $l->no_sppb }}"  required >
+            </div>
+            <div class=" form-group col-2">
+                <label for="kode_barang">Kode Barang</label>
+                <input type="text" name="kode_barang[]" class="form-control" value="{{ $l->kode_barang }}" required readonly>
+            </div>
+            <div class=" form-group col-4">
+                <label for="nama_barang">Nama Barang</label>
+                <input type="text" name="nama_barang[]" class="form-control" value="{{ $l->nama_barang }}" required readonly>
+            </div>
+            <div class=" form-group col-1">
+                <label for="satuan">Satuan</label>
+                <input type="text" name="satuan[]" class="form-control" value="{{ $l->satuan }}" required readonly>
+            </div>
+            <div class="form-group col-12">
+                <label for="inputText">Jadwal Penyerahan Barang</label>
+                <textarea class="form-control" rows="3" placeholder="Enter ..." name="jadwal_penyerahan_barang[]">{!! $l->jadwal_penyerahan_barang !!}</textarea>
+            </div>
+            @endforeach
         </div>
         <div class=" card-footer">
-            <button type="button" class="btn btn-block btn-secondary btn-lg" onclick="submit_Lampiran4()">Submit</button>
+            <button type="button" class="btn btn-block btn-secondary btn-lg" onclick="submitLampiran4()">Submit</button>
         </div>
     </form>
 </div>
@@ -15,51 +55,7 @@
 
 <script type="text/javascript">
 
-    // Fungsi untuk mengisi nilai input form dengan data barang
-    function isiNilaiForm4(dataBarang) {
-        // console.log(dataBarang)
-        if (dataBarang) {
-            var fields = ``;
-            dataBarang.forEach(function(row) {
-                fields+=`<div class="form-group col-2">
-                <label for="nomor_sop">Nomor SOP</label>
-                <input type="text" name="nomor_sop[]" placeholder="Nomor SOP" class="form-control" value="{{ $valueNomorSop }}" readonly required>
-            </div>
-            <div class=" form-group col-2">
-                <label for="tanggal_sop">Tanggal SOP</label>
-                <input type="date" name="tanggal_sop[]" class="form-control" value="{{ $data->tanggal_sop }}" readonly required>
-            </div>
-            <div class=" form-group col-2">
-                <label for="tanggal_sop">Gudang</label>
-                <input type="text" name="lokasi[]" class="form-control" required>
-            </div>
-           
-            <div class=" form-group col-1">
-                <label for="no_sppb">Nomor SPPB</label>
-                <input type="text" name="no_sppb[]" class="form-control"  required >
-            </div>
-            <div class=" form-group col-2">
-                <label for="kode_barang">Kode Barang</label>
-                <input type="text" name="kode_barang[]" class="form-control" value="${row.material_number}" required readonly>
-            </div>
-            <div class=" form-group col-4">
-                <label for="nama_barang">Nama Barang</label>
-                <input type="text" name="nama_barang[]" class="form-control" value="${row.material_name}" required readonly>
-            </div>
-            <div class=" form-group col-1">
-                <label for="satuan">Satuan</label>
-                <input type="text" name="satuan[]" class="form-control" value="${row.purchase_order_unit_of_measure}" required readonly>
-            </div>
-            <div class="form-group col-12">
-                <label for="inputText">Jadwal Penyerahan Barang</label>
-                <textarea class="form-control" rows="3" placeholder="Enter ..." name="jadwal_penyerahan_barang[]"></textarea>
-            </div>`;
-            });
-
-            $('#loadinputlampiran4').append(fields);
-        }
-        
-    }
+  
 
     function submitLampiran4() {
         var form = $('#inputLampiran4');
@@ -79,8 +75,5 @@
         });
     }
 
-    function submit_Lampiran4() {
-        submitLampiran4();
-    }
 </script>
 @endpush

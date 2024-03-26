@@ -222,61 +222,216 @@
                                     </table>
                                 </div>
                                 <!-- BAGIAN PAGE2 -->
-                                <div class="pagebreak">
-                                    <div style="height: 50px; text-align: right">
-                                        <p style="padding-right: 10px">Lembar ke - 2 -</p>
-
-                                        <div class="page2">
-                                            <!-- PASAL 1 -->
-                                        
-                                            <!-- Isi Pasal -->
-                                            <div>
-                                                <h4 style="text-align: center">PASAL1<br>DEFINISI-DEFINISI</h4>
-                                                <table style="width: 100%">
-                                                    <tbody style="vertical-align: top">
-                                                        <tr>
-                                                            <td style="vertical-align: top; width: 3%">a. </td>
-                                                            <td style="width: 97%"><b>Perjanjian</b> adalah Perjanjian ini yang dibuat dan ditandatangani antara Para Pihak, termasuk seluruh lampirannya dan setiap perubahan-perubahannya.</td>
-                                                        </tr>
-                                                        <td style="line-height: 1px">&nbsp;</td>
-                                                        <tr>
-                                                            <td>b. </td>
-                                                            <td><b>Barang</b> adalah Pengadaan barang yang harus diadakan dan dipasok oleh PIHAK KEDUA.</td>
-                                                        </tr>
-                                                        <td style="line-height: 1px">&nbsp;</td>
-                                                        <tr>
-                                                            <td>c. </td>
-                                                            <td><b>Spesifikasi Teknis</b> adalah Spesifikasi Teknis barang yang telah disepakati bersama oleh para pihak sebagaimana dimaksud dalam Lampiran III Perjanjian ini.</td>
-                                                        </tr>
-                                                        <td style="line-height: 1px">&nbsp;</td>
-                                                        <tr>
-                                                            <td>d. </td>
-                                                            <td><b>Bulan dan Hari</b> adalah bulan dan hari terkait yang tercantum dalam kalender Masehi.</td>
-                                                        </tr>
-                                                        <td style="line-height: 1px">&nbsp;</td>
-                                                        <tr>
-                                                            <td>e. </td>
-                                                            <td><b>Tanggal Berlakunya Perjanjian</b> adalah tanggal dimana semua ketentuan yang terdapat pada Pasal 23 terpenuhi.</td>
-                                                        </tr>
-                                                        <td style="line-height: 1px">&nbsp;</td>
-                                                        <tr>
-                                                            <td>f. </td>
-                                                            <td><b>Surat Penerimaan Barang (SPB) </b> adalah pernyataan tertulis bertanggal dan diterbitkan oleh PIHAK KESATU yang menyatakan bahwa barang telah diserahkan
-                                                                dan diterima oleh PIHAK KESATU sesuai dengan Perjanjian.</td>
-                                                        </tr>
-                                                        <td style="line-height: 1px">&nbsp;</td>
-                                                        <tr>
-                                                            <td>g. </td>
-                                                            <td><b>Jaminan Mutu</b> adalah kewajiban PIHAK KEDUA untuk menjaga kualitas barang selama masa tertentu sebagaimana diatur dalam Perjanjian ini.</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                    
-                                        </div>
+                                <div class="pagebreak"></div>
                                 
+                                
+                                <div class="page">
+                                    <!-- PASAL 1 -->
+                                    <div style="height: 100px; text-align: left;float: right;">
+                                        <div style="padding-right: 10px">
+                                            <p style="text-align: center;    margin-bottom: -15px !important;">Lembar ke - 2 -</p>
+                                            <p style="text-align: left;">
+                                                <table>
+                                                    <tr>
+                                                        <td>Nomor</td>
+                                                        <td>:</td>
+                                                        <td>SP-30/I/2024</td>
+                                                    </tr>
+                                                    <tr style="border-bottom: 1px solid black;">
+                                                        <td>Tanggal</td>
+                                                        <td>:</td>
+                                                        <td>10 Januari 2024</td>
+                                                    </tr>
+
+                                                </table>
+                                                </p>
+                                        </div>
+                                        
                                     </div>
+                                    <div style="clear: both;"></div>
+                                    <!-- Isi Pasal -->
+                                    @php
+                                        $no=1;
+                                    @endphp
+                                    @foreach ($data->pasal as $p)
+                                     @if ($no > 0 && $no <= 6)
+                                        <div class="boxpasal">
+                                            <h4 style="text-align: center">{{ $p->nama_pasal }}
+                                                <br>{{ $p->keterangan_pasal }}
+                                            </h4>
+                                            {!! $p->isi_pasal !!}
+                                        </div>
+                                        <div style="margin-bottom: 40px;"></div>
+                                    @endif
+                                    
+                                    @php
+                                        $no++;
+                                    @endphp
+                                    @endforeach
+                                    {{-- end loop pasal --}}
                                 </div>
+                                {{-- end page 2 --}}
+                            
+                                
+
+
+                                 <div class="pagebreak"></div>
+
+
+
+                                {{-- page 3 --}}
+                                 <div class="page">
+                                    <div style="height: 100px; text-align: left;float: right;">
+                                        <div style="padding-right: 10px">
+                                            <p style="text-align: center;    margin-bottom: -15px !important;">Lembar ke - 3 -</p>
+                                            <p style="text-align: left;">
+                                                <table>
+                                                    <tr>
+                                                        <td>Nomor</td>
+                                                        <td>:</td>
+                                                        <td>SP-30/I/2024</td>
+                                                    </tr>
+                                                    <tr style="border-bottom: 1px solid black;">
+                                                        <td>Tanggal</td>
+                                                        <td>:</td>
+                                                        <td>10 Januari 2024</td>
+                                                    </tr>
+
+                                                </table>
+                                                </p>
+                                        </div>
+                                        
+                                    </div>
+                                    <div style="clear: both;"></div>
+                                    <!-- Isi Pasal -->
+                                    @php
+                                        $no=1;
+                                    @endphp
+                                    @foreach ($data->pasal as $p)
+                                    @if ($no > 6 && $no <= 9)
+                                        <div class="boxpasal">
+                                            <h4 style="text-align: center">{{ $p->nama_pasal }}
+                                                <br>{{ $p->keterangan_pasal }}
+                                            </h4>
+                                            {!! $p->isi_pasal !!}
+                                        </div>
+                                        <div style="margin-bottom: 40px;"></div>
+                                    @endif
+                                    
+                                    @php
+                                        $no++;
+                                    @endphp
+                                    @endforeach
+                                    {{-- end loop pasal --}}
+                                </div>
+                                {{-- end page 3 --}}
+
+                                <div class="pagebreak"></div>
+
+
+
+                                {{-- page 4 --}}
+                                 <div class="page">
+                                    <div style="height: 100px; text-align: left;float: right;">
+                                        <div style="padding-right: 10px">
+                                            <p style="text-align: center;    margin-bottom: -15px !important;">Lembar ke - 4 -</p>
+                                            <p style="text-align: left;">
+                                                <table>
+                                                    <tr>
+                                                        <td>Nomor</td>
+                                                        <td>:</td>
+                                                        <td>SP-30/I/2024</td>
+                                                    </tr>
+                                                    <tr style="border-bottom: 1px solid black;">
+                                                        <td>Tanggal</td>
+                                                        <td>:</td>
+                                                        <td>10 Januari 2024</td>
+                                                    </tr>
+
+                                                </table>
+                                                </p>
+                                        </div>
+                                        
+                                    </div>
+                                    <div style="clear: both;"></div>
+                                    <!-- Isi Pasal -->
+                                    @php
+                                        $no=1;
+                                    @endphp
+                                    @foreach ($data->pasal as $p)
+                                    @if ($no > 9 && $no <= 12)
+                                        <div class="boxpasal">
+                                            <h4 style="text-align: center">{{ $p->nama_pasal }}
+                                                <br>{{ $p->keterangan_pasal }}
+                                            </h4>
+                                            {!! $p->isi_pasal !!}
+                                        </div>
+                                        <div style="margin-bottom: 40px;"></div>
+                                    @endif
+                                    
+                                    @php
+                                        $no++;
+                                    @endphp
+                                    @endforeach
+                                    {{-- end loop pasal --}}
+                                </div>
+                                {{-- end page 4 --}}
+
+                            <div class="pagebreak"></div>
+
+                                {{-- page 5 --}}
+                                 <div class="page">
+                                    <div style="height: 100px; text-align: left;float: right;">
+                                        <div style="padding-right: 10px">
+                                            <p style="text-align: center;    margin-bottom: -15px !important;">Lembar ke - 5 -</p>
+                                            <p style="text-align: left;">
+                                                <table>
+                                                    <tr>
+                                                        <td>Nomor</td>
+                                                        <td>:</td>
+                                                        <td>SP-30/I/2024</td>
+                                                    </tr>
+                                                    <tr style="border-bottom: 1px solid black;">
+                                                        <td>Tanggal</td>
+                                                        <td>:</td>
+                                                        <td>10 Januari 2024</td>
+                                                    </tr>
+
+                                                </table>
+                                                </p>
+                                        </div>
+                                        
+                                    </div>
+                                    <div style="clear: both;"></div>
+                                    <!-- Isi Pasal -->
+                                    @php
+                                        $no=1;
+                                    @endphp
+                                    @foreach ($data->pasal as $p)
+                                    @if ($no > 12 && $no <= 15)
+                                        <div class="boxpasal">
+                                            <h4 style="text-align: center">{{ $p->nama_pasal }}
+                                                <br>{{ $p->keterangan_pasal }}
+                                            </h4>
+                                            {!! $p->isi_pasal !!}
+                                        </div>
+                                        <div style="margin-bottom: 40px;"></div>
+                                    @endif
+                                    
+                                    @php
+                                        $no++;
+                                    @endphp
+                                    @endforeach
+                                    {{-- end loop pasal --}}
+                                </div>
+                                {{-- end page 5 --}}
+
+
+
+
+
+
+
                             </div>
                             <!-- /.card-body -->
                         </div>
