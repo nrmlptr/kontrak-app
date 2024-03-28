@@ -52,13 +52,17 @@
                                     </tr>
                                 </thead>
                                 <tbody align="center">
+                                    @php
+                                          $statuslist=['reviewkasek','reviewkadept','reviewkadiv'];
+                                    @endphp
                                     @foreach($data as $d)
                                     <tr>
                                         <td>
-                                            <a href="{{ route('showKontrak', ['id' => $d->id]) }}" class="btn btn-sm btn-primary"><i class="fas fa-info-circle"></i>Detail</a>
+                                            <a href="{{ route('showKontrak', ['id' => $d->id]) }}" class="btn btn-sm btn-primary my-1"><i class="fas fa-info-circle"></i>Detail</a>
+                                            <a href="{{ route('logKontrak', ['id' => $d->id]) }}" class="logkontrak btn btn-sm btn-info my-1"><i class="fas fa-retweet"></i>Log</a>
                                         </td>
+
                                         <td>{{ $loop->iteration }}</td>
-                                        <!-- <td>{{ $d->number }}</td> -->
                                         <td>{{ $d->detail_number }}</td>
                                         <td>{{ $d->tanggal_sop }}</td>
                                         <td>{{ $d->nomor_sop }}</td>
@@ -74,19 +78,18 @@
                                             @endif
                                         </td>
                                         @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin')
-                                            {{-- Check if datarevisi tidak ada for this kontraks_id --}}
-                                           <?php 
-                                                $RkontrakExists = \App\Models\revisiKontrak::where('kontraks_id', $d->id)->doesntExist();
-                                           
-                                           ?>        
+                                           @php
+                                                $rkontrakexist=$d->revisiKontraks->pluck('user_id')->toArray();
+                                           @endphp
                                             {{-- JIKA DATA REVISI UNTUK KONTRAK TERSEBUT BENAR TIDAK ADA --}}
-                                            @if($RkontrakExists)
-                                                <td><span class="badge badge-info">Tidak Ada Revisi</span></td>
-                                            @else
-                                                <td>
+                                            @if(!empty($rkontrakexist))
+                                               <td>
                                                     <a href="{{ route('viewRevisi', ['id' => $d->id]) }}" class="btn btn-sm btn-secondary"><i class="fas fa-eye"></i><br> Show Revisi</a>
                                                     {{-- <a href="{{ route('editLampiran', ['id' => $d->id]) }}" class="btn btn-sm btn-warning"><i class="fas fa-pen"></i> Edit Lampiran</a> --}}
                                                 </td>    
+                                            @else
+                                             <td><span class="badge badge-info">Tidak Ada Revisi</span></td>
+                                                
                                             @endif
                                         @endif
                                     </tr>
@@ -107,3 +110,14 @@
 </div>
 
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).on('click','.logkontrak',function (e) {
+            e.preventDefault();
+            let href=$(this).attr('href')
+            // console.log(href)
+            winpopup(href,'logkontrak')
+          })
+    </script>
+@endpush

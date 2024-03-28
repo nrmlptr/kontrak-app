@@ -66,9 +66,9 @@
                 <div class="row">
                     <div class="col-12">
                         @if(Auth::user()->permission=='kasek' || Auth::user()->permission=='kadept' || Auth::user()->permission=='kadiv')
-                        <a href="{{ route('createRevisi', ['id' => $data->id]) }}" class="btn btn-sm btn-warning mr-1 mb-3"><i class="fas fa-pen"></i> Revisi Kontrak</a>
+                        <a href="{{ route('createRevisi', ['id' => $data->id]) }}" class="btn btn-sm btn-warning mr-1 mb-3 {{ $cekApprovedKontrak }}"><i class="fas fa-pen"></i> Revisi Kontrak</a>
 
-                        <a href="" class="btn btn-sm btn-success mr-1 mb-3"><i class="fas fa-thumbs-up"></i> Setujui Kontrak</a>
+                        <a href="{{ route('setujuiKontrak',$data->id) }}" id="setujuiKontrak" class="btn btn-sm btn-success mr-1 mb-3 {{ $cekApprovedKontrak }}"><i class="fas fa-thumbs-up"></i> Setujui Kontrak</a>
                         @endif
                         <a href="javascript:void(0)"  class="btn btn-sm btn-secondary mr-1 mb-3"><i class="nav-icon fas fa-print"></i></i> Cetak Kontrak</a>
                         <div class="card">
@@ -815,3 +815,29 @@
         <!-- /.content -->
     </div>
 @endsection
+@push('scripts')
+    <script>
+        $(document).on('click','#setujuiKontrak',function(e){
+            e.preventDefault()
+            let href=$(this).attr('href')
+            console.log(href)
+            if (confirm('Apakah Anda yakin menyetujui kontrak ini?')) {
+                $.ajax({
+                                method: "POST",
+                                url: href,
+                                data: {},
+                                success: function(result) {
+
+                                    console.log(result.message);
+                                        if (result.redirect) {
+                                            window.location.href = result.redirect; // Mengarahkan ke halaman review
+                                        }
+                                    
+                                    
+                                }
+                            });
+                }
+            
+        })
+    </script>
+@endpush

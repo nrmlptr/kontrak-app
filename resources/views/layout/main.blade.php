@@ -4,6 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Monitoring Kontrak System | Pengadaan</title>
 
     <!-- Favicon -->
@@ -297,6 +299,13 @@
 
     <!-- Page specific script -->
     <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+            });
         $(function() {
             $("#example1").DataTable({
                 "responsive": true,
@@ -314,6 +323,21 @@
                 "responsive": true,
             });
         });
+        function winpopup(url, windowname) {
+                let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+                let screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+                
+                let popupWidth = 900;
+                let popupHeight = 640;
+                
+                let leftPosition = (screenWidth - popupWidth) / 2;
+                let topPosition = (screenHeight - popupHeight) / 2;
+                
+                let features = 'width=' + popupWidth + ',height=' + popupHeight + ',toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=' + leftPosition + ',top=' + topPosition;
+                
+                window.open(url, windowname, features);
+                return false;
+            }
     </script>
     @stack('scripts')
 </body>

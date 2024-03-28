@@ -3,7 +3,7 @@
 // app/Helpers.php
 
 
-function tanggal_indonesia($date)
+function tanggal_indonesia($date, $istime = "")
 {
     // Array nama bulan dalam bahasa Indonesia
     $bulan = [
@@ -17,9 +17,13 @@ function tanggal_indonesia($date)
     $tanggal = date('d', strtotime($date));
     $bulan_num = date('n', strtotime($date));
     $tahun = date('Y', strtotime($date));
+    $time = date('H:i:s', strtotime($date));
 
     // Format tanggal ke format Indonesia
     $tanggal_formatted = $tanggal . ' ' . $bulan[$bulan_num] . ' ' . $tahun;
+    if (isset($istime) && $istime == 'Y') {
+        $tanggal_formatted .= " " . $time;
+    }
 
     return $tanggal_formatted;
 }

@@ -181,8 +181,8 @@ class KontrakController extends Controller
     {
         // echo 'monitoring kontrak';
         // $data = Kontrak::get();
-        $data = Kontrak::orderBy('date_kontrak', 'desc')->get();
-        // $data = Kontrak::Unitkerja()->orderBy('date_kontrak', 'desc')->get();
+        // $data = Kontrak::orderBy('date_kontrak', 'desc')->get();
+        $data = Kontrak::Unitkerja()->orderBy('date_kontrak', 'desc')->get();
         // "select * from contracts where unit_kerja='4120'";
 
         return view('indexKontrak', compact('data'));
@@ -672,7 +672,9 @@ class KontrakController extends Controller
 
     public function rKontrak()
     {
-        $data = Kontrak::Unitkerja()->orderBy('date_kontrak', 'desc')->get();
+        $data = Kontrak::with(['revisiKontraks' => function ($q) {
+            return $q->where('statusrevisi', 'N');
+        }])->Unitkerja()->orderBy('date_kontrak', 'desc')->get();
         // "select * from contracts where unit_kerja='4120'";
         return view('rKontrak', compact('data'));
     }
@@ -698,16 +700,60 @@ class KontrakController extends Controller
     public function showKontrak(Request $request, $id)
     {
         // Mengambil data kontrak berdasarkan ID yang diberikan
-        $data = Kontrak::with(['integrates', 'pasal', 'lampiran1', 'lampiran2', 'lampiran3', 'lampiran4', 'lampiran5', 'lampiran6', 'lampiran7'])->findOrFail($id);
+        $data = Kontrak::with(['integrates', 'pasal', 'lampiran1', 'lampiran2', 'lampiran3', 'lampiran4', 'lampiran5', 'lampiran6', 'lampiran7', 'logs', 'revisiKontraks'])->findOrFail($id);
 
         // Mengurutkan koleksi pasal berdasarkan nama_pasal sebelum mengirimkannya ke tampilan
         // $data->pasal = $data->pasal->sortBy('nama_pasal');
+        $statusnya = "approved" . auth()->user()->permission;
+        $statuslist = $data->logs->pluck('status')->toArray();
+        // cek tombol menyetujui kontak
+        $cekApprovedKontrak = (in_array($statusnya, $statuslist) ? 'd-none' : '');
 
 
         // return $data;
         $pihak2name = 'Cecep Hidayat';
         $pihak1name = 'Rezi Syahputra';
-        return view('showKontrakcoba', compact('data', 'pihak2name', 'pihak1name'));
+        return view('showKontrakcoba', compact('data', 'pihak2name', 'pihak1name', 'cekApprovedKontrak'));
+    }
+    public function logKontrak(Request $request, $id)
+    {
+        $kontrak = Kontrak::with(['logs.user'])->findOrFail($id);
+        return view('logkontrak', compact('kontrak'));
+    }
+
+    public function setujuiKontrak($id)
+    {
+        $kontrak = Kontrak::findOrFail($id);
+        $revisi = revisiKontrak::with('user')
+            ->latest()->take(1)
+            ->where('kontraks_id', $id)->first();
+
+        // kalo di aproved maka naikkan status ke review selanjutnya
+        $status = "approved" . $revisi->user->permission;
+        $kontrak->logs()->create([
+            'status'    => $status,
+            'user_id'   => auth()->id(),
+        ]);
+        if ($status == 'approvedkasek') {
+            $nextstatus = "reviewkadept";
+        } elseif ($status == 'approvedkadept') {
+            $nextstatus = "reviewkadiv";
+        } else {
+            // finish
+            $nextstatus = "approvedkadiv";
+        }
+        if ($status != "approvedkadiv") {
+            // selain approvekadive maka akan di set review ke tahap selanjutnya
+            sleep(2);
+            $kontrak->logs()->create([
+                'status'    => $nextstatus,
+                'user_id'   => auth()->id(),
+            ]);
+        }
+        // set status revisi jadi Y
+        $revisi->update(['statusrevisi' => 'Y']);
+        $kontrak->update(['status' => $nextstatus]);
+        return response()->json(['message' => 'berhasil di setujui', 'redirect' => route('rKontrak'), 'status' => 'success']);
     }
 
 

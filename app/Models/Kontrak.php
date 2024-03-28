@@ -77,7 +77,7 @@ class Kontrak extends Model
 
     public function logs()
     {
-        return $this->hasMany(LogContract::class, 'kontraks_id');
+        return $this->hasMany(LogContract::class, 'kontraks_id')->orderBy('created_at', 'DESC');
     }
     public function pasal()
     {
