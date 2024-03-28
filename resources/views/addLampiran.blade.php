@@ -190,41 +190,48 @@
 </div>
 @endsection
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <!-- jQuery -->
+    {{-- <script src="{{ asset('lte/plugins/jquery/jquery.min.js') }}"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script>
-            $(document).ready(function() {
-        var nomor_sop = "{{ $data->nomor_sop }}";
+        $(document).ready(function() {
+            var nomor_sop = "{{ $data->nomor_sop }}";
 
-        $.ajax({
-            type: 'GET',
-            url: "{{route('dataBarang')}}",
-            data: {
-                _token: $("input[name='_token']").val(),
-                po: nomor_sop
-            },
-            success: function(response) {
-                console.log(response);
-                if (response[0].id) {
-                    isiNilaiForm3(response);
-                    isiNilaiForm4(response);
-                    isiNilaiForm5(response);
-                    $.get(`/dataVendor/${response[0].registration_no}`,function(data){
-                        $('textarea[name="alamat_vendor"]').val(data.alamat)
-                     });
-                } else {
-                    console.log("Kontrak tidak ditemukan");
+            $.ajax({
+                type: 'GET',
+                url: "{{ route('dataBarang') }}",
+                data: {
+                    _token: $("input[name='_token']").val(),
+                    po: nomor_sop
+                },
+                success: function(response) {
+                    console.log(response);
+                    if (response[0].id) {
+                        isiNilaiForm3(response);
+                        isiNilaiForm4(response);
+                        isiNilaiForm5(response);
+                        $.get(`/dataVendor/${response[0].registration_no}`, function(data) {
+                            // Setelah mendapatkan data, set nilai textarea
+                            // $('textarea[name="alamat_vendor"]').val(data.alamat);
+                             $('textarea[name="alamat_vendor"]').summernote('code',data.alamat);
+                        });
+                    } else {
+                        console.log("Kontrak tidak ditemukan");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log("error");
                 }
-            },
-            error: function(xhr, status, error) {
-                console.log("error");
-            }
-        });
-
-
-   
+            });
+            
             $('.summernote').summernote();
-          
-    });
-
+            // Inisialisasi Summernote dan menambahkan event handler summernote.init
+            // $('.summernote').summernote().on('summernote.init', function() {
+            //     // Callback ini akan dipanggil ketika inisialisasi Summernote selesai
+            //     // Di sini, Anda dapat menetapkan nilai ke textarea setelah inisialisasi Summernote selesai
+            // });
+        });
     </script>
+
+
 @endpush

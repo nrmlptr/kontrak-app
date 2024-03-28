@@ -52,7 +52,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="isi_pasal">Isi Pasal</label>
-                                        <input type="text" class="form-control" name="isi_pasal" id="isi_pasal" required>
+                                        <textarea class="form-control" name="isi_pasal" id="isi_pasal" style="display: none;"></textarea>
                                         @error('isi_pasal')
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror

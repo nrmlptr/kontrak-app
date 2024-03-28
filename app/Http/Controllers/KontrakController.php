@@ -157,10 +157,10 @@ class KontrakController extends Controller
             }
 
             $save = Vendor::insert($dataSave);
-            $alamatnya = $dataVendor[0]['alamat'] . " Provinsi " . $dataVendor[0]['provinsi'] . ", Kota : " . $dataVendor[0]['kota'] . ", Kode pos : " . $dataVendor[0]['kode_pos'];
+            $alamatnya = $dataVendor[0]['alamat'] . " Kota " . $dataVendor[0]['kota'] . ",  Provinsi " . $dataVendor[0]['provinsi'] . ", Kode pos " . $dataVendor[0]['kode_pos'];
         } else {
             $row = $cek->first();
-            $alamatnya = $row->alamat . " Provinsi " . $row->provinsi . ", Kota : " . $row->kota . ", Kode pos : " . $row->kode_pos;
+            $alamatnya = $row->alamat . " Kota " . $row->kota . ", Provinsi " . $row->provinsi . ", Kode pos  " . $row->kode_pos;
         }
         return response()->json(['alamat' => $alamatnya]);
         // return $data;
@@ -181,7 +181,8 @@ class KontrakController extends Controller
     {
         // echo 'monitoring kontrak';
         // $data = Kontrak::get();
-        $data = Kontrak::Unitkerja()->orderBy('date_kontrak', 'desc')->get();
+        $data = Kontrak::orderBy('date_kontrak', 'desc')->get();
+        // $data = Kontrak::Unitkerja()->orderBy('date_kontrak', 'desc')->get();
         // "select * from contracts where unit_kerja='4120'";
 
         return view('indexKontrak', compact('data'));
@@ -252,6 +253,17 @@ class KontrakController extends Controller
         return response()->json(['message' => 'Kontrak Berhasil Dibuat', 'redirect' => route('indexKontrak')]);
     }
 
+    // method hapus kontrak  ==================================================================================================
+    public function deleteKontrak(Request $request, $id)
+    {
+        $kontrak = Kontrak::find($id);
+
+        if ($kontrak) {
+            $kontrak->delete();
+        }
+
+        return redirect()->route('indexKontrak');
+    }
 
     // METHOD TAMPIL VIEW LAMPIRAN INPUT
     public function addLampiran(Request $request, $id)
@@ -488,6 +500,7 @@ class KontrakController extends Controller
         $validatedData = $request->validate([
             'kontraks_id'       => 'required',
             'no_sppb'           => 'required',
+            'kode_barang'       => 'required',
             'nama_barang'       => 'required',
             'satuan'            => 'required',
             'lokasi'            => 'required',
@@ -510,6 +523,7 @@ class KontrakController extends Controller
             $datax[] = [
                 'kontraks_id'       => $kontraks_id,
                 'no_sppb'           => $r,
+                'kode_barang'       => $kode_barang[$key],
                 'nama_barang'       => $nama_barang[$key],
                 'satuan'            => $satuan[$key],
                 'lokasi'            => $lokasi[$key],
@@ -685,6 +699,11 @@ class KontrakController extends Controller
     {
         // Mengambil data kontrak berdasarkan ID yang diberikan
         $data = Kontrak::with(['integrates', 'pasal', 'lampiran1', 'lampiran2', 'lampiran3', 'lampiran4', 'lampiran5', 'lampiran6', 'lampiran7'])->findOrFail($id);
+
+        // Mengurutkan koleksi pasal berdasarkan nama_pasal sebelum mengirimkannya ke tampilan
+        // $data->pasal = $data->pasal->sortBy('nama_pasal');
+
+
         // return $data;
         $pihak2name = 'Cecep Hidayat';
         $pihak1name = 'Rezi Syahputra';
@@ -718,7 +737,7 @@ class KontrakController extends Controller
         revisiKontrak::create($data);
 
         // Response JSON dengan pesan sukses dan redirect ke halaman monitoring
-        return response()->json(['message' => 'Revisi Berhasil Dibuat', 'redirect' => route('rKontrak')]);
+        return response()->json(['message' => 'Revisi Berhasil Dibuat', 'redirect' => route('indexKontrak')]);
     }
 
     public function showRevisi($id)

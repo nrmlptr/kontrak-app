@@ -32,6 +32,11 @@
                 <input type="text" name="no_sppb[]" class="form-control" required>
                 
             </div>
+            <div class="form-group col-2">
+                <label for="nama_barang">Kode Barang</label>
+                <input type="text" name="kode_barang[]" placeholder="Kode Barang" value="${row.material_number}" class="form-control" readonly required>
+                   
+            </div>
             <div class="form-group col-4">
                 <label for="nama_barang">Nama Barang</label>
                 <input type="text" name="nama_barang[]" placeholder="Nama Barang" value="${row.material_name}" class="form-control" readonly required>

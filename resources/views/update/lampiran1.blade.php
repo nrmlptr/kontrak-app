@@ -64,7 +64,14 @@
                 <a class="btn btn-primary text-white" type="button" id="btn-addrow">Add</a>
                 <br><br>
                 <ul id="sortable">
-                    @foreach ($lampiran1 as $l)
+                    @php
+                        if (count($lampiran1)==7) {
+                           $keynum = [1,2,3];
+                        } else {
+                           $keynum = [1,2,3,4,5];
+                        }
+                    @endphp
+                    @foreach ($lampiran1 as $k => $l)
                     <li class="ui-state-default">
                         <input class="numbering" name="numbering[]">
                         <a href="#" type="button" style="color: red;" class="btn-deleterow"><i class="fa fa-trash"></i></a>
@@ -73,7 +80,7 @@
                                 <input type="text" name="perihal[]" value="{{ $l['perihal'] }}" placeholder="Nama Header" class="form-control" >
                             </div>
                             <div class="form-group col-6">
-                                <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control"  value="{{ $l['nomor_surat'] }}" readonly>
+                                <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control"  value="{{ $l['nomor_surat'] }}" @if(! in_array($k, $keynum)) readonly @endif >
                             </div>
                             <div class="form-group col-6">
                                 <input type="date" name="tanggal_surat[]" class="form-control"  value="{{ $l['tanggal_surat'] }}">

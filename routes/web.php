@@ -106,6 +106,9 @@ Route::middleware('auth')->group(
         // CREATE REVISI KONTRAK
         Route::get('/addRevisi/{id}', [KontrakController::class, 'addRevisi'])->name('createRevisi');
         Route::post('/loadRevisi', [KontrakController::class, 'storeRevisi'])->name('submitRevisi');
+        // Hapus Data Kontrak
+        Route::delete('/deleteKontrak/{id}', [KontrakController::class, 'deleteKontrak'])->name('deleteKontrak');
+
 
         // end auth group
 

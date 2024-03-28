@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Monitoring Kontrak System | Pengadaan</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('lte/dist/img/logoperuri.ico') }}"/>
+
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
@@ -84,7 +87,7 @@
                         <img src="{{ asset('lte/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
                     </div> -->
                     <div class="info">
-                        <span class="badge badge-info">Hallo, {{ Auth::user()->name }}</span><br>
+                        <span class="badge badge-info">Hallo, {{ Auth::user()->name .' - '. Auth::user()->unit_kerja }}</span><br>
                         <span class="badge badge-secondary">Your Role as {{ Auth::user()->permission }}</span>
                         <a href="#" class="d-block"></a>
                     </div>
