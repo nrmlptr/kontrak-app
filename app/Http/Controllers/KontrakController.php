@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use File;
 use Illuminate\Support\Facades\Http;
-
+use PDF;
 // use Spatie\LaravelIgnition\Exceptions\ViewException;
 
 
@@ -714,6 +714,20 @@ class KontrakController extends Controller
         $pihak2name = 'Cecep Hidayat';
         $pihak1name = 'Rezi Syahputra';
         return view('showKontrakcoba', compact('data', 'pihak2name', 'pihak1name', 'cekApprovedKontrak'));
+    }
+    public function cetakKontrak($id)
+    {
+        $pihak2name = 'Cecep Hidayat';
+        $pihak1name = 'Rezi Syahputra';
+        $kontrak = Kontrak::with(['integrates', 'pasal', 'lampiran1', 'lampiran2', 'lampiran3', 'lampiran4', 'lampiran5', 'lampiran6', 'lampiran7', 'logs', 'revisiKontraks'])->findOrFail($id);
+        $data = [
+            'data' => $kontrak,
+            'pihak2name' => $pihak2name,
+            'pihak1name' => $pihak1name,
+        ];
+        $pdf = PDF::loadview('cetak_kontrak_pdf', $data);
+        // Set opsi setRemoteEnable
+        return $pdf->stream("kontrak_" . $kontrak->detail_number . "pdf");
     }
     public function logKontrak(Request $request, $id)
     {

@@ -70,7 +70,7 @@
 
                         <a href="{{ route('setujuiKontrak',$data->id) }}" id="setujuiKontrak" class="btn btn-sm btn-success mr-1 mb-3 {{ $cekApprovedKontrak }}"><i class="fas fa-thumbs-up"></i> Setujui Kontrak</a>
                         @endif
-                        <a href="javascript:void(0)"  class="btn btn-sm btn-secondary mr-1 mb-3"><i class="nav-icon fas fa-print"></i></i> Cetak Kontrak</a>
+                        <a href="{{ route('cetakKontrak',$data->id) }}" target="_blank"  class="btn btn-sm btn-secondary mr-1 mb-3"><i class="nav-icon fas fa-print"></i></i> Cetak Kontrak</a>
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Detail Kontrak</h3>

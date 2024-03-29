@@ -103,6 +103,7 @@ Route::middleware('auth')->group(
         Route::get('/review', [KontrakController::class, 'rKontrak'])->name('rKontrak');
         // TAMPIL DETAIL KONTRAK
         Route::get('/detailKontrak/{id}', [KontrakController::class, 'showKontrak'])->name('showKontrak');
+        Route::get('/cetakKontrak/{id}', [KontrakController::class, 'cetakKontrak'])->name('cetakKontrak');
         Route::get('/logKontrak/{id}', [KontrakController::class, 'logKontrak'])->name('logKontrak');
         Route::post('/setujuiKontrak/{id}', [KontrakController::class, 'setujuiKontrak'])->name('setujuiKontrak');
         // CREATE REVISI KONTRAK
