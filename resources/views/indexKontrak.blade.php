@@ -31,7 +31,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="kontakdatatable" class="table table-bordered table-striped">
                                 <thead align="center">
                                     <tr>
                                         @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin')
@@ -173,3 +173,42 @@
 </div>
 
 @endsection
+
+@push('scripts')
+    <script>
+         $(function() {
+    var table = $("#kontakdatatable").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "columnDefs": [{
+            targets: [0, 11],
+            visible: false
+        }],
+        "buttons": [
+            {
+                extend: 'excelHtml5',
+                text: 'Excel',
+                exportOptions: {
+                    columns: ':visible' // Mengatur kolom yang akan diekspor, mengambil yang terlihat di tabel saja
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                text: 'PDF',
+                orientation: 'landscape', // Mengatur orientasi kertas menjadi lanskap
+                exportOptions: {
+                    columns: ':visible' // Mengatur kolom yang akan diekspor, mengambil yang terlihat di tabel saja
+                }
+            }
+            
+        ]
+    });
+
+    table.buttons().container().appendTo('#kontakdatatable_wrapper .col-md-6:eq(0)');
+});
+
+      
+        
+    </script>
+@endpush

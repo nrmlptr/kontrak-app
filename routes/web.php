@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KontrakController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\VendorController;
 
 
 /*
@@ -46,6 +48,7 @@ Route::middleware('auth')->group(
             [KontrakController::class, 'dataBarang']
         )->name('dataBarang');
         Route::get('/dataVendor/{no_vendor}', [KontrakController::class, 'vendor_data'])->name('Vendordata');
+
 
         // Input Kontrak & Lampiran
         Route::get('/addKontrak', [KontrakController::class, 'addKontrak'])->name('creatKontrak');
@@ -112,7 +115,14 @@ Route::middleware('auth')->group(
         // Hapus Data Kontrak
         Route::delete('/deleteKontrak/{id}', [KontrakController::class, 'deleteKontrak'])->name('deleteKontrak');
 
+        // vendor
+        Route::get('vendor', [VendorController::class, 'index'])->name('vendor.index');
+        Route::get('vendor/{registration_no}', [VendorController::class, 'edit'])->name('vendor.edit');
+        Route::put('vendor/{registration_no}', [VendorController::class, 'update'])->name('vendor.update');
+        Route::get('/dataNpwp/{no_vendor}', [VendorController::class, 'npwp_data'])->name('npwpdata');
 
+        Route::get('setting/{setting}', [SettingController::class, 'edit'])->name('setting.edit');
+        Route::put('setting/{setting}', [SettingController::class, 'update'])->name('setting.update');
         // end auth group
 
     }

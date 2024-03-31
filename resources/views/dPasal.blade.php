@@ -38,6 +38,7 @@
                                         <th>Nama Pasal</th>
                                         <th class="d-none d-sm-table-cell" style="width: 15%;">Keterangan</th>
                                         <th>Isi Pasal</th>
+                                        <th>Urutan</th>
                                         <th>Jenis Kontrak</th>
                                         <th class="text-center" style="width: 10%;">Action</th>
                                     </tr>
@@ -49,6 +50,7 @@
                                         <td>{{ $d->nama_pasal }}</td>
                                         <td>{{ $d->keterangan_pasal }}</td>
                                         <td>{!! $d->isi_pasal !!}</td>
+                                        <td>{{ $d->urutan }}</td>
                                         <td>
                                             @if($d->jenis_pasal == '1')
                                             <span class="badge badge-success">Jaminan</span>

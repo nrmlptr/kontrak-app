@@ -74,23 +74,18 @@ table tr td{
                         <td><br></td>
                         <tr>
                             <td style="vertical-align: top;text-align: left" colspan="2"><b>{{ $pihak1name }},</b></td>
-                            <td>yang dalam hal ini jabatannya selaku POH Kepala Divisi Pengadaan dan Fasilitas Umum sesuai Nota Dinas Direktorat SDM, Teknologi dan Informasi Nomor : 21/Dir. SDM & TI/VIII/2023 tanggal 01 Agustus 2023
-                                Tentang Penunjukan POH Kepala Divisi Pengadaan dan Fasilitas Umum, dari dan oleh karena itu bertindak untuk dan atas nama Perum Percetakan Uang RI yang didirikan untuk terakhir kalinya berdasarkan Peraturan Pemerintah RI
-                                NomorL 6 Tahun 2019 tanggal 19 Februari 2019 tentang Perusahaan Umum (Perum) Percetakan Uang Republik Indonesia, yang berkedudukan hukum di Jalan Palatehan No. 4, Kebayoran Baru, Jakarta Selatan 12160,
-                                yang selanjutnya dalam perbuatan hukum ini disebut sebagai: 
-                                <br>
-                                -------------------------------------- PIHAK KESATU -------------------------------------
+                            <td>
+                                @if ($data->peruritext)
+                                            {!! @$data->peruritext !!}
+                                    @else
+                                        {!! @$pihak1data->peruri_akta !!}
+                                    @endif
                             </td>
                         </tr>
                         <td><br></td>
                         <tr>
                             <td style="vertical-align: top;text-align: left" colspan="2"><b>{{ $pihak2name }},</b></td>
-                            <td>yang dalam hal ini jabatannya selaku Technical Director untuk dan atas nama {{ @$data->integrates[0]->vendor_name }} yang anggaran dasarnya telah mendapat pengesahan dari Menteri Hukum dan HAM Nomor: c-12289 HT.01.01TH.2003
-                                dan diumumkan dalam Tambahan Berita Negara RI tertanggal 22 Agustus 2003 Nomor: 67, Tambahan Nomor 7310/2003 dengan Akta tertanggal 19 Februari 2003 Nomor: 4 yang dibuat dihadapan TH. Siti Sri Amiretno Diah Wasisti
-                                Bagiono SH, Notaris di Jakarta dan telah diubah untuk terakhir kalinya dengan Akta Nomor: 25 tanggal 12 November 2021 yang dibuat dihadapan RA Mahyasari Arizza Notonagoro.SH, M.Kn., Notaris di Jakarta,
-                                yang berkedudukan hukum di Desa Parung Mulya, Kecamatan Ciampel, Kabupaten Karawang, Jawa Barat, untuk selanjutnya dalam perbuatan hukum ini disebut sebagai: 
-                                <br>
-                                -------------------------------------- PIHAK KEDUA -------------------------------------
+                            <td> {!! @$pihak2data->akta !!}
                             </td>
                         </tr>
                         <td><br></td>

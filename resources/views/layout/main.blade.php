@@ -125,7 +125,7 @@
                         <li class="nav-header">MENU UTAMA</li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-copy"></i>
+                                <i class="fas fa-copy"></i>
                                 <p>
                                     Kontrak Management
                                     <i class="right fas fa-angle-left"></i>
@@ -159,13 +159,8 @@
                                         <p>Review</p>
                                     </a>
                                 </li>
-                                <!-- <li class="nav-item">
-                                    <a href="" class="nav-link">
-                                        <i class="nav-icon fas fa-print"></i>
-                                        <p>Print</p>
-                                    </a>
-                                </li> -->
-                                <li class="nav-item">
+                         
+                                <li class="nav-item d-none">
                                     <a href="#" class="nav-link">
                                         <i class="nav-icon fas fa-table"></i>
                                         <p>Eksport</p>
@@ -173,51 +168,36 @@
                                 </li>
                             </ul>
                         </li>
-                        <hr>
                         @if(Auth::user()->permission=='admin')
-                        <li class="nav-header">USER MANAGEMENT</li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-chart-pie"></i>
-                                <p>
-                                    User Management
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
+                       <li class="nav-item">
+                            <a href="{{ route('index') }}" class="nav-link">
+                                <i class=" fas fa-user"></i>
+                                <p>User</p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('index') }}" class="nav-link">
-                                        <i class="fas fa-user"></i>
-                                        <p>User</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
-                        <!-- Divider -->
-                        <hr class="sidebar-divider d-none d-md-block">
-                        <li class="nav-header">PASAL MANAGEMENT</li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-chart-pie"></i>
-                                <p>
-                                    Pasal Management
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
+                            <a href="{{ route('vPasal') }}" class="nav-link">
+                                <i class=" fas fa-book"></i>
+                                <p>Pasal</p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('vPasal') }}" class="nav-link">
-                                        <i class="nav-icon fas fa-book"></i>
-                                        <p>Pasal</p>
-                                    </a>
-                                </li>
-                            </ul>
+                        </li>
+                      
+                        <li class="nav-item">
+                            <a href="{{ route('vendor.index') }}" class="nav-link">
+                                <i class=" fas fa-burn"></i>
+                                <p>Vendor</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('setting.edit',1) }}" class="nav-link">
+                                <i class=" fas fa-cog"></i>
+                                <p>Setting</p>
+                            </a>
                         </li>
                         @endif
-                        <hr>
                         <li class="nav-item">
                             <a href="{{ route('logout') }}" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class=" fas fa-sign-out-alt"></i>
                                 <p>Logout</p>
                             </a>
                         </li>
@@ -311,8 +291,7 @@
                 "responsive": true,
                 "lengthChange": false,
                 "autoWidth": false,
-                "buttons": ["excel", "pdf"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            })
             $('#example2').DataTable({
                 "paging": true,
                 "lengthChange": false,

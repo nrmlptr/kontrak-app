@@ -10,8 +10,8 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('vPasal') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Add Pasal</li>
+                        <li class="breadcrumb-item"><a href="{{ route('vendor.index') }}">Home</a></li>
+                        <li class="breadcrumb-item active">Edit Vendor</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -22,67 +22,62 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <form action="{{ route('loadPasal') }}" method="POST">
+            <form action="{{ route('vendor.update',['registration_no' => $data->registration_no]) }}" method="POST">
                 @csrf
+                @method('PUT')
                 <div class="row">
                     <!-- left column -->
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <!-- general form elements -->
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Tambah Data Pasal</h3>
+                                <h3 class="card-title">Edit Data Vendor</h3>
                             </div>
                             <!-- /.card-header -->
-                            <!-- form start -->
-                            <form>
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="nama_pasal">Nama Pasal</label>
-                                        <input type="text" class="form-control" name="nama_pasal" id="nama_pasal" required>
-                                        @error('nama_pasal')
+                                        <label for="vendor_name">Nama Vendor</label>
+                                        <input type="text" class="form-control" name="vendor_name" readonly value="{{ $data->vendor_name }}" id="vendor_name" required>
+                                        @error('vendor_name')
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="keterangan_pasal">Keterangan Pasal</label>
-                                        <input type="text" class="form-control" name="keterangan_pasal" id="keterangan_pasal" required>
-                                        @error('keterangan_pasal')
+                                        <label for="pihakname">Nama Pihak</label>
+                                        <input type="text" class="form-control" name="pihakname" 
+                                            @if (@$data->vendortext->pihakname)
+                                                value="{{ @$data->vendortext->pihakname }}"
+                                            @else
+                                                value="{{ @$data->vendor[0]->full_name }}"
+                                            @endif
+                                        id="pihakname" required>
+                                        @error('pihakname')
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="isi_pasal">Isi Pasal</label>
-                                        <textarea class="form-control" name="isi_pasal" id="isi_pasal" style="display: none;"></textarea>
-                                        @error('isi_pasal')
+                                        <label for="npwp">No NPWP</label>
+                                        <input type="text" class="form-control" name="npwp" value="{{ @$data->vendortext->npwp }}" id="npwp" required>
+                                        @error('npwp')
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>
+                                     
                                     <div class="form-group">
-                                        <label for="urutan">Urutan</label>
-                                        <input type="number" min="1" class="form-control" name="urutan" id="urutan" required>
-                                        @error('urutan')
+                                        <label for="akta">Akta</label>
+                                        <textarea type="text" class="form-control" name="akta" id="akta">{!! @$data->vendortext->akta !!}</textarea required>
+                                        @error('akta')
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>
-                                    <div class="form-group">
-                                        <label for="jenis_pasal">Jenis Kontrak</label>
-                                        <select class="form-control" name="jenis_pasal" id="jenis_pasal" required>
-                                            <option value="">Pilih</option>
-                                            <option value="1">Jaminan</option>
-                                            <option value="2">Tanpa Jaminan</option>
-                                        </select>
-                                        @error('jenis_pasal')
-                                        <small style="color: red;">{{ $message }}</small>
-                                        @enderror
-                                    </div>
+                                   
                                 </div>
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-primary">Submit</button>
-                                    <a href="{{ route('vPasal') }}" class="btn btn-danger">Cancel</a>
+                                    <a href="{{ route('vendor.index') }}" class="btn btn-danger">Cancel</a>
                                 </div>
-                            </form>
                         </div>
                         <!-- /.card -->
                     </div>
@@ -103,8 +98,11 @@
     <script>
         
         $(document).ready(function() {
-            $('#isi_pasal').summernote();
-            
+            $('#akta').summernote();
+            $.get(`/dataNpwp/{{ $data->registration_no }}}`, function(data) {
+                // Setelah mendapatkan data, set nilai textarea
+                $('#npwp').val(data.npwp);
+            });
         });
     </script>
 @endpush

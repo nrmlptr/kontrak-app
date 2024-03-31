@@ -146,6 +146,17 @@
                                                 @endif
                                             </div>
                                         </div>
+
+                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                            <div class="form-group">
+                                                <label for="peruri_text">Akta Peruri</label>
+                                                <textarea name="peruri_text" class="form-control" id="peruri_text" cols="30" rows="10">{!! $setting->peruri_akta !!}</textarea>
+                                                <!-- tempat naro error -->
+                                                @if($errors->has('peruri_text'))
+                                                <span class="text-danger">{{ $errors->first('peruri_text') }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="card-footer">
                                         <button type="button" class="btn btn-secondary" onclick="submit_data()">Submit</button>
@@ -163,14 +174,20 @@
     </section>
     <!-- /.content -->
 </div>
-<!-- jQuery -->
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-<script src="{{ asset('lte/plugins/jquery/jquery.min.js') }}"></script>
+
+@endsection
+
+@push('scripts')
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script>
+        
+        $(document).ready(function() {
+            $('#peruri_text').summernote();
+        });
 
-<!-- Script Anda -->
-<script type="text/javascript">
+        
     function submitKontrak() {
 
         var formKontrak = $('#inputKontrak');
@@ -229,6 +246,4 @@
         });
     });
 </script>
-
-
-@endsection
+@endpush

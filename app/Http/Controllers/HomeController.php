@@ -17,8 +17,9 @@ class HomeController extends Controller
     //
     public function dashboard()
     {
+
         $dataKontrak = Kontrak::get();
-        $dataSOP     = Integrate::get();
+        $dataSOP     = Integrate::groupBy('purchasing_document_number')->get();
         $dataVendor  = Vendor::distinct()->get(['registration_no']);
         $dataPasal   = PasalKontrak::get();
 
@@ -34,7 +35,7 @@ class HomeController extends Controller
         $KontrakPerJenis = $dataKontrak->groupBy('jenis_kontrak')->map(function ($group) {
             return $group->count();
         });
-        
+
 
         // dd(auth()->user()->getRoleNames());
         return view('dashboard', compact('dataKontrak', 'dataSOP', 'dataVendor', 'dataPasal', 'dataStatus', 'KontrakPerJenis'));
@@ -162,6 +163,7 @@ class HomeController extends Controller
             'keterangan_pasal'  => 'required',
             'isi_pasal'         => 'required',
             'jenis_pasal'       => 'required',
+            'urutan'       => 'required',
         ]);
 
         if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
@@ -171,6 +173,7 @@ class HomeController extends Controller
         $data['keterangan_pasal']    = $request->keterangan_pasal;
         $data['isi_pasal']           = $request->isi_pasal;
         $data['jenis_pasal']         = $request->jenis_pasal;
+        $data['urutan']         = $request->jenis_pasal;
 
         PasalKontrak::create($data);
 
@@ -195,6 +198,7 @@ class HomeController extends Controller
             'keterangan_pasal'  => 'required',
             'isi_pasal'         => 'required',
             'jenis_pasal'       => 'required',
+            'urutan'       => 'required',
         ]);
 
         if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
@@ -204,6 +208,7 @@ class HomeController extends Controller
         $data['keterangan_pasal']    = $request->keterangan_pasal;
         $data['isi_pasal']           = $request->isi_pasal;
         $data['jenis_pasal']         = $request->jenis_pasal;
+        $data['urutan']         = $request->urutan;
 
 
         PasalKontrak::whereId($id)->update($data);
