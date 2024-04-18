@@ -86,7 +86,7 @@
                     </div> -->
                     <div class="info">
                         <span class="badge badge-info">Hallo, {{ Auth::user()->name .' - '. Auth::user()->unit_kerja }}</span><br>
-                        <span class="badge badge-secondary">Your Role as {{ Auth::user()->permission }}</span>
+                        <span class="badge badge-secondary mt-2">Your Role as {{ Auth::user()->permission }}</span>
                         <a href="#" class="d-block"></a>
                     </div>
                 </div>
@@ -152,11 +152,12 @@
                                 <li class="nav-item">
                                     <a href="{{ route('rKontrak') }}" class="nav-link">
                                         <i class="nav-icon fas fa-book"></i>
-                                        <p>Review</p>
+                                        <p>Review Kontrak</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
+                        <li class="nav-header">MENU EXPORT</li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="fas fa-print"></i>
@@ -181,6 +182,7 @@
                             </ul>
                         </li>
                         @if(Auth::user()->permission=='admin')
+                            <li class="nav-header">MENU TAMBAHAN</li>
                             <li class="nav-item">
                                 <a href="{{ route('index') }}" class="nav-link">
                                     <i class=" fas fa-user"></i>
@@ -207,6 +209,8 @@
                                 </a>
                             </li>
                         @endif
+
+                        <hr>
                         <li class="nav-item">
                             <a href="{{ route('logout') }}" class="nav-link">
                                 <i class=" fas fa-sign-out-alt"></i>
@@ -314,6 +318,7 @@
                 "autoWidth": false,
                 "responsive": true,
             });
+            
 
             $('#filter_type').change(function() {
                 if ($(this).val() === 'month') {
@@ -328,6 +333,7 @@
                 }
             });
 
+            // setting filter_value ketika nilai input filter_type nya month
             $('#month, #year').change(function() {
                 var month = $('#month').val();
                 var year = $('#year').val();

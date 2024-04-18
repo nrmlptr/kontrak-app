@@ -54,7 +54,7 @@
                     <div class="col-sm-6"></div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('rKontrak') }}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('rKontrak') }}">Back</a></li>
                             <li class="breadcrumb-item active">Detail Kontrak</li>
                         </ol>
                     </div><!-- /.col -->

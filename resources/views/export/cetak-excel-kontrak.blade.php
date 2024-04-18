@@ -60,14 +60,12 @@
                                 </select>
                             
                                 <!-- Tambahkan input untuk tahun -->
-                                <input type="number" name="year" id="year" placeholder="Enter Year" autocomplete="off" class="form-control col-6 mt-2" style="display: none;">
-
-                                
+                                <input type="number" name="year" id="year" placeholder="Enter Year" autocomplete="off" class="form-control col-6 mt-2" style="display: none;" >
 
                                 {{-- input ketika filter by tanggal, atau by tahun --}}
                                 <input type="text" name="filter_value" id="filter_value" placeholder="Enter Value" autocomplete="off" class="form-control col-6 mt-2">
 
-                                <button type="submit" class="btn btn-info mt-2">Export</button>
+                                <button type="submit" class="btn btn-primary mt-2">Export Kontrak</button>
                             </form>
                         </div>
                         <!-- /.card-body -->

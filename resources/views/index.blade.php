@@ -107,6 +107,15 @@
     <script>
         $(document).ready(function() {
             $('#userdatatable').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+
+
                 dom: 'Bfrtip',
                 buttons: [
                     {

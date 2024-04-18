@@ -36,7 +36,7 @@ class KontrakExport implements FromCollection, WithHeadings
                     'Unit Kerja' => $contract->unit_kerja,
                     'Jenis Kontrak' => $jenisKontrak,
                     'Status' => $contract->status,
-                    'Nominal' => $contract->total_keseluruhan,
+                    'Nominal' => @formatRupiah($contract->total_keseluruhan),
                 ];
         });
     }

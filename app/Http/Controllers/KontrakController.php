@@ -1119,7 +1119,7 @@ class KontrakController extends Controller
 
         return view('export.cetak-kontrak-pertanggal-pdf', compact('exportPertanggal'));
     }
-    
+
 
     public function viewExport(){
         return view('export.cetak-excel-kontrak');
@@ -1131,23 +1131,26 @@ class KontrakController extends Controller
         // dd($request->all());
         $filterType = $request->input('filter_type');
         $filterValue = $request->input('filter_value');
-        $year = $request->input('year');
+        $year = $request->input('year'); //ambil nilai tahun dari inputan
         $month = $request->input('month'); // Menangkap nilai bulan dari input
 
         $contracts = Kontrak::query();
 
         if ($filterType && $filterValue) {
+
             if ($filterType === 'year') {
                 $contracts->whereYear('date_kontrak', $filterValue);
+
             } elseif ($filterType === 'month') {
                 // Validasi apakah tahun dan bulan telah dipilih
                 if (!$year || !$month) {
-                    return redirect()->back()->with('error', 'Please select both year and month when filtering by month.');
+                    return redirect()->back()->with('error', 'Bulan dan Tahun Belum Terisi!');
                 }
-                // Ubah nilai bulan menjadi format yang sesuai untuk whereMonth
+
+                //tangkep nilai bulan dari inputan
                 $monthValue = strlen($month) == 1 ? '0' . $month : $month;
-                // $filterValue = $monthValue;
                 $contracts->whereYear('date_kontrak', $year)->whereMonth('date_kontrak', $monthValue);
+
             } elseif ($filterType === 'date') {
                 // Pisahkan rentang tanggal
                 $dates = explode(' - ', $filterValue);
@@ -1161,7 +1164,7 @@ class KontrakController extends Controller
 
         $contracts = $contracts->get();
 
-        return Excel::download(new KontrakExport($contracts), 'kontrak.xlsx');
+        return Excel::download(new KontrakExport($contracts), 'data-kontrak.xlsx');
     }
 
 
