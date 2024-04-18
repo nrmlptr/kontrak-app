@@ -157,6 +157,17 @@
                                                 @endif
                                             </div>
                                         </div>
+
+                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                            <div class="form-group">
+                                                <label for="akta">Akta Vendor</label>
+                                                <textarea class="form-control summernote" rows="5" style="resize: vertical; width: 100%;" name="akta" id="akta"></textarea>
+                                                <!-- tempat naro error -->
+                                                @if($errors->has('akta'))
+                                                <span class="text-danger">{{ $errors->first('akta') }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="card-footer">
                                         <button type="button" class="btn btn-secondary" onclick="submit_data()">Submit</button>
@@ -181,13 +192,17 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <script>
-        
-        $(document).ready(function() {
-            $('#peruri_text').summernote();
-        });
+<script>
+    
+    $(document).ready(function() {
+        $('#peruri_text').summernote();
+    });
 
-        
+    // $(document).ready(function() {
+    //     $('#akta').summernote();
+    // });
+
+    
     function submitKontrak() {
 
         var formKontrak = $('#inputKontrak');
@@ -227,7 +242,9 @@
                                 text: item.purchasing_document_number + '\xa0\xa0\xa0\xa0\xa0\xa0\xa0' + item.vendor_name,
                                 id: item.purchasing_document_number,
                                 document_date: item.document_date,
-                                tender_name: item.tender_name
+                                tender_name: item.tender_name,
+                                akta: item.akta
+                                
                             }
                         })
                     };
@@ -242,8 +259,12 @@
             $('#perihal').val(data.tender_name); // Isi nilai perihal
             $('#nomor_sop').val(data.id); // Isi nilai nomor SOP
             $('#tanggal_sop').val(data.document_date); // Isi nilai tanggal SOP
+            $('#date_kontrak').val(data.document_date);
+            $('textarea[name="akta"]').summernote('code',data.akta);
 
         });
+
+        $('.summernote').summernote();
     });
 </script>
 @endpush

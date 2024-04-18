@@ -58,6 +58,7 @@
                                         <div class="col-xs-6 col-sm-6 col-md-6">
                                             <div class="form-group">
                                                 <label for="revisi">Revisi Kontrak</label>
+                                                {{-- <textarea class="form-control" name="revisi" id="revisi" style="display: none;"></textarea> --}}
                                                 <textarea name="revisi" id="revisi" cols="30" rows="10" class="form-control"></textarea>
                                             </div>
                                         </div>
@@ -107,4 +108,14 @@
 </script>
 
 
+
 @endsection
+@push('scripts')
+{{-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script>   
+        $(document).ready(function() {
+            $('#revisi').summernote();
+            
+        });
+    </script> --}}
+@endpush

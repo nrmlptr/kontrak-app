@@ -35,28 +35,28 @@ function formatRupiah($angka)
 function terbilang($angka)
 {
     $angka = (float)$angka;
-    $bilangan = ['', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan', 'sepuluh', 'sebelas'];
+    $bilangan = ['', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan', 'Sepuluh', 'Sebelas'];
 
     if ($angka < 12) {
         return $bilangan[(int)$angka];
     } elseif ($angka < 20) {
-        return terbilang($angka - 10) . ' belas';
+        return terbilang($angka - 10) . ' Belas';
     } elseif ($angka < 100) {
-        return terbilang($angka / 10) . ' puluh ' . terbilang($angka % 10);
+        return terbilang($angka / 10) . ' Puluh ' . terbilang($angka % 10);
     } elseif ($angka < 200) {
         return ' seratus ' . terbilang($angka - 100);
     } elseif ($angka < 1000) {
-        return terbilang($angka / 100) . ' ratus ' . terbilang($angka % 100);
+        return terbilang($angka / 100) . ' Ratus ' . terbilang($angka % 100);
     } elseif ($angka < 2000) {
         return ' seribu ' . terbilang($angka - 1000);
     } elseif ($angka < 1000000) {
-        return terbilang($angka / 1000) . ' ribu ' . terbilang($angka % 1000);
+        return terbilang($angka / 1000) . ' Ribu ' . terbilang($angka % 1000);
     } elseif ($angka < 1000000000) {
-        return terbilang($angka / 1000000) . ' juta ' . terbilang($angka % 1000000);
+        return terbilang($angka / 1000000) . ' Juta ' . terbilang($angka % 1000000);
     } elseif ($angka < 1000000000000) {
-        return terbilang($angka / 1000000000) . ' miliar ' . terbilang($angka % 1000000000);
+        return terbilang($angka / 1000000000) . ' Miliar ' . terbilang($angka % 1000000000);
     } elseif ($angka < 1000000000000000) {
-        return terbilang($angka / 1000000000000) . ' triliun ' . terbilang($angka % 1000000000000);
+        return terbilang($angka / 1000000000000) . ' Triliun ' . terbilang($angka % 1000000000000);
     } else {
         return 'Angka terlalu besar';
     }
@@ -64,4 +64,16 @@ function terbilang($angka)
 function showEncodeChar($str)
 {
     return mb_convert_encoding($str, 'HTML-ENTITIES', 'UTF-8');
+}
+
+function getMonthIndo($index)
+{
+    $bulan = [
+        1 => 'Januari', 2 => 'Februari', 3 => 'Maret',
+        4 => 'April', 5 => 'Mei', 6 => 'Juni',
+        7 => 'Juli', 8 => 'Agustus', 9 => 'September',
+        10 => 'Oktober', 11 => 'November', 12 => 'Desember'
+    ];
+    // return strtoupper($bulan[$index]);
+    return ucfirst(strtolower($bulan[$index]));
 }

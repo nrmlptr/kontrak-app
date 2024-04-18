@@ -17,12 +17,12 @@ class LoginController extends Controller
         // dd($request->all());
 
         $request->validate([
-            'email'     => 'required',
+            'username'  => 'required',
             'password'  => 'required',
         ]);
 
         $data = [
-            'email'     => $request->email,
+            'username'  => $request->username,
             'password'  =>$request->password
         ];
 

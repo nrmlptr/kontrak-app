@@ -49,6 +49,13 @@
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>
+                                    <div class="form-group">
+                                        <label for="urutan">Urutan Pasal</label>
+                                        <input type="number" min="1" class="form-control" name="urutan" id="urutan" value="{{ $data->urutan }}" required>
+                                        @error('urutan')
+                                        <small style="color: red;">{{ $message }}</small>
+                                        @enderror
+                                    </div>
                                      <div class="form-group">
                                         <label for="jenis_pasal">Jenis Kontrak</label>
                                         <select name="jenis_pasal" id="jenis_pasal" class="form-control">
@@ -69,13 +76,7 @@
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>
-                                    <div class="form-group">
-                                        <label for="urutan">Urutan</label>
-                                        <input type="number" min="1" class="form-control" name="urutan" id="urutan" value="{{ $data->urutan }}" required>
-                                        @error('urutan')
-                                        <small style="color: red;">{{ $message }}</small>
-                                        @enderror
-                                    </div>
+                                    
                                    
                                 </div>
                                 <!-- /.card-body -->

@@ -25,45 +25,35 @@
 
 @push('scripts')
     <script type="text/javascript">
-    // function submitLampiran2() {
-    //     var form3 = $('#inputLampiran2');
-    //     console.log(form3);
-    // }
+        function submitLampiran2() {
+            // var form = $('#inputLampiran2');
+            // var perihal = form.find('input[name="perihal"]').val();
+            // var nomorSOP = form.find('input[name="nomor_sop"]').val();
+            // var tanggalSOP = form.find('input[name="tanggal_sop"]').val();
 
-    // function submit_Lampiran2() {
-    //     submitLampiran2()
-    // }
-</script>
-<script type="text/javascript">
-    function submitLampiran2() {
-        // var form = $('#inputLampiran2');
-        // var perihal = form.find('input[name="perihal"]').val();
-        // var nomorSOP = form.find('input[name="nomor_sop"]').val();
-        // var tanggalSOP = form.find('input[name="tanggal_sop"]').val();
+            // console.log("Perihal:", perihal);
+            // console.log("Nomor SOP:", nomorSOP);
+            // console.log("Tanggal SOP:", tanggalSOP);
 
-        // console.log("Perihal:", perihal);
-        // console.log("Nomor SOP:", nomorSOP);
-        // console.log("Tanggal SOP:", tanggalSOP);
+            var form = $('#inputLampiran2');
 
-        var form = $('#inputLampiran2');
+            $.ajax({
+                method: "POST",
+                url: "{{ route('submitLampiran2') }}",
+                data: form.serialize(),
+                success: function(result) {
+                    $(".collapse").removeClass('show');
+                    $('#collapseLampiran3').addClass('show');
+                    console.log(result.message);
+                    // if (result.redirect) {
+                    //     window.location.href = result.redirect; // Mengarahkan ulang halaman ke halaman monitoring
+                    // }
+                }
+            });
+        }
 
-        $.ajax({
-            method: "POST",
-            url: "{{ route('submitLampiran2') }}",
-            data: form.serialize(),
-            success: function(result) {
-                $(".collapse").removeClass('show');
-                $('#collapseLampiran3').addClass('show');
-                console.log(result.message);
-                // if (result.redirect) {
-                //     window.location.href = result.redirect; // Mengarahkan ulang halaman ke halaman monitoring
-                // }
-            }
-        });
-    }
-
-    // function submit_Lampiran2() {
-    //     submitLampiran2();
-    // }
-</script>
+        // function submit_Lampiran2() {
+        //     submitLampiran2();
+        // }
+    </script>
 @endpush

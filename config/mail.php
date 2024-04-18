@@ -108,8 +108,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'ptrkrynhkr@gmail.com', 'Notifikasi-Aplikasi-Kontrak'),
+        'name' => env('MAIL_FROM_NAME', 'AdminPengadaan'),
     ],
 
     /*

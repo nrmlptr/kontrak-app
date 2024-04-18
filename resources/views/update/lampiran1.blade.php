@@ -53,8 +53,8 @@
 </style>
 @php
     $lampiran1=json_decode($data->lampiran1->data_json,true);
-    
 @endphp
+
 <div class="row">
     <form class="inputlampiran1" id="inputlampiran1">
         @csrf
@@ -72,24 +72,22 @@
                         }
                     @endphp
                     @foreach ($lampiran1 as $k => $l)
-                    <li class="ui-state-default">
-                        <input class="numbering" name="numbering[]">
-                        <a href="#" type="button" style="color: red;" class="btn-deleterow"><i class="fa fa-trash"></i></a>
-                        <div class="row">
-                            <div class="form-group col-12">
-                                <input type="text" name="perihal[]" value="{{ $l['perihal'] }}" placeholder="Nama Header" class="form-control" >
+                        <li class="ui-state-default">
+                            <input class="numbering" name="numbering[]">
+                            <a href="#" type="button" style="color: red;" class="btn-deleterow"><i class="fa fa-trash"></i></a>
+                            <div class="row">
+                                <div class="form-group col-12">
+                                    <input type="text" name="perihal[]" value="{{ $l['perihal'] }}" placeholder="Nama Header" class="form-control" >
+                                </div>
+                                <div class="form-group col-6">
+                                    <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control"  value="{{ $l['nomor_surat'] }}" @if(! in_array($k, $keynum)) readonly @endif >
+                                </div>
+                                <div class="form-group col-6">
+                                    <input type="date" name="tanggal_surat[]" class="form-control"  value="{{ $l['tanggal_surat'] }}">
+                                </div>
                             </div>
-                            <div class="form-group col-6">
-                                <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control"  value="{{ $l['nomor_surat'] }}" @if(! in_array($k, $keynum)) readonly @endif >
-                            </div>
-                            <div class="form-group col-6">
-                                <input type="date" name="tanggal_surat[]" class="form-control"  value="{{ $l['tanggal_surat'] }}">
-                            </div>
-                        </div>
-                    </li>
-                    @endforeach
-
-                   
+                        </li>
+                    @endforeach 
                 </ul>
             </div>
         </div>
@@ -101,82 +99,83 @@
 
 
 <!-- JAVASCRIPT -->
-<!-- jQuery -->
+
 @push('scripts')
     <script type="text/javascript">
-    jQuery(document).ready(function($) {
-        counting_container();
-    });
-
-    function counting_container() {
-        var inputs = $('input.numbering');
-        var nbElems = inputs.length;
-        $('.ListContainer input.numbering').each(function(idx) {
-            $(this).val(idx + 1);
+        jQuery(document).ready(function($) {
+            counting_container();
         });
-        $(".numbering").attr('disabled', 'true')
-    }
 
-    $('#sortable').sortable({
-        stop: function() {
+        function counting_container() {
             var inputs = $('input.numbering');
             var nbElems = inputs.length;
             $('.ListContainer input.numbering').each(function(idx) {
                 $(this).val(idx + 1);
             });
+            $(".numbering").attr('disabled', 'true')
         }
-    });
 
-    var fieldadd = '<li class="ui-state-default">' +
-        '<input class="numbering" name="numbering[]">' +
-        '<a type="button" style="color: red" class="btn-deleterow"><i class="fa fa-trash"></i></a>' +
-        '<div class="row">' +
-        '<div class="form-group col-12">' +
-        '<input type="text" name="perihal[]" placeholder="Nama Header" class="form-control">' +
-        '</div>' +
-        '<div class="form-group col-6">' +
-        '<input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control">' +
-        '</div>' +
-        '<div class="form-group col-6">' +
-        '<input type="date" name="tanggal_surat[]" class="form-control">' +
-        '</div>' +
-        '</div>' +
-        '</li>'
-
-    $('#btn-addrow').on('click', function() {
-        $('#sortable').append(fieldadd)
-        counting_container();
-        // submitLampiran1()
-    })
-
-    $('body').on('click', '.btn-deleterow', function() {
-        $(this).parent().remove()
-        counting_container();
-    })
-
-
-    function submitLampiran1() {
-
-        var form2 = $('#inputlampiran1').serializeArray();
-        // console.log(form2);
-        $.ajax({
-            method: 'POST',
-            url: "{{ route('submitLampiran1') }}",
-            dataType: 'json',
-            data: form2,
-            success: function(result) {
-                $(".collapse").removeClass('show');
-                $('#collapseLampiran2').addClass('show');
-                console.log(result.message);
-                // if (result.redirect) {
-                //     window.location.href = result.redirect; // Mengarahkan ulang halaman ke halaman monitoring
-                // }
+        $('#sortable').sortable({
+            stop: function() {
+                var inputs = $('input.numbering');
+                var nbElems = inputs.length;
+                $('.ListContainer input.numbering').each(function(idx) {
+                    $(this).val(idx + 1);
+                });
             }
         });
-    }
 
-    function submit_Lampiran1() {
-        submitLampiran1()
-    }
-</script>
+        var fieldadd = '<li class="ui-state-default">' +
+            '<input class="numbering" name="numbering[]">' +
+            '<a type="button" style="color: red" class="btn-deleterow"><i class="fa fa-trash"></i></a>' +
+            '<div class="row">' +
+            '<div class="form-group col-12">' +
+            '<input type="text" name="perihal[]" placeholder="Nama Header" class="form-control">' +
+            '</div>' +
+            '<div class="form-group col-6">' +
+            '<input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control">' +
+            '</div>' +
+            '<div class="form-group col-6">' +
+            '<input type="date" name="tanggal_surat[]" class="form-control">' +
+            '</div>' +
+            '</div>' +
+            '</li>'
+
+        $('#btn-addrow').on('click', function() {
+            $('#sortable').append(fieldadd)
+            counting_container();
+            // submitLampiran1()
+        })
+
+        $('body').on('click', '.btn-deleterow', function() {
+            $(this).parent().remove()
+            counting_container();
+        })
+
+
+        function submitLampiran1() {
+
+            var form2 = $('#inputlampiran1').serializeArray();
+            // console.log(form2);
+            $.ajax({
+                method: 'POST',
+                url: "{{ route('submitLampiran1') }}",
+                dataType: 'json',
+                data: form2,
+                success: function(result) {
+                    $(".collapse").removeClass('show');
+                    $('#collapseLampiran2').addClass('show');
+                    console.log(result.message);
+                    // if (result.redirect) {
+                    //     window.location.href = result.redirect; // Mengarahkan ulang halaman ke halaman monitoring
+                    // }
+                }
+            });
+        }
+
+        function submit_Lampiran1() {
+            submitLampiran1()
+        }
+        
+    </script>
 @endpush

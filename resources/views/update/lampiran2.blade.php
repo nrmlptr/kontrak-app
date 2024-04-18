@@ -28,24 +28,22 @@
 
 @push('scripts')
     <script type="text/javascript">
-</script>
-<script type="text/javascript">
-    function submitLampiran2() {
+        function submitLampiran2() {
 
-        var form = $('#inputLampiran2');
+            var form = $('#inputLampiran2');
 
-        $.ajax({
-            method: "POST",
-            url: "{{ route('submitLampiran2') }}",
-            data: form.serialize(),
-            success: function(result) {
-                $(".collapse").removeClass('show');
-                $('#collapseLampiran3').addClass('show');
-                console.log(result.message);
-                
-            }
-        });
-    }
+            $.ajax({
+                method: "POST",
+                url: "{{ route('submitLampiran2') }}",
+                data: form.serialize(),
+                success: function(result) {
+                    $(".collapse").removeClass('show');
+                    $('#collapseLampiran3').addClass('show');
+                    console.log(result.message);
+                    
+                }
+            });
+        }
 
-</script>
+    </script>
 @endpush

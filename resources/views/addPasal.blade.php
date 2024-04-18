@@ -58,7 +58,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="urutan">Urutan</label>
+                                        <label for="urutan">Urutan Pasal</label>
                                         <input type="number" min="1" class="form-control" name="urutan" id="urutan" required>
                                         @error('urutan')
                                         <small style="color: red;">{{ $message }}</small>
@@ -100,8 +100,7 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <script>
-        
+    <script>   
         $(document).ready(function() {
             $('#isi_pasal').summernote();
             

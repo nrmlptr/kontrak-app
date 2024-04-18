@@ -50,25 +50,24 @@
         </div>
     </form>
 </div>
-@push('scripts')
-    
-<script type="text/javascript">
-   
-    // SUBMIT DATA
+@push('scripts') 
+    <script type="text/javascript">
 
-    function submitLampiran6() {
-        var form = $('#inputLampiran6');
+        // SUBMIT DATA
 
-        $.ajax({
-            method: "POST",
-            url: "{{ route('submitLampiran6') }}",
-            data: form.serialize(),
-            success: function(result) {
-                $(".collapse").removeClass('show');
-                $('#collapseLampiran7').addClass('show');
-                console.log(result.message);
-            }
-        });
-    }
-</script>
+        function submitLampiran6() {
+            var form = $('#inputLampiran6');
+
+            $.ajax({
+                method: "POST",
+                url: "{{ route('submitLampiran6') }}",
+                data: form.serialize(),
+                success: function(result) {
+                    $(".collapse").removeClass('show');
+                    $('#collapseLampiran7').addClass('show');
+                    console.log(result.message);
+                }
+            });
+        }
+    </script>
 @endpush

@@ -63,11 +63,7 @@
                         <i class="fas fa-expand-arrows-alt"></i>
                     </a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
-                        <i class="fas fa-th-large"></i>
-                    </a>
-                </li> -->
+               
             </ul>
         </nav>
         <!-- /.navbar -->
@@ -159,41 +155,57 @@
                                         <p>Review</p>
                                     </a>
                                 </li>
-                         
-                                <li class="nav-item d-none">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon fas fa-table"></i>
-                                        <p>Eksport</p>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-print"></i>
+                                <p>
+                                    Export Kontrak
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('ExKontrakPDF') }}" class="nav-link">
+                                        <i class="fas fa-copy"></i>
+                                        <p>Export by PDF</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('viewExport') }}" class="nav-link">
+                                        <i class="fas fa-table"></i>
+                                        <p>Export by EXCEL</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
                         @if(Auth::user()->permission=='admin')
-                       <li class="nav-item">
-                            <a href="{{ route('index') }}" class="nav-link">
-                                <i class=" fas fa-user"></i>
-                                <p>User</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('vPasal') }}" class="nav-link">
-                                <i class=" fas fa-book"></i>
-                                <p>Pasal</p>
-                            </a>
-                        </li>
-                      
-                        <li class="nav-item">
-                            <a href="{{ route('vendor.index') }}" class="nav-link">
-                                <i class=" fas fa-burn"></i>
-                                <p>Vendor</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('setting.edit',1) }}" class="nav-link">
-                                <i class=" fas fa-cog"></i>
-                                <p>Setting</p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="{{ route('index') }}" class="nav-link">
+                                    <i class=" fas fa-user"></i>
+                                    <p>User</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('vPasal') }}" class="nav-link">
+                                    <i class=" fas fa-book"></i>
+                                    <p>Pasal</p>
+                                </a>
+                            </li>
+                        
+                            <li class="nav-item">
+                                <a href="{{ route('vendor.index') }}" class="nav-link">
+                                    <i class=" fas fa-burn"></i>
+                                    <p>Vendor</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('setting.edit',1) }}" class="nav-link">
+                                    <i class=" fas fa-cog"></i>
+                                    <p>Setting</p>
+                                </a>
+                            </li>
                         @endif
                         <li class="nav-item">
                             <a href="{{ route('logout') }}" class="nav-link">
@@ -215,7 +227,7 @@
             <strong>Copyright &copy;{{ date('Y')}} Dept.Pengadaan - PERURI.</strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
-                <b>Version</b> 3.2.0
+                {{-- <b>Version</b> 3.2.0 --}}
             </div>
         </footer>
 
@@ -291,7 +303,8 @@
                 "responsive": true,
                 "lengthChange": false,
                 "autoWidth": false,
-            })
+            });
+
             $('#example2').DataTable({
                 "paging": true,
                 "lengthChange": false,
@@ -301,22 +314,62 @@
                 "autoWidth": false,
                 "responsive": true,
             });
+
+            $('#filter_type').change(function() {
+                if ($(this).val() === 'month') {
+                    $('#month').show(); // Tampilkan input bulan
+                    $('#year').show(); // Tampilkan input tahun
+                    $('#filter_value').val(''); // Kosongkan nilai filter_value
+                    $('#filter_value').hide(); // Sembunyikan input filter_value
+                } else {
+                    $('#month').hide(); // Sembunyikan input bulan
+                    $('#year').hide(); // Sembunyikan input tahun
+                    $('#filter_value').show(); // Tampilkan kembali input filter_value
+                }
+            });
+
+            $('#month, #year').change(function() {
+                var month = $('#month').val();
+                var year = $('#year').val();
+                if (month && year) {
+                    $('#filter_value').val(month + '/' + year); // Atur nilai input filter_value
+                }
+            });
+
+            $('input[name="filter_value"]').daterangepicker({
+                autoUpdateInput: false,
+                locale: {
+                    cancelLabel: 'Clear'
+                }
+            });
+
+            $('input[name="filter_value"]').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
+            });
+
+            $('input[name="filter_value"]').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+            });
         });
+
+
         function winpopup(url, windowname) {
-                let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-                let screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-                
-                let popupWidth = 900;
-                let popupHeight = 640;
-                
-                let leftPosition = (screenWidth - popupWidth) / 2;
-                let topPosition = (screenHeight - popupHeight) / 2;
-                
-                let features = 'width=' + popupWidth + ',height=' + popupHeight + ',toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=' + leftPosition + ',top=' + topPosition;
-                
-                window.open(url, windowname, features);
-                return false;
-            }
+            let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+            let screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+            
+            let popupWidth = 900;
+            let popupHeight = 640;
+            
+            let leftPosition = (screenWidth - popupWidth) / 2;
+            let topPosition = (screenHeight - popupHeight) / 2;
+            
+            let features = 'width=' + popupWidth + ',height=' + popupHeight + ',toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=' + leftPosition + ',top=' + topPosition;
+            
+            window.open(url, windowname, features);
+            return false;
+        }
+
+        
     </script>
     @stack('scripts')
 </body>

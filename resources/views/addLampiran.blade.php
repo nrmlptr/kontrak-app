@@ -213,7 +213,7 @@
                         $.get(`/dataVendor/${response[0].registration_no}`, function(data) {
                             // Setelah mendapatkan data, set nilai textarea
                             // $('textarea[name="alamat_vendor"]').val(data.alamat);
-                             $('textarea[name="alamat_vendor"]').summernote('code',data.alamat);
+                            $('textarea[name="alamat_vendor"]').summernote('code',data.alamat);
                         });
                     } else {
                         console.log("Kontrak tidak ditemukan");

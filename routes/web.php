@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ExcelController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\File;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KontrakController;
@@ -117,12 +119,35 @@ Route::middleware('auth')->group(
 
         // vendor
         Route::get('vendor', [VendorController::class, 'index'])->name('vendor.index');
+        // route untuk buka view edit vendor untuk get npwp dan ubah akta
         Route::get('vendor/{registration_no}', [VendorController::class, 'edit'])->name('vendor.edit');
+        // route untuk loading update vendor
         Route::put('vendor/{registration_no}', [VendorController::class, 'update'])->name('vendor.update');
+        // route untuk get data npwp dari api 
         Route::get('/dataNpwp/{no_vendor}', [VendorController::class, 'npwp_data'])->name('npwpdata');
 
+        // route untuk buka view setting update akta peruri
         Route::get('setting/{setting}', [SettingController::class, 'edit'])->name('setting.edit');
+        // route untuk loading perubahan akta peruri
         Route::put('setting/{setting}', [SettingController::class, 'update'])->name('setting.update');
+
+
+        // route  untuk show history revisi kontrak
+        Route::get('/historyRevisi/{id}', [KontrakController::class, 'historyRevisiK'])->name('historyRevisiK');
+
+        // route untuk show tabel sop dan tunjukin tiap sop ada berapa PR 
+        Route::get('/viewSOP', [KontrakController::class, 'indexSOP'])->name('indexSOP');
+        Route::get('/detail/{purchasing_document_number}', [KontrakController::class, 'detailPR'])->name('detailPR');
+
+        // ROUTE untuk Export Kontrak
+        // pdf
+        Route::get('/ExKontrakPDF', [KontrakController::class, 'ExportKPDF'])->name('ExKontrakPDF');
+        Route::get('/ExKontrakPDF=pertanggal/{tglawal}/{tglakhir}', [KontrakController::class, 'ExportKontrakPertanggalPDF'])->name('ExKontrakPDF=pertanggal');
+        //route klik buka menu export excel
+        Route::get('kontrak/export/', [KontrakController::class, 'viewExport'])->name('viewExport');
+        Route::get('/export', [KontrakController::class, 'export'])->name('contracts.export');
+
+        
         // end auth group
 
     }

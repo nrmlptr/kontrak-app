@@ -38,16 +38,16 @@
                                             <th></th>
                                         @endif
                                         <th>No</th>
-                                        <!-- <th>Nomor SP</th> -->
-                                        <th>Detail SP</th>
-                                        <th>Tanggal SOP</th>
+                                        <th>Nomor SP</th>
+                                        <th>Tanggal SP</th>
                                         <th>Nomor SOP</th>
+                                        <th>Tanggal SOP</th>
                                         <th>Perihal</th>
-                                        <th>Tanggal Kontrak</th>
                                         <th>Pembuat</th>
                                         <th>Unit Kerja</th>
                                         <th>Jenis Kontrak</th>
                                         <th>Status</th>
+                                        <th>Nominal</th>
                                         @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin')
                                             <th>Action</th>
                                         @endif
@@ -68,44 +68,50 @@
                                             @endif
                                         @endif
                                         <td>{{ $loop->iteration }}</td>
-                                        <!-- <td>{{ $d->number }}</td> -->
                                         <td>{{ $d->detail_number }}</td>
-                                        <td>{{ $d->tanggal_sop }}</td>
+                                        <td>{{ date('d-m-Y', strtotime($d->date_kontrak)) }}</td>
                                         <td>{{ $d->nomor_sop }}</td>
+                                        <td>{{ date('d-m-Y', strtotime($d->tanggal_sop)) }}</td>
                                         <td>{{ $d->perihal }}</td>
-                                        <td>{{ $d->date_kontrak }}</td>
                                         <td>{{ $d->pembuat }}</td>
                                         <td>{{ $d->unit_kerja }}</td>
                                         <td>
                                             @if($d->jenis_kontrak == '1')
-                                            <span class="badge badge-success">Jaminan</span>
+                                                <span class="badge badge-success">Jaminan</span>
                                             @else
-                                            <span class="badge badge-secondary">Tanpa Jaminan</span>
+                                                <span class="badge badge-secondary">Tanpa Jaminan</span>
                                             @endif
                                         </td>
                                         <td>
                                             @if($d->status == 'draft')
-                                            <span class="badge badge-warning">draft</span>
+                                                <span class="badge badge-warning">draft</span>
                                             @elseif($d->status == 'reviewkasek')
-                                            <span class="badge badge-danger">on review kasek</span>
+                                                <span class="badge badge-info">Review Kasek</span>
+                                            @elseif($d->status == 'revisikasek')
+                                                <span class="badge badge-danger">Revisi by Kasek</span>
                                             @elseif($d->status == 'editedkasek')
-                                            <span class="badge badge-info">revisi by kasek</span>
+                                                <span class="badge badge-warning">Diperiksa ulang by Kasek</span>
                                             @elseif($d->status == 'approvedkasek')
-                                            <span class="badge badge-success">approved by kasek</span>
+                                                <span class="badge badge-success">Disetujui Kasek</span>
                                             @elseif($d->status == 'reviewkadept')
-                                            <span class="badge badge-danger">on review kadept</span>
-                                             @elseif($d->status == 'editedkadept')
-                                            <span class="badge badge-info">revisi by kadept</span>
+                                                <span class="badge badge-info">Review Kadept</span>
+                                            @elseif($d->status == 'revisikadept')
+                                                <span class="badge badge-danger">Revisi by Kadept</span>
+                                            @elseif($d->status == 'editedkadept')
+                                                <span class="badge badge-warning">Diperiksa ulang by Kasek</span>
                                             @elseif($d->status == 'approvedkadept')
-                                            <span class="badge badge-success">approved by kadept</span>
+                                                <span class="badge badge-success">Disetujui Kadept</span>
                                             @elseif($d->status == 'reviewkadiv')
-                                            <span class="badge badge-danger">on review kadiv</span>
+                                                <span class="badge badge-info">Review Kadiv</span>
+                                            @elseif($d->status == 'revisikadiv')
+                                                <span class="badge badge-danger">Revisi by Kadiv</span>
                                             @elseif($d->status == 'editedkadiv')
-                                            <span class="badge badge-info">revisi by kadiv</span>
+                                                <span class="badge badge-warning">Diperiksa ulang by Kasek</span>
                                             @else
-                                            <span class="badge badge-success">approved kadiv NET</span>
+                                                <span class="badge badge-success">Disetujui Kadiv (NET)</span>
                                             @endif
                                         </td>
+                                        <th>{{ $d-> }}</th>
                                         @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin')
                                             @php
                                                 $cekPembuat = Auth::user()->name;
@@ -115,6 +121,7 @@
                                                 {{-- Check if Lampiran7 exists for this kontraks_id --}}
                                                 @php
                                                     $cekLampiran7 = \App\Models\Lampiran7::where('kontraks_id', $d->id)->doesntExist();
+                                                    // dd($cekLampiran7)
                                                 @endphp
                                                 {{-- If Lampiran7 untuk kontrak tersebut benar tidak ada, show the button --}}
                                                 @if($cekLampiran7)
@@ -175,40 +182,33 @@
 @endsection
 
 @push('scripts')
+    
+
     <script>
-         $(function() {
-    var table = $("#kontakdatatable").DataTable({
-        "responsive": true,
-        "lengthChange": false,
-        "autoWidth": false,
-        "columnDefs": [{
-            targets: [0, 11],
-            visible: false
-        }],
-        "buttons": [
-            {
-                extend: 'excelHtml5',
-                text: 'Excel',
-                exportOptions: {
-                    columns: ':visible' // Mengatur kolom yang akan diekspor, mengambil yang terlihat di tabel saja
-                }
-            },
-            {
-                extend: 'pdfHtml5',
-                text: 'PDF',
-                orientation: 'landscape', // Mengatur orientasi kertas menjadi lanskap
-                exportOptions: {
-                    columns: ':visible' // Mengatur kolom yang akan diekspor, mengambil yang terlihat di tabel saja
-                }
-            }
-            
-        ]
-    });
-
-    table.buttons().container().appendTo('#kontakdatatable_wrapper .col-md-6:eq(0)');
-});
-
-      
-        
+        $(document).ready(function() {
+            $('#kontakdatatable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'excel',
+                        filename: 'Data_Kontrak_Dept_Pengadaan', // untuk nama filenya
+                        title: 'Data Kontrak | Dept Pengadaan', //untuk di header nya
+                        exportOptions: {
+                            columns: [ 1,2,3,4,5,6,7,8,9]
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        filename: 'Data_Kontrak_Dept_Pengadaan', // untuk nama filenya
+                        title: 'Data Kontrak | Dept Pengadaan', //untuk di header nya
+                        orientation: 'landscape',
+                        exportOptions: {
+                            columns: [ 1,2,3,4,5,6,7,8,9]
+                        }
+                    }
+                ]
+            });
+        });
     </script>
+
 @endpush

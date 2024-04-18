@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,19 +14,18 @@ class Kontrak extends Model
         'id'
     ];
 
+    protected $table = 'kontraks'; // Sesuaikan nama tabel dengan nama sebenarnya
+
+
     public function lampiran1()
     {
         return $this->hasOne(Lampiran1::class, 'kontraks_id'); // Menentukan kunci asing secara eksplisit
     }
 
-
-
     public function lampiran2()
     {
         return $this->hasOne(Lampiran2::class, 'kontraks_id'); // Menentukan kunci asing secara eksplisit
     }
-
-
 
     public function lampiran3()
     {
@@ -44,13 +44,10 @@ class Kontrak extends Model
         return $this->hasOne(Lampiran6::class, 'kontraks_id'); // Menentukan kunci asing secara eksplisit
     }
 
-
-
     public function lampiran7()
     {
         return $this->hasOne(Lampiran7::class, 'kontraks_id'); // Menentukan kunci asing secara eksplisit
     }
-
 
     public function revisiKontraks()
     {
@@ -73,5 +70,42 @@ class Kontrak extends Model
     public function integrates()
     {
         return $this->hasMany(Integrate::class, 'purchasing_document_number', 'nomor_sop');
+    }
+
+    public function historyRevisi()
+    {
+        return $this->hasMany(RevisiKontrak::class, 'kontraks_id')->orderBy('created_at', 'DESC'); 
+    }
+
+
+
+    public function viewBYdate($date)
+    {
+        return Kontrak::whereDate('date_kontrak', $date)->get();
+    }
+
+    public function viewBYmonth($month, $year)
+    {
+        return Kontrak::whereMonth('date_kontrak', $month)
+        ->whereYear('date_kontrak', $year)
+        ->get();
+    }
+
+    public function viewBYyear($year){
+        return Kontrak::whereYear('date_kontrak', $year)->get();
+    }
+
+
+    public function viewALL()
+    {
+        return static::all(); // Menggunakan metode all() untuk mengambil semua data kontrak
+    }
+
+    public function optionTahun()
+    {
+        return Kontrak::selectRaw('YEAR(date_kontrak) AS tahun')
+        ->orderByRaw('YEAR(date_kontrak)')
+        ->groupByRaw('YEAR(date_kontrak)')
+            ->get();
     }
 }

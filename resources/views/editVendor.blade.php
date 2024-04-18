@@ -57,7 +57,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="npwp">No NPWP</label>
-                                        <input type="text" class="form-control" name="npwp" value="{{ @$data->vendortext->npwp }}" id="npwp" required>
+                                        <input type="text" class="form-control" name="npwp" value="{{ @$data->vendortext->tax_document_number }}" id="npwp" required>
                                         @error('npwp')
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
@@ -95,14 +95,32 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <script>
+<script>
+    // $(document).ready(function() {
+    //     $('#akta').summernote();
+    //     $.get(`/dataNpwp/{{ $data->registration_no }}}`, function(data) {
+    //         // Setelah mendapatkan data, set nilai textarea
+    //         $('#npwp').val(data.tax_document_number);
+    //         console.log(data);
+    //     });
         
-        $(document).ready(function() {
-            $('#akta').summernote();
-            $.get(`/dataNpwp/{{ $data->registration_no }}}`, function(data) {
-                // Setelah mendapatkan data, set nilai textarea
-                $('#npwp').val(data.npwp);
-            });
-        });
-    </script>
+    // });
+
+    $(document).ready(function() {
+    $('#akta').summernote();
+    $.get(`/dataNpwp/{{ $data->registration_no }}`, function(data) {
+        // Pastikan bahwa respons yang diterima dapat diuraikan dengan benar sebagai JSON
+        try {
+            // Setelah mendapatkan data, set nilai textarea
+            $('#npwp').val(data.tax_document_number);
+            console.log(data);
+        } catch (error) {
+            console.error("Error parsing JSON data: ", error);
+        }
+    }).fail(function(xhr, status, error) {
+        console.error("Failed to fetch NPWP data:", error);
+    });
+});
+</script>
+
 @endpush

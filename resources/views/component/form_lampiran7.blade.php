@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="alert alert-danger d-none" id="infostatus" role="alert">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates similique hic eius saepe. Deleniti excepturi, accusantium iure eveniet nostrum ratione vel rerum veritatis non laborum, dolores tenetur ipsam libero dolore.</div>
+    <div class="alert alert-danger d-none" id="infostatus" role="alert"></div>
     <form id="inputLampiran7">
         @csrf
         <div class="row">
@@ -16,8 +16,7 @@
                     Jakarta Selatan 12160
                     <br>
                     Indonesia
-                </textarea>
-               
+                </textarea>   
             </div>
             <div class="form-group col-12">
                 <label>Alamat Vendor</label>
@@ -28,37 +27,35 @@
             <button type="button" class="btn btn-block btn-secondary btn-lg" onclick="submitLampiran7()">Submit</button>
             <!-- </div> -->
         </div>
-
     </form>
 </div>
 
 @push('scripts')
     
-<script type="text/javascript">
-   
-    // SUBMIT DATA
+    <script type="text/javascript">
+    
+        // SUBMIT DATA
+        function submitLampiran7() {
+            var form = $('#inputLampiran7');
 
-    function submitLampiran7() {
-        var form = $('#inputLampiran7');
+            $.ajax({
+                method: "POST",
+                url: "{{ route('submitLampiran7') }}",
+                data: form.serialize(),
+                success: function(result) {
 
-        $.ajax({
-            method: "POST",
-            url: "{{ route('submitLampiran7') }}",
-            data: form.serialize(),
-            success: function(result) {
-
-                console.log(result.message);
-                if (result.status=='success') {
-                    if (result.redirect) {
-                        window.location.href = result.redirect; // Mengarahkan ke halaman review
+                    console.log(result.message);
+                    if (result.status=='success') {
+                        if (result.redirect) {
+                            window.location.href = result.redirect; // Mengarahkan ke halaman review
+                        }
+                    } else {
+                        $('#infostatus').text(``);
+                        $('#infostatus').removeClass('d-none').text(result.message);
                     }
-                } else {
-                    $('#infostatus').text(``);
-                    $('#infostatus').removeClass('d-none').text(result.message);
+                    
                 }
-                
-            }
-        });
-    }
-</script>
+            });
+        }
+    </script>
 @endpush

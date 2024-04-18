@@ -32,7 +32,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table id="example1" class="table table-bordered table-striped">
+                            <table id="userdatatable" class="table table-bordered table-striped">
                                 <thead>
                                     <tr class="text-center">
                                         <th>No</th>
@@ -102,3 +102,33 @@
 </div>
 
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#userdatatable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'excel',
+                        filename: 'Data_User_AP_Dept_Pengadaan', // untuk nama filenya
+                        title: 'Data Pengguna Aplikasi Kontrak | Dept Pengadaan', //untuk di header nya
+                        exportOptions: {
+                            columns: [ 0,1,2,3,4,5]
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        filename: 'Data_User_AP_Dept_Pengadaan', // untuk nama filenya
+                        title: 'Data Pengguna Aplikasi Kontrak | Dept Pengadaan', //untuk di header nya
+                        // orientation: 'ladnscape',
+                        exportOptions: {
+                            columns: [ 0,1,2,3,4,5]
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+
+@endpush

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\KontrakExport;
 use App\Models\Kontrak;
 use App\Models\User;
 use App\Models\Integrate;
@@ -12,11 +13,15 @@ use App\Models\Lampiran4;
 use App\Models\Lampiran5;
 use App\Models\Lampiran6;
 use App\Models\Lampiran7;
+use App\Models\LogContract;
 use App\Models\PasalKontrak;
 use App\Models\revisiKontrak;
 use App\Models\Setting;
 use App\Models\Vendor;
 use App\Models\VendorText;
+use App\Notifications\KontrakApprovedNotification;
+use App\Notifications\KontrakReviewEditNotification;
+use App\Notifications\KontrakRevisiNotification;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Datatables;
@@ -27,7 +32,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use File;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 use PDF;
+use PhpOffice\PhpSpreadsheet\Reader\Xls;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
 // use Spatie\LaravelIgnition\Exceptions\ViewException;
 
 
@@ -47,6 +57,7 @@ class KontrakController extends Controller
         $client     = new Client();
         $request    = $client->request('GET', $url, ['verify' => false]);
         $collection = collect(json_decode($request->getBody()));
+        // dd($collection->count());
         // dd($request->getBody());
         // buat array kosong untuk nanti tampung datanya
         $inputData  = array();
@@ -54,11 +65,14 @@ class KontrakController extends Controller
 
         foreach ($collection as $col) {
             // dd($col);
+            $tanggalSPPH = $col->tgl_spph;
+            $tglSPPHSQL = date('Y-m-d H:i:s', strtotime($tanggalSPPH));
             $tanggalWaktu = $col->tgl_sp3_approve; // Ambil nilai tanggal dan waktu dari kolom tgl_sp3_approve
             $tanggalWaktuMySQL = date('Y-m-d H:i:s', strtotime($tanggalWaktu)); // Format nilai ke dalam format yang sesuai dengan MySQL
 
             $inputData = [
                 'no_spph'                            => $col->no_spph,
+                'tgl_spph'                           => $tglSPPHSQL,
                 'no_sp3'                             => $col->no_sp3,
                 'tgl_sp3_approve'                    => $tanggalWaktuMySQL,
                 'schedule_from_time'                 => $col->schedule_from_time,
@@ -76,15 +90,24 @@ class KontrakController extends Controller
                 'material_number'                    => $col->material_number,
                 'material_name'                      => $col->material_name,
                 'purchase_requisition_number'        => $col->purchase_requisition_number,
+                'requisition_date'                   => $col->requisition_date,
                 'item_number_of_purchasing_document' => $col->item_number_of_purchasing_document,
                 'purchase_order_quantity'            => (int) str_replace(['.', ','], '', $col->purchase_order_quantity),
                 'purchase_order_unit_of_measure'     => $col->purchase_order_unit_of_measure,
                 'net_price'                          => (int) str_replace(['.', ','], '', $col->net_price),
                 'condition_value'                    => $col->condition_value,
                 'alamat'                             => $col->alamat,
-                'kode_pos'                           => $col->kode_pos,
+                'kecamatan'                          => $col->sub_district,
                 'kota'                               => $col->kota,
-                'provinsi'                           => $col->provinsi
+                'provinsi'                           => $col->provinsi,
+                'kode_pos'                           => $col->kode_pos,
+                'negara'                             => $col->negara,
+                'no_hp'                              => $col->phone_number,
+                'website'                            => $col->website,
+                'email_perusahaan'                   => $col->company_email,
+                'kategori_lokasi'                    => $col->location_category
+
+
             ];
 
             // dd($inputData);
@@ -93,17 +116,42 @@ class KontrakController extends Controller
     }
 
 
+    // public function getdataSOP(Request $request)
+    // {
+    //     $data = [];
+
+    //     if ($request->has('q')) {
+    //         $search = $request->q;
+    //         $data = Integrate::select("purchasing_document_number", "vendor_name", "document_date", "tender_name")
+    //             ->with('vendorText') // Mengambil data VendorText
+    //             ->where('purchasing_document_number', 'LIKE', "%$search%")
+    //             ->orWhere('vendor_name', 'LIKE', "%$search%")
+    //             ->groupBy('purchasing_document_number', 'vendor_name', 'document_date', 'tender_name') // Memasukkan kolom 'vendor_name' ke dalam klausa 'GROUP BY'
+    //             ->orderBy('purchasing_document_number')
+    //             ->get();
+    //         if ($data->isEmpty()) {
+    //             return response()->json('Tidak ada data yang cocok ditemukan.');
+    //         } else {
+    //             // dd($data);
+    //             return response()->json($data);
+    //         }
+    //     }
+
+    //     return response()->json($data);
+    // }
+
     public function getdataSOP(Request $request)
     {
         $data = [];
 
         if ($request->has('q')) {
             $search = $request->q;
-            $data = Integrate::select("purchasing_document_number", "vendor_name", "document_date", "tender_name")
-                ->where('purchasing_document_number', 'LIKE', "%$search%")
-                ->orWhere('vendor_name', 'LIKE', "%$search%")
-                ->groupBy('purchasing_document_number', 'vendor_name', 'document_date', 'tender_name') // Memasukkan kolom 'vendor_name' ke dalam klausa 'GROUP BY'
-                ->orderBy('purchasing_document_number')
+            $data = Integrate::select("integrates.purchasing_document_number", "integrates.vendor_name", "integrates.document_date", "integrates.tender_name", "vendor_texts.akta")
+                ->leftJoin('vendor_texts', 'integrates.registration_no', '=', 'vendor_texts.registration_no') // Melakukan left join dengan tabel vendortext
+                ->where('integrates.purchasing_document_number', 'LIKE', "%$search%")
+                ->orWhere('integrates.vendor_name', 'LIKE', "%$search%")
+                ->groupBy('integrates.purchasing_document_number', 'integrates.vendor_name', 'integrates.document_date', 'integrates.tender_name', 'vendor_texts.akta') // Memasukkan kolom-kolom ke dalam klausa GROUP BY
+                ->orderBy('integrates.purchasing_document_number')
                 ->get();
 
             if ($data->isEmpty()) {
@@ -115,7 +163,6 @@ class KontrakController extends Controller
 
         return response()->json($data);
     }
-
 
     // public function vendor_data($no_vendor)
     // {
@@ -140,50 +187,67 @@ class KontrakController extends Controller
             $dataSave = [];
             foreach ($dataVendor as $v) {
                 $dataSave[] = [
-                    'registration_no' => $v['registration_no'],
-                    'sap_code'        => $v['sap_code'],
-                    'alamat'          => $v['alamat'],
-                    'kode_pos'        => $v['kode_pos'],
-                    'kota'            => $v['kota'],
-                    'provinsi'        => $v['provinsi'],
-                    'board_type'      => showEncodeChar($v['board_type']),
-                    'primary_data'    => $v['primary_data'],
-                    'full_name'       => $v['full_name'],
-                    'citizenship'     => $v['citizenship'],
-                    'position'        => $v['position'],
-                    'email'           => $v['email'],
-                    'phone_number'    => $v['phone_number'],
-                    'created_at'      => now(),
-                    'updated_at'      => now(),
+                    'registration_no'       => $v['registration_no'],
+                    'sap_code'              => $v['sap_code'],
+                    'alamat'                => $v['alamat'],
+                    'sub_district'          => $v['sub_district'],
+                    'kota'                  => $v['kota'],
+                    'provinsi'              => $v['provinsi'],
+                    'kode_pos'              => $v['kode_pos'],
+                    'negara'                => $v['negara'],
+                    'board_type'            => showEncodeChar($v['board_type']),
+                    'primary_data'          => $v['primary_data'],
+                    'full_name'             => $v['full_name'],
+                    'citizenship'           => $v['citizenship'],
+                    'position'              => $v['position'],
+                    'email'                 => $v['email'],
+                    'phone_number'          => $v['phone_number'],
+                    'website'               => $v['website'],
+                    'company_email'         => $v['company_email'],
+                    'location_category'     => $v['location_category'],
+                    'created_at'            => now(),
+                    'updated_at'            => now(),
                 ];
             }
 
             $save = Vendor::insert($dataSave);
-            $alamatnya = $dataVendor[0]['alamat'] . " Kota " . $dataVendor[0]['kota'] . ",  Provinsi " . $dataVendor[0]['provinsi'] . ", Kode pos " . $dataVendor[0]['kode_pos'];
+            $alamatnya = $dataVendor[0]['alamat'] . '<br>' . $dataVendor[0]['sub_district'] . '<br>' . $dataVendor[0]['kota'] . '<br>' . $dataVendor[0]['provinsi'] . '<br>' . $dataVendor[0]['kode_pos'] . '<br>' .  $dataVendor[0]['negara'];
         } else {
             $row = $cek->first();
-            $alamatnya = $row->alamat . " Kota " . $row->kota . ", Provinsi " . $row->provinsi . ", Kode pos  " . $row->kode_pos;
+            $alamatnya = $row->alamat . '<br>' . $row->sub_district . '<br>' . $row->kota . '<br>' . $row->provinsi . '<br>' . $row->kode_pos . '<br>' . $row->negara;
         }
         return response()->json(['alamat' => $alamatnya]);
         // return $data;
     }
+
+    // public function dataBarang(Request $request)
+    // {
+    //     $dataBarang = DB::table('integrates')
+    //         ->join('kontraks', 'integrates.purchasing_document_number', '=', 'kontraks.nomor_sop')
+    //         ->where('kontraks.nomor_sop', $request->po)
+    //         ->select('integrates.*')
+    //         ->get();
+
+    //     return response()->json($dataBarang);
+    // }
 
     public function dataBarang(Request $request)
     {
         $dataBarang = DB::table('integrates')
             ->join('kontraks', 'integrates.purchasing_document_number', '=', 'kontraks.nomor_sop')
             ->where('kontraks.nomor_sop', $request->po)
-            ->select('integrates.*')
+            ->select('integrates.*', DB::raw('TRIM(LEADING "0" FROM integrates.purchase_requisition_number) as purchase_requisition_number'))
             ->get();
 
         return response()->json($dataBarang);
     }
 
+
     public function indexKontrak()
     {
         // echo 'monitoring kontrak';
         // $data = Kontrak::get();
-        $data = Kontrak::orderBy('date_kontrak', 'desc')->get();
+        $data = Kontrak::orderBy('created_at', 'desc')->get();
         // $data = Kontrak::Unitkerja()->orderBy('date_kontrak', 'desc')->get();
         // "select * from contracts where unit_kerja='4120'";
 
@@ -196,7 +260,8 @@ class KontrakController extends Controller
 
         // echo 'form add kontrak';
         // if (auth()->user()->can('view_input')) {
-        $setting = Setting::find(1);
+        $setting    = Setting::find(1);
+        // $setVendor = VendorText::where('registration_no', $request->nomor_sop)->first();
         return view('addKontrak', compact('setting'));
         // }
 
@@ -239,7 +304,8 @@ class KontrakController extends Controller
         $validated['pembuat']       = Auth::user()->name;
         $validated['jenis_kontrak'] = $jenisKontrakValue;
         $validated['status']        = $status;
-        $validated['peruritext']        = $peruri_text;
+        $validated['peruritext']    = $peruri_text;
+        $validated['vendortext']    = $akta;
         $validated['unit_kerja']    = Auth::user()->unit_kerja;
 
         // dd($validated);
@@ -291,11 +357,14 @@ class KontrakController extends Controller
         // TAMBAHIN QUERY BUAT NGAMBIL BEBERAPA DATA DARI API UNTUK INPUT DI LAMPIRAN 1
         $data = Kontrak::join('integrates', 'kontraks.nomor_sop', '=', 'integrates.purchasing_document_number')
             ->where('kontraks.id', $id)
-            ->select('kontraks.*', 'integrates.no_spph', 'integrates.no_sp3', 'integrates.tgl_sp3_approve', 'integrates.purchasing_group')
+            ->select('kontraks.*', 'integrates.purchase_requisition_number', 'integrates.no_spph', 'integrates.tgl_spph', 'integrates.no_sp3', 'integrates.tgl_sp3_approve', 'integrates.purchasing_group')
             ->first();
 
         // dd($data);
 
+        // Ilangin dua nol depan nomor pr
+        $noSPPB = ltrim($data->purchase_requisition_number, '0');
+        // dd($noSPPB);
         // Mengambil dua angka terakhir dari tahun tanggal_sop
         $tahunSop = date('y', strtotime($data->tanggal_sop));
 
@@ -306,7 +375,8 @@ class KontrakController extends Controller
         // return view('addLampiran', compact('data','api'));
         return view('addLampiran', [
             'data' => $data,
-            'valueNomorSop' => $valueNomorSop
+            'valueNomorSop' => $valueNomorSop,
+            'no_sppb' => $noSPPB
         ]);
     }
 
@@ -463,6 +533,7 @@ class KontrakController extends Controller
 
     public function storeLampiran4(Request $request)
     {
+        // dd($request->all());
         extract($request->all());
 
         // Validasi data
@@ -668,6 +739,18 @@ class KontrakController extends Controller
             $kontrak->status = $status;
             $kontrak->save();
         }
+
+        // Kirim notifikasi ke pengguna yang memberikan revisi
+        if (isset($revisi) && $revisi) {
+            // Ambil alamat email dan nama yang memberikan revisi
+            $emailRevisi = $revisi->user->email;
+            $namaPengguna = $revisi->user->name;
+
+            // Kirim notifikasi email
+            $user = User::where('email', $emailRevisi)->first();
+            $user->notify(new KontrakReviewEditNotification($kontrak, $namaPengguna));
+        }
+
         $kontrak->logs()->create([
             'status'    => $status,
             'user_id'   => auth()->id(),
@@ -699,27 +782,10 @@ class KontrakController extends Controller
         )) {
             $data = $data->Unitkerja(); //where unit kerja
         }
-        $data = $data->orderBy('date_kontrak', 'desc')->get();
+        $data = $data->orderBy('created_at', 'desc')->get();
         // "select * from contracts where unit_kerja='4120'";
         return view('rKontrak', compact('data'));
     }
-
-    // method detail kontrak
-    // public function showKontrak(Request $request, $id)
-    // {
-    //     // AMBIL DATA PASAL
-    //     $dataPasal = PasalKontrak::get();
-    //     // dd($dataPasal);
-    //     // Mengambil data kontrak
-    //     $data = Kontrak::get();
-    //     // $data = Kontrak::with('lampiran1')->find($id);
-
-    //     // Mengambil data lampiran1 terkait dengan kontrak
-    //     // $lampiran1 = $data->lampiran1;
-
-    //     // dd($lampiran1);
-    //     return view('showKontrak', compact('data', 'dataPasal'));
-    // }
 
     // method detail kontrak
     public function showKontrak(Request $request, $id)
@@ -743,19 +809,29 @@ class KontrakController extends Controller
 
         // Mengurutkan koleksi pasal berdasarkan nama_pasal sebelum mengirimkannya ke tampilan
         // $data->pasal = $data->pasal->sortBy('nama_pasal');
-        $statusnya = "approved" . auth()->user()->permission;
-        $statuslist = $data->logs->pluck('status')->toArray();
-        // cek tombol menyetujui kontak
-        $cekApprovedKontrak = (in_array($statusnya, $statuslist) ? 'd-none' : '');
 
+
+        // $statusnya = "approved" . auth()->user()->permission;
+        // $statuslist = $data->logs->pluck('status')->toArray();
+        // // cek tombol menyetujui kontak
+        // $cekApprovedKontrak = (in_array($statusnya, $statuslist) ? 'd-none' : '');
+
+        // Ambil tanggal dari $data
+        $tanggal_kontrak = Carbon::parse($data->date_kontrak);
+        $arrDateSplit = explode('-', $data->date_kontrak); //thn - bulan -tanggal
+        // dd($arrDateSplit);
+        // Buat hari dan tanggal kontrak
+        $tanggal_tertulis = $tanggal_kontrak->isoFormat('dddd') . ", tanggal " . terbilang($arrDateSplit[2]) . " bulan " . getMonthIndo($tanggal_kontrak->isoFormat('M')) . " tahun " . terbilang($arrDateSplit[0]);
+        // dd($tanggal_tertulis);
 
         // return $data;
         $pihak1data = Setting::find(1);
         $pihak2data = VendorText::where('registration_no', @$data->integrates[0]->registration_no)->first();
         $pihak2name = @$pihak2data->pihakname;
         $pihak1name = @$pihak1data->peruri_pihakname;
-        return view('showKontrakcoba', compact('data', 'pihak2name', 'pihak1name', 'cekApprovedKontrak', 'pihak1data', 'pihak2data'));
+        return view('showKontrakcoba', compact('data', 'pihak2name', 'pihak1name', 'pihak1data', 'pihak2data', 'tanggal_tertulis'));
     }
+
     public function cetakKontrak($id)
     {
 
@@ -774,6 +850,15 @@ class KontrakController extends Controller
             'logs',
             'revisiKontraks'
         ])->findOrFail($id);
+
+        // Ambil tanggal dari $data
+        $tanggal_kontrak = Carbon::parse($kontrak->date_kontrak);
+        $arrDateSplit = explode('-', $kontrak->date_kontrak); //thn - bulan -tanggal
+        // dd($arrDateSplit);
+        // Buat hari dan tanggal kontrak
+        $tanggal_tertulis = $tanggal_kontrak->isoFormat('dddd') . ", tanggal " . terbilang($arrDateSplit[2]) . " bulan " . getMonthIndo($tanggal_kontrak->isoFormat('M')) . " tahun " . terbilang($arrDateSplit[0]);
+        // dd($tanggal_tertulis);
+
         $pihak1data = Setting::find(1);
         $pihak2data = VendorText::where('registration_no', @$kontrak->integrates[0]->registration_no)->first();
         $pihak2name = @$pihak2data->pihakname;
@@ -784,11 +869,14 @@ class KontrakController extends Controller
             'pihak1name' => $pihak1name,
             'pihak1data' => $pihak1data,
             'pihak2data' => $pihak2data,
+            'tanggal_tertulis' => $tanggal_tertulis,
         ];
         $pdf = PDF::loadview('cetak_kontrak_pdf', $data);
         // Set opsi setRemoteEnable
         return $pdf->stream("kontrak_" . $kontrak->detail_number . "pdf");
     }
+
+
     public function logKontrak(Request $request, $id)
     {
         $kontrak = Kontrak::with(['logs.user'])->findOrFail($id);
@@ -809,15 +897,14 @@ class KontrakController extends Controller
             $revisi->update(['statusrevisi' => 'Y']);
         }
 
-        // $status = "approved" . $revisi->user->permission;
-
-
         // kalo di aproved maka naikkan status ke review selanjutnya
         $status = "approved" . auth()->user()->permission;
         $kontrak->logs()->create([
             'status'    => $status,
             'user_id'   => auth()->id(),
         ]);
+
+
         if ($status == 'approvedkasek') {
             $nextstatus = "reviewkadept";
         } elseif ($status == 'approvedkadept') {
@@ -835,10 +922,31 @@ class KontrakController extends Controller
             ]);
         }
 
+        // update status kontrak
         $kontrak->update(['status' => $nextstatus]);
+
+        // Kirim notifikasi email sesuai dengan status kontrak
+        // $this->sendApprovalNotification($kontrak, $status);
+        $cekKontrakStatus = LogContract::with('user')
+            ->latest()
+            ->where(['kontraks_id' => $kontrak->id, 'status' => 'draft', 'user_id' => auth()->id()])
+            ->first();
+
+        if ($cekKontrakStatus) {
+            // Ambil alamat email pembuat kontrak
+            $emailPembuat = $cekKontrakStatus->user->email;
+            $namaPembuat = $cekKontrakStatus->user->name;
+
+            // Kirim notifikasi email sesuai dengan status kontrak
+            if ($cekKontrakStatus) {
+                // Jika disetujui oleh kasek, kirim notifikasi kepada pembuat kontrak
+                $user = User::where('email', $emailPembuat)->first();
+                $user->notify(new KontrakApprovedNotification($kontrak, $namaPembuat, $status));
+            }
+        }
+
         return response()->json(['message' => 'berhasil di setujui', 'redirect' => route('rKontrak'), 'status' => 'success']);
     }
-
 
 
     public function addRevisi(Request $request, $id)
@@ -848,26 +956,67 @@ class KontrakController extends Controller
         return view('addRevisi')->with('data', $data);
     }
 
+
+
     public function storeRevisi(Request $request)
     {
-        // dd($request->all());
-        $validator = Validator::make($request->all(), [
-            'kontraks_id'   => 'required',
-            'revisi'        => 'required',
+        // Validasi data
+        $validated = $request->validate([
+            'kontraks_id' => 'required',
+            'revisi' => 'required',
         ]);
 
-        if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
+        // Simpan data revisi
+        $data['kontraks_id'] = $validated['kontraks_id'];
+        $data['revisi'] = $validated['revisi'];
+        $data['user_id'] = auth()->id();
+        $status = '';
 
-        // Simpan data ke dalam tabel Lampiran7
-        $data['kontraks_id']   = $request->kontraks_id;
-        $data['revisi']        = $request->revisi;
-        $data['user_id']        = auth()->id();
+        // Tentukan status berdasarkan izin pengguna
+        $userPermission = auth()->user()->permission;
+        switch ($userPermission) {
+            case 'kasek':
+                $status = 'revisikasek';
+                break;
+            case 'kadept':
+                $status = 'revisikadept';
+                break;
+            case 'kadiv':
+                $status = 'revisikadiv';
+                break;
+        }
 
+        // Buat entri revisiKontrak
         revisiKontrak::create($data);
 
+        // Perbarui status kontrak
+        $kontrak = Kontrak::find($validated['kontraks_id']);
+        if ($kontrak) {
+            $kontrak->status = $status;
+            $kontrak->save();
+
+            $noteRevisi = revisiKontrak::where('kontraks_id', $kontrak->id)->latest()->first();
+            // Ambil alamat email pembuat kontrak dari tabel User
+            $pembuat = $kontrak->pembuat;
+            $emailPembuat = User::where('name', $pembuat)->value('email');
+            $user = User::where('email', $emailPembuat)->first();
+
+            // Kirim email notifikasi kepada pembuat kontrak
+            if ($kontrak && $noteRevisi) {
+                $user->notify(new KontrakRevisiNotification($kontrak, $noteRevisi));
+            }
+        }
+
+        // Buat entri log
+        $kontrak->logs()->create([
+            'status' => $status,
+            'user_id' => auth()->id(),
+        ]);
+
         // Response JSON dengan pesan sukses dan redirect ke halaman monitoring
-        return response()->json(['message' => 'Revisi Berhasil Dibuat', 'redirect' => route('indexKontrak')]);
+        return response()->json(['message' => 'Revisi Berhasil Dibuat', 'redirect' => route('rKontrak')]);
     }
+
 
     public function showRevisi($id)
     {
@@ -927,4 +1076,93 @@ class KontrakController extends Controller
         return response()->json(['message' => 'Lampiran 1 Berhasil Diperbarui']);
         // return redirect()->route('createLampiran');
     }
+
+
+    public function historyRevisiK(Request $request, $id)
+    {
+        $RVkontrak = Kontrak::with(['historyRevisi.user'])->findOrFail($id);
+        return view('historyRevisi', compact('RVkontrak'));
+    }
+
+    public function indexSOP()
+    {
+        // echo 'TAMPIL DATA SOP';
+        // $data = Integrate::orderBy('document_date', 'desc')->get();
+        // $data = Integrate::withCount('purchaseRequisitions')->orderBy('document_date', 'desc')->get()
+
+        $data = Integrate::select('purchasing_document_number', 'document_date', 'tender_name', 'vendor_name')->distinct()->with('purchaseRequisitions')->orderBy('document_date', 'desc')->get();
+
+        // dd($data);
+        return view('indexSOP', compact('data'));
+    }
+
+    public function detailPR($purchasing_document_number)
+    {
+        $purchaseRequisitions = Integrate::where('purchasing_document_number', $purchasing_document_number)->get();
+        return view('detailPR', compact('purchaseRequisitions', 'purchasing_document_number'));
+    }
+
+    public function ExportKPDF()
+    {
+        // echo 'INI TEMPAT EXPORT KONTRAK BY PDF';
+        // $data = Kontrak::orderBy('created_at', 'desc')->get();
+
+        // return view('export.cetakKontrak-PDF', compact('data'));
+        return view('export.cetakKontrak-PDF');
+    }
+
+    public function ExportKontrakPertanggalPDF($tglawal, $tglakhir)
+    {
+        // dd(["Tanggal Awal : ".$tglawal, "Tanggal Akhir : ".$tglakhir]);
+
+        $exportPertanggal = Kontrak::orderBy('created_at', 'desc')->whereBetween('date_kontrak', [$tglawal, $tglakhir])->get();
+
+        return view('export.cetak-kontrak-pertanggal-pdf', compact('exportPertanggal'));
+    }
+    
+
+    public function viewExport(){
+        return view('export.cetak-excel-kontrak');
+    }
+
+
+    public function export(Request $request)
+    {
+        // dd($request->all());
+        $filterType = $request->input('filter_type');
+        $filterValue = $request->input('filter_value');
+        $year = $request->input('year');
+        $month = $request->input('month'); // Menangkap nilai bulan dari input
+
+        $contracts = Kontrak::query();
+
+        if ($filterType && $filterValue) {
+            if ($filterType === 'year') {
+                $contracts->whereYear('date_kontrak', $filterValue);
+            } elseif ($filterType === 'month') {
+                // Validasi apakah tahun dan bulan telah dipilih
+                if (!$year || !$month) {
+                    return redirect()->back()->with('error', 'Please select both year and month when filtering by month.');
+                }
+                // Ubah nilai bulan menjadi format yang sesuai untuk whereMonth
+                $monthValue = strlen($month) == 1 ? '0' . $month : $month;
+                // $filterValue = $monthValue;
+                $contracts->whereYear('date_kontrak', $year)->whereMonth('date_kontrak', $monthValue);
+            } elseif ($filterType === 'date') {
+                // Pisahkan rentang tanggal
+                $dates = explode(' - ', $filterValue);
+                $startDate = $dates[0];
+                $endDate = $dates[1];
+
+                // Terapkan filter rentang tanggal
+                $contracts->whereBetween('date_kontrak', [$startDate, $endDate]);
+            }
+        }
+
+        $contracts = $contracts->get();
+
+        return Excel::download(new KontrakExport($contracts), 'kontrak.xlsx');
+    }
+
+
 }

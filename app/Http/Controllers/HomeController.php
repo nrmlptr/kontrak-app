@@ -145,6 +145,7 @@ class HomeController extends Controller
     {
 
         $dataPasal = PasalKontrak::get();
+        // dd($dataPasal)->count();
         // dd($dataPasal);
         return view('dPasal', compact('dataPasal'));
     }
@@ -163,7 +164,7 @@ class HomeController extends Controller
             'keterangan_pasal'  => 'required',
             'isi_pasal'         => 'required',
             'jenis_pasal'       => 'required',
-            'urutan'       => 'required',
+            'urutan'            => 'required',
         ]);
 
         if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
@@ -173,7 +174,7 @@ class HomeController extends Controller
         $data['keterangan_pasal']    = $request->keterangan_pasal;
         $data['isi_pasal']           = $request->isi_pasal;
         $data['jenis_pasal']         = $request->jenis_pasal;
-        $data['urutan']         = $request->jenis_pasal;
+        $data['urutan']              = $request->jenis_pasal;
 
         PasalKontrak::create($data);
 
@@ -198,7 +199,7 @@ class HomeController extends Controller
             'keterangan_pasal'  => 'required',
             'isi_pasal'         => 'required',
             'jenis_pasal'       => 'required',
-            'urutan'       => 'required',
+            'urutan'            => 'required',
         ]);
 
         if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
@@ -208,7 +209,7 @@ class HomeController extends Controller
         $data['keterangan_pasal']    = $request->keterangan_pasal;
         $data['isi_pasal']           = $request->isi_pasal;
         $data['jenis_pasal']         = $request->jenis_pasal;
-        $data['urutan']         = $request->urutan;
+        $data['urutan']              = $request->urutan;
 
 
         PasalKontrak::whereId($id)->update($data);
