@@ -12,16 +12,18 @@ class KontrakReviewEditNotification extends Notification
 {
     use Queueable;
     public $kontraks;
-    public $namaPengguna;
+    public $namaPenggunaRevisi;
+    public $userPenerima;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($kontraks, $namaPengguna)
+    public function __construct($kontraks, $namaPenggunaRevisi, $userPenerima)
     {
         //
         $this->kontraks = $kontraks;
-        $this->namaPengguna = $namaPengguna;
+        $this->namaPenggunaRevisi = $namaPenggunaRevisi;
+        $this->userPenerima = $userPenerima;
     }
 
     /**
@@ -29,10 +31,6 @@ class KontrakReviewEditNotification extends Notification
      *
      * @return array<int, string>
      */
-    // public function via(object $notifiable): array
-    // {
-    //     return ['mail'];
-    // }
 
     public function via($notifiable)
     {
@@ -42,29 +40,25 @@ class KontrakReviewEditNotification extends Notification
     /**
      * Get the mail representation of the notification.
      */
-    // public function toMail(object $notifiable): MailMessage
-    // {
-    //     return (new MailMessage)
-    //         ->line('The introduction to the notification.')
-    //         ->action('Notification Action', url('/'))
-    //         ->line('Thank you for using our application!');
-    // }
 
     public function toMail($notifiable)
     {
+
         return (new MailMessage)
-        ->subject('Notifikasi Kontrak Telah Diperbaiki')
-        ->line('Dear, ' .$this->namaPengguna)
-        ->line('Kontrak yang Anda beri revisi telah diperbarui.')
-        ->line('Dengan Detail berikut : ')
-        ->line('Nomor Kontrak: ' . $this->kontraks->detail_number)
-        ->line('Tanggal Kontrak: ' . date('d-m-Y', strtotime($this->kontraks->date_kontrak)))
-        ->line('Nomor SOP: ' . $this->kontraks->nomor_sop)
-        ->line('Tanggal SOP: ' . date('d-m-Y', strtotime($this->kontraks->tanggal_sop)))
-        ->line('Perihal: ' . $this->kontraks->perihal)
-        ->line('---------------------------------------------------')
-        ->line('Silakan cek kembali kontrak tersebut dihalaman review. Terimakasih')
-        ->action('Lihat Kontrak', url('/detailKontrak/{id}' . $this->kontraks->id));
+            ->subject('Notifikasi Kontrak Telah Diperbaiki')
+            ->line('Dear, ' . $this->userPenerima->name)
+            ->line('Kontrak yang diberi revisi telah diperbarui.')
+            ->line('Dengan Detail berikut : ')
+            ->line('Nomor Kontrak: ' . $this->kontraks->detail_number)
+            ->line('Tanggal Kontrak: ' . date('d-m-Y', strtotime($this->kontraks->date_kontrak)))
+            ->line('Nomor SOP: ' . $this->kontraks->nomor_sop)
+            ->line('Tanggal SOP: ' . date('d-m-Y', strtotime($this->kontraks->tanggal_sop)))
+            ->line('Perihal: ' . $this->kontraks->perihal)
+            ->line('---------------------------------------------------')
+            ->line('Pembuat Kontrak : ' . $this->kontraks->pembuat) // Nama pengguna yang melakukan revisi
+            ->line('---------------------------------------------------')
+            ->line('Silakan cek kembali kontrak tersebut dihalaman review. Terimakasih')
+            ->action('Lihat Kontrak', url('/detailKontrak/{id}' . $this->kontraks->id));
     }
 
     /**
@@ -72,6 +66,7 @@ class KontrakReviewEditNotification extends Notification
      *
      * @return array<string, mixed>
      */
+
     public function toArray(object $notifiable): array
     {
         return [

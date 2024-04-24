@@ -22,15 +22,20 @@ use App\Models\VendorText;
 use App\Notifications\KontrakApprovedNotification;
 use App\Notifications\KontrakReviewEditNotification;
 use App\Notifications\KontrakRevisiNotification;
+use App\Notifications\RevisiKontrakNotification;
+use App\Notifications\UpdateKontrakNotification;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Datatables;
 use Carbon\Carbon;
+use Dompdf\Options;
+use Dompdf\Dompdf;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use File;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
@@ -688,12 +693,33 @@ class KontrakController extends Controller
         $data['kontraks_id']   = $kontraks_id;
         $data['alamat_peruri'] = $alamat_peruri;
         $data['alamat_vendor'] = $alamat_vendor;
+
+        $kontrak = Kontrak::find($request->kontraks_id);
+
         if (isset($nextstatus) && $nextstatus == 'edited') {
             // ambil row revisi terakhir
             $revisi = revisiKontrak::with('user')
                 ->latest()->take(1)
                 ->where('kontraks_id', $kontraks_id)->first();
-            $status = "edited" . $revisi->user->permission;
+            $userPermissionrevisi = $revisi->user->permission;
+            $previousRole = [];
+            switch ($userPermissionrevisi) {
+                case 'kadept':
+                    $previousRole['kasek'] = User::where('permission', 'kasek')->where('unit_kerja', $kontrak->unit_kerja)->get();
+                    $status = "edited" . $userPermissionrevisi;
+                    break;
+                case 'kadiv':
+                    $previousRole['kasek'] = User::where('permission', 'kasek')->where('unit_kerja', $kontrak->unit_kerja)->get();
+                    $previousRole['kadept'] = User::where('permission', 'kadept')->get();
+                    $status = "edited" . $userPermissionrevisi;;
+                    break;
+                default:
+                    $previousRole = ''; // Tidak ada role sebelumnya untuk kasek
+                    $status = "edited" . $userPermissionrevisi;;
+                    break;
+            }
+            // dd($previousRole);
+            // $status = "edited" . $userPermissionrevisi;
         } else {
             // created
             $status = "reviewkasek";
@@ -723,40 +749,86 @@ class KontrakController extends Controller
                 return response()->json(['message' => 'Lampiran 6 belum Dibuat',  'status' => 'error']);
             }
         }
-        // cek dulu sini
-        $lampiran7 = Lampiran7::where('kontraks_id', $kontraks_id);
-        // return $lampiran7;
-        $chek = $lampiran7->exists();
-        if ($chek) {
-            $lampiran7->delete();
+
+
+        try {
+            DB::beginTransaction();
+            // cek dulu sini
+            $lampiran7 = Lampiran7::where('kontraks_id', $kontraks_id);
+            // return $lampiran7;
+            $chek = $lampiran7->exists();
+            if ($chek) {
+                $lampiran7->delete();
+            }
+            // simpan data update lampiran 7
+            Lampiran7::create($data);
+            // $endData = Lampiran7::create($data);
+
+            // dd($endData);
+
+            // Perbarui status kontrak
+            if ($kontrak) {
+                $kontrak->status = $status;
+                $kontrak->save();
+            }
+
+            // kondisi untuk kasih notif database ketika sudah update 
+            // if(isset($revisi) && $revisi){
+            //     // notif untuk yang memberikan revisi
+            //     $pemberiRevisi = $revisi->user->unit_kerja;
+            //     $namaPenggunaRevisi = $revisi->user->name;
+
+            //     // Kirim notifikasi ke setiap penulis yang cocok
+            //     foreach ($pemberiRevisi as $user) {
+            //         $user->notify(new UpdateKontrakNotification($endData, $namaPenggunaRevisi));
+            //     }
+
+
+            //     dd($pemberiRevisi);
+            // }
+
+            if (isset($revisi) && $revisi) {
+                // Ambil alamat email dan nama yang memberikan revisi
+                $emailRevisi = $revisi->user->email;
+                $namaPenggunaRevisi = $revisi->user->name;
+
+                // Kirim notifikasi email untuk pengguna yang memberikan revisi
+                $user = User::where('email', $emailRevisi)->first();
+                $user->notify(new KontrakReviewEditNotification($kontrak, $namaPenggunaRevisi, $user));
+
+                // kirim notif email untuk pengguna sebelumnya (jika yang revisi kadept, maka notif update untuk kasek, jika yang revisi kadiv maka notif update untuk kasek dan kadept)
+                if (!empty($previousRole)) {
+                    // $previousUsers = User::where('permission', $previousRole)->get();
+                    // $namaPreviousUsers = '';
+
+                    foreach ($previousRole as $roleUser) {
+                        // Dapatkan nama pengguna dan tambahkan ke array $namaPreviousUsers
+                        // $namaPreviousUsers = $roleUser->name;
+                        foreach ($roleUser as $user) {
+                            $user->notify(new
+                                KontrakReviewEditNotification($kontrak, $namaPenggunaRevisi, $user));
+                        }
+                    }
+                }
+            }
+
+            // save data ke tabel log
+            $kontrak->logs()->create([
+                'status'    => $status,
+                'user_id'   => auth()->id(),
+            ]);
+
+            DB::commit();
+
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            // return response()->json(['message' => 'Update Data Kontrak Gagal Dibuat', 'redirect' => route('editLampiran', ['id' =>$id])]);
         }
-        Lampiran7::create($data);
 
 
-        // Perbarui status kontrak menjadi 'reviewkasek'
-        $kontrak = Kontrak::find($request->kontraks_id);
-        if ($kontrak) {
-            $kontrak->status = $status;
-            $kontrak->save();
-        }
 
-        // Kirim notifikasi ke pengguna yang memberikan revisi
-        if (isset($revisi) && $revisi) {
-            // Ambil alamat email dan nama yang memberikan revisi
-            $emailRevisi = $revisi->user->email;
-            $namaPengguna = $revisi->user->name;
-
-            // Kirim notifikasi email
-            $user = User::where('email', $emailRevisi)->first();
-            $user->notify(new KontrakReviewEditNotification($kontrak, $namaPengguna));
-        }
-
-        $kontrak->logs()->create([
-            'status'    => $status,
-            'user_id'   => auth()->id(),
-        ]);
-
-        // Response JSON dengan pesan sukses dan redirect ke halaman monitoring
+        // Response JSON dengan pesan sukses dan redirect ke reviewkontrak
         return response()->json(['message' => 'Lampiran 7 Berhasil Dibuat', 'redirect' => route('rKontrak'), 'status' => 'success']);
     }
 
@@ -960,12 +1032,14 @@ class KontrakController extends Controller
 
     public function storeRevisi(Request $request)
     {
+        // dd($request->all());
         // Validasi data
         $validated = $request->validate([
             'kontraks_id' => 'required',
             'revisi' => 'required',
         ]);
 
+        $kontrak = Kontrak::find($validated['kontraks_id']);
         // Simpan data revisi
         $data['kontraks_id'] = $validated['kontraks_id'];
         $data['revisi'] = $validated['revisi'];
@@ -974,48 +1048,101 @@ class KontrakController extends Controller
 
         // Tentukan status berdasarkan izin pengguna
         $userPermission = auth()->user()->permission;
+        // buat variabel untuk pengguna sebelumnya yang akan dapet notif email
+        $previousRole = [];
         switch ($userPermission) {
-            case 'kasek':
-                $status = 'revisikasek';
-                break;
             case 'kadept':
+                $previousRole['kasek'] = User::where('permission', 'kasek')->where('unit_kerja', $kontrak->unit_kerja)->get();
                 $status = 'revisikadept';
                 break;
             case 'kadiv':
+                $previousRole['kasek'] = User::where('permission', 'kasek')->where('unit_kerja', $kontrak->unit_kerja)->get();
+                $previousRole['kadept'] = User::where('permission', 'kadept')->get();
                 $status = 'revisikadiv';
+                break;
+            default:
+                $previousRole = ''; // Tidak ada role sebelumnya untuk kasek
+                $status = 'revisikasek';
                 break;
         }
 
-        // Buat entri revisiKontrak
-        revisiKontrak::create($data);
+       
+        try{
+            DB::beginTransaction();
 
-        // Perbarui status kontrak
-        $kontrak = Kontrak::find($validated['kontraks_id']);
-        if ($kontrak) {
-            $kontrak->status = $status;
-            $kontrak->save();
+            // Buat entri revisiKontrak
+            $revisi = revisiKontrak::create($data);
+            // KONDISI UNTUK KASIH NOTIF DATABASE KETIKA REVISI DIBERIKAN OLEH KASEK,KADEPT,KADIV KEPADA STAFF
+            if ($kontrak) {
+                // Temukan penulis dengan unit kerja yang sama dan memiliki permission 'writer' atau 'admin'
+                $userWriters = User::where('unit_kerja', $kontrak->unit_kerja)
+                    ->whereIn('permission', ['writer', 'admin'])
+                    ->get();
 
-            $noteRevisi = revisiKontrak::where('kontraks_id', $kontrak->id)->latest()->first();
-            // Ambil alamat email pembuat kontrak dari tabel User
-            $pembuat = $kontrak->pembuat;
-            $emailPembuat = User::where('name', $pembuat)->value('email');
-            $user = User::where('email', $emailPembuat)->first();
-
-            // Kirim email notifikasi kepada pembuat kontrak
-            if ($kontrak && $noteRevisi) {
-                $user->notify(new KontrakRevisiNotification($kontrak, $noteRevisi));
+                // Kirim notifikasi ke setiap penulis yang cocok
+                foreach ($userWriters as $user) {
+                    $user->notify(new RevisiKontrakNotification($revisi));
+                }
             }
-        }
 
-        // Buat entri log
-        $kontrak->logs()->create([
-            'status' => $status,
-            'user_id' => auth()->id(),
-        ]);
+            // NOTIF UNTUK USER SEBELUMNYA JIKA YANG REVISI KADEPT ATAU KADIV
+            if (!empty($previousRole)) {
+                foreach ($previousRole as $roleUser) {
+                    foreach ($roleUser as $user) {
+                        $user->notify(new RevisiKontrakNotification($revisi));
+                    }
+                }
+            }
+
+            // Perbarui status kontrak
+            if ($kontrak) {
+                $kontrak->status = $status;
+                $kontrak->save();
+
+                // $noteRevisi = revisiKontrak::where('kontraks_id', $kontrak->id)->latest()->first();
+
+                // Ambil alamat email pembuat kontrak dari tabel User
+                // $pembuat = $kontrak->pembuat;
+                // $emailPembuat = User::where('name', $pembuat)->value('email');
+                // $user = User::where('email', $emailPembuat)->first();
+
+                // Kirim email notifikasi kepada pembuat kontrak
+                // if ($kontrak && $noteRevisi) {
+                    // $user->notify(new KontrakRevisiNotification($kontrak, $noteRevisi, $user));
+                // }
+
+                // Kirim notifikasi email kepada pengguna dengan role sebelumnya
+                // jika yang beri revisi kadept, maka kasek dan staff dapat email, jika yang beri revisi kasek maka staff aja yang dapat email, jika kadiv yang revisi, kadept,kasek dan staff dapat notif email.
+                // if (!empty($previousRole)) {
+                    // $previousUsers = User::where('permission', $previousRole)->get();
+                    // foreach ($previousUsers as $previousUser) {
+                    //     $previousUser->notify(new KontrakRevisiNotification($kontrak, $noteRevisi));
+                    // }
+                    // foreach ($previousRole as $roleUser) {
+                        // foreach ($roleUser as $user) {
+                            // $user->notify(new KontrakRevisiNotification($kontrak, $noteRevisi, $user));
+                        // }
+                    // }
+                // }
+            }
+
+            // Buat entri log
+            $kontrak->logs()->create([
+                'status' => $status,
+                'user_id' => auth()->id(),
+            ]);
+
+            DB::commit();
+
+        }catch (\Exception $e){
+            DB::rollback();
+            return response()->json(['message' => 'Revisi Gagal Dibuat', 'redirect' => route('createRevisi')]);
+        }
 
         // Response JSON dengan pesan sukses dan redirect ke halaman monitoring
         return response()->json(['message' => 'Revisi Berhasil Dibuat', 'redirect' => route('rKontrak')]);
     }
+
 
 
     public function showRevisi($id)
@@ -1025,9 +1152,25 @@ class KontrakController extends Controller
             ->latest()->take(1)
             ->where('kontraks_id', $id)->first();
 
+        // auth()->user()->unreadNotifications->where('id', request('id'))->first()->markAsRead();
         // Tampilkan view untuk menampilkan data revisi
         return view('viewRevisi', compact('revisi'));
     }
+
+
+    public function showNotifRevisi($id)
+    {
+        // Ambil data revisi berdasarkan kontraks_id
+        $revisi = revisiKontrak::with('user')
+            ->latest()->take(1)
+            ->where('kontraks_id', $id)->first();
+
+        auth()->user()->unreadNotifications->where('id', request('id'))->first()->markAsRead();
+        // Tampilkan view untuk menampilkan data revisi
+        return view('showRevisiNotif', compact('revisi'));
+    }
+
+
 
     public function updateLampiran(Request $request, $id)
     {
@@ -1121,7 +1264,8 @@ class KontrakController extends Controller
     }
 
 
-    public function viewExport(){
+    public function viewExport()
+    {
         return view('export.cetak-excel-kontrak');
     }
 
@@ -1140,7 +1284,6 @@ class KontrakController extends Controller
 
             if ($filterType === 'year') {
                 $contracts->whereYear('date_kontrak', $filterValue);
-
             } elseif ($filterType === 'month') {
                 // Validasi apakah tahun dan bulan telah dipilih
                 if (!$year || !$month) {
@@ -1150,7 +1293,6 @@ class KontrakController extends Controller
                 //tangkep nilai bulan dari inputan
                 $monthValue = strlen($month) == 1 ? '0' . $month : $month;
                 $contracts->whereYear('date_kontrak', $year)->whereMonth('date_kontrak', $monthValue);
-
             } elseif ($filterType === 'date') {
                 // Pisahkan rentang tanggal
                 $dates = explode(' - ', $filterValue);
@@ -1166,6 +1308,4 @@ class KontrakController extends Controller
 
         return Excel::download(new KontrakExport($contracts), 'data-kontrak.xlsx');
     }
-
-
 }

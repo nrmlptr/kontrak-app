@@ -113,12 +113,17 @@
                                            @php
                                                 $rkontrakexist=$d->revisiKontraks->pluck('user_id')->toArray();
                                            @endphp
-                                            {{-- JIKA DATA REVISI UNTUK KONTRAK TERSEBUT BENAR TIDAK ADA --}}
+                                            {{-- JIKA DATA REVISI UNTUK KONTRAK TERSEBUT ADA --}}
                                             @if(!empty($rkontrakexist))
-                                               <td>
-                                                    <a href="{{ route('viewRevisi', ['id' => $d->id]) }}" class="btn btn-sm btn-secondary"><i class="fas fa-eye"></i><br> Show Revisi</a>
-                                                    {{-- <a href="{{ route('editLampiran', ['id' => $d->id]) }}" class="btn btn-sm btn-warning"><i class="fas fa-pen"></i> Edit Lampiran</a> --}}
-                                                </td>    
+                                                {{-- cek lagi, jika statusnya belum disetujui kadiv, maka tampilkan tombol show revisi untuk nantinya edit data lampiran --}}
+                                                @if($d->status !== 'approvedkadiv')
+                                                    <td>
+                                                        <a href="{{ route('viewRevisi', ['id' => $d->id]) }}" class="btn btn-sm btn-secondary"><i class="fas fa-eye"></i><br> Show Revisi</a>
+                                                        {{-- <a href="{{ route('editLampiran', ['id' => $d->id]) }}" class="btn btn-sm btn-warning"><i class="fas fa-pen"></i> Edit Lampiran</a> --}}
+                                                    </td>
+                                                @else
+                                                    <td><span class="badge badge-success">Kontrak selesai dibuat</span></td>
+                                                @endif    
                                             @else
                                              <td><span class="badge badge-info">Tidak Ada Revisi</span></td>
                                                 

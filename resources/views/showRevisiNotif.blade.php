@@ -25,9 +25,9 @@
             <!-- Main row -->
             <div class="row">
                 <div class="col-12">
-                    {{-- @if(Auth::user()->permission =='writer' || Auth::user()->permission=='admin') --}}
+                    @if(Auth::user()->permission =='writer' || Auth::user()->permission=='admin')
                         <a href="{{ route('editLampiran', ['id' => $revisi->kontraks_id]) }}" class="btn btn-primary mb-3">Edit Lampiran</a>
-                    {{-- @endif --}}
+                    @endif
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title"><b>NOTE REVISI</b></h3>

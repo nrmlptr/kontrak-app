@@ -64,7 +64,11 @@
                                         </div>
                                     </div>
                                     <div class="card-footer">
-                                        <button type="button" class="btn btn-secondary" onclick="submitRevisi()">Submit</button>
+                                        {{-- <button type="button" class="btn btn-secondary" onclick="submitRevisi()">Submit</button> --}}
+                                        <button class="btn btn-primary" type="button" onclick="submitRevisi()">
+                                            <span id="loading-spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                            submit
+                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -87,16 +91,25 @@
 
 <!-- Script Anda -->
 <script type="text/javascript">
-   function submitRevisi() {
+    $(document).ready(function(){
+        $('#loading-spinner').hide();
+    });
+
+
+    function submitRevisi() {
 
         var formRevisi = $('#inputRevisi');
         // console.log(formRevisi);
-
+        
         $.ajax({
             method: 'POST',
             url: "{{ route('submitRevisi') }}",
             data: formRevisi.serialize(),
+            beforeSend: function(){
+                $('#loading-spinner').show();
+            },
             success: function(result) {
+                $('#loading-spinner').hide();
                 console.log(result.message)
                 if (result.redirect) {
                     window.location.href = result.redirect; // Mengarahkan ulang halaman ke halaman monitoring

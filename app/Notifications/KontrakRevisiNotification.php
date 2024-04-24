@@ -13,15 +13,16 @@ class KontrakRevisiNotification extends Notification
     // use Queueable;
     public $kontraks;
     public $noteRevisi;
+    public $userPenerima;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($kontraks, $noteRevisi)
+    public function __construct($kontraks, $noteRevisi, $userPenerima)
     {
-        //
         $this->kontraks = $kontraks;
         $this->noteRevisi = $noteRevisi;
+        $this->userPenerima = $userPenerima;
     }
 
     /**
@@ -29,10 +30,7 @@ class KontrakRevisiNotification extends Notification
      *
      * @return array<int, string>
      */
-    // public function via(object $notifiable): array
-    // {
-    //     return ['mail'];
-    // }
+
     public function via($notifiable)
     {
         return ['mail'];
@@ -41,22 +39,17 @@ class KontrakRevisiNotification extends Notification
     /**
      * Get the mail representation of the notification.
      */
-    // public function toMail(object $notifiable): MailMessage
-    // {
-    //     return (new MailMessage)
-    //                 ->line('The introduction to the notification.')
-    //                 ->action('Notification Action', url('/'))
-    //                 ->line('Thank you for using our application!');
-    // }
+
     public function toMail($notifiable)
     {
         // Ambil nama dan posisi pengguna yang terkait dengan revisi
         $user = $this->noteRevisi->user;
+        // dd($user);
 
         return (new MailMessage)
-
-            ->line('Dear, ' . $this->kontraks->pembuat)
-            ->line('Ada revisi pada kontrak yang perlu Anda perbaiki.')
+            ->subject('Notifikasi Revisi Kontrak')
+            ->line('Dear, ' . $this->userPenerima->name)
+            ->line('Ada revisi pada kontrak yang perlu diperbaiki.')
             ->line('Dengan Detail berikut : ')
             ->line('Nomor Kontrak: ' . $this->kontraks->detail_number)
             ->line('Tanggal Kontrak: ' . date('d-m-Y', strtotime($this->kontraks->date_kontrak)))

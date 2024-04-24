@@ -58,6 +58,27 @@
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
+                {{-- dropdown untuk notifikasi --}}
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-bell"></i>
+                        <span class="badge badge-warning navbar-badge">{{ auth()->user()->unreadNotifications->count() }}</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="min-width: 30rem;">
+                        <span class="dropdown-item dropdown-header">{{ auth()->user()->unreadNotifications->count() }} Notifications</span>
+                        <div class="dropdown-divider"></div>
+                        @foreach(auth()->user()->unreadNotifications as $notification)
+                        <a href="{{ url($notification->data['url']. '?id='.$notification->id) }}" class="dropdown-item">
+                            <i class="fas fa-envelope mr-2"></i> {{ $notification->data['title'] }}
+                            <span class="float-right text-muted text-sm">{{ $notification->created_at->diffForHumans() }}</span>
+                            <p class="mb-0">{{ ucwords($notification->data['messages']) }}</p>
+                            
+                        </a>
+                        @endforeach
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                    </div>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                         <i class="fas fa-expand-arrows-alt"></i>
@@ -152,7 +173,9 @@
                                 <li class="nav-item">
                                     <a href="{{ route('rKontrak') }}" class="nav-link">
                                         <i class="nav-icon fas fa-book"></i>
-                                        <p>Review Kontrak</p>
+                                        <p>Review Kontrak
+                                            <span class="badge badge-danger right">{{ auth()->user()->unreadNotifications->count() }}</span>
+                                        </p>
                                     </a>
                                 </li>
                             </ul>

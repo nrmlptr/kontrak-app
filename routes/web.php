@@ -89,10 +89,10 @@ Route::middleware('auth')->group(
         // Hapus Data Pasal
         Route::delete('/deletePasal/{id}', [HomeController::class, 'deletePasal'])->name('deletePasal');
         // tampilkan hasil revisi yang dibuat oleh kasek,kadept,kadiv
-        Route::get(
-            '/showRevisi/{id}',
-            [KontrakController::class, 'showRevisi']
-        )->name('viewRevisi');
+        Route::get('/showRevisi/{id}', [KontrakController::class, 'showRevisi'])->name('viewRevisi');
+        // tampilkan revisi ketika di klik dari notif
+        Route::get('/showRevisiNotif/{id}', [KontrakController::class, 'showNotifRevisi'])->name('showNotifRevisi');
+        
         // edit lampiran
         Route::get('/updateLampiran/{id}', [KontrakController::class, 'updateLampiran'])->name('editLampiran');
         Route::post('/editLampiran1', [KontrakController::class, 'editLampiran1'])->name('submitEditLampiran1');

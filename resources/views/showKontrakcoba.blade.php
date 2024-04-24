@@ -5,16 +5,11 @@
             size: A4;
             margin: 1cm;
         }
+        
         @media print {
             @page {
                 margin: 0.3in 1in 0.3in 1in !important
             }
-            /* .content {
-                page-break-inside: avoid;
-            }
-            .page-break {
-                page-break-before: always;
-            } */
         }
         .content {
             overflow: auto;
@@ -27,6 +22,7 @@
         .page-break {
         page-break-after: always;
         }
+
         /* Style untuk tanda tangan */
         .signature-table {
             width: 100%;
@@ -70,8 +66,10 @@
                 <div class="row">
                     <div class="col-12">
                         @if(Auth::user()->permission=='kasek' || Auth::user()->permission=='kadept' || Auth::user()->permission=='kadiv')
-                        <a href="{{ route('createRevisi', ['id' => $data->id]) }}" class="btn btn-sm btn-warning mr-1 mb-3"><i class="fas fa-pen"></i> Revisi Kontrak</a>
-                        <a href="{{ route('setujuiKontrak',$data->id) }}" id="setujuiKontrak" class="btn btn-sm btn-success mr-1 mb-3"><i class="fas fa-thumbs-up"></i> Setujui Kontrak</a>
+                            @if($data->status !== 'approvedkadiv')
+                                <a href="{{ route('createRevisi', ['id' => $data->id]) }}" class="btn btn-sm btn-warning mr-1 mb-3"><i class="fas fa-pen"></i> Revisi Kontrak</a>
+                                <a href="{{ route('setujuiKontrak',$data->id) }}" id="setujuiKontrak" class="btn btn-sm btn-success mr-1 mb-3"><i class="fas fa-thumbs-up"></i> Setujui Kontrak</a>
+                            @endif
                         @endif
                         <a href="{{ route('cetakKontrak',$data->id) }}" target="_blank"  class="btn btn-sm btn-secondary mr-1 mb-3"><i class="nav-icon fas fa-print"></i></i> Cetak Kontrak</a>
                         <div class="card">
