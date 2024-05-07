@@ -8,6 +8,16 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     //
+
+    // coba coba bikin function untuk url yang dikirim ke email tanpa perlu login
+    // public function loginUrl(Request $request){
+    //     if (!$request->hasValidSignature()) {
+    //         abort(401);
+    //     }
+    //     $user = Auth::loginUsingId($request->user_id);
+    //     return $request->url;
+    // }
+
     public function index(){
         return view('auth.login');
     }
@@ -28,7 +38,7 @@ class LoginController extends Controller
 
 
         if(Auth::attempt($data)){
-            return redirect()->route('dashboard');
+            return redirect()->route('dashboard')->with('success', 'Kamu Berhasil Login!');;
         }else{
             return redirect()->route('login')->with('failed', 'Email atau Password Salah, Silahkan Coba Lagi!');
         }

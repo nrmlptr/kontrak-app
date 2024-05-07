@@ -191,8 +191,9 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <script>
+    <script src="{{ asset('assets/summernote-0.8.18-dist/summernote.min.js') }}"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> --}}
+    <script type="text/javascript">
             $(document).ready(function() {
         var nomor_sop = "{{ $data->nomor_sop }}";
 

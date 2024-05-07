@@ -51,7 +51,22 @@
                                         <td>{{ $d->name }}</td>
                                         <td>{{ $d->username }}</td>
                                         <td>{{ $d->email }}</td>
-                                        <td>{{ $d->unit_kerja }}</td>
+                                        <td>@if($d->unit_kerja == '41A10')
+                                                <span class="badge badge-info">Investasi</span>
+                                            @elseif($d->unit_kerja == '41A20')
+                                                <span class="badge badge-warning">Jasa Barum</span>
+                                            @elseif($d->unit_kerja == '41A30')
+                                                <span class="badge badge-success">Lokal</span>
+                                            @elseif($d->unit_kerja == '41A40')
+                                                <span class="badge badge-primary">Import</span>
+                                            @elseif($d->unit_kerja == '41KDP')
+                                                <span class="badge badge-dark">Kepala Department</span>
+                                            @elseif($d->unit_kerja == '41KDV')
+                                                <span class="badge badge-dark">Kepala Divisi</span>
+                                            @else
+                                                <span class="badge badge-dark">Admin</span>
+                                            @endif
+                                        </td>
                                         <td>{{ $d->permission }}</td>
                                         <td>
                                             <a href="{{ route('editUser', ['id' => $d->id]) }}" class="btn btn-sm btn-warning"><i class="fas fa-pen"></i></a>
@@ -104,12 +119,12 @@
 @endsection
 
 @push('scripts')
-    <script>
+    <script type="text/javascript">
         $(document).ready(function() {
             $('#userdatatable').DataTable({
                 "paging": true,
                 "lengthChange": false,
-                "searching": false,
+                "searching": true,
                 "ordering": true,
                 "info": true,
                 "autoWidth": false,

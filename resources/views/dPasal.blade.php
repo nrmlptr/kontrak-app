@@ -39,7 +39,7 @@
                                         <th class="d-none d-sm-table-cell" style="width: 15%;">Keterangan</th>
                                         <th>Isi Pasal</th>
                                         <th>Urutan</th>
-                                        <th>Jenis Kontrak</th>
+                                        <th>Jenis Pasal</th>
                                         <th class="text-center" style="width: 10%;">Action</th>
                                     </tr>
                                 </thead>
@@ -109,18 +109,17 @@
 @endsection
 
 @push('scripts')
-    <script>
+    <script type="text/javascript">
         $(document).ready(function() {
             $('#pasaldatatable').DataTable({
                 "paging": true,
                 "lengthChange": false,
-                "searching": false,
+                "searching": true,
                 "ordering": true,
                 "info": true,
-                "autoWidth": false,
+                "autoWidth": true,
                 "responsive": true,
 
-                
                 dom: 'Bfrtip',
                 buttons: [
                     {
@@ -131,7 +130,7 @@
                             columns: [ 0,1,2,3,4,5]
                         }
                     },
-                     {
+                    {
                         extend: 'pdf',
                         filename: 'Data_Pasal_Dept_Pengadaan', // untuk nama filenya
                         title: 'Data Pasal Kontrak | Dept Pengadaan', //untuk di header nya
@@ -144,5 +143,4 @@
             });
         });
     </script>
-
 @endpush

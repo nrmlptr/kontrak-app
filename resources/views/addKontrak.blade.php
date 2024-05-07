@@ -58,6 +58,13 @@
                                         <div class="col-md-2" style="text-align: center;">
                                             <select class="form-control" name="jenis_kontrak" id="" onchange="">
                                                 <option value="" disabled selected hidden>Jenis Kontrak</option>
+                                                <option value="lumpsum">Lumpsum</option>
+                                                <option value="harga_satuan">Harga Satuan</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2" style="text-align: center;">
+                                            <select class="form-control" name="status_jaminan" id="" onchange="">
+                                                <option value="" disabled selected hidden>Status Jaminan</option>
                                                 <option value="jaminan">Jaminan</option>
                                                 <option value="tanpa_jaminan">Tanpa Jaminan</option>
                                             </select>
@@ -116,6 +123,16 @@
                                                 @endif
                                             </div>
                                         </div>
+                                        <div class="col-xs-6 col-sm-8 col-md-6">
+                                            <div class="form-group">
+                                                <label for="namavendor">Nama Vendor</label>
+                                                <input type="text" placeholder="Nama Vendor" name="nm_vendor" class="form-control" id="nm_vendor" readonly>
+                                                <!-- TEMPAT BUAT NARO ERROR -->
+                                                @if($errors->has('nm_vendor'))
+                                                <span class="text-danger">{{ $errors->first('nm_vendor') }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
                                         <div class="col-xs-2 col-sm-2 col-md-2">
                                             <div class="form-group">
                                                 <label for="noSP">Nomor SP</label>
@@ -146,7 +163,7 @@
                                                 @endif
                                             </div>
                                         </div>
-
+                                        {{-- kolom input akta --}}
                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                             <div class="form-group">
                                                 <label for="peruri_text">Akta Peruri</label>
@@ -170,7 +187,9 @@
                                         </div>
                                     </div>
                                     <div class="card-footer">
-                                        <button type="button" class="btn btn-secondary" onclick="submit_data()">Submit</button>
+                                        <button type="button" class="btn btn-secondary" onclick="submit_data()">
+                                        <span id="loading-spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>    
+                                        Submit</button>
                                     </div>
                                 </form>
                             </div>
@@ -189,13 +208,21 @@
 @endsection
 
 @push('scripts')
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+{{-- select 2 --}}
+<link rel="stylesheet" href="{{ asset('assets/select2.min.css') }}">
+{{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" /> --}}
+<script src="{{ asset('assets/select2.min.js') }}"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script> --}}
+<script src="{{ asset('assets/summernote-0.8.18-dist/summernote.min.js') }}"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> --}}
 <script>
     
     $(document).ready(function() {
         $('#peruri_text').summernote();
+    });
+
+    $(document).ready(function(){
+        $('#loading-spinner').hide();
     });
 
     // $(document).ready(function() {
@@ -206,14 +233,18 @@
     function submitKontrak() {
 
         var formKontrak = $('#inputKontrak');
-        console.log(formKontrak);
+        // console.log(formKontrak);
 
         $.ajax({
             method: 'POST',
             url: 'loadKontrak',
             data: formKontrak.serialize(),
+            beforeSend: function(){
+                $('#loading-spinner').show();
+            },
             success: function(result) {
-                console.log(result.message)
+                $('#loading-spinner').hide();
+                // console.log(result.message)
                 if (result.redirect) {
                     window.location.href = result.redirect; // Mengarahkan ulang halaman ke halaman monitoring
                 }
@@ -243,6 +274,7 @@
                                 id: item.purchasing_document_number,
                                 document_date: item.document_date,
                                 tender_name: item.tender_name,
+                                vendor_name: item.vendor_name,
                                 akta: item.akta
                                 
                             }
@@ -260,6 +292,7 @@
             $('#nomor_sop').val(data.id); // Isi nilai nomor SOP
             $('#tanggal_sop').val(data.document_date); // Isi nilai tanggal SOP
             $('#date_kontrak').val(data.document_date);
+            $('#nm_vendor').val(data.vendor_name);
             $('textarea[name="akta"]').summernote('code',data.akta);
 
         });

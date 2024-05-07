@@ -50,7 +50,11 @@
             if (dataBarang) {
                 var fields = ``;
                 dataBarang.forEach(function(row) {
-                    fields+=`<div class="form-group col-2">
+                    fields+=`<div class="form-group">
+                    <label for="gambarnon">Upload Gambar (Optional)</label>
+                    <input type="file" name="gambarnon[]" id="gambarnon[]" multiple class="form-control" >
+                    </div>
+                    <div class="form-group col-1">
                     <label for="inputNOSPPB">Nomor SPPB</label>
                         <input type="text" name="no_sppb[]" class="form-control" value="${row.purchase_requisition_number}" readonly>
                     </div>
@@ -58,12 +62,12 @@
                         <label for="inputKodeBarang">Kode Barang</label>
                         <input type="text" name="kode_barang[]" class="form-control" value="${row.material_number}" readonly>
                     </div>
-                    <div class="form-group col-6">
+                    <div class="form-group col-5">
                         <label for="jenisBarang">Nama Barang</label>
                         <input type="text" name="nama_barang[]" class="form-control" value="${row.material_name}" readonly>
                     </div>
-                    <div class="form-group col-2">
-                        <label for="jenisBarang">Nama Barang</label>
+                    <div class="form-group col-1">
+                        <label for="jenisBarang">Satuan</label>
                         <input type="text" name="satuan[]" class="form-control" value="${row.purchase_order_unit_of_measure}" readonly>
                     </div>
                     <div class="form-group col-12">
@@ -124,6 +128,12 @@
                 contentType: false,
                 processData: false,
                 success: function(result) {
+                    // // Tambahkan notifikasi flash di sini
+                    // flash()
+                    //     .option('position', 'top-center')
+                    //     .option('timeout', 3000)
+                    //     .addSuccess('Lampiran 3 Berhasil Dibuat!');
+                        
                     $(".collapse").removeClass('show');
                     $('#collapseLampiran4').addClass('show');
                     console.log(result.message);
@@ -131,6 +141,12 @@
                 error: function(xhr, status, error) {
                     var err = JSON.parse(xhr.responseText);
                     $('#validationErrors').html(err.message);
+                    // Tambahkan notifikasi flash di sini jika diperlukan
+                    // flash()
+                    //     .option('position', 'top-center')
+                    //     .option('timeout', 3000)
+                    //     .addError('Lampiran 3 Gagal Dibuat!');
+
                 }
             });
         });

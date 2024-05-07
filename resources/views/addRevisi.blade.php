@@ -67,7 +67,7 @@
                                         {{-- <button type="button" class="btn btn-secondary" onclick="submitRevisi()">Submit</button> --}}
                                         <button class="btn btn-primary" type="button" onclick="submitRevisi()">
                                             <span id="loading-spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                            submit
+                                            Submit
                                         </button>
                                     </div>
                                 </form>
@@ -86,8 +86,6 @@
 <!-- jQuery -->
 <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 <script src="{{ asset('lte/plugins/jquery/jquery.min.js') }}"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
 <!-- Script Anda -->
 <script type="text/javascript">
@@ -96,8 +94,8 @@
     });
 
 
+    // submit data
     function submitRevisi() {
-
         var formRevisi = $('#inputRevisi');
         // console.log(formRevisi);
         
@@ -110,7 +108,7 @@
             },
             success: function(result) {
                 $('#loading-spinner').hide();
-                console.log(result.message)
+                // console.log(result.message)
                 if (result.redirect) {
                     window.location.href = result.redirect; // Mengarahkan ulang halaman ke halaman monitoring
                 }
@@ -119,16 +117,4 @@
 
     }
 </script>
-
-
-
 @endsection
-@push('scripts')
-{{-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <script>   
-        $(document).ready(function() {
-            $('#revisi').summernote();
-            
-        });
-    </script> --}}
-@endpush

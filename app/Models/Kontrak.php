@@ -63,6 +63,7 @@ class Kontrak extends Model
     {
         return $this->hasMany(LogContract::class, 'kontraks_id')->orderBy('created_at', 'DESC');
     }
+
     public function pasal()
     {
         return $this->hasMany(PasalKontrak::class, 'jenis_pasal', 'jenis_kontrak');
@@ -74,7 +75,7 @@ class Kontrak extends Model
 
     public function historyRevisi()
     {
-        return $this->hasMany(RevisiKontrak::class, 'kontraks_id')->orderBy('created_at', 'DESC'); 
+        return $this->hasMany(RevisiKontrak::class, 'kontraks_id')->orderBy('created_at', 'DESC');
     }
 
 
@@ -87,11 +88,12 @@ class Kontrak extends Model
     public function viewBYmonth($month, $year)
     {
         return Kontrak::whereMonth('date_kontrak', $month)
-        ->whereYear('date_kontrak', $year)
-        ->get();
+            ->whereYear('date_kontrak', $year)
+            ->get();
     }
 
-    public function viewBYyear($year){
+    public function viewBYyear($year)
+    {
         return Kontrak::whereYear('date_kontrak', $year)->get();
     }
 
@@ -104,8 +106,18 @@ class Kontrak extends Model
     public function optionTahun()
     {
         return Kontrak::selectRaw('YEAR(date_kontrak) AS tahun')
-        ->orderByRaw('YEAR(date_kontrak)')
-        ->groupByRaw('YEAR(date_kontrak)')
+            ->orderByRaw('YEAR(date_kontrak)')
+            ->groupByRaw('YEAR(date_kontrak)')
             ->get();
     }
+
+    // public function log()
+    // {
+    //     return $this->hasMany(LogContract::class, 'kontraks_id'); // Menggunakan hasMany karena satu kontrak dapat memiliki banyak log
+    // }
+
+    // public function log()
+    // {
+    //     return $this->hasMany(LogContract::class, 'kontraks_id');
+    // }
 }

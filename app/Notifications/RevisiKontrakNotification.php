@@ -52,8 +52,8 @@ class RevisiKontrakNotification extends Notification
         return [
             'kontraks_id' => $this->revisiKontrak->kontraks_id,
             'user_id'     => $this->revisiKontrak->user_id,
-            'title'       => 'Revisi Kontrak',
-            'messages'    => $this->revisiKontrak->user->name .' Memberikan Revisi pada Kontrak ',
+            'title'       => 'Ada Revisi Kontrak!',
+            'messages'    => $this->revisiKontrak->user->name . ' Memberikan Revisi pada Kontrak',
             'url'         => route('showNotifRevisi', $this->revisiKontrak->kontraks_id),
         ];
     }

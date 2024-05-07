@@ -7,15 +7,13 @@
             <hr>
             <div class="form-group col-3">
                 <label for="total_keseluruhan">Total Keseluruhan</label>
-                <input style=" border: 2px solid #ff0000;" type="text" name="total_keseluruhan" class="form-control" required readonly>
-                
+                <input style=" border: 2px solid #ff0000;" type="text" name="total_keseluruhan" class="form-control" required readonly>   
             </div>
             <button type="button" class="btn btn-block btn-secondary btn-lg" onclick="submit_Lampiran5()">Submit</button>
         </div>
     </form>
 </div>
 @push('scripts')
-    
     <script type="text/javascript">
 
         // Fungsi untuk mengisi nilai input form dengan data barang
@@ -68,10 +66,10 @@
                     <input type="text" name="jumlah[]" class="form-control"  value="${row.purchase_order_quantity}" required readonly>
                 
                 </div>
+               
                 <div class="form-group col-1">
                     <label for="ppn">PPN %</label>
-                    <input type="text" name="ppn[]" class="form-control" required>
-                    
+                    <input type="text" name="ppn[]" class="form-control" value="${row.default_ppn || 11}" data-ppn="${row.default_ppn || 11}" required>
                 </div>
                 <div class="form-group col-2">
                     <label for="harga_akhir">Total Harga + PPN</label>
@@ -89,52 +87,61 @@
 
         //===============================================================================================
         // Fungsi untuk melakukan perhitungan nilai
+        // Inisialisasi totalKeseluruhan di luar fungsi
+        // var totalKeseluruhan = 0;
+
         // $(document).on('input', 'input[name="jumlah[]"], input[name="harga_awal[]"], input[name="ppn[]"]', function() {
-        //     // Mendapatkan nilai input jumlah, harga_awal, dan ppn pada baris yang terkait
-        //     var row = $(this).closest('.row');
-        //     var jumlah = parseInt(row.find('input[name="jumlah[]"]').val()) || 0;
-        //     var hargaAwal = parseInt(row.find('input[name="harga_awal[]"]').val()) || 0;
-        //     var ppn = parseInt(row.find('input[name="ppn[]"]').val()) || 0;
+        //     // Bersihkan nilai totalKeseluruhan
+        //     totalKeseluruhan = 0;
 
-        //     // Melakukan perhitungan total harga + PPN
-        //     var totalHarga = (jumlah * hargaAwal) + ((jumlah * hargaAwal) * (ppn / 100));
+        //     // Iterasi untuk setiap barang
+        //     $('input[name="harga_akhir[]"]').each(function() {
+        //         var totalHarga = 0;
+        //         var row = $(this).closest('.row');
+        //         var jumlah = parseInt(row.find('input[name="jumlah[]"]').val()) || 0;
+        //         var hargaAwal = parseInt(row.find('input[name="harga_awal[]"]').val()) || 0;
+        //         var ppn = parseInt(row.find('input[name="ppn[]"]').val()) || 0;    //set nilai default ppn
 
-        //     // Hasil perhitungan dimasukkan ke input harga_akhir pada baris yang terkait
-        //     row.find('input[name="harga_akhir[]"]').val(totalHarga.toFixed(2));
+        //         // Perhitungan total harga akhir untuk barang saat ini
+        //         totalHarga = (jumlah * hargaAwal) + ((jumlah * hargaAwal) * (ppn / 100));
+
+        //         // Mengisi nilai total harga akhir pada input harga_akhir
+        //         $(this).val(totalHarga.toFixed(2));
+
+        //         // Menambahkan total harga akhir barang saat ini ke totalKeseluruhan
+        //         totalKeseluruhan += totalHarga;
+        //     });
+
+        //     // Mengisi nilai total keseluruhan ke dalam input total_keseluruhan
+        //     $('input[name="total_keseluruhan"]').val(totalKeseluruhan.toFixed(2));
         // });
 
-        //===============================================================================================
-        // Fungsi untuk melakukan perhitungan nilai
-        // Inisialisasi totalKeseluruhan di luar fungsi
-        var totalKeseluruhan = 0;
+        //========================================================================================================================
 
-        $(document).on('input', 'input[name="jumlah[]"], input[name="harga_awal[]"], input[name="ppn[]"]', function() {
-            // Bersihkan nilai totalKeseluruhan
-            totalKeseluruhan = 0;
+        // after modified fungsi perhitungan harga
+        function hitungTotalHarga() {
+            var totalKeseluruhan = 0;
 
-            // Iterasi untuk setiap barang
             $('input[name="harga_akhir[]"]').each(function() {
                 var totalHarga = 0;
                 var row = $(this).closest('.row');
                 var jumlah = parseInt(row.find('input[name="jumlah[]"]').val()) || 0;
                 var hargaAwal = parseInt(row.find('input[name="harga_awal[]"]').val()) || 0;
-                var ppn = parseInt(row.find('input[name="ppn[]"]').val()) || 0;
+                var ppn = parseInt(row.find('input[name="ppn[]"]').val()) || parseInt(row.find('input[name="ppn[]"]').attr('data-ppn')) || 0;
 
-                // Perhitungan total harga akhir untuk barang saat ini
                 totalHarga = (jumlah * hargaAwal) + ((jumlah * hargaAwal) * (ppn / 100));
-
-                // Mengisi nilai total harga akhir pada input harga_akhir
                 $(this).val(totalHarga.toFixed(2));
-
-                // Menambahkan total harga akhir barang saat ini ke totalKeseluruhan
                 totalKeseluruhan += totalHarga;
             });
 
-            // Mengisi nilai total keseluruhan ke dalam input total_keseluruhan
             $('input[name="total_keseluruhan"]').val(totalKeseluruhan.toFixed(2));
+        }
+
+        $(document).on('input', 'input[name="jumlah[]"], input[name="harga_awal[]"], input[name="ppn[]"]', function() {
+            hitungTotalHarga();
         });
 
-        //===============================================================================================
+        //=========================================================================================================================
         // SUBMIT DATA
         function submitLampiran5() {
             var form = $('#inputLampiran5');

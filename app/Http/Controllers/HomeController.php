@@ -20,8 +20,12 @@ class HomeController extends Controller
 
         $dataKontrak = Kontrak::get();
         $dataSOP     = Integrate::groupBy('purchasing_document_number')->get();
-        $dataVendor  = Vendor::distinct()->get(['registration_no']);
-        $dataPasal   = PasalKontrak::get();
+
+        // ambil nilai data kontrak yang statusnya sudah approvedkadiv
+        $dataKontrakAKDV = Kontrak::where('status', 'approvedkadiv')->get();
+
+        // ambil nilai data kontrak yang statusnya selain approvedkadiv
+        $dataKontrakProses = Kontrak::whereNotIn('status', ['approvedkadiv'])->get();
 
 
         // Ambil data kontrak dari tabel kontrak
@@ -31,17 +35,36 @@ class HomeController extends Controller
         $dataStatus = $dataKontrak->groupBy('status')->map(function ($group) {
             return $group->count();
         });
+        // kecualikan approvekadiv
+        $dataStatus = $dataStatus->forget('approvedkadiv');
 
-        $KontrakPerJenis = $dataKontrak->groupBy('jenis_kontrak')->map(function ($group) {
+
+        // data kontrak per status jaminan
+        $KontrakPerStatusJaminan = $dataKontrak->groupBy('status_jaminan')->map(function ($group) {
             return $group->count();
         });
 
+        // data kontrak per jenis kontrak
+        $KontrakperJenisKontrak = $dataKontrak->groupBy('jenis_kontrak')->map(function ($groupJK) {
+            return $groupJK->count();
+        });
+
+        // Mengelompokkan data kontrak berdasarkan nama vendor dan menghitung jumlah kontrak untuk setiap vendor
+        $KontrakPerVendor = $dataKontrak->groupBy('nm_vendor')->map(function ($group) {
+            return $group->count();
+        });
+
+        // Mengambil 10 vendor dengan jumlah kontrak tertinggi
+        $topVendors = $KontrakPerVendor->sortDesc()->take(10);
+
+
 
         // dd(auth()->user()->getRoleNames());
-        return view('dashboard', compact('dataKontrak', 'dataSOP', 'dataVendor', 'dataPasal', 'dataStatus', 'KontrakPerJenis'));
+        return view('dashboard', compact('dataKontrak', 'dataSOP', 'dataKontrakAKDV', 'dataKontrakProses', 'dataStatus', 'KontrakPerStatusJaminan', 'KontrakperJenisKontrak', 'topVendors'));
     }
 
 
+    // method view data user
     public function index()
     {
         // echo 'ini method index';
@@ -55,14 +78,25 @@ class HomeController extends Controller
 
     }
 
+    // method buka form adduser
     public function addUser()
     {
         return view('addUser');
     }
 
+    // method save adduser
     public function loadUser(Request $request)
     {
         // dd($request->all());
+        $messages = [
+            'nama.required' => 'Kolom nama harus diisi.',
+            'username.required' => 'Kolom username harus diisi.',
+            'email.required' => 'Kolom email harus diisi.',
+            'unit_kerja.required' => 'Kolom unit kerja harus diisi.',
+            'password.required' => 'Kolom password harus diisi.',
+            'permission.required' => 'Kolom permission harus diisi.'
+        ];
+
         $validator = Validator::make($request->all(), [
             'nama'          => 'required',
             'username'      => 'required',
@@ -70,9 +104,12 @@ class HomeController extends Controller
             'unit_kerja'    => 'required',
             'password'      => 'required',
             'permission'    => 'required'
-        ]);
+        ], $messages);
 
-        if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
+        if ($validator->fails())
+            flash()->addFlash('error', 'Gagal menyimpan data user, pastikan semua kolom terisi!');
+        return redirect()->back()->withInput()->withErrors($validator);
+
 
         // yang berada dalam index array merupakan field yg ada di db
         $data['name']           = $request->nama;
@@ -84,9 +121,14 @@ class HomeController extends Controller
 
         User::create($data);
 
+        // NOTIFIKASI
+        flash()->addFlash('success', 'Berhasil Menyimpan Data User!');
+
         return redirect()->route('index');
     }
 
+
+    // method buka form edituser
     public function editUser(Request $request, $id)
     {
         $data = User::find($id);
@@ -96,9 +138,10 @@ class HomeController extends Controller
         return view('editUser', compact('data'));
     }
 
+    // method proses simpan data edit user
     public function updateUser(Request $request, $id)
     {
-        // dd($request->all()); cek datanya berhasil kekirim gak?
+        // dd($request->all()); //cek datanya berhasil kekirim gak?
 
         $validator = Validator::make($request->all(), [
             'nama'          => 'required',
@@ -122,7 +165,12 @@ class HomeController extends Controller
             $data['password']  = Hash::make($request->password);
         }
 
+        // dd($data);
+
         User::whereId($id)->update($data);
+
+        // NOTIFIKASI 
+        flash()->addFlash('success', 'Berhasil Perbarui Data User!');
 
         return redirect()->route('index');
     }
@@ -136,6 +184,9 @@ class HomeController extends Controller
             $data->delete();
         }
 
+        // notifikasi
+        flash()->addFlash('success', 'Berhasil Hapus Data User!');
+
         return redirect()->route('index');
     }
 
@@ -147,6 +198,14 @@ class HomeController extends Controller
         $dataPasal = PasalKontrak::get();
         // dd($dataPasal)->count();
         // dd($dataPasal);
+
+
+        // // search by jenis pasal (jaminan atau tanpa jaminan)
+        // if ($request->jenis_pasal) {
+        //     $data = PasalKontrak::where('jenis_pasal', 'LIKE', '%' . $request->jenis_pasal . '%')->get();
+        // }
+
+
         return view('dPasal', compact('dataPasal'));
     }
 
@@ -159,15 +218,25 @@ class HomeController extends Controller
     {
         // dd($request->all());
 
+        $messagesPasal = [
+            'nama_pasal.required' => 'Kolom Nama Pasal Harus Diisi.',
+            'keterangan_pasal.required' => 'Kolom Keterangan Pasal harus diisi.',
+            'isi_pasal.required' => 'Kolom Isi Pasal harus diisi.',
+            'jenis_pasal.required' => 'Kolom Jenis Pasal harus diisi.',
+            'urutan.required' => 'Kolom urutan harus diisi.'
+        ];
+
         $validator = Validator::make($request->all(), [
             'nama_pasal'        => 'required',
             'keterangan_pasal'  => 'required',
             'isi_pasal'         => 'required',
             'jenis_pasal'       => 'required',
             'urutan'            => 'required',
-        ]);
+        ], $messagesPasal);
 
-        if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
+        if ($validator->fails())
+            // flash()->addFlash('error', 'Gagal menyimpan data pasal, pastikan semua kolom terisi!');
+            return redirect()->back()->withInput()->withErrors($validator);
 
         // yang berada dalam index array merupakan field yg ada di db
         $data['nama_pasal']          = $request->nama_pasal;
@@ -177,6 +246,9 @@ class HomeController extends Controller
         $data['urutan']              = $request->jenis_pasal;
 
         PasalKontrak::create($data);
+
+        // nnotifikasi berhasil
+        flash()->addFlash('success', 'Berhasil Menyimpan Data Pasal!');
 
         return redirect()->route('vPasal');
     }
@@ -214,6 +286,9 @@ class HomeController extends Controller
 
         PasalKontrak::whereId($id)->update($data);
 
+        // NOTIFIKASI 
+        flash()->addFlash('success', 'Berhasil Perbarui Data Pasal!');
+
         return redirect()->route('vPasal');
     }
 
@@ -224,6 +299,9 @@ class HomeController extends Controller
         if ($data) {
             $data->delete();
         }
+
+        // notifikasi
+        flash()->addFlash('success', 'Berhasil Hapus Data Pasal!');
 
         return redirect()->route('vPasal');
     }

@@ -25,19 +25,47 @@ class KontrakExport implements FromCollection, WithHeadings
         // return Kontrak::all();
         // return $this->contracts;
         return $this->contracts->map(function ($contract) {
-            $jenisKontrak = ($contract->jenis_kontrak == 1) ? 'Jaminan' : 'Tanpa Jaminan';
+            // Manipulasi nilai unit kerja
+            $unitKerja = $contract->unit_kerja;
+            switch ($unitKerja) {
+                case '41A10':
+                    $unitKerja = 'Investasi';
+                    break;
+                case '41A20':
+                    $unitKerja = 'Jasa Barum';
+                    break;
+                case '41A30':
+                    $unitKerja = 'Lokal';
+                    break;
+                case '41A40':
+                    $unitKerja = 'Import';
+                    break;
+                default:
+                    // Tidak ada manipulasi jika unit kerja tidak cocok dengan nilai yang diharapkan
+                    break;
+            }
+
+            // manipulasi nilai jenis kontrak
+            $jeniKontrak = ($contract->jenis_kontrak == 1) ? 'Lumpsum' : 'Harga Biasa';
+
+
+            // manipulasi nilai status jaminan
+            $statusJaminan = ($contract->status_jaminan == 1) ? 'Jaminan' : 'Tanpa Jaminan';
+
             return [
-                    'Nomor SP' => $contract->detail_number,
-                    'Tanggal SP' => date('d-m-Y', strtotime($contract->date_kontrak)),
-                    'Nomor SOP' => $contract->nomor_sop,
-                    'Tanggal SOP' => date('d-m-Y', strtotime($contract->tanggal_sop)),
-                    'Perihal' => $contract->perihal,
-                    'Pembuat' => $contract->pembuat,
-                    'Unit Kerja' => $contract->unit_kerja,
-                    'Jenis Kontrak' => $jenisKontrak,
-                    'Status' => $contract->status,
-                    'Nominal' => @formatRupiah($contract->total_keseluruhan),
-                ];
+                'Nomor SP'                     => $contract->detail_number,
+                'Tanggal SP'                   => date('d-m-Y', strtotime($contract->date_kontrak)),
+                'Nomor SOP'                    => $contract->nomor_sop,
+                'Tanggal SOP'                  => date('d-m-Y', strtotime($contract->tanggal_sop)),
+                'Nama Vendor'                  => $contract->nm_vendor,
+                'Perihal'                      => $contract->perihal,
+                'Pembuat'                      => $contract->pembuat,
+                'Unit Kerja'                   => $unitKerja,
+                'Jenis Kontrak'                => $jeniKontrak,
+                'Status Jaminan'               => $statusJaminan,
+                'Status'                       => $contract->status,
+                'Total Nilai Harga (Incl PPN)' => @formatRupiah($contract->total_keseluruhan),
+            ];
         });
     }
 
@@ -48,12 +76,14 @@ class KontrakExport implements FromCollection, WithHeadings
             'Tanggal SP',
             'Nomor SOP',
             'Tanggal SOP',
+            'Nama Vendor',
             'Perihal',
             'Pembuat',
             'Unit Kerja',
             'Jenis Kontrak',
+            'Status Jaminan',
             'Status',
-            'Nominal'
+            'Total Nilai Harga (Incl PPN)'
         ];
     }
 }

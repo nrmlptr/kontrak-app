@@ -8,7 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KontrakController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\VendorController;
-
+use Illuminate\Support\Facades\URL;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +20,22 @@ use App\Http\Controllers\VendorController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+// // coba coba bikin function untuk url yang dikirim ke email tanpa perlu login
+// Route::get('tes', function () {
+//     echo $url = URL::temporarySignedRoute(
+//         'loginUrl',
+//         now()->addDays(10),
+//         [
+//             'revisiKontrak' => 1,
+//             'user_id' => 1,
+//             'url' => route('showNotifRevisi', 1)
+
+//         ]
+//     );
+// });
+
+// Route::get('/login/login-url', [LoginController::class, 'loginUrl'])->name('loginUrl');
+
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -92,7 +108,7 @@ Route::middleware('auth')->group(
         Route::get('/showRevisi/{id}', [KontrakController::class, 'showRevisi'])->name('viewRevisi');
         // tampilkan revisi ketika di klik dari notif
         Route::get('/showRevisiNotif/{id}', [KontrakController::class, 'showNotifRevisi'])->name('showNotifRevisi');
-        
+
         // edit lampiran
         Route::get('/updateLampiran/{id}', [KontrakController::class, 'updateLampiran'])->name('editLampiran');
         Route::post('/editLampiran1', [KontrakController::class, 'editLampiran1'])->name('submitEditLampiran1');
@@ -108,6 +124,17 @@ Route::middleware('auth')->group(
         Route::get('/review', [KontrakController::class, 'rKontrak'])->name('rKontrak');
         // TAMPIL DETAIL KONTRAK
         Route::get('/detailKontrak/{id}', [KontrakController::class, 'showKontrak'])->name('showKontrak');
+        // TAMPIL DETAIL KONTRAK ketika ada approved
+        Route::get('/showKontrakNotif/{id}', [KontrakController::class, 'showKontrakNotif'])->name('showKontrakNotif');
+
+        // tampil kontrak detail ketika pembuat berhasil bikin kontrak untuk notif ke kasek
+        Route::get('/Kontrakshow1/{id}', [KontrakController::class, 'Kontrakshow1'])->name('Kontrakshow1');
+
+
+        // ROUTE TAMPIL DETAIL KONTRAK KETIKA DI UPDATE UNTUK NOTIF KE KASEK
+        Route::get('/showUpdateKontrak/{id}', [KontrakController::class, 'showUpdateKontrak'])->name('showUpdateKontrak');
+
+        // route cetak kontrak pdf per 1 kontrak
         Route::get('/cetakKontrak/{id}', [KontrakController::class, 'cetakKontrak'])->name('cetakKontrak');
         Route::get('/logKontrak/{id}', [KontrakController::class, 'logKontrak'])->name('logKontrak');
         Route::post('/setujuiKontrak/{id}', [KontrakController::class, 'setujuiKontrak'])->name('setujuiKontrak');
@@ -147,8 +174,19 @@ Route::middleware('auth')->group(
         Route::get('kontrak/export/', [KontrakController::class, 'viewExport'])->name('viewExport');
         Route::get('/export', [KontrakController::class, 'export'])->name('contracts.export');
 
-        
+        // ROUTE VIEW KONTRAK JUST APPROVEDKADIV UNTUK UPLOAD FITUR
+        Route::get('/kontrak-upload', [KontrakController::class, 'KontrakAK'])->name('KontrakAK');
+
+        // route upload doc kontrak yang sudah di ttd
+        Route::post('/loadUpload/{id}', [KontrakController::class, 'storeUploadKontrak'])->name('loadUpload');
+        // route untuk download doc kontrak nya
+        Route::get('/downloadKontrakTTD/{id}', [KontrakController::class, 'downloadDocKontrak'])->name('downloadKontrak');
+
+
+        // route datatable
+        Route::get('/get-logged-in-user-role', [KontrakController::class, 'getLoggedInUserRole']);
         // end auth group
 
     }
+
 );

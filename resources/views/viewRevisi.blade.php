@@ -48,6 +48,20 @@
                                     <td colspan="2"><b>{{ $revisi->user->permission }}</b></td>
                                 </tr>
                                 <tr>
+                                    <td>Detail</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <hr color="black;">
+                                        <div class="callout callout-info">
+                                            <h6>No Kontrak : </h6>
+                                            <h6><b>{{ $revisi->kontrak->detail_number }}</b></h6>
+                                            <h6>Perihal : </h6>
+                                            <h6><b>{{ $revisi->kontrak->perihal }}</b></h6>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td>Isi Revisi </td>
                                     <td></td>
                                     <td></td>

@@ -11,7 +11,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Dashboard v1</li>
+                            <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -29,7 +29,7 @@
                         <div class="small-box bg-info">
                             <div class="inner">
                                 <h3>{{ $dataKontrak->count() }}</h3>
-                                <p>Jumlah Kontrak</p>
+                                <p><b>Jumlah Kontrak</b></p>
                             </div>
                             <div class="icon">
                                 <i class="nav-icon fas fa-copy"></i>
@@ -44,10 +44,12 @@
                             <div class="inner">
                                 <h3>{{ $dataSOP->count() }}</h3>
 
-                                <p>Jumlah SOP/PO/SPK</p>
+                                <p><b>Jumlah SOP/PO/SPK</b></p>
                             </div>
                             <div class="icon">
-                                <i class="ion ion-stats-bars"></i>
+                                {{-- <i class="fa-solid fa-chart-simple"></i> --}}
+                                <i class="nav-icon fas fa-chart-bar"></i>
+                                {{-- <i class="ion ion-stats-bars"></i> --}}
                             </div>
                             <a href="{{ route('indexSOP') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
@@ -57,14 +59,14 @@
                         <!-- small box -->
                         <div class="small-box bg-warning">
                             <div class="inner">
-                                <h3>{{ $dataVendor->count() }}</h3>
+                                <h3>{{ $dataKontrakAKDV->count() }}</h3>
 
-                                <p>Jumlah Vendor</p>
+                                <p><b>Kontrak Disetujui Kadiv</b></p>
                             </div>
                             <div class="icon">
-                                <i class="ion ion-person-add"></i>
+                                <i class="fas fa-check-circle"></i>
                             </div>
-                            <a class="small-box-footer">Verified</a>
+                            <a href="{{ route('KontrakAK') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->
@@ -72,12 +74,12 @@
                         <!-- small box -->
                         <div class="small-box bg-danger">
                             <div class="inner">
-                                <h3>{{ $dataPasal->count() }}</h3>
+                                <h3>{{ $dataKontrakProses->count() }}</h3>
 
-                                <p>Jumlah Pasal</p>
+                                <p><b>Kontrak Dalam Proses</b></p>
                             </div>
                             <div class="icon">
-                                <i class="nav-icon fas fa-book"></i>
+                                <i class="fas fa-tasks"></i>
                             </div>
                             <a href="#" class="small-box-footer">Verified</a>
                         </div>
@@ -85,10 +87,11 @@
                     <!-- ./col -->
                 </div>
                 <!-- /.row -->
+
                 <!-- Main row -->
                 <div class="row">
-                    <!-- Left col -->
-                    <!-- kotak buat grafik tangki netralisasi -->
+                    
+                    <!-- kotak buat grafik proses kontrak -->
                     <div class="col-md-6 col-sm-6">
                         <div class="x_panel">
                             <div class="x_title">
@@ -98,13 +101,38 @@
                             </div>
                         </div>
                     </div>  
-                    <!-- kotak untuk grafik tangki outlet wwt -->
+                    <!-- kotak untuk grafik kontrak per status jaminan -->
                     <div class="col-md-6 col-sm-6  ">
                         <div class="x_panel">
                             <div class="x_title">
                                 <figure class="highcharts-figure">
                                     <div>
-                                    <div id="kontrakperjenis"></div>
+                                    <div id="kontrakperstatusJaminan"></div>
+                                    </div>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>   
+                </div>
+                <div class="row">
+                    
+                    <!-- kotak buat grafik kontrak per jenis kontrak -->
+                    <div class="col-md-6 col-sm-6">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <figure class="highcharts-figure">
+                                    <div id="grafikKontrakPerJK"></div>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>  
+                    <!-- kotak untuk grafik per nama vendor -->
+                    <div class="col-md-6 col-sm-6  ">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <figure class="highcharts-figure">
+                                    <div>
+                                    <div id="grafikKontrakperVendor"></div>
                                     </div>
                                 </figure>
                             </div>
@@ -120,14 +148,23 @@
 {{-- HIGHCHARTS --}}
 {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}
 <script src="{{ asset('lte/plugins/jquery/jquery.min.js') }}"></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/data.js"></script>
-<script src="https://code.highcharts.com/modules/series-label.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
-<script src="https://code.highcharts.com/highcharts-3d.js"></script>
-<script src="https://code.highcharts.com/modules/cylinder.js"></script>
+{{-- <script src="https://code.highcharts.com/highcharts.js"></script> --}}
+<script src="{{ asset('assets/Highcharts/code/highcharts.js') }}"></script>
+{{-- <script src="https://code.highcharts.com/modules/data.js"></script> --}}
+<script src="{{ asset('assets/Highcharts/code/modules/data.js') }}"></script>
+{{-- <script src="https://code.highcharts.com/modules/series-label.js"></script> --}}
+<script src="{{ asset('assets/Highcharts/code/modules/series-label.js') }}"></script>
+{{-- <script src="https://code.highcharts.com/modules/exporting.js"></script> --}}
+<script src="{{ asset('assets/Highcharts/code/modules/exporting.js') }}"></script>
+{{-- <script src="https://code.highcharts.com/modules/export-data.js"></script> --}}
+<script src="{{ asset('assets/Highcharts/code/modules/export-data.js') }}"></script>
+{{-- <script src="https://code.highcharts.com/modules/accessibility.js"></script> --}}
+<script src="{{ asset('assets/Highcharts/code/modules/accessibility.js') }}"></script>
+{{-- <script src="https://code.highcharts.com/highcharts-3d.js"></script> --}}
+<script src="{{ asset('assets/Highcharts/code/highcharts-3d.js') }}"></script>
+{{-- <script src="https://code.highcharts.com/modules/cylinder.js"></script> --}}
+<script src="{{ asset('assets/Highcharts/code/modules/cylinder.js') }}"></script>
+
 
 
 <script type="text/javascript">
@@ -139,7 +176,7 @@
                 type: 'pie'
             },
             title: {
-              text: 'GRAFIK STATUS KONTRAK'
+              text: 'PROSES PEMBUATAN KONTRAK'
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.y}</b>'
@@ -174,17 +211,17 @@
         });
     });
 
-    // GRAFIK KONTRAK BY JENIS
+    // GRAFIK KONTRAK BY STATUS JAMINAN
     @php
         // Membuat array untuk kategori dan data
         $categories = [];
         $dataKontrak = [];
 
         // Iterasi melalui grup dan menambahkan data ke dalam array
-        foreach ($KontrakPerJenis as $jenis => $jumlah) {
-            if ($jenis == 1) {
+        foreach ($KontrakPerStatusJaminan as $statusJaminan => $jumlah) {
+            if ($statusJaminan == 1) {
                 $categories[] = 'Jaminan';
-            } elseif ($jenis == 2) {
+            } elseif ($statusJaminan == 2) {
                 $categories[] = 'Tanpa Jaminan';
             }
             $dataKontrak[] = $jumlah;
@@ -199,47 +236,180 @@
 
 
     $(document).ready(function() {
-        Highcharts.chart('kontrakperjenis', {
+        Highcharts.chart('kontrakperstatusJaminan', {
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: 'KONTRAK BERDASARKAN STATUS JAMINAN'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.y}</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.y}',
+                        style: {
+                            fontSize: '1.2em',
+                            textOutline: 'none',
+                            opacity: 0.7
+                        }
+                    }
+                }
+            },
+            series: [{
+                name: 'Jumlah',
+                colorByPoint: true,
+                data: [
+                    @foreach($dataGrafik['categories'] as $index => $category)
+                        {
+                            name: '{{ $category }}',
+                            y: {{ $dataGrafik['dataKontrak'][$index] }}
+                        },
+                    @endforeach
+                ]
+            }]
+        });
+    });
+
+
+    // GRAFIK KONTRAK BY jenis kontrak
+    @php
+        // Membuat array untuk kategori dan data
+        $categories = [];
+        $dataKontrak = [];
+
+        // Iterasi melalui grup dan menambahkan data ke dalam array
+        foreach ($KontrakperJenisKontrak as $Jeniskontrak => $jumlah) {
+            if ($Jeniskontrak == 1) {
+                $categories[] = 'Lumpsum';
+            } elseif ($Jeniskontrak == 2) {
+                $categories[] = 'Harga Satuan';
+            }
+            $dataKontrak[] = $jumlah;
+        }
+
+        // Menyiapkan data untuk dikirim ke view
+        $dataGrafik = [
+            'categories' => $categories,
+            'dataKontrak' => $dataKontrak
+        ];
+    @endphp
+
+
+    $(document).ready(function() {
+        Highcharts.chart('grafikKontrakPerJK', {
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: 'KONTRAK BERDASARKAN JENIS KONTRAK'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.y}</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.y}',
+                        style: {
+                            fontSize: '1.2em',
+                            textOutline: 'none',
+                            opacity: 0.7
+                        }
+                    }
+                }
+            },
+            series: [{
+                name: 'Jumlah',
+                colorByPoint: true,
+                data: [
+                    @foreach($dataGrafik['categories'] as $index => $category)
+                        {
+                            name: '{{ $category }}',
+                            y: {{ $dataGrafik['dataKontrak'][$index] }}
+                        },
+                    @endforeach
+                ]
+            }]
+        });
+    });
+
+    // GRAFIK KONTRAK BY VENDOR
+    @php
+        // Membuat array untuk kategori dan data
+        $categories = [];
+        $dataKontrak = [];
+
+        // Iterasi melalui grup dan menambahkan data ke dalam array
+        foreach ($topVendors as $vendor => $jumlah) {
+            $categories[] = $vendor;
+            $dataKontrak[] = $jumlah;
+        }
+
+        // Menyiapkan data untuk dikirim ke view
+        $dataGrafik = [
+            'categories' => $categories,
+            'dataKontrak' => $dataKontrak
+        ];
+    @endphp
+
+
+    $(document).ready(function() {
+        Highcharts.chart('grafikKontrakperVendor', {
             chart: {
                 type: 'column'
             },
             title: {
-                text: 'GRAFIK KONTRAK BERDASARKAN JENIS'
+                text: 'TOP 10 VENDOR DENGAN PEMBUATAN KONTRAK TERBANYAK'
             },
             xAxis: {
                 categories: {!! json_encode($dataGrafik['categories']) !!},
                 crosshair: true,
                 title: {
-                    text: 'Jenis Kontrak'
-                },
-                // accessibility: {
-                //     description: 'Jenis Kontrak'
-                // }
+                    text: 'Nama Vendor'
+                }
             },
             yAxis: {
                 min: 0,
-                // max: 30,
-                tickInterval: 1,
                 title: {
                     text: 'Jumlah Kontrak'
                 }
             },
             tooltip: {
-                valueSuffix: ''
+                // pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>',
+                // shared: true
+                enabled: false
             },
             plotOptions: {
                 column: {
                     pointPadding: 0.2,
                     borderWidth: 0,
-                    colorByPoint: true // Mengaktifkan warna berdasarkan kategori
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.y}', // Menampilkan jumlah kontrak
+                        inside: true,
+                        style: {
+                            fontSize: '14px' // Ukuran teks
+                        }
+                    },
+                    // colorByPoint: true, //aktifkan warna berdasarkan point
+                    // colors: ['#7cb5ec'], // Warna yang sama untuk semua point
                 }
             },
             series: [{
                 name: 'Jumlah Kontrak',
                 data: {!! json_encode($dataGrafik['dataKontrak']) !!}
-            }],
-            colors: ['#7cb5ec', '#90ed7d'] // Menentukan warna untuk setiap kategori
+            }]
         });
     });
+
 
 </script>

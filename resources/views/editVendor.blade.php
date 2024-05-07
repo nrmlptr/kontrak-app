@@ -94,33 +94,33 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script>
-    // $(document).ready(function() {
-    //     $('#akta').summernote();
-    //     $.get(`/dataNpwp/{{ $data->registration_no }}}`, function(data) {
-    //         // Setelah mendapatkan data, set nilai textarea
-    //         $('#npwp').val(data.tax_document_number);
-    //         console.log(data);
-    //     });
-        
-    // });
+    <script src="{{ asset('assets/summernote-0.8.18-dist/summernote.min.js') }}"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> --}}
+    <script>
+        // $(document).ready(function() {
+        //     $('#akta').summernote();
+        //     $.get(`/dataNpwp/{{ $data->registration_no }}}`, function(data) {
+        //         // Setelah mendapatkan data, set nilai textarea
+        //         $('#npwp').val(data.tax_document_number);
+        //         console.log(data);
+        //     });
+            
+        // });
 
-    $(document).ready(function() {
-    $('#akta').summernote();
-    $.get(`/dataNpwp/{{ $data->registration_no }}`, function(data) {
-        // Pastikan bahwa respons yang diterima dapat diuraikan dengan benar sebagai JSON
-        try {
-            // Setelah mendapatkan data, set nilai textarea
-            $('#npwp').val(data.tax_document_number);
-            console.log(data);
-        } catch (error) {
-            console.error("Error parsing JSON data: ", error);
-        }
-    }).fail(function(xhr, status, error) {
-        console.error("Failed to fetch NPWP data:", error);
-    });
-});
-</script>
-
+        $(document).ready(function() {
+            $('#akta').summernote();
+            $.get(`/dataNpwp/{{ $data->registration_no }}`, function(data) {
+                // Pastikan bahwa respons yang diterima dapat diuraikan dengan benar sebagai JSON
+                try {
+                    // Setelah mendapatkan data, set nilai textarea
+                    $('#npwp').val(data.tax_document_number);
+                    console.log(data);
+                } catch (error) {
+                    console.error("Error parsing JSON data: ", error);
+                }
+            }).fail(function(xhr, status, error) {
+                console.error("Failed to fetch NPWP data:", error);
+            });
+        });
+    </script>
 @endpush

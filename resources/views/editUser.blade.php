@@ -39,7 +39,7 @@
                             <form>
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="NamaPengguna">Nama</label>
+                                        <label for="namaPengguna">Nama</label>
                                         <input type="text" class="form-control" name="nama" value="{{ $data->name }}" id="namaPengguna" placeholder="Enter Nama">
                                         @error('nama')
                                         <small style="color: red;">{{ $message }}</small>
@@ -53,15 +53,47 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Email address</label>
-                                        <input type="email" class="form-control" name="email" value="{{ $data->email }}" id="exampleInputEmail1" placeholder="Enter email">
+                                        <label for="email">Email address</label>
+                                        <input type="email" class="form-control" name="email" value="{{ $data->email }}" id="email" placeholder="Enter email">
                                         @error('email')
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="unit_kerja">Unit Kerja</label>
-                                        <input type="text" class="form-control" name="unit_kerja" value="{{ $data->unit_kerja }}" id="unit_kerja">
+                                        <select class="form-control" name="unit_kerja" id="unit_kerja">
+                                            @php
+                                                
+                                            @endphp
+                                            <option value="{{ $data->unit_kerja }}" selected>
+                                                @if($data->unit_kerja === '41A')
+                                                    Admin
+                                                @elseif($data->unit_kerja === '41KDV')
+                                                    Kepala Divisi
+                                                @elseif($data->unit_kerja === '41KDP')
+                                                    Kepala Department
+                                                @elseif($data->unit_kerja === '41A10')
+                                                    Investasi
+                                                @elseif($data->unit_kerja === '41A20')
+                                                    Jasa Barum
+                                                @elseif($data->unit_kerja === '41A20')
+                                                    Jasa Barum
+                                                @elseif($data->unit_kerja === '41A30')
+                                                    Lokal
+                                                @else
+                                                    Import
+                                                @endif
+                                            </option>
+                                            <option value="">Pilih Unit Kerja</option>
+                                            <option value="41A">Admin</option>
+                                            <option value="41KDV">Kepala Divisi</option>
+                                            <option value="41KDP">Kepala Department</option>
+                                            <option value="41A10">Investasi</option>
+                                            <option value="41A20">Jasa Barum</option>
+                                            <option value="41A30">Lokal</option>
+                                            <option value="41A40">Import</option>
+                                        </select>
+                                        {{-- <input type="text" class="form-control" name="unit_kerja" value="{{ $data->unit_kerja }}" id="unit_kerja"> --}}
                                         @error('unit_kerja')
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror

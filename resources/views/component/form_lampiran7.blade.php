@@ -24,7 +24,10 @@
                
             </div>
             <!-- <div class="card-footer"> -->
-            <button type="button" class="btn btn-block btn-secondary btn-lg" onclick="submitLampiran7()">Submit</button>
+            <button type="button" class="btn btn-block btn-secondary btn-lg" onclick="submitLampiran7()">
+                <span id="loading-spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Submit
+            </button>
             <!-- </div> -->
         </div>
     </form>
@@ -33,7 +36,10 @@
 @push('scripts')
     
     <script type="text/javascript">
-    
+        $(document).ready(function(){
+            $('#loading-spinner').hide();
+        });
+
         // SUBMIT DATA
         function submitLampiran7() {
             var form = $('#inputLampiran7');
@@ -42,8 +48,11 @@
                 method: "POST",
                 url: "{{ route('submitLampiran7') }}",
                 data: form.serialize(),
+                beforeSend: function(){
+                    $('#loading-spinner').show();
+                },
                 success: function(result) {
-
+                    $('#loading-spinner').hide();
                     console.log(result.message);
                     if (result.status=='success') {
                         if (result.redirect) {

@@ -68,7 +68,7 @@
                         @if(Auth::user()->permission=='kasek' || Auth::user()->permission=='kadept' || Auth::user()->permission=='kadiv')
                             @if($data->status !== 'approvedkadiv')
                                 <a href="{{ route('createRevisi', ['id' => $data->id]) }}" class="btn btn-sm btn-warning mr-1 mb-3"><i class="fas fa-pen"></i> Revisi Kontrak</a>
-                                <a href="{{ route('setujuiKontrak',$data->id) }}" id="setujuiKontrak" class="btn btn-sm btn-success mr-1 mb-3"><i class="fas fa-thumbs-up"></i> Setujui Kontrak</a>
+                                <a href="{{ route('setujuiKontrak',$data->id) }}" id="setujuiKontrak" class="btn btn-sm btn-success mr-1 mb-3"><i class="fas fa-thumbs-up"></i> Submit Kontrak</a>
                             @endif
                         @endif
                         <a href="{{ route('cetakKontrak',$data->id) }}" target="_blank"  class="btn btn-sm btn-secondary mr-1 mb-3"><i class="nav-icon fas fa-print"></i></i> Cetak Kontrak</a>
@@ -185,7 +185,7 @@
                                             </div>
                                         </div>
                                         <div style="clear: both;"></div> --}}
-                                    
+
                                         
                                         <!-- Isi Pasal -->
                                         @foreach ($data->pasal as $p)
@@ -215,7 +215,7 @@
                                                 {!! $p->isi_pasal !!}
                                             </div>
                                             <div style="margin-bottom: 40px;"></div>            
-                                    
+
                                             {{-- table ttd diakhir loop --}}
                                             @if ($loop->last)
                                                 <p style="text-align: justify;">Demikian Perjanjian ini dibuat dalam 2 (dua) rangkap ASLI masing-masing sama bunyi dan bermeterai cukup serta mempunyai kekuatan hukum yang sama setelah ditandatangani dan dibubuhi cap perusahaan kedua belah pihak.</p>
@@ -246,6 +246,7 @@
                                         @endforeach
                                         {{-- end loop pasal --}}
                                     </div>
+
 
                                     {{-- disini butuh page break ke halaman selanjutnya --}}
                                     <div class="page-break"></div>
@@ -377,53 +378,158 @@
                                     @php
                                         $lampiran3=$data->lampiran3;
                                     @endphp
+
                                     <div class="content">
 
                                         @if ($lampiran3[0]->jenis_spesifikasi=='2')
-                                            <table border="1">
-                                                <tbody>
-                                                    <tr>
-                                                        <td><b>LAMPIRAN III : SPESIFIKASI TEKNIS  </b></td>
-                                                        <td><b>Halaman : 1 / 1</b></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td rowspan="2"><b>PERIHAL : {{ strtoupper($data->perihal) }}</b></td>
-                                                        <td><b>Nomor : {{ $data->detail_number }}</b></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>Tanggal : {{ tanggal_indonesia($data->date_kontrak) }}</b></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <span style="text-align: center;"><b>SPESIFIKASI TEKNIS</b></span>
-                                            
+
+                                            {{-- TEMPAT TAMPILIN NONSATANDARLAB --}}
                                             @foreach ($lampiran3 as $l) 
-                                                <span style="text-align: center;"><b>{{ $l->jenis_barang }}</b></span>
+                                                <table style="border-collapse: collapse; width: 100%;" border="1">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="width: 20%; font-size: 14px;"><b>LAMPIRAN III</b></td>
+                                                            <td style="width: 2%; font-size: 14px;"><b>:</b></td>
+                                                            <td style="font-size: 14px;"><b>SPESIFIKASI TEKNIS</b></td>
+                                                            <td style="font-size: 14px;"><b>Halaman : {{ $loop->iteration  }} / {{ $lampiran3->count() }} </b></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 13%; font-size: 14px;" rowspan="2"><b>PERIHAL</b></td>
+                                                            <td rowspan="2" style="width: 2%; border: none; font-size: 14px;"><b> : </b></td>
+                                                            <td rowspan="2" style="width: 60%; font-size: 14px;"><b>{{ strtoupper($data->perihal) }}</b></td>
+                                                            <td style="width: 30%; font-size: 14px;"><b>Nomor : {{ $data->detail_number }}</b></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="font-size: 14px;"><b>Tanggal : {{ tanggal_indonesia($data->date_kontrak) }}</b></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                {{-- <div><br></div> --}}
+                                                <div style="text-align: center;"><b>SPESIFIKASI TEKNIS</b></div>
+                                                {{-- <div><br></div> --}}
+                                                @if($l->gambarnon !== null)
+                                                    <div style="display: grid; place-items: center;">
+                                                        <img src="{{ Storage::url($l->gambarnon) }}" alt="{{ Storage::url($l->gambarnon) }}" style="margin-top: 20px; margin-bottom: 20px; max-width: auto; height: auto;">
+                                                    </div>
+                                                @else
+                                                    <div style="background-color: white;"></div>
+                                                @endif
+                                                @if (!$loop->last)
+                                                    <div class="page-break"></div>
+                                                @endif
                                             @endforeach
-                                            <table border="1" cellpadding="3" cellspacing="1">
-                                                <thead>
+                                            {{-- TEMPAT MANGGIL NAMA BARANGNYA --}}
+                                            @foreach ($lampiran3 as $l) 
+                                                <div style="text-align: center;"><b>{{ $l->jenis_barang }}</b></div>
+                                                {{-- <div><br></div> --}}
+                                            @endforeach
+                                            <div><br></div>
+                                            {{-- TEMPAT TABEL SPESIFIKASINYA --}}
+                                            <table style="border-collapse: collapse; width: 100%; border: 1px solid #ddd; text-align: left;">
+                                                <thead style="background-color: #f2f2f2;">
                                                     <tr>
-                                                        <th>No </th>
-                                                        <th>No SPBB</th>
-                                                        <th>Kode Barang</th>
-                                                        <th>Nama Barang</th>
-                                                        <th>Spesifikasi Teknis</th>
+                                                        <th style="padding: 8px; border: 1px solid #ddd;">No</th>
+                                                        <th style="padding: 8px; border: 1px solid #ddd;">No. SPPB</th>
+                                                        <th style="padding: 8px; border: 1px solid #ddd;">Kode Barang</th>
+                                                        <th style="padding: 8px; border: 1px solid #ddd;">Jenis Barang</th>
+                                                        <th style="padding: 8px; border: 1px solid #ddd;">Spesifikasi Teknis</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($lampiran3 as $l)
-                                                    <tr>
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $l->no_sppb }}</td>
-                                                        <td>{{ $l->kode_barang }}</td>
-                                                        <td>{{ $l->jenis_barang }}</td>
-                                                        {{-- <td>{{ $l->spesifikasi_teknis }}</td> --}}
-                                                        <td>{!! nl2br(e($l->spesifikasi_teknis)) !!}</td>
-                                                    </tr>
+                                                    @foreach($lampiran3 as $l)
+                                                        <tr>
+                                                            <td style="padding: 8px; border: 1px solid #ddd;">{{ $loop->iteration }}</td>
+                                                            <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->no_sppb }}</td>
+                                                            <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->kode_barang }}</td>
+                                                            <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->jenis_barang }}</td>
+                                                            <td style="padding: 8px; border: 1px solid #ddd;">{!! nl2br(e($l->spesifikasi_teknis)) !!}</td>
+                                                        </tr>
                                                     @endforeach
+                                                    
                                                 </tbody>
                                             </table>
+
+
+                                            
+                                            {{-- @foreach ($lampiran3 as $l)
+                                                <table border="1">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="width: 20%; font-size: 14px;"><b>LAMPIRAN III</b></td>
+                                                            <td style="width: 2%; font-size: 14px;"><b>:</b></td>
+                                                            <td style="font-size: 14px;"><b>SPESIFIKASI TEKNIS</b></td>
+                                                            <td style="font-size: 14px;"><b>Halaman : {{ $loop->iteration }} / {{ $lampiran3->count() }}</b></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 13%; font-size: 14px;" rowspan="2"><b>PERIHAL</b></td>
+                                                            <td rowspan="2" style="width: 2%; border: none; font-size: 14px;"><b> : </b></td>
+                                                            <td rowspan="2" style="width: 60%; font-size: 14px;"><b>{{ strtoupper($data->perihal) }}</b></td>
+                                                            <td style="width: 30%; font-size: 14px;"><b>Nomor : {{ $data->detail_number }}</b></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="font-size: 14px;"><b>Tanggal : {{ tanggal_indonesia($data->date_kontrak) }}</b></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div><br></div>
+                                                <div style="text-align: center; font-size: 14px;"><b>SPESIFIKASI TEKNIS</b></div>
+                                                <div><br></div>
+                                                <div style="text-align: center;"><b>{{ $l->jenis_barang }}</b></div>
+                                                <div><br></div>
+                                                <div style="margin-bottom: 20px;">
+                                                    @if($l->gambarnon !== null)
+                                                        <div style="display: grid; place-items: center; margin-bottom: 20px;">
+                                                            <img src="{{ storage_path("app/".$l->gambarnon) }}" style="display: block; margin: 20px auto; max-width: 50%; max-height: auto;">
+                                                        </div>
+                                                        <table style="border-collapse: collapse; width: 100%; border: 1px solid #ddd; text-align: left;">
+                                                            <thead style="background-color: #f2f2f2;">
+                                                                <tr>
+                                                                    <th style="padding: 8px; border: 1px solid #ddd;">No. SPPB</th>
+                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Kode Barang</th>
+                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Jenis Barang</th>
+                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Spesifikasi Teknis</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->no_sppb }}</td>
+                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->kode_barang }}</td>
+                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->jenis_barang }}</td>
+                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{!! nl2br(e($l->spesifikasi_teknis)) !!}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    @else
+                                                        <div style="width: 100px; height: 100px; background-color: white;"></div>
+                                                        <table style="border-collapse: collapse; width: 100%; border: 1px solid #ddd; text-align: left;">
+                                                            <thead style="background-color: #f2f2f2;">
+                                                                <tr>
+                                                                    <th style="padding: 8px; border: 1px solid #ddd;">No. SPPB</th>
+                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Kode Barang</th>
+                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Jenis Barang</th>
+                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Spesifikasi Teknis</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->no_sppb }}</td>
+                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->kode_barang }}</td>
+                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->jenis_barang }}</td>
+                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{!! nl2br(e($l->spesifikasi_teknis)) !!}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    @endif
+                                                </div>
+                                                @if (!$loop->last)
+                                                    <div class="page-break"></div>
+                                                @endif
+                                            @endforeach --}}
+
+
                                         @else
+
+                                            {{-- TEMPAT UNTUK STANDARLAB --}}
                                             @foreach ($lampiran3 as $l)
                                                 <table border="1">
                                                     <tbody>
@@ -441,11 +547,10 @@
                                                     </tbody>
                                                 </table>
                                                 {{-- <img src="{{ Storage::url('uploads/spesifikasi_teknis/' . $l->gambar) }}" alt="{{ $l->gambar }}" style="margin-top:20px;margin-bottom:20px;"> --}}
-
                                                 <img src="{{ Storage::url($l->gambar) }}" alt="{{ Storage::url($l->gambar) }}" style="margin-top:20px;margin-bottom:20px; max-width: auto%; max-height: auto;">
                                             @endforeach
+
                                         @endif
-                                        
                                         
                                         <table style="width: 100%;
                                                 border-collapse: collapse;
@@ -501,35 +606,36 @@
                                                     dimaksud Pasal 5 Perjanjian ini sesuai jadwal yang tercantum dalam Surat Order Pembelian
                                                     (SOP) Nomor : {{ $lampiran4[0]->nomor_sop }} tanggal {{ tanggal_indonesia($lampiran4[0]->tanggal_sop) }} yang diterbitkan oleh PIHAK
                                                     KESATU yaitu sebagai berikut :
-                                                    <br>
-                                                    <table border="1" cellpadding="3" cellspacing="1">
-                                                        <thead>
+                                                    <div><br></div>
+                                                    <table style="border-collapse: collapse; width: 100%; border: 1px solid #ddd; text-align: center;">
+                                                        <thead style="background-color: #f2f2f2;">
                                                             <tr>
-                                                                <th>No </th>
-                                                                <th>No SPPB</th>
-                                                                <th>Kode Barang</th>
-                                                                <th>Nama Barang</th>
-                                                                <th>Tanggal Penyerahan</th>
+                                                                <th style="padding: 8px; border: 1px solid #ddd;">No</th>
+                                                                <th style="padding: 8px; border: 1px solid #ddd;">No SPPB</th>
+                                                                <th style="padding: 8px; border: 1px solid #ddd;">Kode Barang</th>
+                                                                <th style="padding: 8px; border: 1px solid #ddd;">Nama Barang</th>
+                                                                <th style="padding: 8px; border: 1px solid #ddd;">Tanggal Penyerahan</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             @foreach ($lampiran4 as $l)
                                                                 <tr>
-                                                                    <td>{{ $loop->iteration }}</td>
-                                                                    <td>{{ $l->no_sppb }}</td>
-                                                                    <td>{{ $l->kode_barang }}</td>
-                                                                    <td>{{ $l->nama_barang }}</td>
-                                                                    <td>{{ $l->jadwal_penyerahan_barang }}</td>
+                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $loop->iteration }}</td>
+                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->no_sppb }}</td>
+                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->kode_barang }}</td>
+                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->nama_barang }}</td>
+                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->jadwal_penyerahan_barang }}</td>
                                                                 </tr>
-                                                            @endforeach   
+                                                            @endforeach
                                                         </tbody>
                                                     </table>
+                                                    <div><br></div>
                                                 </li>
                                             @else
                                                 <li style="text-align: justify;">
                                                     PIHAK KEDUA sanggup dan berjanji untuk melaksanakan penyerahan barang sebagaimana
                                                     dimaksud Pasal 5 Perjanjian ini sesuai jadwal yang tercantum dalam Surat Order Pembelian (SOP)
-                                                    Nomor : {{ @$lampiran4[0]->nomor_sop }} tanggal {{ tanggal_indonesia(@$lampiran4[0]->tanggal_sop) }} yang diterbitkan oleh PIHAK KESATU yaitu secara bertahap sampai dengan tanggal {{ @$lampiran4[0]->jadwal_penyerahan_barang }}. 
+                                                    Nomor : {{ @$lampiran4[0]->nomor_sop }} tanggal {{ tanggal_indonesia(@$lampiran4[0]->tanggal_sop) }} yang diterbitkan oleh PIHAK KESATU yaitu {{ @$lampiran4[0]->jadwal_penyerahan_barang }}. 
                                                     
                                                 </li>
                                             @endif
@@ -608,16 +714,16 @@
                                         <ol>
                                             @if ($lampiran5->count()>1)
                                                 <li>
-                                                    Harga satuan barang :
-                                                    <br>
-                                                    <table border="1" cellpadding="3" cellspacing="1">
-                                                        <thead>
+                                                    Harga satuan barang :                               
+                                                    <div><br></div>
+                                                    <table style="border-collapse: collapse; width: 100%; border: 1px solid #ddd; text-align: center;">
+                                                        <thead style="background-color: #f2f2f2;">
                                                             <tr>
-                                                                <th>No </th>
-                                                                <th>No SPPB</th>
-                                                                <th>Kode Barang</th>
-                                                                <th>Nama Barang</th>
-                                                                <th>Harga Satuan / Liter (Excl. PPN)</th>
+                                                                <th style="padding: 8px; border: 1px solid #ddd;">No</th>
+                                                                <th style="padding: 8px; border: 1px solid #ddd;">No SPPB</th>
+                                                                <th style="padding: 8px; border: 1px solid #ddd;">Kode Barang</th>
+                                                                <th style="padding: 8px; border: 1px solid #ddd;">Nama Barang</th>
+                                                                <th style="padding: 8px; border: 1px solid #ddd;">Harga Satuan / Liter (Excl. PPN)</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -626,20 +732,20 @@
                                                             @endphp
                                                             @foreach ($lampiran5 as $l)
                                                                 <tr>
-                                                                    <td>{{ $loop->iteration }}</td>
-                                                                    <td>{{ $l->no_sppb }}</td>
-                                                                    <td>{{ $l->kode_barang }}</td>
-                                                                    <td>{{ $l->nama_barang }}</td>
-                                                                    <td>{{ formatRupiah($l->harga_awal) }}</td>
-
+                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $loop->iteration }}</td>
+                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->no_sppb }}</td>
+                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->kode_barang }}</td>
+                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->nama_barang }}</td>
+                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ formatRupiah($l->harga_awal) }}</td>
                                                                 </tr>
                                                                 @php
-                                                                $totalHarga=$l->harga_awal*$l->qty;
+                                                                    $totalHarga=$l->harga_awal*$l->qty;
                                                                     $total+=$totalHarga;
                                                                 @endphp
                                                             @endforeach
                                                         </tbody>
                                                     </table>
+                                                    <div><br></div>
                                                     dengan total harga keseluruhan sebesar {{ @formatRupiah($data->total_keseluruhan) }} ({{ terbilang($data->total_keseluruhan) }} Rupiah)  sudah termasuk Pajak Pertambahan Nilai (PPN).
                                                 </li>
                                             @else
@@ -741,7 +847,7 @@
                                                 <ol>
                                                     <li style="text-align: justify;">Kuitansi yang bermeterai cukup.</li>
                                                     <li style="text-align: justify;">Faktur Pajak.</li>
-                                                    <li style="text-align: justify;">Invoice</li>
+                                                    <li style="text-align: justify;">Invoice.</li>
                                                     @if ($data->jenis_kontrak=='1')
                                                         <li style="text-align: justify;">Copy Jaminan Pelaksanaan dan Surat keabsahan Jaminan (Jaminan Pelaksanaan) yang telah distempel "Verified Dep. Pengadaan Perum Peruri".
                                                         </li>
@@ -749,7 +855,7 @@
                                                     <li style="text-align: justify;">Copy Surat Order Pembelian Nomor : {{ @$lampiran6->nomor_sop }} tanggal {{ tanggal_indonesia($data->tanggal_sop) }}.</li>
                                                     <li style="text-align: justify;">Copy Perjanjian Nomor : {{ $data->detail_number }} tanggal {{ tanggal_indonesia($data->date_kontrak) }}.
                                                     </li>
-                                                    <li style="text-align: justify;">Surat Bukti Penyerahan Barang/Delivery Order (DO)</li>
+                                                    <li style="text-align: justify;">Surat Bukti Penyerahan Barang/Delivery Order (DO).</li>
                                                     <li style="text-align: justify;">Copy Surat Penerimaan Barang (SPB).</li>
                                                 </ol>
                                             </li>
@@ -867,29 +973,40 @@
         <!-- /.content -->
     </div>
 @endsection
-@push('scripts')
-    <script>
-        $(document).on('click','#setujuiKontrak',function(e){
-            e.preventDefault()
-            let href=$(this).attr('href')
-            console.log(href)
-            if (confirm('Apakah Anda yakin akan menyetujui kontrak ini?')) {
-                $.ajax({
-                    method: "POST",
-                    url: href,
-                    data: {},
-                    success: function(result) {
 
-                        console.log(result.message);
-                        if (result.redirect) {
-                            window.location.href = result.redirect; // Mengarahkan ke halaman review
+
+@push('scripts')
+    <script type="text/javascript">
+        // import Swal from 'sweetalert2';
+
+        $(document).on('click', '#setujuiKontrak', function(e) {
+            e.preventDefault();
+            let href = $(this).attr('href');
+            console.log(href);
+            Swal.fire({
+                title: "Apakah Anda yakin akan submit draft Kontrak Pengadaan?",
+                // text: "Anda tidak akan dapat mengembalikan ini!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                 cancelButtonText: "Tidak",
+                confirmButtonText: "Ya, Submit!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        method: "POST",
+                        url: href,
+                        data: {},
+                        success: function(result) {
+                            console.log(result.message);
+                            if (result.redirect) {
+                                window.location.href = result.redirect; // Mengarahkan ke halaman review
+                            }
                         }
-                        
-                        
-                    }
-                });
-            }
-            
-        })
+                    });
+                }
+            });
+        });
     </script>
 @endpush

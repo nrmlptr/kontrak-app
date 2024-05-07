@@ -14,4 +14,9 @@ class LogContract extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function kontrak()
+    {
+        return $this->belongsTo(Kontrak::class, 'kontraks_id');
+    }
 }

@@ -76,13 +76,12 @@
 
 @push('scripts')
     
-
-    <script>
+    <script type="text/javascript">
         $(document).ready(function() {
             $('#soptabel').DataTable({
                 "paging": true,
                 "lengthChange": false,
-                "searching": false,
+                "searching": true,
                 "ordering": true,
                 "info": true,
                 "autoWidth": false,

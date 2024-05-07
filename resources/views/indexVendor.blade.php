@@ -11,7 +11,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Vendor</li>
+                        <li class="breadcrumb-item active">Vendor Akta Setting</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -27,10 +27,42 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Vendor</h3>
+                            <h3 class="card-title">Vendor List</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
+                            <a class="btn btn-primary mb-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" title="Filter Data"><i class="fas fa-filter"></i>
+                                Filter Data
+                            </a>
+                            <a href="{{ route('vendor.index') }}" class="btn btn-warning mb-2" title="Refresh Data"><i class="fas fa-sync-alt"></i></a>
+
+                            <div class="collapse" id="collapseExample">
+                                <form action="{{ route('vendor.index') }}" method="GET">
+                                @csrf
+                                    <div class="row">
+                                         <div class="col-md-3 mb-3">
+                                            <label for="">No Registration</label>
+                                            <input type="text" name="no_regis" id="filter-no-registration" class="form-control filter">
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label for="">No SOP</label>
+                                            <input type="text" name="no_sop" id="filter-no-sop" class="form-control filter">
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="">Nama Vendor</label>
+                                            <input type="text" name="nm_vendor" id="filter-nama-vendor" class="form-control filter">
+                                        </div>
+                                        <div class="col-md-2 mb-3 mt-1 input-group-append">
+                                            {{-- <br> --}}
+                                            <button type="submit" class="btn btn-primary" title="Search Data"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                    
+                                </form>
+                            </div>
+
+
+
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead align="center">
                                     <tr>

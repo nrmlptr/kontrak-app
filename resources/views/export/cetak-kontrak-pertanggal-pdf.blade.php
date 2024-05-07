@@ -61,11 +61,13 @@
                     <th>Tanggal SP</th>
                     <th>Nomor SOP</th>
                     <th>Tanggal SOP</th>
+                    <th>Nama Vendor</th>
                     <th>Perihal</th>
                     <th>Pembuat</th>
                     <th>Unit Kerja</th>
                     <th>Jenis Kontrak</th>
-                    <th>Nominal</th>
+                    <th>Status Jaminan</th>
+                    <th>Total Harga (Incl PPN)</th>
                     <th>Status</th>
                 </tr>
             </thead>
@@ -77,11 +79,28 @@
                         <td>{{ date('d-m-Y', strtotime($d->date_kontrak)) }}</td>
                         <td>{{ $d->nomor_sop }}</td>
                         <td>{{ date('d-m-Y', strtotime($d->tanggal_sop)) }}</td>
+                        <td>{{ $d->nm_vendor }}</td>
                         <td>{{ $d->perihal }}</td>
                         <td>{{ $d->pembuat }}</td>
-                        <td>{{ $d->unit_kerja }}</td>
+                        <td>@if($d->unit_kerja == '41A10')
+                                Investasi
+                            @elseif($d->unit_kerja == '41A20')
+                                Jasa Barum
+                            @elseif($d->unit_kerja == '41A30')
+                                Lokal
+                            @else
+                                Import
+                            @endif
+                        </td>
                         <td>
                             @if($d->jenis_kontrak == '1')
+                                Lumpsum
+                            @else
+                                Harga Satuan
+                            @endif
+                        </td>
+                         <td>
+                            @if($d->status_jaminan == '1')
                                 Jaminan
                             @else
                                 Tanpa Jaminan

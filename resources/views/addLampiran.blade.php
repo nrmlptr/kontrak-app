@@ -192,8 +192,9 @@
 @push('scripts')
     <!-- jQuery -->
     {{-- <script src="{{ asset('lte/plugins/jquery/jquery.min.js') }}"></script> --}}
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <script>
+    <script src="{{ asset('assets/summernote-0.8.18-dist/summernote.min.js') }}"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> --}}
+    <script type="text/javascript">
         $(document).ready(function() {
             var nomor_sop = "{{ $data->nomor_sop }}";
 
@@ -210,6 +211,11 @@
                         isiNilaiForm3(response);
                         isiNilaiForm4(response);
                         isiNilaiForm5(response);
+
+                        // Panggil fungsi hitungTotalHarga setelah formulir selesai dimuat
+                        hitungTotalHarga();
+
+
                         $.get(`/dataVendor/${response[0].registration_no}`, function(data) {
                             // Setelah mendapatkan data, set nilai textarea
                             // $('textarea[name="alamat_vendor"]').val(data.alamat);

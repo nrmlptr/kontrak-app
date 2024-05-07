@@ -1,3 +1,7 @@
+@php
+    $successMessage = session('success');
+@endphp
+
 <div class="row">
     <form id="inputLampiran4">
         @csrf
@@ -67,6 +71,15 @@
             
         }
 
+        $(document).ready(function() {
+            var successMessage = '{{ $successMessage }}';
+
+            // Jika ada notifikasi success, tampilkan dengan Toastr
+            if (successMessage) {
+                toastr.success(successMessage);
+            }
+        });
+
         function submitLampiran4() {
             var form = $('#inputLampiran4');
 
@@ -78,9 +91,6 @@
                     $(".collapse").removeClass('show');
                     $('#collapseLampiran5').addClass('show');
                     console.log(result.message);
-                    // if (result.redirect) {
-                    //     window.location.href = result.redirect; // Mengarahkan ulang halaman ke halaman monitoring
-                    // }
                 }
             });
         }

@@ -35,20 +35,11 @@
                                 <label for="label">Tanggal Awal</label>
                                 <input type="date" name="tglawal" id="tglawal" class="form-control col-2" required>
                             </div>
-                            {{-- <div class="input-group mb-3">
-                                <label for="label">Tanggal Awal</label>
-                                <input type="date" name="tglawal" id="tglawal" class="form-control col-4">
-                            </div> --}}
                             <div class="form-group">
                                 <label for="label">Tanggal Akhir</label>
                                 <input type="date" name="tglakhir" id="tglakhir" class="form-control col-2" required>
                             </div>
                             
-                            {{-- <div class="input-group mb-3">
-                                <label for="label">Tanggal Akhir</label>
-                                <input type="date" name="tglakhir" id="tglakhir" class="form-control">
-                            </div> --}}
-
                             <div class="input-group mb-3">
                                 <a href="" onclick="this.href='/ExKontrakPDF=pertanggal/'+ document.getElementById('tglawal').value + '/' + document.getElementById('tglakhir').value " 
                                 target="_blank" class="btn btn-primary">Export Kontrak</a>

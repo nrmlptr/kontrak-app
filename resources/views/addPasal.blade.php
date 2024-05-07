@@ -59,13 +59,13 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="urutan">Urutan Pasal</label>
-                                        <input type="number" min="1" class="form-control" name="urutan" id="urutan" required>
+                                        <input type="number" min="1" class="form-control" name="urutan" id="urutan">
                                         @error('urutan')
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="jenis_pasal">Jenis Kontrak</label>
+                                        <label for="jenis_pasal">Jenis Pasal</label>
                                         <select class="form-control" name="jenis_pasal" id="jenis_pasal" required>
                                             <option value="">Pilih</option>
                                             <option value="1">Jaminan</option>
@@ -99,7 +99,8 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script src="{{ asset('assets/summernote-0.8.18-dist/summernote.min.js') }}"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> --}}
     <script>   
         $(document).ready(function() {
             $('#isi_pasal').summernote();

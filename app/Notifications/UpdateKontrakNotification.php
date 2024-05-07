@@ -14,12 +14,14 @@ class UpdateKontrakNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    private $kontraks;
-    private $namaPenggunaRevisi;
-    public function __construct($kontraks, $namaPenggunaRevisi)
+    private $updateKontrak;
+    private $notifKasek;
+
+
+    public function __construct($updateKontrak, $notifKasek)
     {
-        $this->kontraks = $kontraks;
-        $this->namaPenggunaRevisi = $namaPenggunaRevisi;
+        $this->updateKontrak = $updateKontrak;
+        $this->notifKasek = $notifKasek;
     }
 
     /**
@@ -51,10 +53,9 @@ class UpdateKontrakNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'id'      =>  $this->kontraks->id,
-            'pembuat' => $this->kontraks->user->name,
-            'title'   => $this->namaPenggunaRevisi->name . 'Ada Update Kontrak!',
-            'messages' => $this->kontraks->user->name . 'Sudah Memperbarui Kontrak',            
+            'title'     => 'Kontrak Telah Diperbaharui!', 
+            'messages'  => $this->updateKontrak->pembuat . ' Telah memperbaharui kontrak dengan Nomor ' . $this->updateKontrak->detail_number . ' Silahkan review kembali. Terimakasih!',
+            'url'       => route('showUpdateKontrak', $this->updateKontrak->id),
         ];
     }
 }

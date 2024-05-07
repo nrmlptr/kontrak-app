@@ -60,7 +60,17 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="unit_kerja">Unit Kerja</label>
-                                        <input type="text" class="form-control" name="unit_kerja" id="unit_kerja" placeholder="Enter Unit Kerja">
+                                        <select class="form-control" name="unit_kerja" id="unit_kerja" required>
+                                            <option value="">Pilih Unit Kerja</option>
+                                            <option value="41A">Admin</option>
+                                            <option value="41KDV">Kepala Divisi</option>
+                                            <option value="41KDP">Kepala Department</option>
+                                            <option value="41A10">Investasi</option>
+                                            <option value="41A20">Jasa Barum</option>
+                                            <option value="41A30">Lokal</option>
+                                            <option value="41A40">Import</option>
+                                        </select>
+                                        {{-- <input type="text" class="form-control" name="unit_kerja" id="unit_kerja" placeholder="Enter Unit Kerja"> --}}
                                         @error('unit_kerja')
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror

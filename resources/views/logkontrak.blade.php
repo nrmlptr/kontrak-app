@@ -34,26 +34,32 @@
                            <div class="table-responsive">
                             <table class="table table-hovered table-sm table-bordered">
                             <tr>
-                                <td>Number</td>
+                                <td><b>Number</b></td>
                                 <td>:</td>
                                 <td>{{ $kontrak->detail_number }}</td>
                             </tr>
                             <tr>
-                                <td>Perihal</td>
+                                <td><b>Perihal</b></td>
                                 <td>:</td>
                                 <td>{{ $kontrak->perihal }}</td>
                             </tr>
                             <tr>
-                                <td>Log Status</td>
+                                <td><b>Log Status</b></td>
                                 <td>:</td>
                                 <td>
                                     <ul>
                                         @foreach ($kontrak->logs as $l)
-                                        <li>{{ $l->status }} - {{ $l->user->name }}@({{ tanggal_indonesia($l->created_at,'Y') }})</li>
+                                            <li>{{ $l->status }} - {{ $l->user->name }}@({{ tanggal_indonesia($l->created_at,'Y') }})</li>
                                         @endforeach
-                                        
                                     </ul>
                                     
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Total Waktu (Pembuatan - Approved)</b></td>
+                                <td>:</td>
+                                <td>
+                                    {{$lamaProses}} hari
                                 </td>
                             </tr>
                            </table>

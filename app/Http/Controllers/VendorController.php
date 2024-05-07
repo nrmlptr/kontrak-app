@@ -18,9 +18,55 @@ use PDF;
 
 class VendorController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $data = Integrate::with('vendortext')->groupBy('purchasing_document_number')->get();
+
+        // search by nama vendor
+        if ($request->nm_vendor) {
+            $data = Integrate::with('vendortext')->groupBy('purchasing_document_number')->where('vendor_name', 'LIKE', '%' . $request->nm_vendor . '%')->get();
+        }
+
+        // search by nO REGIS
+        if ($request->no_regis) {
+            $data = Integrate::with('vendortext')->groupBy('purchasing_document_number')->where('registration_no', 'LIKE', '%' . $request->no_regis . '%')->get();
+        }
+
+        // search by no sop
+        if ($request->no_sop) {
+            $data = Integrate::with('vendortext')->groupBy('purchasing_document_number')->where('purchasing_document_number', 'LIKE', '%' . $request->no_sop . '%')->get();
+        }
+
+
+        // search by nama vendor dan no regis
+        if ($request->nm_vendor && $request->no_regis) {
+            $data = Integrate::with('vendortext')->groupBy('purchasing_document_number')->where('vendor_name', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('registration_no', 'LIKE', '%' . $request->no_regis . '%')
+                ->get();
+        }
+
+        // search by nama vendor dan no sop
+        if ($request->nm_vendor && $request->no_sop) {
+            $data = Integrate::with('vendortext')->groupBy('purchasing_document_number')->where('vendor_name', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('purchasing_document_number', 'LIKE', '%' . $request->no_sop . '%')
+                ->get();
+        }
+
+        // search by no regis & no sop
+        if ($request->no_sop && $request->no_regis) {
+            $data = Integrate::with('vendortext')->groupBy('purchasing_document_number')->where('purchasing_document_number', 'LIKE', '%' . $request->no_sop . '%')
+                ->where('registration_no', 'LIKE', '%' . $request->no_regis . '%')
+                ->get();
+        }
+
+        // search by no regis & no sop & nama vendor
+        if ($request->nm_vendor &&  $request->no_sop && $request->no_regis) {
+            $data = Integrate::with('vendortext')->groupBy('purchasing_document_number')->where('vendor_name', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('purchasing_document_number', 'LIKE', '%' . $request->no_sop . '%')
+                ->where('registration_no', 'LIKE', '%' . $request->no_regis . '%')
+                ->get();
+        }
+
         return view('indexVendor', compact('data'));
     }
 
