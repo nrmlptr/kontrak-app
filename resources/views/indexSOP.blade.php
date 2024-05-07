@@ -31,6 +31,52 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
+                            <a class="btn btn-primary mb-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" title="Filter Data"><i class="fas fa-filter"></i>
+                                Filter Data
+                            </a>
+                            <a href="{{ route('indexSOP') }}" class="btn btn-warning mb-2" title="Refresh Data"><i class="fas fa-sync-alt"></i></a>
+                            <div class="collapse" id="collapseExample">
+                                <form action="{{ route('indexSOP') }}" method="GET">
+                                @csrf
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <label for="">Nama Vendor</label>
+                                            <input type="text" name="nm_vendor" id="filter-nama-vendor" class="form-control filter">
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="">No SOP</label>
+                                            <input type="text" name="no_sop" id="filter-no-sop" class="form-control filter">
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="">Perihal</label>
+                                            <input type="text" name="perihal" id="filter-perihal" class="form-control filter">
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-12">
+                                            <label for="">Tanggal SOP</label>
+                                            {{-- <hr> --}}
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="startdate">Start</label>
+                                                <input type="date" class="form-control" name="startdate">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="enddate">End</label>
+                                                <input type="date" class="form-control" name="enddate">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mt-3 input-group-append">
+                                            {{-- <br> --}}
+                                            <button type="submit" class="btn btn-primary" title="Search Data"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
                             <table id="soptabel" class="table table-bordered table-striped">
                                 <thead align="center">
                                     <tr>

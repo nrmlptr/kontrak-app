@@ -77,3 +77,13 @@ function getMonthIndo($index)
     // return strtoupper($bulan[$index]);
     return ucfirst(strtolower($bulan[$index]));
 }
+function splitString($text, $chunkLength)
+{
+    // Hitung jumlah kata dalam string
+    $wordCount = str_word_count($text);
+
+    // Bagi string menjadi bagian-bagian dengan panjang yang diinginkan
+    $chunks = str_split($text, $chunkLength);
+
+    return $chunks;
+}

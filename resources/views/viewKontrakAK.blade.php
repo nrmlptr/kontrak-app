@@ -11,7 +11,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Data Kontrak - Upload</li>
+                        <li class="breadcrumb-item active">Upload Document Kontrak</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -31,6 +31,73 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
+                            <a class="btn btn-primary mb-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" title="Filter Data"><i class="fas fa-filter"></i>
+                                Filter Data
+                            </a>
+                            <a href="{{ route('KontrakAK') }}" class="btn btn-warning mb-2" title="Refresh Data"><i class="fas fa-sync-alt"></i></a>
+                            <div class="collapse" id="collapseExample">
+                                <form action="{{ route('KontrakAK') }}" method="GET">
+                                @csrf
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <label for="">Nama Vendor</label>
+                                            <input type="text" name="nm_vendor" id="filter-nama-vendor" class="form-control filter">
+                                        </div>
+                                        <div class="col-md-2 mb-3">
+                                            <label for="">Nomor SOP</label>
+                                            <input type="text" name="no_sop" id="filter-no-sop" class="form-control filter">
+                                        </div>
+                                        <div class="col-md-2 mb-3">
+                                            <label for="">Unit Kerja</label>
+                                            <select name="unit_kerja" id="filter-unit-kerja" class="form-control filter">
+                                                <option value="">Pilih Unit Kerja</option>
+                                                <option value="41A10">Investasi</option>
+                                                <option value="41A20">Jasa Barum</option>
+                                                <option value="41A30">Lokal</option>
+                                                <option value="41A40">Import</option> 
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2 mb-3">
+                                            <label for="">Jenis Kontrak</label>
+                                            <select name="jenis_kontrak" id="filter-jenis-kontrak" class="form-control filter">
+                                                <option value="">Pilih Jenis Kontrak</option>
+                                                <option value="1">Lumpsum</option>
+                                                <option value="2">Harga Satuan</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2 mb-3">
+                                            <label for="">Status Jaminan</label>
+                                            <select name="status_jaminan" id="filter-status-jaminan" class="form-control filter">
+                                                <option value="">Pilih Status Jaminan</option>
+                                                <option value="1">Jaminan</option>
+                                                <option value="2">Tanpa Jaminan</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-12">
+                                            <label for="">Tanggal SP</label>
+                                            {{-- <hr> --}}
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="startdate">Start</label>
+                                                <input type="date" class="form-control" name="startdate">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="enddate">End</label>
+                                                <input type="date" class="form-control" name="enddate">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mt-3 input-group-append">
+                                            {{-- <br> --}}
+                                            <button type="submit" class="btn btn-primary" title="Search Data"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                             <table id="kontrakAKdatatable" class="table table-bordered table-striped">
                                 <thead align="center">
                                     <tr>
@@ -210,7 +277,7 @@
                         filename: 'Data_Kontrak_Dept_Pengadaan', // untuk nama filenya
                         title: 'Data Kontrak | Dept Pengadaan', //untuk di header nya
                         exportOptions: {
-                            columns: [ 1,2,3,4,5,6,7,8,9,10,11,12]
+                            columns: [ 1,2,3,4,5,6,7,8,9,10,11,12,13]
                         }
                     },
                     {
@@ -219,7 +286,7 @@
                         title: 'Data Kontrak | Dept Pengadaan', //untuk di header nya
                         orientation: 'landscape',
                         exportOptions: {
-                            columns: [ 1,2,3,4,5,6,7,8,9,10,11,12]
+                            columns: [ 1,2,3,4,5,6,7,8,9,10,11,12,13]
                         }
                     }
                 ]

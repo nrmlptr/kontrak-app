@@ -312,6 +312,60 @@ class KontrakController extends Controller
             $data = Kontrak::where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')->get();
         }
 
+        // search by rentang tgl sp (contoh : 01 april 2024 - 06 april 2024)
+        if ($request->startdate && $request->enddate) {
+
+            $data = Kontrak::where(
+                'date_kontrak',
+                '>=',
+                $request->startdate
+            )
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+        // search by nama vendor & status
+        if ($request->nm_vendor && $request->status) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('status', 'LIKE', '%' . $request->status . '%')
+                ->get();
+        }
+
+        // search by nama vendor & unit kerja
+        if (
+            $request->nm_vendor && $request->unit_kerja
+        ) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
+                ->get();
+        }
+
+        // search by nama vendor & jenis kontrak
+        if ($request->nm_vendor && $request->jenis_kontrak) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
+                ->get();
+        }
+
+        // search by nama vendor & status jaminan
+        if ($request->nm_vendor && $request->status_jaminan) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
+                ->get();
+        }
+
+        // search by nama vendor & tanggal sp
+        if (
+            $request->nm_vendor && $request->startdate && $request->enddate
+        ) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+        //==============================SEARCH BY STATUS ================
+
         // search by status dan unit kerja
         if ($request->status && $request->unit_kerja) {
             $data = Kontrak::where('status', 'LIKE', '%' . $request->status . '%')
@@ -333,14 +387,156 @@ class KontrakController extends Controller
                 ->get();
         }
 
-        // search by status dan nama vendor
-        if ($request->status && $request->nm_vendor) {
+        // search by status & tanggal sp
+        if (
+            $request->status && $request->startdate && $request->enddate
+        ) {
             $data = Kontrak::where('status', 'LIKE', '%' . $request->status . '%')
-                ->where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
                 ->get();
         }
 
-        // search by status, unit kerja dan jenis_kontrak
+        //============================== search by unit kerja ==========
+        // search by unit kerja dan jenis kontrak
+        if ($request->unit_kerja && $request->jenis_kontrak) {
+            $data = Kontrak::where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
+                ->where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
+                ->get();
+        }
+
+        // search by unit kerja dan status jaminan
+        if ($request->unit_kerja && $request->status_jaminan) {
+            $data = Kontrak::where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
+                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
+                ->get();
+        }
+
+        // search by unit kerja & tanggal sp
+        if (
+            $request->unit_kerja && $request->startdate && $request->enddate
+        ) {
+            $data = Kontrak::where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+        //================= search by jenis kontrak =========================================================================================
+
+        // search by jenis kontrak dan status jaminan
+        if ($request->jenis_kontrak && $request->status_jaminan) {
+            $data = Kontrak::where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
+                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
+                ->get();
+        }
+
+        // search by jenis kontrak & tanggal sp
+        if (
+            $request->jenis_kontrak && $request->startdate && $request->enddate
+        ) {
+            $data = Kontrak::where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+        //============= search by status jaminan ==================================================================================
+        // search by status jaminan & tanggal sp
+        if (
+            $request->status_jaminan && $request->startdate && $request->enddate
+        ) {
+            $data = Kontrak::where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+        // search by nama vendor, status, unit kerja ============================================================================================================
+        if ($request->nm_vendor && $request->status && $request->unit_kerja) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('status', 'LIKE', '%' . $request->status . '%')
+                ->where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
+                ->get();
+        }
+
+        // search by nama vendor, status, jenis kontrak ============================================================================================================
+        if ($request->nm_vendor && $request->status && $request->jenis_kontrak) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('status', 'LIKE', '%' . $request->status . '%')
+                ->where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
+                ->get();
+        }
+
+        // search by nama vendor, status, status jaminan ============================================================================================================
+        if ($request->nm_vendor && $request->status && $request->jenis_kontrak) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('status', 'LIKE', '%' . $request->status . '%')
+                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
+                ->get();
+        }
+
+        // search by nama vendor, status, tanggal sp ============================================================================================================
+        if ($request->nm_vendor && $request->status && $request->startdate && $request->enddate) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('status', 'LIKE', '%' . $request->status . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+        //=============================== search by nama vendor, unit kerja, jenis kontrak =======================================================================
+        if ($request->nm_vendor && $request->unit_kerja && $request->jenis_kontrak) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
+                ->where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
+                ->get();
+        }
+
+        //=============================== search by nama vendor, unit kerja, status jaminan=======================================================================
+        if ($request->nm_vendor && $request->unit_kerja && $request->jenis_kontrak) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
+                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
+                ->get();
+        }
+
+        // ========================================== search by nama vendor, unit kerja, tanggal sp ==============================================================
+        if ($request->nm_vendor && $request->unit_kerja && $request->startdate && $request->enddate) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+        //=============================== search by nama vendor, jenis kontrak status jaminan ===================================================================
+        if ($request->nm_vendor && $request->jenis_kontrak && $request->status_jaminan) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
+                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
+                ->get();
+        }
+
+        //=============================== search by nama vendor, jenis kontrak, tanggal sp ======================================================================
+        if ($request->nm_vendor && $request->jenis_kontrak && $request->startdate && $request->enddate) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+        //=============================== search by nama vendor, status jaminan, tanggal sp ======================================================================
+        if ($request->nm_vendor && $request->status_jaminan && $request->startdate && $request->enddate) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+        // search by status, unit kerja dan jenis_kontrak =======================================================================================================
         if ($request->status && $request->unit_kerja && $request->jenis_kontrak) {
             $data = Kontrak::where('status', 'LIKE', '%' . $request->status . '%')
                 ->where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
@@ -372,26 +568,6 @@ class KontrakController extends Controller
                 ->get();
         }
 
-        // search by unit kerja dan jenis kontrak
-        if ($request->unit_kerja && $request->jenis_kontrak) {
-            $data = Kontrak::where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
-                ->where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
-                ->get();
-        }
-
-        // search by unit kerja dan status jaminan
-        if ($request->unit_kerja && $request->status_jaminan) {
-            $data = Kontrak::where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
-                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
-                ->get();
-        }
-
-        // search by unit kerja dan nama vendor
-        if ($request->unit_kerja && $request->nm_vendor) {
-            $data = Kontrak::where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
-                ->where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
-                ->get();
-        }
 
         // search by unit kerja, jenis_kontrak dan status jaminan
         if (
@@ -414,76 +590,6 @@ class KontrakController extends Controller
                 ->get();
         }
 
-        // search by jenis kontrak dan status jaminan
-        if ($request->jenis_kontrak && $request->status_jaminan) {
-            $data = Kontrak::where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
-                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
-                ->get();
-        }
-
-        // search by jenis kontrak dan nama vendor
-        if ($request->jenis_kontrak && $request->nm_vendor) {
-            $data = Kontrak::where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
-                ->where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
-                ->get();
-        }
-
-        // search by status jaminan dan nama vendor
-        if ($request->status_jaminan && $request->nm_vendor) {
-            $data = Kontrak::where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
-                ->where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
-                ->get();
-        }
-
-        // search by rentang tgl sp (contoh : 01 april 2024 - 06 april 2024)
-        if ($request->startdate && $request->enddate) {
-
-            $data = Kontrak::where('date_kontrak', '>=', $request->startdate)
-                ->where('date_kontrak', '<=', $request->enddate)
-                ->get();
-        }
-
-        // search by status dan tanggal sp
-        if ($request->status && $request->startdate && $request->enddate) {
-            $data = Kontrak::where('status', 'LIKE', '%' . $request->status . '%')
-                ->where('date_kontrak', '>=', $request->startdate)
-                ->where('date_kontrak', '<=', $request->enddate)
-                ->get();
-        }
-
-        // search by unit kerja dan tgl sp
-        if ($request->unit_kerja && $request->startdate && $request->enddate) {
-            $data = Kontrak::where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
-                ->where('date_kontrak', '>=', $request->startdate)
-                ->where('date_kontrak', '<=', $request->enddate)
-                ->get();
-        }
-
-        // search by jenis kontrak dan tanggal sp
-        if ($request->jenis_kontrak && $request->startdate && $request->enddate) {
-            $data = Kontrak::where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
-                ->where('date_kontrak', '>=', $request->startdate)
-                ->where('date_kontrak', '<=', $request->enddate)
-                ->get();
-        }
-
-        // search by status jaminan dan tgl sp
-        if ($request->status_jaminan && $request->startdate && $request->enddate) {
-            $data = Kontrak::where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
-                ->where('date_kontrak', '>=', $request->startdate)
-                ->where('date_kontrak', '<=', $request->enddate)
-                ->get();
-        }
-
-
-        // search by nama vendor dan tgl sp
-        if ($request->nm_vendor && $request->startdate && $request->enddate) {
-            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
-                ->where('date_kontrak', '>=', $request->startdate)
-                ->where('date_kontrak', '<=', $request->enddate)
-                ->get();
-        }
-
         // search by nama vendor dan unit kerja dan tgl sp
         if ($request->nm_vendor && $request->unit_kerja && $request->startdate && $request->enddate) {
             $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
@@ -502,23 +608,6 @@ class KontrakController extends Controller
                 ->get();
         }
 
-        // search by nama vendor, jenis kontrak dan tgl sp
-        if ($request->nm_vendor && $request->jenis_kontrak && $request->startdate && $request->enddate) {
-            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
-                ->where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
-                ->where('date_kontrak', '>=', $request->startdate)
-                ->where('date_kontrak', '<=', $request->enddate)
-                ->get();
-        }
-
-        // search by nama vendor, status jaminan dan tgl sp
-        if ($request->nm_vendor && $request->status_jaminan && $request->startdate && $request->enddate) {
-            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
-                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
-                ->where('date_kontrak', '>=', $request->startdate)
-                ->where('date_kontrak', '<=', $request->enddate)
-                ->get();
-        }
 
         // search by status dan unit kerja dan tgl sp
         if ($request->status && $request->unit_kerja && $request->startdate && $request->enddate) {
@@ -1295,6 +1384,60 @@ class KontrakController extends Controller
             $data = Kontrak::where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')->get();
         }
 
+        // search by rentang tgl sp (contoh : 01 april 2024 - 06 april 2024)
+        if ($request->startdate && $request->enddate) {
+
+            $data = Kontrak::where(
+                'date_kontrak',
+                '>=',
+                $request->startdate
+            )
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+        // search by nama vendor & status
+        if ($request->nm_vendor && $request->status) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('status', 'LIKE', '%' . $request->status . '%')
+                ->get();
+        }
+
+        // search by nama vendor & unit kerja
+        if (
+            $request->nm_vendor && $request->unit_kerja
+        ) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
+                ->get();
+        }
+
+        // search by nama vendor & jenis kontrak
+        if ($request->nm_vendor && $request->jenis_kontrak) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
+                ->get();
+        }
+
+        // search by nama vendor & status jaminan
+        if ($request->nm_vendor && $request->status_jaminan) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
+                ->get();
+        }
+
+        // search by nama vendor & tanggal sp
+        if (
+            $request->nm_vendor && $request->startdate && $request->enddate
+        ) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+        //==============================SEARCH BY STATUS ================
+
         // search by status dan unit kerja
         if ($request->status && $request->unit_kerja) {
             $data = Kontrak::where('status', 'LIKE', '%' . $request->status . '%')
@@ -1316,14 +1459,164 @@ class KontrakController extends Controller
                 ->get();
         }
 
-        // search by status dan nama vendor
-        if ($request->status && $request->nm_vendor) {
+        // search by status & tanggal sp
+        if (
+            $request->status && $request->startdate && $request->enddate
+        ) {
             $data = Kontrak::where('status', 'LIKE', '%' . $request->status . '%')
-                ->where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
                 ->get();
         }
 
-        // search by status, unit kerja dan jenis_kontrak
+        //============================== search by unit kerja ==========
+        // search by unit kerja dan jenis kontrak
+        if ($request->unit_kerja && $request->jenis_kontrak) {
+            $data = Kontrak::where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
+                ->where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
+                ->get();
+        }
+
+        // search by unit kerja dan status jaminan
+        if ($request->unit_kerja && $request->status_jaminan) {
+            $data = Kontrak::where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
+                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
+                ->get();
+        }
+
+        // search by unit kerja & tanggal sp
+        if (
+            $request->unit_kerja && $request->startdate && $request->enddate
+        ) {
+            $data = Kontrak::where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+        //================= search by jenis kontrak =========================================================================================
+
+        // search by jenis kontrak dan status jaminan
+        if ($request->jenis_kontrak && $request->status_jaminan) {
+            $data = Kontrak::where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
+                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
+                ->get();
+        }
+
+        // search by jenis kontrak & tanggal sp
+        if (
+            $request->jenis_kontrak && $request->startdate && $request->enddate
+        ) {
+            $data = Kontrak::where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+        //============= search by status jaminan ==================================================================================
+        // search by status jaminan & tanggal sp
+        if (
+            $request->status_jaminan && $request->startdate && $request->enddate
+        ) {
+            $data = Kontrak::where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+        // search by nama vendor, status, unit kerja ============================================================================================================
+        if (
+            $request->nm_vendor && $request->status && $request->unit_kerja
+        ) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('status', 'LIKE', '%' . $request->status . '%')
+                ->where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
+                ->get();
+        }
+
+        // search by nama vendor, status, jenis kontrak ============================================================================================================
+        if (
+            $request->nm_vendor && $request->status && $request->jenis_kontrak
+        ) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('status', 'LIKE', '%' . $request->status . '%')
+                ->where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
+                ->get();
+        }
+
+        // search by nama vendor, status, status jaminan ============================================================================================================
+        if (
+            $request->nm_vendor && $request->status && $request->jenis_kontrak
+        ) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('status', 'LIKE', '%' . $request->status . '%')
+                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
+                ->get();
+        }
+
+        // search by nama vendor, status, tanggal sp ============================================================================================================
+        if (
+            $request->nm_vendor && $request->status && $request->startdate && $request->enddate
+        ) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('status', 'LIKE', '%' . $request->status . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+        //=============================== search by nama vendor, unit kerja, jenis kontrak =======================================================================
+        if ($request->nm_vendor && $request->unit_kerja && $request->jenis_kontrak) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
+                ->where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
+                ->get();
+        }
+
+        //=============================== search by nama vendor, unit kerja, status jaminan=======================================================================
+        if ($request->nm_vendor && $request->unit_kerja && $request->jenis_kontrak) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
+                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
+                ->get();
+        }
+
+        // ========================================== search by nama vendor, unit kerja, tanggal sp ==============================================================
+        if ($request->nm_vendor && $request->unit_kerja && $request->startdate && $request->enddate) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+        //=============================== search by nama vendor, jenis kontrak status jaminan ===================================================================
+        if ($request->nm_vendor && $request->jenis_kontrak && $request->status_jaminan) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
+                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
+                ->get();
+        }
+
+        //=============================== search by nama vendor, jenis kontrak, tanggal sp ======================================================================
+        if ($request->nm_vendor && $request->jenis_kontrak && $request->startdate && $request->enddate) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+        //=============================== search by nama vendor, status jaminan, tanggal sp ======================================================================
+        if ($request->nm_vendor && $request->status_jaminan && $request->startdate && $request->enddate) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+        // search by status, unit kerja dan jenis_kontrak =======================================================================================================
         if ($request->status && $request->unit_kerja && $request->jenis_kontrak) {
             $data = Kontrak::where('status', 'LIKE', '%' . $request->status . '%')
                 ->where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
@@ -1355,26 +1648,6 @@ class KontrakController extends Controller
                 ->get();
         }
 
-        // search by unit kerja dan jenis kontrak
-        if ($request->unit_kerja && $request->jenis_kontrak) {
-            $data = Kontrak::where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
-                ->where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
-                ->get();
-        }
-
-        // search by unit kerja dan status jaminan
-        if ($request->unit_kerja && $request->status_jaminan) {
-            $data = Kontrak::where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
-                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
-                ->get();
-        }
-
-        // search by unit kerja dan nama vendor
-        if ($request->unit_kerja && $request->nm_vendor) {
-            $data = Kontrak::where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
-                ->where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
-                ->get();
-        }
 
         // search by unit kerja, jenis_kontrak dan status jaminan
         if (
@@ -1397,76 +1670,6 @@ class KontrakController extends Controller
                 ->get();
         }
 
-        // search by jenis kontrak dan status jaminan
-        if ($request->jenis_kontrak && $request->status_jaminan) {
-            $data = Kontrak::where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
-                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
-                ->get();
-        }
-
-        // search by jenis kontrak dan nama vendor
-        if ($request->jenis_kontrak && $request->nm_vendor) {
-            $data = Kontrak::where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
-                ->where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
-                ->get();
-        }
-
-        // search by status jaminan dan nama vendor
-        if ($request->status_jaminan && $request->nm_vendor) {
-            $data = Kontrak::where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
-                ->where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
-                ->get();
-        }
-
-        // search by rentang tgl sp (contoh : 01 april 2024 - 06 april 2024)
-        if ($request->startdate && $request->enddate) {
-
-            $data = Kontrak::where('date_kontrak', '>=', $request->startdate)
-                ->where('date_kontrak', '<=', $request->enddate)
-                ->get();
-        }
-
-        // search by status dan tanggal sp
-        if ($request->status && $request->startdate && $request->enddate) {
-            $data = Kontrak::where('status', 'LIKE', '%' . $request->status . '%')
-                ->where('date_kontrak', '>=', $request->startdate)
-                ->where('date_kontrak', '<=', $request->enddate)
-                ->get();
-        }
-
-        // search by unit kerja dan tgl sp
-        if ($request->unit_kerja && $request->startdate && $request->enddate) {
-            $data = Kontrak::where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
-                ->where('date_kontrak', '>=', $request->startdate)
-                ->where('date_kontrak', '<=', $request->enddate)
-                ->get();
-        }
-
-        // search by jenis kontrak dan tanggal sp
-        if ($request->jenis_kontrak && $request->startdate && $request->enddate) {
-            $data = Kontrak::where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
-                ->where('date_kontrak', '>=', $request->startdate)
-                ->where('date_kontrak', '<=', $request->enddate)
-                ->get();
-        }
-
-        // search by status jaminan dan tgl sp
-        if ($request->status_jaminan && $request->startdate && $request->enddate) {
-            $data = Kontrak::where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
-                ->where('date_kontrak', '>=', $request->startdate)
-                ->where('date_kontrak', '<=', $request->enddate)
-                ->get();
-        }
-
-
-        // search by nama vendor dan tgl sp
-        if ($request->nm_vendor && $request->startdate && $request->enddate) {
-            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
-                ->where('date_kontrak', '>=', $request->startdate)
-                ->where('date_kontrak', '<=', $request->enddate)
-                ->get();
-        }
-
         // search by nama vendor dan unit kerja dan tgl sp
         if ($request->nm_vendor && $request->unit_kerja && $request->startdate && $request->enddate) {
             $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
@@ -1477,7 +1680,9 @@ class KontrakController extends Controller
         }
 
         // search by nama vendor, status dan tgl sp
-        if ($request->nm_vendor && $request->status && $request->startdate && $request->enddate) {
+        if (
+            $request->nm_vendor && $request->status && $request->startdate && $request->enddate
+        ) {
             $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
                 ->where('status', 'LIKE', '%' . $request->status . '%')
                 ->where('date_kontrak', '>=', $request->startdate)
@@ -1485,23 +1690,6 @@ class KontrakController extends Controller
                 ->get();
         }
 
-        // search by nama vendor, jenis kontrak dan tgl sp
-        if ($request->nm_vendor && $request->jenis_kontrak && $request->startdate && $request->enddate) {
-            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
-                ->where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
-                ->where('date_kontrak', '>=', $request->startdate)
-                ->where('date_kontrak', '<=', $request->enddate)
-                ->get();
-        }
-
-        // search by nama vendor, status jaminan dan tgl sp
-        if ($request->nm_vendor && $request->status_jaminan && $request->startdate && $request->enddate) {
-            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
-                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
-                ->where('date_kontrak', '>=', $request->startdate)
-                ->where('date_kontrak', '<=', $request->enddate)
-                ->get();
-        }
 
         // search by status dan unit kerja dan tgl sp
         if ($request->status && $request->unit_kerja && $request->startdate && $request->enddate) {
@@ -1557,7 +1745,9 @@ class KontrakController extends Controller
         }
 
         // search by all data spesifik & tgl sp
-        if ($request->nm_vendor && $request->status && $request->unit_kerja && $request->jenis_kontrak && $request->status_jaminan && $request->startdate && $request->enddate) {
+        if (
+            $request->nm_vendor && $request->status && $request->unit_kerja && $request->jenis_kontrak && $request->status_jaminan && $request->startdate && $request->enddate
+        ) {
             $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
                 ->where('status', 'LIKE', '%' . $request->status . '%')
                 ->where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
@@ -1838,7 +2028,9 @@ class KontrakController extends Controller
 
     public function cetakKontrak($id)
     {
-
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $dompdf = new Dompdf($options);
         $kontrak = Kontrak::with([
             'integrates',
             'pasal' => function ($q) {
@@ -1854,6 +2046,44 @@ class KontrakController extends Controller
             'logs',
             'revisiKontraks'
         ])->findOrFail($id);
+        $teks = "";
+        foreach ($kontrak->pasal as $p) {
+            $teks .= " <h4>" . $p->nama_pasal . "
+                            <br>" . $p->keterangan_pasal . "
+                        </h4> " . $p->isi_pasal;
+            // $teks .= ' <div class="boxpasal" style="text-align: justify; font-size: 14px; page-break-inside: avoid;">
+
+
+            //             <h4 style="text-align: center">' . $p->nama_pasal . '
+            //                 <br>' . $p->keterangan_pasal . '
+            //             </h4>
+            //             ' . $p->isi_pasal . '
+            //         </div>
+            //         <div style="margin-bottom: 40px;"></div>';
+        }
+        // Buat HTML dengan teks yang akan dimasukkan ke dalam PDF
+        $html = "<html><body>";
+        $html .= "<p>$teks</p>"; // Tambahkan teks ke dalam paragraf
+        $html .= "</body></html>";
+
+        // Muat HTML ke dalam DOMPDF
+        // $dompdf->loadHtml($html);
+
+        // // Render PDF
+        // $dompdf->render();
+
+        // // Dapatkan jumlah halaman
+        // $jumlah_halaman = $dompdf->getCanvas()->get_page_count();
+
+        // ukur brp banyak character string untuk 1 halaman
+        $jumlah_string = str_word_count($teks);
+
+        // Hitung jumlah halaman yang diperlukan
+        $kapasitas_per_halaman = 1000; // Misalnya, 1000 string per halaman
+        $jumlah_halaman = ceil($jumlah_string / $kapasitas_per_halaman);
+        $chunktext = splitString($teks, $kapasitas_per_halaman);
+        // return $jumlah_halaman;
+
 
         // Ambil tanggal dari $data
         $tanggal_kontrak = Carbon::parse($kontrak->date_kontrak);
@@ -1867,6 +2097,8 @@ class KontrakController extends Controller
         $pihak2data = VendorText::where('registration_no', @$kontrak->integrates[0]->registration_no)->first();
         $pihak2name = @$pihak2data->pihakname;
         $pihak1name = @$pihak1data->peruri_pihakname;
+        print_r($chunktext);
+        die;
         $data = [
             'data' => $kontrak,
             'pihak2name' => $pihak2name,
@@ -1874,8 +2106,11 @@ class KontrakController extends Controller
             'pihak1data' => $pihak1data,
             'pihak2data' => $pihak2data,
             'tanggal_tertulis' => $tanggal_tertulis,
+            'page_estimated_pasal' => $jumlah_halaman,
+            'kapasitas_per_halaman' => $kapasitas_per_halaman,
+            'chunktext' => $chunktext,
         ];
-        $pdf = PDF::loadview('cetak_kontrak_pdf', $data);
+        $pdf = PDF::loadview('cetak_kontrak_pdf2', $data);
         // Set opsi setRemoteEnable
         return $pdf->stream("kontrak_" . $kontrak->detail_number . "pdf");
     }
@@ -2233,13 +2468,126 @@ class KontrakController extends Controller
         return view('historyRevisi', compact('RVkontrak'));
     }
 
-    public function indexSOP()
+    public function indexSOP(Request $request)
     {
         // echo 'TAMPIL DATA SOP';
         // $data = Integrate::orderBy('document_date', 'desc')->get();
         // $data = Integrate::withCount('purchaseRequisitions')->orderBy('document_date', 'desc')->get()
+        // ===========================================================================================================================================================
 
         $data = Integrate::select('purchasing_document_number', 'document_date', 'tender_name', 'vendor_name')->distinct()->with('purchaseRequisitions')->orderBy('document_date', 'desc')->get();
+
+
+        // search by nama vendor
+        if ($request->nm_vendor) {
+            $data = Integrate::where('vendor_name', 'LIKE', '%' . $request->nm_vendor . '%')->get();
+        }
+
+        // search by nOMOR SOP
+        if ($request->no_sop) {
+            $data = Integrate::where('purchasing_document_number', 'LIKE', '%' . $request->no_sop . '%')->get();
+        }
+
+        // search by PERIHAL
+        if ($request->perihal) {
+            $data = Integrate::where('tender_name', 'LIKE', '%' . $request->perihal . '%')->get();
+        }
+
+        // search by rentang tgl sop (contoh : 01 april 2024 - 06 april 2024)
+        if ($request->startdate && $request->enddate) {
+
+            $data = Integrate::where('document_date', '>=', $request->startdate)
+                ->where('document_date', '<=', $request->enddate)
+                ->get();
+        }
+
+
+        // search by nama vendor & no sop
+        if ($request->nm_vendor && $request->no_sop) {
+            $data = Integrate::where('vendor_name', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('purchasing_document_number', 'LIKE', '%' . $request->no_sop . '%')
+                ->get();
+        }
+
+        // search by nama vendor & perihal
+        if ($request->nm_vendor && $request->perihal) {
+            $data = Integrate::where('vendor_name', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('tender_name', 'LIKE', '%' . $request->perihal . '%')
+                ->get();
+        }
+
+        // search by nama vendor & tanggal sop
+        if ($request->nm_vendor && $request->startdate && $request->enddate) {
+            $data = Integrate::where('vendor_name', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('document_date', '>=', $request->startdate)
+                ->where('document_date', '<=', $request->enddate)
+                ->get();
+        }
+
+        // search by NO SOP & perihal
+        if ($request->no_sop && $request->perihal) {
+            $data = Integrate::where('purchasing_document_number', 'LIKE', '%' . $request->no_sop . '%')
+                ->where('tender_name', 'LIKE', '%' . $request->perihal . '%')
+                ->get();
+        }
+
+        // search by nO SOP & tanggal sop
+        if ($request->no_sop && $request->startdate && $request->enddate) {
+            $data = Integrate::where('purchasing_document_number', 'LIKE', '%' . $request->no_sop . '%')
+                ->where('document_date', '>=', $request->startdate)
+                ->where('document_date', '<=', $request->enddate)
+                ->get();
+        }
+
+        // search by perihal & tanggal sop
+        if ($request->perihal && $request->startdate && $request->enddate) {
+            $data = Integrate::where('tender_name', 'LIKE', '%' . $request->perihal . '%')
+                ->where('document_date', '>=', $request->startdate)
+                ->where('document_date', '<=', $request->enddate)
+                ->get();
+        }
+
+        // search by nama vendor & no sop & rentang tanggal
+        if ($request->nm_vendor && $request->no_sop && $request->startdate && $request->enddate) {
+            $data = Integrate::where('vendor_name', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('purchasing_document_number', 'LIKE', '%' . $request->no_sop . '%')
+                ->where('document_date', '>=', $request->startdate)
+                ->where('document_date', '<=', $request->enddate)
+                ->get();
+        }
+
+        // search by nama vendor & perihal & rentang tanggal
+        if ($request->nm_vendor && $request->perihal && $request->startdate && $request->enddate) {
+            $data = Integrate::where('vendor_name', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('tender_name', 'LIKE', '%' . $request->perihal . '%')
+                ->where('document_date', '>=', $request->startdate)
+                ->where('document_date', '<=', $request->enddate)
+                ->get();
+        }
+
+        // search by no sop & perihal & rentang tanggal
+        if (
+            $request->no_sop && $request->perihal && $request->startdate && $request->enddate
+        ) {
+            $data = Integrate::where('purchasing_document_number', 'LIKE', '%' . $request->no_sop . '%')
+                ->where('tender_name', 'LIKE', '%' . $request->perihal . '%')
+                ->where('document_date', '>=', $request->startdate)
+                ->where('document_date', '<=', $request->enddate)
+                ->get();
+        }
+
+        // search by no sop & perihal & rentang tanggal
+        if (
+            $request->nm_vendor && $request->no_sop && $request->perihal && $request->startdate && $request->enddate
+        ) {
+            $data = Integrate::where('vendor_name', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('purchasing_document_number', 'LIKE', '%' . $request->no_sop . '%')
+                ->where('tender_name', 'LIKE', '%' . $request->perihal . '%')
+                ->where('document_date', '>=', $request->startdate)
+                ->where('document_date', '<=', $request->enddate)
+                ->get();
+        }
+
 
         // dd($data);
         return view('indexSOP', compact('data'));
@@ -2318,9 +2666,168 @@ class KontrakController extends Controller
 
 
     // method untuk view data kontrak yang statusnya approvedkadiv saja untuk taro tombol upload
-    public function KontrakAK()
+    public function KontrakAK(Request $request)
     {
         $data = Kontrak::orderBy('updated_at', 'DESC')->where('status', 'approvedkadiv')->get();
+
+        // search by nama vendor
+        if ($request->nm_vendor) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')->get();
+        }
+
+        // search by nomor sop
+        if ($request->no_sop) {
+            $data = Kontrak::where('nomor_sop', 'LIKE', '%' . $request->no_sop . '%')->get();
+        }
+
+        // search by unit kerja
+        if ($request->unit_kerja) {
+            $data = Kontrak::where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')->get();
+        }
+
+        // sesarch by jenis kontrak
+        if ($request->jenis_kontrak) {
+            $data = Kontrak::where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')->get();
+        }
+
+        // search by status jaminan
+        if ($request->status_jaminan) {
+            $data = Kontrak::where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')->get();
+        }
+
+        // search by rentang tgl sp (contoh : 01 april 2024 - 06 april 2024)
+        if ($request->startdate && $request->enddate) {
+
+            $data = Kontrak::where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+        // search by nama vendor & no sop
+        if ($request->nm_vendor && $request->no_sop) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('nomor_sop', 'LIKE', '%' . $request->no_sop . '%')
+                ->get();
+        }
+
+        // search by nama vendor & unit kerja
+        if ($request->nm_vendor && $request->unit_kerja) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
+                ->get();
+        }
+
+        // search by nama vendor & jenis kontrak
+        if ($request->nm_vendor && $request->jenis_kontrak) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
+                ->get();
+        }
+
+        // search by nama vendor & status jaminan
+        if ($request->nm_vendor && $request->status_jaminan) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
+                ->get();
+        }
+
+        // search by nama vendor & tanggal sp
+        if ($request->nm_vendor && $request->startdate && $request->enddate) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+        // search by no sop & unit kerja
+        if ($request->no_sop && $request->unit_kerja) {
+            $data = Kontrak::where('nomor_sop', 'LIKE', '%' . $request->no_sop . '%')
+                ->where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
+                ->get();
+        }
+
+        // search by no sop & jenis kontrak
+        if ($request->no_sop && $request->jenis_kontrak) {
+            $data = Kontrak::where('nomor_sop', 'LIKE', '%' . $request->no_sop . '%')
+                ->where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
+                ->get();
+        }
+
+        // search by no sop & status jaminan
+        if ($request->no_sop && $request->status_jaminan) {
+            $data = Kontrak::where('nomor_sop', 'LIKE', '%' . $request->no_sop . '%')
+                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
+                ->get();
+        }
+
+        // search by no sop & tanggal sp
+        if ($request->no_sop && $request->startdate && $request->enddate) {
+            $data = Kontrak::where('nomor_sop', 'LIKE', '%' . $request->no_sop . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+        // search by unit kerja & jenis kontrak
+        if ($request->unit_kerja && $request->jenis_kontrak) {
+            $data = Kontrak::where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
+                ->where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
+                ->get();
+        }
+
+        // search by unit kerja & status jaminan
+        if ($request->unit_kerja && $request->status_jaminan) {
+            $data = Kontrak::where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
+                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
+                ->get();
+        }
+
+        // search by unit kerja & tanggal sp
+        if ($request->unit_kerja && $request->startdate && $request->enddate) {
+            $data = Kontrak::where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+        // search by jenis kontrak & status jaminan
+        if ($request->jenis_kontrak && $request->status_jaminan) {
+            $data = Kontrak::where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
+                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
+                ->get();
+        }
+
+        // search by jenis kontrak & tanggal sp
+        if ($request->jenis_kontrak && $request->startdate && $request->enddate) {
+            $data = Kontrak::where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+        // search by status jaminan & tanggal sp
+        if ($request->status_jaminan && $request->startdate && $request->enddate) {
+            $data = Kontrak::where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+
+        // search by status jaminan & tanggal sp
+        if ($request->nm_vendor && $request->no_sop && $request->unit_kerja && $request->jenis_kontrak && $request->status_jaminan && $request->startdate && $request->enddate) {
+            $data = Kontrak::where('nm_vendor', 'LIKE', '%' . $request->nm_vendor . '%')
+                ->where('nomor_sop', 'LIKE', '%' . $request->no_sop . '%')
+                ->where('unit_kerja', 'LIKE', '%' . $request->unit_kerja . '%')
+                ->where('jenis_kontrak', 'LIKE', '%' . $request->jeni_kontrak . '%')
+                ->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%')
+                ->where('date_kontrak', '>=', $request->startdate)
+                ->where('date_kontrak', '<=', $request->enddate)
+                ->get();
+        }
+
+
+
         // dd($data);
 
         return view('viewKontrakAK', compact('data'));
