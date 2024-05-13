@@ -112,8 +112,20 @@
             $.get(`/dataNpwp/{{ $data->registration_no }}`, function(data) {
                 // Pastikan bahwa respons yang diterima dapat diuraikan dengan benar sebagai JSON
                 try {
-                    // Setelah mendapatkan data, set nilai textarea
+                    // Setelah mendapatkan data, set nilai input
                     $('#npwp').val(data.tax_document_number);
+                    console.log(data);
+                } catch (error) {
+                    console.error("Error parsing JSON data: ", error);
+                }
+            }).fail(function(xhr, status, error) {
+                console.error("Failed to fetch NPWP data:", error);
+            });
+            $.get(`/dataPejabatVendor/{{ $data->registration_no }}`, function(data) {
+                // Pastikan bahwa respons yang diterima dapat diuraikan dengan benar sebagai JSON
+                try {
+                    // Setelah mendapatkan data, set nilai input
+                    $('#pihakname').val(data.full_name);
                     console.log(data);
                 } catch (error) {
                     console.error("Error parsing JSON data: ", error);

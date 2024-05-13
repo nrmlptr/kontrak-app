@@ -11,7 +11,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Monitoring Kontrak</li>
+                        <li class="breadcrumb-item active">Kontrak On Process</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -27,16 +27,16 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Monitoring Kontrak</h3>
+                            <h3 class="card-title">Data Kontrak - On Process</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                             <a class="btn btn-primary mb-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" title="Filter Data"><i class="fas fa-filter"></i>
                                 Filter Data
                             </a>
-                            <a href="{{ route('indexKontrak') }}" class="btn btn-warning mb-2" title="Refresh Data"><i class="fas fa-sync-alt"></i></a>
+                            <a href="{{ route('KontrakonProcess') }}" class="btn btn-warning mb-2" title="Refresh Data"><i class="fas fa-sync-alt"></i></a>
                             <div class="collapse" id="collapseExample">
-                                <form action="{{ route('indexKontrak') }}" method="GET">
+                                <form action="{{ route('KontrakonProcess') }}" method="GET">
                                 @csrf
                                     <div class="row">
                                         <div class="col-md-4 mb-3">
@@ -59,7 +59,6 @@
                                                 <option value="reviewkadiv">Review By Kadiv</option>
                                                 <option value="revisikadiv">Revisi By Kadiv</option>
                                                 <option value="editedkadiv">Diperiksa Ulang Kasek</option>
-                                                <option value="approvedkadiv">Disetujui Kadiv (NET)</option>
                                             </select>
                                         </div>
                                         <div class="col-md-2 mb-3">
@@ -113,8 +112,7 @@
                                     </div>
                                 </form>
                             </div>
-                            
-                            <table id="kontrakdatatable" class="table table-bordered table-striped">
+                            <table id="kontrakOPdatatable" class="table table-bordered table-striped">
                                 <thead align="center">
                                     <tr>                                        
                                         @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin')
@@ -260,6 +258,7 @@
                                                 @endif
                                             @endif
                                         </tr>
+                                        {{-- modal hapus dokumen kontrak --}}
                                         <div class="modal fade" id="modal-hapus-kontrak{{ $d->id }}">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -282,10 +281,10 @@
 
                                                     </div>
                                                 </div>
-                                                <!-- /.modal-content -->
                                             </div>
-                                            <!-- /.modal-dialog -->
                                         </div>
+
+                                        {{-- modal upload document kontrak --}}
                                         <div class="modal fade" id="modal-upload-doc{{ $d->id }}">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -324,7 +323,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- /.modal -->
                                     @endforeach
                                 </tbody>
                             </table>
@@ -347,7 +345,7 @@
     <script type="text/javascript">
 
         $(document).ready(function() {
-
+            
             var loggedInUserRole;
 
             $.ajax({
@@ -368,7 +366,8 @@
             }
 
 
-            $('#kontrakdatatable').DataTable({
+
+            $('#kontrakOPdatatable').DataTable({
                 "paging": true,
                 "lengthChange": true,
                 "pageLength": 5,
@@ -389,7 +388,6 @@
                         title: 'Data Kontrak | Dept Pengadaan',
                         exportOptions: {
                             columns: exportColumns
-                            // columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
                         }
                     },
                     {
@@ -399,51 +397,11 @@
                         orientation: 'landscape',
                         exportOptions: {
                             columns: exportColumns
-                            // columns: [ 2,3,4,5,6,7,8,9,10,11,12,13,14 ]
                         }
                     },
-                    // 'pageLength'
                 ]
             });
         });
-
-
-        // $(document).ready(function() {
-        //     $('#kontrakdatatable').DataTable({
-        //         "paging": true,
-        //         "lengthChange": true,
-        //         "pageLength": 10,
-        //         "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'semua']],
-        //         "searching": true,
-        //         "ordering": false,
-        //         "info": true,
-        //         "autoWidth": false,
-        //         "responsive": true,
-        //         "processing": true,
-        //         "dom": '<"top"Blf<"clear">>rt<"bottom"ip<"clear">>',
-        //         "buttons": [
-        //             {
-        //                 extend: 'excel',
-        //                 filename: 'Data_Kontrak_Dept_Pengadaan',
-        //                 title: 'Data Kontrak | Dept Pengadaan',
-        //                 exportOptions: {
-        //                     columns: [ 2,3,4,5,6,7,8,9,10,11,12,13]
-        //                 }
-        //             },
-        //             {
-        //                 extend: 'pdf',
-        //                 filename: 'Data_Kontrak_Dept_Pengadaan',
-        //                 title: 'Data Kontrak | Dept Pengadaan',
-        //                 orientation: 'landscape',
-        //                 exportOptions: {
-        //                     columns: [ 2,3,4,5,6,7,8,9,10,11,12,13]
-        //                 }
-        //             }
-        //         ]
-        //     });
-        // });
-
-
     </script>
 
 @endpush

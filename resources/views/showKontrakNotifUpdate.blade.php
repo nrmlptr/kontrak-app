@@ -243,10 +243,9 @@
                                         <!-- Isi Pasal -->
                                         @foreach ($data->pasal as $p)
                                             <div class="boxpasal" style="text-align: justify; page-break-inside: avoid;">
-                                                <div style="height: 100px; text-align: left;">
+                                                {{-- <div style="height: 100px; text-align: left;">
                                                     <div style="padding-right: 10px; float: right;">
                                                         <p style="text-align: center; margin-bottom: -15px !important;">Lembar ke - {{ $loop->iteration }} -</p>
-                                                        {{-- <p style="text-align: center; margin-bottom: -15px !important;">Lembar ke - {{ $loop->iteration }} -</p> --}}
                                                         <p style="text-align: left;">
                                                             <table>
                                                                 <tr>
@@ -262,7 +261,7 @@
                                                             </table>
                                                         </p>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                                 <h4 style="text-align: center">{{ $p->nama_pasal }}
                                                     <br>{{ $p->keterangan_pasal }}
                                                 </h4>

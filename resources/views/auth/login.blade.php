@@ -40,10 +40,10 @@
                     <small style="color: red;">{{ $message }}</small>
                     @enderror
                     <div class="input-group mb-3">
-                        <input type="password" name="password" class="form-control" placeholder="Password">
+                        <input type="password" name="password" class="form-control" id="password" placeholder="Password">
                         <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
+                            <div class="input-group-text show-hide">
+                                <span class="show fas fa-eye"></span>
                             </div>
                         </div>
                     </div>
@@ -110,6 +110,20 @@
             Swal.fire('{{ $message }}');
         </script>
     @endif
+
+    {{-- show hide password --}}
+    <script type="text/javascript">
+        $('.show-hide').on('click', function(){
+            var type = $('#password').attr('type');
+            if (type == 'password') {
+                $('#password').attr('type', 'text');
+                $(this).text('hide')
+            }else{
+                $('#password').attr('type', 'password');
+                $(this).text('show')
+            }
+        });
+    </script>
 </body>
 
 </html>

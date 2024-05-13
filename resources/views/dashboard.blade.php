@@ -81,7 +81,7 @@
                             <div class="icon">
                                 <i class="fas fa-tasks"></i>
                             </div>
-                            <a href="#" class="small-box-footer">Verified</a>
+                           <a href="{{ route('KontrakonProcess') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->
@@ -133,6 +133,32 @@
                                 <figure class="highcharts-figure">
                                     <div>
                                     <div id="grafikKontrakperVendor"></div>
+                                    </div>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>   
+                </div>
+
+                <div class="row">
+                    
+                    <!-- kotak buat grafik kontrak per jenis kontrak -->
+                    <div class="col-md-6 col-sm-6">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <figure class="highcharts-figure">
+                                    <div id="container"></div>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>  
+                    <!-- kotak untuk grafik per nama vendor -->
+                    <div class="col-md-6 col-sm-6  ">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <figure class="highcharts-figure">
+                                    <div>
+                                    <div id=""></div>
                                     </div>
                                 </figure>
                             </div>
@@ -410,6 +436,7 @@
             }]
         });
     });
-
+    
 
 </script>
+

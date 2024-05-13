@@ -152,6 +152,8 @@ Route::middleware('auth')->group(
         Route::put('vendor/{registration_no}', [VendorController::class, 'update'])->name('vendor.update');
         // route untuk get data npwp dari api 
         Route::get('/dataNpwp/{no_vendor}', [VendorController::class, 'npwp_data'])->name('npwpdata');
+        // route untuk get data nama pejabat vendor dari api 
+        Route::get('/dataPejabatVendor/{no_vendor}', [VendorController::class, 'Pejabat_vendor'])->name('dataPejabatVendor');
 
         // route untuk buka view setting update akta peruri
         Route::get('setting/{setting}', [SettingController::class, 'edit'])->name('setting.edit');
@@ -176,15 +178,20 @@ Route::middleware('auth')->group(
 
         // ROUTE VIEW KONTRAK JUST APPROVEDKADIV UNTUK UPLOAD FITUR
         Route::get('/kontrak-upload', [KontrakController::class, 'KontrakAK'])->name('KontrakAK');
-
         // route upload doc kontrak yang sudah di ttd
         Route::post('/loadUpload/{id}', [KontrakController::class, 'storeUploadKontrak'])->name('loadUpload');
         // route untuk download doc kontrak nya
         Route::get('/downloadKontrakTTD/{id}', [KontrakController::class, 'downloadDocKontrak'])->name('downloadKontrak');
 
 
-        // route datatable
+        // route datatable download button
         Route::get('/get-logged-in-user-role', [KontrakController::class, 'getLoggedInUserRole']);
+
+
+        // ROUTE VIEW KONTRAK YANG ON PROCESS
+        Route::get('/kontrak-onprocess', [KontrakController::class, 'KontrakonProcess'])->name('KontrakonProcess');
+
+
         // end auth group
 
     }

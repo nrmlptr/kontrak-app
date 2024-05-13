@@ -57,8 +57,6 @@ class HomeController extends Controller
         // Mengambil 10 vendor dengan jumlah kontrak tertinggi
         $topVendors = $KontrakPerVendor->sortDesc()->take(10);
 
-
-
         // dd(auth()->user()->getRoleNames());
         return view('dashboard', compact('dataKontrak', 'dataSOP', 'dataKontrakAKDV', 'dataKontrakProses', 'dataStatus', 'KontrakPerStatusJaminan', 'KontrakperJenisKontrak', 'topVendors'));
     }
@@ -107,8 +105,8 @@ class HomeController extends Controller
         ], $messages);
 
         if ($validator->fails())
-            flash()->addFlash('error', 'Gagal menyimpan data user, pastikan semua kolom terisi!');
-        return redirect()->back()->withInput()->withErrors($validator);
+            // flash()->addFlash('error', 'Gagal menyimpan data user, pastikan semua kolom terisi!');
+            return redirect()->back()->withInput()->withErrors($validator);
 
 
         // yang berada dalam index array merupakan field yg ada di db
@@ -192,7 +190,7 @@ class HomeController extends Controller
 
 
 
-    public function vPasal()
+    public function vPasal(Request $request)
     {
 
         $dataPasal = PasalKontrak::get();
@@ -200,10 +198,10 @@ class HomeController extends Controller
         // dd($dataPasal);
 
 
-        // // search by jenis pasal (jaminan atau tanpa jaminan)
-        // if ($request->jenis_pasal) {
-        //     $data = PasalKontrak::where('jenis_pasal', 'LIKE', '%' . $request->jenis_pasal . '%')->get();
-        // }
+        // search by jenis pasal (jaminan atau tanpa jaminan)
+        if ($request->jenis_pasal) {
+            $data = PasalKontrak::where('jenis_pasal', 'LIKE', '%' . $request->jenis_pasal . '%')->get();
+        }
 
 
         return view('dPasal', compact('dataPasal'));

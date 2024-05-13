@@ -155,5 +155,48 @@ class VendorController extends Controller
         }
     }
 
+
+    public function Pejabat_vendor($no_vendor)
+    {
+        $response = Http::timeout(60)
+            ->withOptions(['verify' => false])
+            ->get("https://scm.peruri.co.id/Api/getsiapdainfo/$no_vendor");
+
+        // Check if the HTTP request was successful (status code 2xx)
+        if ($response->successful()) {
+            $dataNama = $response->json();
+            // dd($dataNama);
+
+            // Inisialisasi variabel untuk menyimpan nomor NPWP
+            $namaPejabat = null;
+
+            // Iterasi melalui setiap baris data
+            foreach ($dataNama as $row) {
+                // Periksa jika board_type nya adalah "BOD (Board of Director) – Direksi"
+                if ($row['board_type'] === 'BOD (Board of Director) – Direksi') {
+                    // dd($row);
+                    // Simpan nama pejabatnya
+                    $namaPejabat = $row['full_name'];
+                    // Keluar dari loop karena sudah ditemukan data yang sesuai
+                    break;
+                }
+            }
+
+            // dd($npwpnya);
+
+            // Periksa apakah nomor NPWP ditemukan
+            if ($namaPejabat !== '') {
+                // Kembalikan nomor NPWP dalam response JSON
+                return response()->json(['full_name' => $namaPejabat]);
+            } else {
+                // Jika tidak ada nomor NPWP yang ditemukan, kembalikan response kosong
+                return response()->json(['message' => 'Nama Pejabat tidak ditemukan.'], 404);
+            }
+        } else {
+            // Jika request tidak berhasil, kembalikan response error
+            return response()->json(['message' => 'Gagal mengambil data Pejabat Vendor.'], $response->status());
+        }
+    }
+
     // end class
 }

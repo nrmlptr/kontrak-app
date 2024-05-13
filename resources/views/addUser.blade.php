@@ -61,10 +61,10 @@
                                     <div class="form-group">
                                         <label for="unit_kerja">Unit Kerja</label>
                                         <select class="form-control" name="unit_kerja" id="unit_kerja" required>
-                                            <option value="">Pilih Unit Kerja</option>
+                                            <option value=""><b>-- Pilih Unit Kerja --</b></option>
                                             <option value="41A">Admin</option>
-                                            <option value="41KDV">Kepala Divisi</option>
-                                            <option value="41KDP">Kepala Department</option>
+                                            <option value="41AKDV">Kepala Divisi</option>
+                                            <option value="41A00">Kepala Department</option>
                                             <option value="41A10">Investasi</option>
                                             <option value="41A20">Jasa Barum</option>
                                             <option value="41A30">Lokal</option>
@@ -78,7 +78,7 @@
                                     <div class="form-group">
                                         <label for="NamaPengguna">Role</label>
                                         <select class="form-control" name="permission" id="permission" required>
-                                            <option value="">Pilih Role</option>
+                                            <option value=""><b>-- Pilih Role --</b></option>
                                             <option value="admin">admin</option>
                                             <option value="writer">writer</option>
                                             <option value="kasek">kasek</option>

@@ -126,7 +126,9 @@
         $(document).ready(function() {
             $('#soptabel').DataTable({
                 "paging": true,
-                "lengthChange": false,
+                "lengthChange": true,
+                "pageLength": 5,
+                "lengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'semua']],
                 "searching": true,
                 "ordering": true,
                 "info": true,
@@ -134,7 +136,7 @@
                 "responsive": true,
 
                 
-                dom: 'Bfrtip',
+                dom: 'Bflrtip',
                 buttons: [
                     {
                         extend: 'excel',

@@ -212,23 +212,31 @@
                                         </td>
                                         @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin')
                                            @php
+                                                $cekPembuat = Auth::user()->name;
                                                 $rkontrakexist=$d->revisiKontraks->pluck('user_id')->toArray();
                                            @endphp
-                                            {{-- JIKA DATA REVISI UNTUK KONTRAK TERSEBUT ADA --}}
-                                            @if(!empty($rkontrakexist))
-                                                {{-- cek lagi, jika statusnya belum disetujui kadiv, maka tampilkan tombol show revisi untuk nantinya edit data lampiran --}}
-                                                @if($d->status !== 'approvedkadiv')
-                                                    <td>
-                                                        <a href="{{ route('viewRevisi', ['id' => $d->id]) }}" class="btn btn-sm btn-secondary"><i class="fas fa-eye"></i><br> Show Revisi</a>
-                                                        {{-- <a href="{{ route('editLampiran', ['id' => $d->id]) }}" class="btn btn-sm btn-warning"><i class="fas fa-pen"></i> Edit Lampiran</a> --}}
-                                                    </td>
+
+                                            {{-- buat kondisi untuk admin dan writer karena ada tombol showRevisi jadi disitu dicek dlu apakah kontrak tersebut pembuatnya sama dengan name user yang lagi login? kalau iya, baru bisa showLampiran buat edit, kalau engga berarti forbidden --}} 
+                                            @if($d->pembuat == $cekPembuat)
+                                                {{-- JIKA DATA REVISI UNTUK KONTRAK TERSEBUT ADA --}}
+                                                @if(!empty($rkontrakexist))
+                                                    {{-- cek lagi, jika statusnya belum disetujui kadiv, maka tampilkan tombol show revisi untuk nantinya edit data lampiran --}}
+                                                    @if($d->status !== 'approvedkadiv')
+                                                        <td>
+                                                            <a href="{{ route('viewRevisi', ['id' => $d->id]) }}" class="btn btn-sm btn-secondary"><i class="fas fa-eye"></i><br> Show Revisi</a>
+                                                            {{-- <a href="{{ route('editLampiran', ['id' => $d->id]) }}" class="btn btn-sm btn-warning"><i class="fas fa-pen"></i> Edit Lampiran</a> --}}
+                                                        </td>
+                                                    @else
+                                                        <td><span class="badge badge-success">Kontrak selesai dibuat</span></td>
+                                                    @endif    
                                                 @else
-                                                    <td><span class="badge badge-success">Kontrak selesai dibuat</span></td>
-                                                @endif    
+                                                <td><span class="badge badge-info">Tidak Ada Revisi</span></td>
+                                                    
+                                                @endif
                                             @else
-                                             <td><span class="badge badge-info">Tidak Ada Revisi</span></td>
-                                                
+                                                <td><span class="badge badge-dark">Forbidden</span></td>
                                             @endif
+                                            
                                         @endif
                                     </tr>
                                     @endforeach

@@ -59,7 +59,7 @@
                                                 <span class="badge badge-success">Lokal</span>
                                             @elseif($d->unit_kerja == '41A40')
                                                 <span class="badge badge-primary">Import</span>
-                                            @elseif($d->unit_kerja == '41KDP')
+                                            @elseif($d->unit_kerja == '41A00')
                                                 <span class="badge badge-dark">Kepala Department</span>
                                             @elseif($d->unit_kerja == '41KDV')
                                                 <span class="badge badge-dark">Kepala Divisi</span>
@@ -123,7 +123,9 @@
         $(document).ready(function() {
             $('#userdatatable').DataTable({
                 "paging": true,
-                "lengthChange": false,
+                "lengthChange": true,
+                "pageLength": 5,
+                "lengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'semua']],
                 "searching": true,
                 "ordering": true,
                 "info": true,
@@ -131,7 +133,7 @@
                 "responsive": true,
 
 
-                dom: 'Bfrtip',
+                dom: 'Bflrtip',
                 buttons: [
                     {
                         extend: 'excel',

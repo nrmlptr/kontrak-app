@@ -27,7 +27,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Data Kontrak</h3>
+                            <h3 class="card-title">Data Kontrak - Aprroved Kadiv (NET)</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -41,15 +41,15 @@
                                     <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label for="">Nama Vendor</label>
-                                            <input type="text" name="nm_vendor" id="filter-nama-vendor" class="form-control filter">
+                                            <input type="text" name="nm_vendor" id="filter-nama-vendor" class="form-control filter" placeholder="Masukkan Nama Vendor" title="Input Nama Vendor">
                                         </div>
                                         <div class="col-md-2 mb-3">
                                             <label for="">Nomor SOP</label>
-                                            <input type="text" name="no_sop" id="filter-no-sop" class="form-control filter">
+                                            <input type="text" name="no_sop" id="filter-no-sop" class="form-control filter" placeholder="Masukkan Nomor SOP" title="Input Nomor SOP">
                                         </div>
                                         <div class="col-md-2 mb-3">
                                             <label for="">Unit Kerja</label>
-                                            <select name="unit_kerja" id="filter-unit-kerja" class="form-control filter">
+                                            <select name="unit_kerja" id="filter-unit-kerja" class="form-control filter" title="Input Unit Kerja">
                                                 <option value="">Pilih Unit Kerja</option>
                                                 <option value="41A10">Investasi</option>
                                                 <option value="41A20">Jasa Barum</option>
@@ -263,14 +263,16 @@
         $(document).ready(function() {
             $('#kontrakAKdatatable').DataTable({
                 "paging": true,
-                "lengthChange": false,
+                "lengthChange": true,
+                "pageLength": 5,
+                "lengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'semua']],
                 "searching": true,
                 "ordering": true,
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
 
-                dom: 'Bfrtip',
+                dom: 'Bflrtip',
                 buttons: [
                     {
                         extend: 'excel',

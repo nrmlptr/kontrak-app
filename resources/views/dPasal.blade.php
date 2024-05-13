@@ -31,9 +31,33 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
+                            {{-- <a class="btn btn-primary mb-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" title="Filter Data"><i class="fas fa-filter"></i>
+                                Filter Data
+                            </a>
+                            <a href="{{ route('vPasal') }}" class="btn btn-warning mb-2" title="Refresh Data"><i class="fas fa-sync-alt"></i></a>
+                            <div class="collapse" id="collapseExample">
+                                <form action="{{ route('vPasal') }}" method="GET">
+                                @csrf
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="">Status Jaminan</label>
+                                            <select name="jenis_pasal" id="filter-jenis-pasal" class="form-control filter">
+                                                <option value="">Pilih Status Jaminan</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                            </select>
+                                        </div>
+                                         <div class="col-md-4 mt-3 input-group-append">
+                                            <button type="submit" class="btn btn-primary" title="Search Data"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div> --}}
+
+
                             <table id="pasaldatatable" class="table table-bordered table-striped">
                                 <thead>
-                                    <tr>
+                                    <tr align="center">
                                         <th>No</th>
                                         <th>Nama Pasal</th>
                                         <th class="d-none d-sm-table-cell" style="width: 15%;">Keterangan</th>
@@ -113,33 +137,35 @@
         $(document).ready(function() {
             $('#pasaldatatable').DataTable({
                 "paging": true,
-                "lengthChange": false,
+                "lengthChange": true,
+                "pageLength": 5,
+                "lengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'semua']],
                 "searching": true,
                 "ordering": true,
                 "info": true,
                 "autoWidth": true,
                 "responsive": true,
 
-                dom: 'Bfrtip',
-                buttons: [
-                    {
-                        extend: 'excel',
-                        filename: 'Data_Pasal_Dept_Pengadaan', // untuk nama filenya
-                        title: 'Data Pasal Kontrak | Dept Pengadaan', //untuk di header nya
-                        exportOptions: {
-                            columns: [ 0,1,2,3,4,5]
-                        }
-                    },
-                    {
-                        extend: 'pdf',
-                        filename: 'Data_Pasal_Dept_Pengadaan', // untuk nama filenya
-                        title: 'Data Pasal Kontrak | Dept Pengadaan', //untuk di header nya
-                        orientation: 'landscape',
-                        exportOptions: {
-                            columns: [ 0,1,2,3,4,5]
-                        }
-                    }
-                ]
+                // dom: 'Bfrtip',
+                // buttons: [
+                //     {
+                //         extend: 'excel',
+                //         filename: 'Data_Pasal_Dept_Pengadaan', // untuk nama filenya
+                //         title: 'Data Pasal Kontrak | Dept Pengadaan', //untuk di header nya
+                //         exportOptions: {
+                //             columns: [ 0,1,2,3,4,5]
+                //         }
+                //     },
+                //     {
+                //         extend: 'pdf',
+                //         filename: 'Data_Pasal_Dept_Pengadaan', // untuk nama filenya
+                //         title: 'Data Pasal Kontrak | Dept Pengadaan', //untuk di header nya
+                //         orientation: 'landscape',
+                //         exportOptions: {
+                //             columns: [ 0,1,2,3,4,5]
+                //         }
+                //     }
+                // ]
             });
         });
     </script>
