@@ -18,8 +18,8 @@ class SettingController extends Controller
 
         // hapus dulu vendortext
         $setting->update([
-            'peruri_pihakname' => $pihakname,
-            'peruri_akta' => $akta,
+            'peruri_pihakname'  => $pihakname,
+            'peruri_akta'       => $akta,
         ]);
         return back();
     }

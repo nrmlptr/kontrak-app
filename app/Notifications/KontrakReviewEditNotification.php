@@ -21,9 +21,9 @@ class KontrakReviewEditNotification extends Notification
     public function __construct($kontraks, $namaPenggunaRevisi, $userPenerima)
     {
         //
-        $this->kontraks = $kontraks;
-        $this->namaPenggunaRevisi = $namaPenggunaRevisi;
-        $this->userPenerima = $userPenerima;
+        $this->kontraks             = $kontraks;
+        $this->namaPenggunaRevisi   = $namaPenggunaRevisi;
+        $this->userPenerima         = $userPenerima;
     }
 
     /**

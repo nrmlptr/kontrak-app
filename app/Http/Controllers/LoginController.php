@@ -33,7 +33,7 @@ class LoginController extends Controller
 
         $data = [
             'username'  => $request->username,
-            'password'  =>$request->password
+            'password'  => $request->password
         ];
 
 

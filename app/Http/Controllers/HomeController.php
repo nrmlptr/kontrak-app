@@ -87,12 +87,12 @@ class HomeController extends Controller
     {
         // dd($request->all());
         $messages = [
-            'nama.required' => 'Kolom nama harus diisi.',
-            'username.required' => 'Kolom username harus diisi.',
-            'email.required' => 'Kolom email harus diisi.',
-            'unit_kerja.required' => 'Kolom unit kerja harus diisi.',
-            'password.required' => 'Kolom password harus diisi.',
-            'permission.required' => 'Kolom permission harus diisi.'
+            'nama.required'         => 'Kolom nama harus diisi.',
+            'username.required'     => 'Kolom username harus diisi.',
+            'email.required'        => 'Kolom email harus diisi.',
+            'unit_kerja.required'   => 'Kolom unit kerja harus diisi.',
+            'password.required'     => 'Kolom password harus diisi.',
+            'permission.required'   => 'Kolom permission harus diisi.'
         ];
 
         $validator = Validator::make($request->all(), [
@@ -217,11 +217,11 @@ class HomeController extends Controller
         // dd($request->all());
 
         $messagesPasal = [
-            'nama_pasal.required' => 'Kolom Nama Pasal Harus Diisi.',
+            'nama_pasal.required'       => 'Kolom Nama Pasal Harus Diisi.',
             'keterangan_pasal.required' => 'Kolom Keterangan Pasal harus diisi.',
-            'isi_pasal.required' => 'Kolom Isi Pasal harus diisi.',
-            'jenis_pasal.required' => 'Kolom Jenis Pasal harus diisi.',
-            'urutan.required' => 'Kolom urutan harus diisi.'
+            'isi_pasal.required'        => 'Kolom Isi Pasal harus diisi.',
+            'jenis_pasal.required'      => 'Kolom Jenis Pasal harus diisi.',
+            'urutan.required'           => 'Kolom urutan harus diisi.'
         ];
 
         $validator = Validator::make($request->all(), [
@@ -241,7 +241,7 @@ class HomeController extends Controller
         $data['keterangan_pasal']    = $request->keterangan_pasal;
         $data['isi_pasal']           = $request->isi_pasal;
         $data['jenis_pasal']         = $request->jenis_pasal;
-        $data['urutan']              = $request->jenis_pasal;
+        $data['urutan']              = $request->urutan;
 
         PasalKontrak::create($data);
 

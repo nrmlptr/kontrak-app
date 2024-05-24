@@ -119,10 +119,10 @@
                                     <tr>                                        
                                         @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin')
                                             <th style="width: 10%">U/D</th>
-                                            <th></th>
+                                            <th>Aksi</th>
                                         @endif
                                         <th>No</th>
-                                        <th>Nomor SP</th>
+                                        <th style="width: 10%">Nomor SP</th>
                                         <th>Tanggal SP</th>
                                         <th>Nomor SOP</th>
                                         <th>Tanggal SOP</th>
@@ -132,11 +132,8 @@
                                         <th>Unit Kerja</th>
                                         <th>Jenis Kontrak</th>
                                         <th>Status Jaminan</th>
-                                        <th>Status</th>
+                                        {{-- <th>Status</th> --}}
                                         <th>Total Harga (Incl PPN)</th>
-                                        @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin')
-                                            <th>Action</th>
-                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody align="center">
@@ -153,9 +150,9 @@
                                                                 Belum Upload Document
                                                             @endif
                                                         </span><br>
-                                                        @if($d->statusdoc !== 'NET')
+                                                        {{-- @if($d->statusdoc !== 'NET') --}}
                                                             <a data-toggle="modal" data-target="#modal-upload-doc{{ $d->id }}" class="btn btn-success sm" title="Upload Document Kontrak"><i class="fas fa-file-upload"></i></a>
-                                                        @endif
+                                                        {{-- @endif --}}
                                                         
                                                         <a href="{{ route('downloadKontrak', ['id' => $d->id]) }}" class="btn btn-primary sm" title="Download Document Kontrak"><i class="fas fa-download"></i></a>
                                                     </td>
@@ -165,16 +162,59 @@
                                                 @php
                                                     $cekPembuat = Auth::user()->name;
                                                 @endphp
-                                                {{-- buat kondisi untuk admin dan writer karena ada tombol addLampiran jadi disitu dicek dlu apakah kontrak tersebut pembuatnya sama dengan name user yang lagi login? kalau iya, baru bisa addLampiran, kalau engga berarti forbidden --}}
+                                                {{-- buat kondisi untuk admin dan writer karena ada tombol addLampiran jadi disitu dicek dlu apakah kontrak tersebut pembuatnya sama dengan name user yang lagi login? kalau iya, baru bisa addLampiran atau hapus, kalau engga berarti forbidden --}}
                                                 @if($d->pembuat == $cekPembuat)
-                                                    <td><a data-toggle="modal" data-target="#modal-hapus-kontrak{{$d->id }}" class="btn btn-sm btn-danger" title="Hapus Kontrak"><i class="fas fa-trash-alt"></i></a></td>
+                                                    <td><a data-toggle="modal" data-target="#modal-hapus-kontrak{{$d->id }}" class="btn btn-sm btn-danger" title="Hapus Kontrak"><i class="fas fa-trash-alt"></i></a><br>
+                                                    {{-- Check if Lampiran7 exists for this kontraks_id --}}
+                                                    @php
+                                                        $cekLampiran7 = \App\Models\Lampiran7::where('kontraks_id', $d->id)->doesntExist();
+                                                        // dd($cekLampiran7)
+                                                    @endphp
+                                                    {{-- If Lampiran7 untuk kontrak tersebut benar tidak ada, show the button --}}
+                                                    @if($cekLampiran7)
+                                                        
+                                                        <a href="{{ route('createLampiran', ['id' => $d->id]) }}" class="btn btn-sm btn-warning mt-2" title="Input Lampiran"><i class="fas fa-pen"></i></a>
+                                                    @else
+                                                       <span class="badge badge-info">Lampiran sudah dibuat</span>
+                                                    @endif
+                                                    </td>
                                                 @else
                                                     <td><span class="badge badge-dark">Forbidden</span></td>
                                                 @endif
 
                                             @endif
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $d->detail_number }}</td>
+                                            <td align="center">
+                                                {{ $d->detail_number }}
+                                                <br>
+                                                @if($d->status == 'draft')
+                                                    <span class="badge badge-warning">draft</span>
+                                                @elseif($d->status == 'reviewkasek')
+                                                    <span class="badge badge-info">Review Kasek</span>
+                                                @elseif($d->status == 'revisikasek')
+                                                    <span class="badge badge-danger">Revisi by Kasek</span>
+                                                @elseif($d->status == 'editedkasek')
+                                                    <span class="badge badge-warning">Diperiksa ulang by Kasek</span>
+                                                @elseif($d->status == 'approvedkasek')
+                                                    <span class="badge badge-success">Disetujui Kasek</span>
+                                                @elseif($d->status == 'reviewkadept')
+                                                    <span class="badge badge-info">Review Kadept</span>
+                                                @elseif($d->status == 'revisikadept')
+                                                    <span class="badge badge-danger">Revisi by Kadept</span>
+                                                @elseif($d->status == 'editedkadept')
+                                                    <span class="badge badge-warning">Diperiksa ulang by Kasek</span>
+                                                @elseif($d->status == 'approvedkadept')
+                                                    <span class="badge badge-success">Disetujui Kadept</span>
+                                                @elseif($d->status == 'reviewkadiv')
+                                                    <span class="badge badge-info">Review Kadiv</span>
+                                                @elseif($d->status == 'revisikadiv')
+                                                    <span class="badge badge-danger">Revisi by Kadiv</span>
+                                                @elseif($d->status == 'editedkadiv')
+                                                    <span class="badge badge-warning">Diperiksa ulang by Kasek</span>
+                                                @else
+                                                    <span class="badge badge-success">Disetujui Kadiv (NET)</span>
+                                                @endif
+                                            </td>
                                             <td>{{ date('d-m-Y', strtotime($d->date_kontrak)) }}</td>
                                             <td>{{ $d->nomor_sop }}</td>
                                             <td>{{ date('d-m-Y', strtotime($d->tanggal_sop)) }}</td>
@@ -205,7 +245,7 @@
                                                     <span class="badge badge-secondary">Tanpa Jaminan</span>
                                                 @endif
                                             </td>
-                                            <td>
+                                            {{-- <td>
                                                 @if($d->status == 'draft')
                                                     <span class="badge badge-warning">draft</span>
                                                 @elseif($d->status == 'reviewkasek')
@@ -233,32 +273,9 @@
                                                 @else
                                                     <span class="badge badge-success">Disetujui Kadiv (NET)</span>
                                                 @endif
-                                            </td>
+                                            </td> --}}
                                             <th>{{ @formatRupiah($d->total_keseluruhan) }}</th>
-                                            @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin')
-                                                @php
-                                                    $cekPembuat = Auth::user()->name;
-                                                @endphp
-                                                {{-- buat kondisi untuk admin dan writer karena ada tombol addLampiran jadi disitu dicek dlu apakah kontrak tersebut pembuatnya sama dengan name user yang lagi login? kalau iya, baru bisa addLampiran, kalau engga berarti forbidden --}}
-                                                @if($d->pembuat == $cekPembuat)
-                                                    {{-- Check if Lampiran7 exists for this kontraks_id --}}
-                                                    @php
-                                                        $cekLampiran7 = \App\Models\Lampiran7::where('kontraks_id', $d->id)->doesntExist();
-                                                        // dd($cekLampiran7)
-                                                    @endphp
-                                                    {{-- If Lampiran7 untuk kontrak tersebut benar tidak ada, show the button --}}
-                                                    @if($cekLampiran7)
-                                                        <td>
-                                                            <a href="{{ route('createLampiran', ['id' => $d->id]) }}" class="btn btn-sm btn-warning" title="Tambah Lampiran"><i class="fas fa-pen"></i> Add Lampiran</a>
-
-                                                        </td>
-                                                    @else
-                                                        <td><span class="badge badge-info">Lampiran sudah dibuat</span></td>
-                                                    @endif
-                                                @else
-                                                    <td><span class="badge badge-dark">Forbidden</span></td>
-                                                @endif
-                                            @endif
+                                           
                                         </tr>
                                         <div class="modal fade" id="modal-hapus-kontrak{{ $d->id }}">
                                             <div class="modal-dialog">
@@ -362,9 +379,9 @@
 
             var exportColumns;
             if (loggedInUserRole === "admin" || loggedInUserRole === "writer") {
-                exportColumns = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+                exportColumns = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
             } else {
-                exportColumns = [0,1,2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+                exportColumns = [0,1,2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
             }
 
 

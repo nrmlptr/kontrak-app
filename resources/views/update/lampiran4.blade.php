@@ -16,9 +16,9 @@
                     <input type="date" name="tanggal_sop[]" class="form-control" value="{{ $l->tanggal_sop }}" readonly required>
                 </div>
                 <div class=" form-group col-2">
-                    <label for="lokasi">Gudang</label>
-                    {{-- <input type="text" name="lokasi[]" class="form-control" value="{{ $l->lokasi }}" required> --}}
-                    <select name="lokasi[]" id="lokasi" class="form-control" required>
+                    <label for="lokasi">Lokasi Gudang</label>
+                    <input type="text" name="plant[]" class="form-control" value="{{ $l->lokasi }}" required readonly>
+                    {{-- <select name="lokasi[]" id="lokasi" class="form-control" required>
                         <option value="{{ $l->lokasi }}" selected>@if($l->lokasi == 'GAT')
                             Gudang Tengah
                         @elseif($l->lokasi == 'UGM')
@@ -36,7 +36,7 @@
                         <option value="TGN">Gudang Tasganu</option>
                         <option value="UMUM">Gudang Umum</option>
                         <option value="UTAS">Gudang Utas</option>
-                    </select>
+                    </select> --}}
                 </div>
             
                 <div class=" form-group col-1">

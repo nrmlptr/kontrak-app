@@ -15,7 +15,7 @@
 </div>
 @push('scripts')
     <script type="text/javascript">
-
+    
         // Fungsi untuk mengisi nilai input form dengan data barang
         function isiNilaiForm5(dataBarang) {
             // console.log(dataBarang)
@@ -46,15 +46,7 @@
                 </div>
                 <div class="form-group col-2">
                     <label for="lokasi">Lokasi Gudang</label>
-                    <select name="lokasi[]" id="lokasi" class="form-control" required>
-                        <option value="">--Pilih Gudang--</option>
-                        <option value="GAT">Gudang Tengah</option>
-                        <option value="UGM">Gudang Ugam</option>
-                        <option value="TGN">Gudang Tasganu</option>
-                        <option value="UMUM">Gudang Umum</option>
-                        <option value="UTAS">Gudang Utas</option>
-                    </select>
-                    
+                    <input type="text" name="plant[]" class="form-control" value="${row.plant}" required readonly>                    
                 </div>
                 <div class="form-group col-2">
                     <label for="harga_awal">Harga Sebelum PPN</label>
@@ -82,6 +74,8 @@
 
                 $('#loadinputlampiran5').append(fields);
             
+                // Panggil fungsi replacePlantValues setelah menambahkan fields ke dalam DOM
+                replacePlantValues();
             }
         }
 

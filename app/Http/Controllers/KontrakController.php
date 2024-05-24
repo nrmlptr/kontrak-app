@@ -53,6 +53,7 @@ use Webklex\PDFMerger\Facades\PDFMergerFacade as PDFMerger;
 
 
 
+
 class KontrakController extends Controller
 {
     public function index()
@@ -118,6 +119,8 @@ class KontrakController extends Controller
                     'material_name'                      => $col['material_name'],
                     'purchase_requisition_number'        => $col['purchase_requisition_number'],
                     'requisition_date'                   => $col['requisition_date'],
+                    'plant'                              => $col['plant'],
+                    'storage_location'                   => $col['storage_location'],
                     'item_number_of_purchasing_document' => $col['item_number_of_purchasing_document'],
                     'purchase_order_quantity'            => (int) str_replace(['.', ','], '', $col['purchase_order_quantity']),
                     'purchase_order_unit_of_measure'     => $col['purchase_order_unit_of_measure'],
@@ -770,16 +773,16 @@ class KontrakController extends Controller
         $tahunSekarang = Carbon::now()->year;
 
         // Menggunakan tahun tersebut dalam pembuatan string
-        $detailNumber = 'SP-' . $request->number . '/VIII/' . $tahunSekarang;
-        $status = 'draft';
-        $validated['detail_number'] = $detailNumber;
-        $validated['pembuat']       = Auth::user()->name;
-        $validated['jenis_kontrak'] = $jenisKontrakValue;
-        $validated['status_jaminan'] = $statusJaminanValue;
-        $validated['status']        = $status;
-        $validated['peruritext']    = $peruri_text;
-        $validated['vendortext']    = $akta;
-        $validated['unit_kerja']    = Auth::user()->unit_kerja;
+        $detailNumber                   = 'SP-' . $request->number . '/VIII/' . $tahunSekarang;
+        $status                         = 'draft';
+        $validated['detail_number']     = $detailNumber;
+        $validated['pembuat']           = Auth::user()->name;
+        $validated['jenis_kontrak']     = $jenisKontrakValue;
+        $validated['status_jaminan']    = $statusJaminanValue;
+        $validated['status']            = $status;
+        $validated['peruritext']        = $peruri_text;
+        $validated['vendortext']        = $akta;
+        $validated['unit_kerja']        = Auth::user()->unit_kerja;
 
         // dd($validated);
         $save = Kontrak::create($validated);
@@ -847,9 +850,9 @@ class KontrakController extends Controller
         // return view('addLampiran')->with('data', $data);
         // return view('addLampiran', compact('data','api'));
         return view('addLampiran', [
-            'data' => $data,
+            'data'          => $data,
             'valueNomorSop' => $valueNomorSop,
-            'no_sppb' => $noSPPB
+            'no_sppb'       => $noSPPB
         ]);
     }
 
@@ -997,9 +1000,9 @@ class KontrakController extends Controller
                 // upload gambar jika ada
                 $gambarnonPath = null;
                 if ($request->hasfile('gambarnon') && isset($request->file('gambarnon')[$key])) {
-                    $gambarnon = $request->file('gambarnon')[$key];
-                    $imagenonName = time() . '_' . $gambarnon->getClientOriginalName();
-                    $gambarnonPath = $gambarnon->storeAs('public/uploads/spesifikasi_teknis/nonstandarlab', $imagenonName);
+                    $gambarnon      = $request->file('gambarnon')[$key];
+                    $imagenonName   = time() . '_' . $gambarnon->getClientOriginalName();
+                    $gambarnonPath  = $gambarnon->storeAs('public/uploads/spesifikasi_teknis/nonstandarlab', $imagenonName);
                 }
 
                 $datanya[] = [
@@ -1035,7 +1038,7 @@ class KontrakController extends Controller
             'kontraks_id'               => 'required',
             'nomor_sop'                 => 'required',
             'tanggal_sop'               => 'required',
-            'lokasi'                    => 'required',
+            'plant'                     => 'required',
             'satuan'                    => 'required',
             'jadwal_penyerahan_barang'  => 'required',
         ]);
@@ -1056,7 +1059,7 @@ class KontrakController extends Controller
                 'kode_barang'              => $kode_barang[$key],
                 'nama_barang'              => $nama_barang[$key],
                 'tanggal_sop'              => $tanggal_sop[$key],
-                'lokasi'                   => $lokasi[$key],
+                'lokasi'                   => $plant[$key],
                 'satuan'                   => $satuan[$key],
                 'jadwal_penyerahan_barang' => $jadwal_penyerahan_barang[$key],
                 'created_at'               => now(),
@@ -1086,7 +1089,7 @@ class KontrakController extends Controller
             'kode_barang'       => 'required',
             'nama_barang'       => 'required',
             'satuan'            => 'required',
-            'lokasi'            => 'required',
+            'plant'             => 'required',
             'harga_awal'        => 'required',
             'jumlah'            => 'required',
             'ppn'               => 'required',
@@ -1109,7 +1112,7 @@ class KontrakController extends Controller
                 'kode_barang'       => $kode_barang[$key],
                 'nama_barang'       => $nama_barang[$key],
                 'satuan'            => $satuan[$key],
-                'lokasi'            => $lokasi[$key],
+                'lokasi'            => $plant[$key],
                 'harga_awal'        => $harga_awal[$key],
                 'qty'               => $jumlah[$key],
                 'ppn'               => $ppn[$key],
@@ -1146,7 +1149,7 @@ class KontrakController extends Controller
             'lama_pembayaran'   => 'required',
         ]);
         // Simpan nilai dari radio button
-        $jenis_pembayaran = $request->jpemb;
+        $jenis_pembayaran           = $request->jpemb;
         $data['kontraks_id']        = $kontraks_id;
         $data['nomor_sop']          = $nomor_sop;
         $data['tanggal_sop']        = $tanggal_sop;
@@ -1193,21 +1196,21 @@ class KontrakController extends Controller
             $revisi = revisiKontrak::with('user')
                 ->latest()->take(1)
                 ->where('kontraks_id', $kontraks_id)->first();
-            $userPermissionrevisi = $revisi->user->permission;
-            $previousRole = [];
+            $userPermissionrevisi   = $revisi->user->permission;
+            $previousRole           = [];
             switch ($userPermissionrevisi) {
                 case 'kadept':
                     $previousRole['kasek'] = User::where('permission', 'kasek')->where('unit_kerja', $kontrak->unit_kerja)->get();
-                    $status = "edited" . $userPermissionrevisi;
+                    $status                = "edited" . $userPermissionrevisi;
                     break;
                 case 'kadiv':
                     $previousRole['kasek'] = User::where('permission', 'kasek')->where('unit_kerja', $kontrak->unit_kerja)->get();
                     $previousRole['kadept'] = User::where('permission', 'kadept')->get();
-                    $status = "edited" . $userPermissionrevisi;;
+                    $status                 = "edited" . $userPermissionrevisi;
                     break;
                 default:
-                    $previousRole = ''; // Tidak ada role sebelumnya untuk kasek
-                    $status = "edited" . $userPermissionrevisi;;
+                    $previousRole   = ''; // Tidak ada role sebelumnya untuk kasek
+                    $status         = "edited" . $userPermissionrevisi;
                     break;
             }
             // dd($previousRole);
@@ -1343,7 +1346,7 @@ class KontrakController extends Controller
     public function rKontrak(Request $request)
     {
         // return auth()->user()->permission;
-        $exceptList = ['kadept', 'kadiv'];
+        $exceptList = ['admin', 'kadept', 'kadiv'];
         $data = Kontrak::with(['revisiKontraks' => function ($q) {
             return $q->where('statusrevisi', 'N');
         }]);
@@ -1831,8 +1834,8 @@ class KontrakController extends Controller
         // $cekApprovedKontrak = (in_array($statusnya, $statuslist) ? 'd-none' : '');
 
         // Ambil tanggal dari $data
-        $tanggal_kontrak = Carbon::parse($data->date_kontrak);
-        $arrDateSplit = explode('-', $data->date_kontrak); //thn - bulan -tanggal
+        $tanggal_kontrak    = Carbon::parse($data->date_kontrak);
+        $arrDateSplit       = explode('-', $data->date_kontrak); //thn - bulan -tanggal
         // dd($arrDateSplit);
         // Buat hari dan tanggal kontrak
         $tanggal_tertulis = $tanggal_kontrak->isoFormat('dddd') . ", tanggal " . terbilang($arrDateSplit[2]) . " bulan " . getMonthIndo($tanggal_kontrak->isoFormat('M')) . " tahun " . terbilang($arrDateSplit[0]);
@@ -1877,8 +1880,8 @@ class KontrakController extends Controller
         // $cekApprovedKontrak = (in_array($statusnya, $statuslist) ? 'd-none' : '');
 
         // Ambil tanggal dari $data
-        $tanggal_kontrak = Carbon::parse($data->date_kontrak);
-        $arrDateSplit = explode('-', $data->date_kontrak); //thn - bulan -tanggal
+        $tanggal_kontrak    = Carbon::parse($data->date_kontrak);
+        $arrDateSplit       = explode('-', $data->date_kontrak); //thn - bulan -tanggal
         // dd($arrDateSplit);
         // Buat hari dan tanggal kontrak
         $tanggal_tertulis = $tanggal_kontrak->isoFormat('dddd') . ", tanggal " . terbilang($arrDateSplit[2]) . " bulan " . getMonthIndo($tanggal_kontrak->isoFormat('M')) . " tahun " . terbilang($arrDateSplit[0]);
@@ -1930,8 +1933,8 @@ class KontrakController extends Controller
         // $cekApprovedKontrak = (in_array($statusnya, $statuslist) ? 'd-none' : '');
 
         // Ambil tanggal dari $data
-        $tanggal_kontrak = Carbon::parse($data->date_kontrak);
-        $arrDateSplit = explode('-', $data->date_kontrak); //thn - bulan -tanggal
+        $tanggal_kontrak    = Carbon::parse($data->date_kontrak);
+        $arrDateSplit       = explode('-', $data->date_kontrak); //thn - bulan -tanggal
         // dd($arrDateSplit);
         // Buat hari dan tanggal kontrak
         $tanggal_tertulis = $tanggal_kontrak->isoFormat('dddd') . ", tanggal " . terbilang($arrDateSplit[2]) . " bulan " . getMonthIndo($tanggal_kontrak->isoFormat('M')) . " tahun " . terbilang($arrDateSplit[0]);
@@ -1995,8 +1998,8 @@ class KontrakController extends Controller
         // $cekApprovedKontrak = (in_array($statusnya, $statuslist) ? 'd-none' : '');
 
         // Ambil tanggal dari $data
-        $tanggal_kontrak = Carbon::parse($data->date_kontrak);
-        $arrDateSplit = explode('-', $data->date_kontrak); //thn - bulan -tanggal
+        $tanggal_kontrak    = Carbon::parse($data->date_kontrak);
+        $arrDateSplit       = explode('-', $data->date_kontrak); //thn - bulan -tanggal
         // dd($arrDateSplit);
         // Buat hari dan tanggal kontrak
         $tanggal_tertulis = $tanggal_kontrak->isoFormat('dddd') . ", tanggal " . terbilang($arrDateSplit[2]) . " bulan " . getMonthIndo($tanggal_kontrak->isoFormat('M')) . " tahun " . terbilang($arrDateSplit[0]);
@@ -2112,6 +2115,8 @@ class KontrakController extends Controller
     //     // Set opsi setRemoteEnable
     //     return $pdf->stream("kontrak_" . $kontrak->detail_number . "pdf");
     // }
+
+
     function cetakKontrak($id)
     {
         $kontrak = Kontrak::with([
@@ -2133,8 +2138,8 @@ class KontrakController extends Controller
 
 
         // Ambil tanggal dari $data
-        $tanggal_kontrak = Carbon::parse($kontrak->date_kontrak);
-        $arrDateSplit = explode('-', $kontrak->date_kontrak); //thn - bulan -tanggal
+        $tanggal_kontrak    = Carbon::parse($kontrak->date_kontrak);
+        $arrDateSplit       = explode('-', $kontrak->date_kontrak); //thn - bulan -tanggal
         // dd($arrDateSplit);
         // Buat hari dan tanggal kontrak
         $tanggal_tertulis = $tanggal_kontrak->isoFormat('dddd') . ", tanggal " . terbilang($arrDateSplit[2]) . " bulan " . getMonthIndo($tanggal_kontrak->isoFormat('M')) . " tahun " . terbilang($arrDateSplit[0]);
@@ -2144,7 +2149,7 @@ class KontrakController extends Controller
         $pihak2data = VendorText::where('registration_no', @$kontrak->integrates[0]->registration_no)->first();
         $pihak2name = @$pihak2data->pihakname;
         $pihak1name = @$pihak1data->peruri_pihakname;
-        $teks = "";
+        $teks       = "";
         // Hitung jumlah pasal
         $total_pasal = count($kontrak->pasal);
         foreach ($kontrak->pasal as $key => $p) {
@@ -2155,28 +2160,30 @@ class KontrakController extends Controller
                         </h4>
                         ' . $p->isi_pasal . '
                     </div>
-                    <div style="margin-bottom: 40px;"></div>';
+                    <div style="margin-top: -19px; margin-bottom: -50px;"></div>';
             // Jika ini adalah iterasi terakhir, tambahkan teks tambahan
             if ($key === $total_pasal - 1) {
-                $teks .= '<p style="text-align: justify; font-size: 14px;">Demikian Perjanjian ini dibuat dalam 2 (dua) rangkap ASLI masing-masing sama bunyi dan bermeterai cukup serta mempunyai kekuatan hukum yang sama setelah ditandatangani dan dibubuhi cap perusahaan kedua belah pihak.</p>
+                $teks .= '<div><br></div>
+                <p style="text-align: justify; font-size: 14px;">Demikian Perjanjian ini dibuat dalam 2 (dua) rangkap ASLI masing-masing sama bunyi dan bermeterai cukup serta mempunyai kekuatan hukum yang sama setelah ditandatangani dan dibubuhi cap perusahaan kedua belah pihak.</p>
+                        <div><br></div>
                         <div><br></div>
                         <div><br></div>
                         <div><br></div>
                         <table style="width: 100%;
                                 border-collapse: collapse;
-                                margin-top: 20px;">
+                                margin-top: -50px;">
                             <tr>
                                 <th style="width: 50%;text-align: center; font-size: 14px;">PIHAK KEDUA,</th>
                                 <th style="width: 50%;text-align: center; font-size: 14px;">PIHAK KESATU,</th>
                             </tr>
                             <tr>
                                 <td style="vertical-align: top;">
-                                    <div style="padding-top: 50px; text-align: center; font-size: 14px;">
+                                    <div style="padding-top: 150px; text-align: center; font-size: 14px;">
                                         <div style=""><b>' . $pihak2name . '</b></div>
                                     </div>
                                 </td>
                                 <td style="vertical-align: top;">
-                                    <div style="padding-top: 50px; text-align: center; font-size: 14px;">
+                                    <div style="padding-top: 150px; text-align: center; font-size: 14px;">
                                         <div style=""><b>' . $pihak1name . '</b></div>
                                     </div>
                                 </td>
@@ -2184,27 +2191,47 @@ class KontrakController extends Controller
                         </table>';
             }
         }
+
+        $datalampiran1 = $kontrak->lampiran1;
+        $showdtlampiran1 = json_decode($datalampiran1->data_json, true);
+
+
         $data = [
-            'data' => $kontrak,
-            'pihak2name' => $pihak2name,
-            'pihak1name' => $pihak1name,
-            'pihak1data' => $pihak1data,
-            'pihak2data' => $pihak2data,
-            'tanggal_tertulis' => $tanggal_tertulis,
-            'teks' => $teks,
+            'data'              => $kontrak,
+            'pihak2name'        => $pihak2name,
+            'pihak1name'        => $pihak1name,
+            'pihak1data'        => $pihak1data,
+            'pihak2data'        => $pihak2data,
+            'tanggal_tertulis'  => $tanggal_tertulis,
+            'teks'              => $teks,
+            'showdtlampiran1'   => $showdtlampiran1,
         ];
         // saving pasalpdf
-        $page1 = $this->downloadpageone($data);
-        $pathpage1 = storage_path('app/public/pdf/' . $page1);
-        $pagepasal = $this->downloadpasal($data);
-        $pathpagepasal = storage_path('app/public/pdf/' . $pagepasal);
-        return $pathpagepasal;
-        $pagenextcontent = $this->downloadnextcontent($data);
-        $pathpagenextcontent = storage_path('app/public/pdf/' . $pagenextcontent);
-        $mergepdf = PDFMerger::init();
+        $page1                  = $this->downloadpageone($data);
+        $pathpage1              = storage_path('app/public/pdf/' . $page1);
+        $pagepasal              = $this->downloadpasal($data);
+        $pathpagepasal          = storage_path('app/public/pdf/' . $pagepasal);
+        // return $pathpagepasal; //http://localhost:8000/storage/pdf/pasal_jenis2.pdf
+        $pagelampiran1          = $this->downloadcontentlampiran1($data);
+        $pathpagelampiran1      = storage_path('app/public/pdf/' . $pagelampiran1);
+        // return $pathpagelampiran1;
+        // return $pagelampiran1;
+        $pagelampiran2          = $this->downloadcontentlampiran2($data);
+        $pathpagelampiran2      = storage_path('app/public/pdf/' . $pagelampiran2);
+        // return $pathpagelampiran2;
+        $pagelampiran3          = $this->downloadcontentlampiran3($data);
+        $pathpagelampiran3      = storage_path('app/public/pdf/' . $pagelampiran3);
+        // return $pagelampiran3;
+        $pagenextcontent        = $this->downloadnextcontent($data);
+        $pathpagenextcontent    = storage_path('app/public/pdf/' . $pagenextcontent);
+
+        $mergepdf               = PDFMerger::init();
 
         $mergepdf->addPDF($pathpage1, 'all');
         $mergepdf->addPDF($pathpagepasal, 'all');
+        $mergepdf->addPDF($pathpagelampiran1, 'all');
+        $mergepdf->addPDF($pathpagelampiran2, 'all');
+        $mergepdf->addPDF($pathpagelampiran3, 'all');
         $mergepdf->addPDF($pathpagenextcontent, 'all');
 
 
@@ -2217,26 +2244,75 @@ class KontrakController extends Controller
     }
     private function downloadpageone($data)
     {
-        $pdf = PDF::loadview('pageonepdf', $data);
-        $fileName = "kontrak_" . $data['data']->id . "_page1.pdf"; // Nama file yang diinginkan
-        $content = $pdf->download()->getOriginalContent();
-        $pageone = Storage::put('public/pdf/' . $fileName, $content);
+        $pdf            = PDF::loadview('pageonepdf', $data);
+        $fileName       = "kontrak_" . $data['data']->id . "_page1.pdf"; // Nama file yang diinginkan
+        $content        = $pdf->download()->getOriginalContent();
+        $pageone        = Storage::put('public/pdf/' . $fileName, $content);
         return $fileName;
     }
     private function downloadpasal($data)
     {
-        $pdf = PDF::loadview('pasalpdf2', $data);
-        $fileName = "pasal_jenis" . $data['data']->pasal[0]->jenis_pasal . ".pdf"; // Nama file yang diinginkan
-        $content = $pdf->download()->getOriginalContent();
-        $pasalpdf = Storage::put('public/pdf/' . $fileName, $content);
+        $pdf            = PDF::loadview('pasalpdf2', $data);
+        $fileName       = "pasal_jenis" . $data['data']->pasal[0]->jenis_pasal . ".pdf"; // Nama file yang diinginkan
+        $content        = $pdf->download()->getOriginalContent();
+        $pasalpdf       = Storage::put('public/pdf/' . $fileName, $content);
         return $fileName;
     }
+    private function downloadcontentlampiran1($data)
+    {
+       
+        $fileName       = "lampiran1" . $data['data']->lampiran1[0] . ".pdf"; // Nama file yang diinginkan
+
+        $total = 0;
+        $data['totalPages'] = $total;
+        $pdf            = PDF::loadview('contentlampiran1', $data);
+        $pdf->render();
+        $totalnya = $pdf->getDomPDF()->get_canvas()->get_page_count();
+        $data['totalPages'] = $totalnya;
+        $pdf            = PDF::loadview('contentlampiran1', $data);
+
+
+        $content        = $pdf->download()->getOriginalContent();
+        $lampiran1pdf   = Storage::put('public/pdf/' . $fileName, $content);
+        return $fileName;
+    }
+    private function downloadcontentlampiran2($data)
+    {
+        $pdf            = PDF::loadview('contentlampiran2', $data);
+        $fileName       = "lampiran2" . $data['data']->lampiran2[0] . ".pdf"; // Nama file yang diinginkan
+        $content        = $pdf->download()->getOriginalContent();
+        $lampiran2pdf   = Storage::put('public/pdf/' . $fileName, $content);
+        return $fileName;
+    }
+    private function downloadcontentlampiran3($data)
+    {
+        $fileName       = "lampiran3" . $data['data']->lampiran3[0]->jenis_spesifikasi . ".pdf"; // Nama file yang diinginkan
+        if ($data['data']->lampiran3[0]->jenis_spesifikasi == '2') {
+            // nonstandar
+            $total = 0;
+            $data['totalPages'] = $total;
+            $pdf            = PDF::loadview('contentlampiran3', $data);
+
+            $pdf->render();
+            $totalnya = $pdf->getDomPDF()->get_canvas()->get_page_count();
+            $data['totalPages'] = $totalnya;
+            $pdf            = PDF::loadview('contentlampiran3', $data);
+        } else {
+            $pdf            = PDF::loadview('contentlampiran3standar', $data);
+        }
+
+        // return $pdf->stream($fileName);
+        $content        = $pdf->download()->getOriginalContent();
+        $lampiran3pdf   = Storage::put('public/pdf/' . $fileName, $content);
+        return $fileName;
+    }
+
     private function downloadnextcontent($data)
     {
-        $pdf = PDF::loadview('nextcontentpdf', $data);
-        $fileName = "kontrak_" . $data['data']->id . "_nextpage.pdf"; // Nama file yang diinginkan
-        $content = $pdf->download()->getOriginalContent();
-        $nextcontent = Storage::put('public/pdf/' . $fileName, $content);
+        $pdf            = PDF::loadview('nextcontentpdf', $data);
+        $fileName       = "kontrak_" . $data['data']->id . "_nextpage.pdf"; // Nama file yang diinginkan
+        $content        = $pdf->download()->getOriginalContent();
+        $nextcontent    = Storage::put('public/pdf/' . $fileName, $content);
         return $fileName;
     }
 
@@ -2397,16 +2473,16 @@ class KontrakController extends Controller
         // dd($request->all());
         // Validasi data
         $validated = $request->validate([
-            'kontraks_id' => 'required',
-            'revisi' => 'required',
+            'kontraks_id'   => 'required',
+            'revisi'        => 'required',
         ]);
 
         $kontrak = Kontrak::find($validated['kontraks_id']);
         // Simpan data revisi
-        $data['kontraks_id'] = $validated['kontraks_id'];
-        $data['revisi'] = $validated['revisi'];
-        $data['user_id'] = auth()->id();
-        $status = '';
+        $data['kontraks_id']    = $validated['kontraks_id'];
+        $data['revisi']         = $validated['revisi'];
+        $data['user_id']        = auth()->id();
+        $status                 = '';
 
         // Tentukan status berdasarkan izin pengguna
         $userPermission = auth()->user()->permission;
@@ -2414,17 +2490,17 @@ class KontrakController extends Controller
         $previousRole = [];
         switch ($userPermission) {
             case 'kadept':
-                $previousRole['kasek'] = User::where('permission', 'kasek')->where('unit_kerja', $kontrak->unit_kerja)->get();
-                $status = 'revisikadept';
+                $previousRole['kasek']  = User::where('permission', 'kasek')->where('unit_kerja', $kontrak->unit_kerja)->get();
+                $status                 = 'revisikadept';
                 break;
             case 'kadiv':
-                $previousRole['kasek'] = User::where('permission', 'kasek')->where('unit_kerja', $kontrak->unit_kerja)->get();
+                $previousRole['kasek']  = User::where('permission', 'kasek')->where('unit_kerja', $kontrak->unit_kerja)->get();
                 $previousRole['kadept'] = User::where('permission', 'kadept')->get();
-                $status = 'revisikadiv';
+                $status                 = 'revisikadiv';
                 break;
             default:
-                $previousRole = ''; // Tidak ada role sebelumnya untuk kasek
-                $status = 'revisikasek';
+                $previousRole   = ''; // Tidak ada role sebelumnya untuk kasek
+                $status         = 'revisikasek';
                 break;
         }
 
@@ -2597,7 +2673,7 @@ class KontrakController extends Controller
         // echo 'TAMPIL DATA SOP';
         // $data = Integrate::orderBy('document_date', 'desc')->get();
         // $data = Integrate::withCount('purchaseRequisitions')->orderBy('document_date', 'desc')->get()
-        // ===========================================================================================================================================================
+        // ==========================================================================================================================
 
         $data = Integrate::select('purchasing_document_number', 'document_date', 'tender_name', 'vendor_name')->distinct()->with('purchaseRequisitions')->orderBy('document_date', 'desc')->get();
 
@@ -2736,7 +2812,7 @@ class KontrakController extends Controller
     {
         // dd(["Tanggal Awal : ".$tglawal, "Tanggal Akhir : ".$tglakhir]);
 
-        $exportPertanggal = Kontrak::orderBy('created_at', 'desc')->whereBetween('date_kontrak', [$tglawal, $tglakhir])->get();
+        $exportPertanggal = Kontrak::orderBy('created_at', 'desc')->whereBetween('tanggal_sop', [$tglawal, $tglakhir])->get();
 
         return view('export.cetak-kontrak-pertanggal-pdf', compact('exportPertanggal'));
     }
@@ -2751,17 +2827,17 @@ class KontrakController extends Controller
     public function export(Request $request)
     {
         // dd($request->all());
-        $filterType = $request->input('filter_type');
-        $filterValue = $request->input('filter_value');
-        $year = $request->input('year'); //ambil nilai tahun dari inputan
-        $month = $request->input('month'); // Menangkap nilai bulan dari input
+        $filterType     = $request->input('filter_type');
+        $filterValue    = $request->input('filter_value');
+        $year           = $request->input('year'); //ambil nilai tahun dari inputan
+        $month          = $request->input('month'); // Menangkap nilai bulan dari input
 
         $contracts = Kontrak::query();
 
         if ($filterType && $filterValue) {
 
             if ($filterType === 'year') {
-                $contracts->whereYear('date_kontrak', $filterValue);
+                $contracts->whereYear('tanggal_sop', $filterValue);
             } elseif ($filterType === 'month') {
                 // Validasi apakah tahun dan bulan telah dipilih
                 if (!$year || !$month) {
@@ -2770,15 +2846,15 @@ class KontrakController extends Controller
 
                 //tangkep nilai bulan dari inputan
                 $monthValue = strlen($month) == 1 ? '0' . $month : $month;
-                $contracts->whereYear('date_kontrak', $year)->whereMonth('date_kontrak', $monthValue);
+                $contracts->whereYear('tanggal_sop', $year)->whereMonth('tanggal_sop', $monthValue);
             } elseif ($filterType === 'date') {
                 // Pisahkan rentang tanggal
-                $dates = explode(' - ', $filterValue);
-                $startDate = $dates[0];
-                $endDate = $dates[1];
+                $dates      = explode(' - ', $filterValue);
+                $startDate  = $dates[0];
+                $endDate    = $dates[1];
 
                 // Terapkan filter rentang tanggal
-                $contracts->whereBetween('date_kontrak', [$startDate, $endDate]);
+                $contracts->whereBetween('tanggal_sop', [$startDate, $endDate]);
             }
         }
 
@@ -2950,8 +3026,6 @@ class KontrakController extends Controller
                 ->get();
         }
 
-
-
         // dd($data);
 
         return view('viewKontrakAK', compact('data'));
@@ -2977,10 +3051,10 @@ class KontrakController extends Controller
             if ($docKontrak->dockontrak) {
                 Storage::delete($docKontrak->dockontrak);
                 // set nilai kolom jadi kosong
-                $docKontrak->dockontrak = null;
-                $docKontrak->tipedoc = null;
-                $docKontrak->ukdok = null;
-                $docKontrak->statusdoc = null;
+                $docKontrak->dockontrak     = null;
+                $docKontrak->tipedoc        = null;
+                $docKontrak->ukdok          = null;
+                $docKontrak->statusdoc      = null;
                 $docKontrak->save();
             }
 
@@ -2990,10 +3064,10 @@ class KontrakController extends Controller
             $pathDoc = $fileDoc->storeAs('public/uploads/document_kontrak', $docName);
 
             // update kolom namadoc,tipedoc,ukdoc dengan document baru
-            $docKontrak->dockontrak = $pathDoc;
-            $docKontrak->tipedoc = $fileDoc->guessExtension();
-            $docKontrak->ukdok = $fileDoc->getSize();
-            $docKontrak->statusdoc = $request->statusdoc;
+            $docKontrak->dockontrak     = $pathDoc;
+            $docKontrak->tipedoc        = $fileDoc->guessExtension();
+            $docKontrak->ukdok          = $fileDoc->getSize();
+            $docKontrak->statusdoc      = $request->statusdoc;
             $docKontrak->save();
 
             return redirect()->back()->with('success', 'Dokumen Kontrak Berhasil di Unggah!');
@@ -3028,7 +3102,6 @@ class KontrakController extends Controller
         return response()->download(storage_path('app/' . $path), $fileName);
     }
 
-
     // Fungsi untuk mendapatkan peran pengguna yang sedang login
     public function getLoggedInUserRole()
     {
@@ -3042,7 +3115,7 @@ class KontrakController extends Controller
             return $user->permission;
         } else {
             // Jika pengguna belum diautentikasi, kembalikan null atau nilai default
-            return null; // Atau kamu bisa mengembalikan nilai default sesuai kebutuhan
+            return null;
         }
     }
 

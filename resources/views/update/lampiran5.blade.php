@@ -15,7 +15,7 @@
                 <div class="row">
                     <div class="form-group col-1">
                         <label for="no_sppb">Nomor SPPB</label>
-                        <input type="text" name="no_sppb[]" class="form-control" value="{{ $l->no_sppb }}" required>
+                        <input type="text" name="no_sppb[]" class="form-control" value="{{ $l->no_sppb }}" required readonly>
                         
                     </div>
                     <div class="form-group col-2">
@@ -35,8 +35,8 @@
                     </div>
                     <div class="form-group col-2">
                         <label for="lokasi">Lokasi Gudang</label>
-                        {{-- <input type="text" name="lokasi[]" class="form-control" value="{{ $l->lokasi }}" required> --}}
-                        <select name="lokasi[]" id="lokasi" class="form-control" required>
+                        <input type="text" name="plant[]" class="form-control" value="{{ $l->lokasi }}" required readonly>
+                        {{-- <select name="lokasi[]" id="lokasi" class="form-control" required>
                             <option value="{{ $l->lokasi }}" selected>@if($l->lokasi == 'GAT')
                                 Gudang Tengah
                             @elseif($l->lokasi == 'UGM')
@@ -54,8 +54,7 @@
                             <option value="TGN">Gudang Tasganu</option>
                             <option value="UMUM">Gudang Umum</option>
                             <option value="UTAS">Gudang Utas</option>
-                        </select>
-                        
+                        </select> --}}   
                     </div>
                     <div class="form-group col-2">
                         <label for="harga_awal">Harga Sebelum PPN</label>

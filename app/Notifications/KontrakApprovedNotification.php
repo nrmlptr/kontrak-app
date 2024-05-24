@@ -22,9 +22,9 @@ class KontrakApprovedNotification extends Notification
     {
         //
 
-        $this->kontraks = $kontraks;
+        $this->kontraks     = $kontraks;
         $this->namaPengguna = $namaPengguna;
-        $this->status = $status;
+        $this->status       = $status;
 
     }
 

@@ -117,9 +117,9 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead align="center">
                                     <tr>
-                                        <th>Detail</th>
+                                        <th>Aksi</th>
                                         <th>No</th>
-                                        <th>Nomor SP</th>
+                                        <th style="width: 10%">Nomor SP</th>
                                         <th>Tanggal SP</th>
                                         <th>Nomor SOP</th>
                                         <th>Tanggal SOP</th>
@@ -129,10 +129,8 @@
                                         <th>Unit Kerja</th>
                                         <th>Jenis Kontrak</th>
                                         <th>Status Jaminan</th>
-                                        <th>Status</th>
-                                        @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin')
-                                            <th>Action</th>
-                                        @endif
+                                        {{-- <th>Status</th> --}}
+                                        
                                     </tr>
                                 </thead>
                                 <tbody align="center">
@@ -143,14 +141,73 @@
                                     <tr>
                                         <td>
                                             @if($d->status !== 'draft')
-                                                <a href="{{ route('showKontrak', ['id' => $d->id]) }}" class="btn btn-sm btn-primary my-1"><i class="fas fa-info-circle"></i>Detail</a>
+                                                <a href="{{ route('showKontrak', ['id' => $d->id]) }}" class="btn btn-sm btn-primary my-1" title="Detail Kontrak"><i class="fas fa-info-circle"></i></a>
+                                                <br>
                                             @endif
-                                            <a href="{{ route('logKontrak', ['id' => $d->id]) }}" class="logkontrak btn btn-sm btn-info my-1"><i class="fas fa-retweet"></i>Log</a>
-                                             <a href="{{ route('historyRevisiK', ['id' => $d->id]) }}" class="historyRkontrak btn btn-sm btn-warning my-1"><i class="fas fa-retweet"></i>History Revisi</a>
+                                            <a href="{{ route('logKontrak', ['id' => $d->id]) }}" class="logkontrak btn btn-sm btn-info my-1" title="History Kontrak"><i class="fas fa-history"></i></a><br>
+                                            <a href="{{ route('historyRevisiK', ['id' => $d->id]) }}" class="historyRkontrak btn btn-sm btn-warning my-1" title="History Revisi"><i class="fas fa-list"></i></a><br>
+                                            @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin')
+                                                @php
+                                                        $cekPembuat = Auth::user()->name;
+                                                        $rkontrakexist=$d->revisiKontraks->pluck('user_id')->toArray();
+                                                @endphp
+
+                                                    {{-- buat kondisi untuk admin dan writer karena ada tombol showRevisi jadi disitu dicek dlu apakah kontrak tersebut pembuatnya sama dengan name user yang lagi login? kalau iya, baru bisa showLampiran buat edit, kalau engga berarti forbidden --}} 
+                                                    @if($d->pembuat == $cekPembuat)
+                                                        {{-- JIKA DATA REVISI UNTUK KONTRAK TERSEBUT ADA --}}
+                                                        @if(!empty($rkontrakexist))
+                                                            {{-- cek lagi, jika statusnya belum disetujui kadiv, maka tampilkan tombol show revisi untuk nantinya edit data lampiran --}}
+                                                            @if($d->status !== 'approvedkadiv')
+                                                                
+                                                                <a href="{{ route('viewRevisi', ['id' => $d->id]) }}" class="btn btn-sm btn-secondary" title="Show Revisi"><i class="fas fa-eye"></i><br></a>
+                                                                {{-- <a href="{{ route('editLampiran', ['id' => $d->id]) }}" class="btn btn-sm btn-warning"><i class="fas fa-pen"></i> Edit Lampiran</a> --}}
+                                                                
+                                                            @else
+                                                                <span class="badge badge-success">Kontrak selesai dibuat</span>
+                                                            @endif    
+                                                        @else
+                                                        <span class="badge badge-info">Tidak Ada Revisi</span>
+                                                            
+                                                        @endif
+                                                    @else
+                                                        <span class="badge badge-dark">Forbidden</span>
+                                                    @endif
+                                                    
+                                                @endif
                                         </td>
 
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $d->detail_number }}</td>
+                                        <td>
+                                            {{ $d->detail_number }}
+                                            <br>
+                                            @if($d->status == 'draft')
+                                                <span class="badge badge-warning">draft</span>
+                                            @elseif($d->status == 'reviewkasek')
+                                                <span class="badge badge-info">Review Kasek</span>
+                                            @elseif($d->status == 'revisikasek')
+                                                <span class="badge badge-danger">Revisi by Kasek</span>
+                                            @elseif($d->status == 'editedkasek')
+                                                <span class="badge badge-warning">Diperiksa ulang by Kasek</span>
+                                            @elseif($d->status == 'approvedkasek')
+                                                <span class="badge badge-success">Disetujui Kasek</span>
+                                            @elseif($d->status == 'reviewkadept')
+                                                <span class="badge badge-info">Review Kadept</span>
+                                            @elseif($d->status == 'revisikadept')
+                                                <span class="badge badge-danger">Revisi by Kadept</span>
+                                            @elseif($d->status == 'editedkadept')
+                                                <span class="badge badge-warning">Diperiksa ulang by Kasek</span>
+                                            @elseif($d->status == 'approvedkadept')
+                                                <span class="badge badge-success">Disetujui Kadept</span>
+                                            @elseif($d->status == 'reviewkadiv')
+                                                <span class="badge badge-info">Review Kadiv</span>
+                                            @elseif($d->status == 'revisikadiv')
+                                                <span class="badge badge-danger">Revisi by Kadiv</span>
+                                            @elseif($d->status == 'editedkadiv')
+                                                <span class="badge badge-warning">Diperiksa ulang by Kasek</span>
+                                            @else
+                                                <span class="badge badge-success">Disetujui Kadiv (NET)</span>
+                                            @endif
+                                        </td>
                                         <td>{{ date('d-m-Y', strtotime($d->date_kontrak)) }}</td>
                                         <td>{{ $d->nomor_sop }}</td>
                                         <td>{{ date('d-m-Y', strtotime($d->tanggal_sop)) }}</td>
@@ -181,7 +238,7 @@
                                                 <span class="badge badge-secondary">Tanpa Jaminan</span>
                                             @endif
                                         </td>
-                                        <td>
+                                        {{-- <td>
                                             @if($d->status == 'draft')
                                                 <span class="badge badge-warning">draft</span>
                                             @elseif($d->status == 'reviewkasek')
@@ -209,35 +266,8 @@
                                             @else
                                                 <span class="badge badge-success">Disetujui Kadiv (NET)</span>
                                             @endif
-                                        </td>
-                                        @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin')
-                                           @php
-                                                $cekPembuat = Auth::user()->name;
-                                                $rkontrakexist=$d->revisiKontraks->pluck('user_id')->toArray();
-                                           @endphp
-
-                                            {{-- buat kondisi untuk admin dan writer karena ada tombol showRevisi jadi disitu dicek dlu apakah kontrak tersebut pembuatnya sama dengan name user yang lagi login? kalau iya, baru bisa showLampiran buat edit, kalau engga berarti forbidden --}} 
-                                            @if($d->pembuat == $cekPembuat)
-                                                {{-- JIKA DATA REVISI UNTUK KONTRAK TERSEBUT ADA --}}
-                                                @if(!empty($rkontrakexist))
-                                                    {{-- cek lagi, jika statusnya belum disetujui kadiv, maka tampilkan tombol show revisi untuk nantinya edit data lampiran --}}
-                                                    @if($d->status !== 'approvedkadiv')
-                                                        <td>
-                                                            <a href="{{ route('viewRevisi', ['id' => $d->id]) }}" class="btn btn-sm btn-secondary"><i class="fas fa-eye"></i><br> Show Revisi</a>
-                                                            {{-- <a href="{{ route('editLampiran', ['id' => $d->id]) }}" class="btn btn-sm btn-warning"><i class="fas fa-pen"></i> Edit Lampiran</a> --}}
-                                                        </td>
-                                                    @else
-                                                        <td><span class="badge badge-success">Kontrak selesai dibuat</span></td>
-                                                    @endif    
-                                                @else
-                                                <td><span class="badge badge-info">Tidak Ada Revisi</span></td>
-                                                    
-                                                @endif
-                                            @else
-                                                <td><span class="badge badge-dark">Forbidden</span></td>
-                                            @endif
-                                            
-                                        @endif
+                                        </td> --}}
+                                        
                                     </tr>
                                     @endforeach
                                 </tbody>

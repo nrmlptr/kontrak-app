@@ -115,7 +115,7 @@
                                         <th>Unit Kerja</th>
                                         <th>Jenis Kontrak</th>
                                         <th>Status Jaminan</th>
-                                        <th>Status</th>
+                                        {{-- <th>Status</th> --}}
                                         <th>Total Harga (Incl PPN)</th>
                                     </tr>
                                 </thead>
@@ -132,15 +132,44 @@
                                                             Belum Upload Document
                                                         @endif
                                                     </span><br>
-                                                    @if($d->statusdoc !== 'NET')
+                                                    {{-- @if($d->statusdoc !== 'NET') --}}
                                                         <a data-toggle="modal" data-target="#modal-upload-doc{{ $d->id }}" class="btn btn-success sm" title="Upload Document Kontrak"><i class="fas fa-file-upload"></i></a>
-                                                    @endif
-                                                   
+                                                    {{-- @endif --}}                                                  
                                                     <a href="{{ route('downloadKontrak', ['id' => $d->id]) }}" class="btn btn-primary sm" title="Download Document Kontrak"><i class="fas fa-download"></i></a>
                                                 </td>
                                             @endif
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $d->detail_number }}</td>
+                                            <td>
+                                                {{ $d->detail_number }}
+                                                <br>
+                                                @if($d->status == 'draft')
+                                                    <span class="badge badge-warning">draft</span>
+                                                @elseif($d->status == 'reviewkasek')
+                                                    <span class="badge badge-info">Review Kasek</span>
+                                                @elseif($d->status == 'revisikasek')
+                                                    <span class="badge badge-danger">Revisi by Kasek</span>
+                                                @elseif($d->status == 'editedkasek')
+                                                    <span class="badge badge-warning">Diperiksa ulang by Kasek</span>
+                                                @elseif($d->status == 'approvedkasek')
+                                                    <span class="badge badge-success">Disetujui Kasek</span>
+                                                @elseif($d->status == 'reviewkadept')
+                                                    <span class="badge badge-info">Review Kadept</span>
+                                                @elseif($d->status == 'revisikadept')
+                                                    <span class="badge badge-danger">Revisi by Kadept</span>
+                                                @elseif($d->status == 'editedkadept')
+                                                    <span class="badge badge-warning">Diperiksa ulang by Kasek</span>
+                                                @elseif($d->status == 'approvedkadept')
+                                                    <span class="badge badge-success">Disetujui Kadept</span>
+                                                @elseif($d->status == 'reviewkadiv')
+                                                    <span class="badge badge-info">Review Kadiv</span>
+                                                @elseif($d->status == 'revisikadiv')
+                                                    <span class="badge badge-danger">Revisi by Kadiv</span>
+                                                @elseif($d->status == 'editedkadiv')
+                                                    <span class="badge badge-warning">Diperiksa ulang by Kasek</span>
+                                                @else
+                                                    <span class="badge badge-success">Disetujui Kadiv (NET)</span>
+                                                @endif
+                                            </td>
                                             <td>{{ date('d-m-Y', strtotime($d->date_kontrak)) }}</td>
                                             <td>{{ $d->nomor_sop }}</td>
                                             <td>{{ date('d-m-Y', strtotime($d->tanggal_sop)) }}</td>
@@ -171,7 +200,7 @@
                                                     <span class="badge badge-secondary">Tanpa Jaminan</span>
                                                 @endif
                                             </td>
-                                            <td>
+                                            {{-- <td>
                                                 @if($d->status == 'draft')
                                                     <span class="badge badge-warning">draft</span>
                                                 @elseif($d->status == 'reviewkasek')
@@ -199,7 +228,7 @@
                                                 @else
                                                     <span class="badge badge-success">Disetujui Kadiv (NET)</span>
                                                 @endif
-                                            </td>
+                                            </td> --}}
                                             <th>{{ @formatRupiah($d->total_keseluruhan) }}</th>
                                         </tr>
                                         <div class="modal fade" id="modal-upload-doc{{ $d->id }}">
@@ -261,6 +290,27 @@
 @push('scripts')
     <script type="text/javascript">
         $(document).ready(function() {
+
+            var loggedInUserRole;
+
+            $.ajax({
+                url: '/get-logged-in-user-role',
+                type: 'GET',
+                async: false,
+                success: function(data) {
+                    // console.log(data);
+                    loggedInUserRole = data;
+                }
+            });
+
+            var exportColumns;
+            if (loggedInUserRole === "admin" || loggedInUserRole === "writer") {
+                exportColumns = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+            } else {
+                exportColumns = [0,1,2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+            }
+
+
             $('#kontrakAKdatatable').DataTable({
                 "paging": true,
                 "lengthChange": true,
@@ -279,7 +329,7 @@
                         filename: 'Data_Kontrak_Dept_Pengadaan', // untuk nama filenya
                         title: 'Data Kontrak | Dept Pengadaan', //untuk di header nya
                         exportOptions: {
-                            columns: [ 1,2,3,4,5,6,7,8,9,10,11,12,13]
+                            columns: exportColumns
                         }
                     },
                     {
@@ -288,7 +338,7 @@
                         title: 'Data Kontrak | Dept Pengadaan', //untuk di header nya
                         orientation: 'landscape',
                         exportOptions: {
-                            columns: [ 1,2,3,4,5,6,7,8,9,10,11,12,13]
+                            columns: exportColumns
                         }
                     }
                 ]

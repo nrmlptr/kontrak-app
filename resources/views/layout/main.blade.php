@@ -254,14 +254,14 @@
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
                                         <a href="{{ route('vendor.index') }}" class="nav-link">
-                                            <i class=" fas fa-burn"></i>
-                                            <p>Akta Vendor Setting</p>
+                                            <i class="fas fa-burn"></i>
+                                            <p> Akta Vendor Setting</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="{{ route('setting.edit',1) }}" class="nav-link">
                                             <i class=" fas fa-cog"></i>
-                                            <p>Akta Peruri Setting</p>
+                                            <p> Akta Peruri Setting</p>
                                         </a>
                                     </li>
                                 </ul>

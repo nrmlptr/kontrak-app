@@ -116,7 +116,7 @@
 
 
             {{-- lampiran 2 --}}
-            {{-- @php
+            @php
                 $lampiran2=$data->lampiran2;
             @endphp
             <div class="content">
@@ -173,17 +173,248 @@
                     </tr>
                 </table>
                 
-            </div> --}}
+            </div>
             {{-- end lampiran 2 --}}
 
 
             {{-- disini butuh page break ke halaman selanjutnya --}}
-            {{-- <div class="page-break"></div> --}}
+            <div class="page-break"></div>
 
+
+            {{-- lampiran 3 --}}
+            @php
+                $lampiran3=$data->lampiran3;
+            @endphp
+            <div class="content">
+                @if ($lampiran3[0]->jenis_spesifikasi=='2')
+        
+                    {{-- <table style="border-collapse: collapse; width: 100%;" border="1">
+                        <tbody>
+                            <tr>
+                                <td style="width: 20%; font-size: 14px;"><b>LAMPIRAN III</b></td>
+                                <td style="width: 2%; font-size: 14px;"><b>:</b></td>
+                                <td style="font-size: 14px;"><b>SPESIFIKASI TEKNIS</b></td>
+                                <td style="font-size: 14px;"><b>Halaman : 1/1 </b></td>
+                            </tr>
+                            <tr>
+                                <td style="width: 13%; font-size: 14px;" rowspan="2"><b>PERIHAL</b></td>
+                                <td rowspan="2" style="width: 2%; border: none; font-size: 14px;"><b> : </b></td>
+                                <td rowspan="2" style="width: 60%; font-size: 14px;"><b>{{ strtoupper($data->perihal) }}</b></td>
+                                <td style="width: 30%; font-size: 14px;"><b>Nomor : {{ $data->detail_number }}</b></td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 14px;"><b>Tanggal : {{ tanggal_indonesia($data->date_kontrak) }}</b></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div><br></div>
+                    <div style="text-align: center;"><b>SPESIFIKASI TEKNIS</b></div>
+                    <div><br></div> --}}
+
+                    {{-- TEMPAT TAMPILIN GAMBAR NONLAB JIKA ADA --}}
+                    @foreach ($lampiran3 as $l) 
+                        <table style="border-collapse: collapse; width: 100%;" border="1">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 20%; font-size: 14px;"><b>LAMPIRAN III</b></td>
+                                    <td style="width: 2%; font-size: 14px;"><b>:</b></td>
+                                    <td style="font-size: 14px;"><b>SPESIFIKASI TEKNIS</b></td>
+                                    <td style="font-size: 14px;"><b>Halaman : {{ $loop->iteration  }} /</b></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 13%; font-size: 14px;" rowspan="2"><b>PERIHAL</b></td>
+                                    <td rowspan="2" style="width: 2%; border: none; font-size: 14px;"><b> : </b></td>
+                                    <td rowspan="2" style="width: 60%; font-size: 14px;"><b>{{ strtoupper($data->perihal) }}</b></td>
+                                    <td style="width: 30%; font-size: 14px;"><b>Nomor : {{ $data->detail_number }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 14px;"><b>Tanggal : {{ tanggal_indonesia($data->date_kontrak) }}</b></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div><br></div>
+                        <div style="text-align: center;"><b>SPESIFIKASI TEKNIS</b></div>
+                        <div><br></div>
+                        @if($l->gambarnon !== null)
+                            <div style="display: grid; place-items: center;">
+                                <img src="{{ storage_path("app/".$l->gambarnon) }}" style="display: block; margin: 20px auto; max-width: 100%; max-height: auto;">
+                            </div>
+                        @else
+                            <div style="background-color: white;"></div>
+                        @endif
+                        @if (!$loop->last)
+                            <div class="page-break"></div>
+                        @endif
+                    @endforeach
+                    {{-- TEMPAT MANGGIL NAMA BARANGNYA --}}
+                    @foreach ($lampiran3 as $l) 
+                        <div style="text-align: center;"><b>{{ $l->jenis_barang }}</b></div>
+                    @endforeach
+                    <div><br></div>
+                    {{-- TEMPAT TABEL SPESIFIKASINYA --}}
+                    <table style="border-collapse: collapse; width: 100%; border: 1px solid #ddd; text-align: left;">
+                        <thead style="background-color: #f2f2f2;">
+                            <tr>
+                                <th style="padding: 8px; border: 1px solid #ddd;">No</th>
+                                <th style="padding: 8px; border: 1px solid #ddd;">No. SPPB</th>
+                                <th style="padding: 8px; border: 1px solid #ddd;">Kode Barang</th>
+                                <th style="padding: 8px; border: 1px solid #ddd;">Jenis Barang</th>
+                                <th style="padding: 8px; border: 1px solid #ddd;">Spesifikasi Teknis</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($lampiran3 as $l)
+                                <tr>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $loop->iteration }}</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->no_sppb }}</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->kode_barang }}</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->jenis_barang }}</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">{!! nl2br(e($l->spesifikasi_teknis)) !!}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                   
+                    
+
+                    {{-- <div class="page-break"></div>
+
+                    @foreach($lampiran3 as $key => $l)
+                        <table style="border-collapse: collapse; width: 100%;" border="1">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 20%; font-size: 14px;"><b>LAMPIRAN III</b></td>
+                                    <td style="width: 2%; font-size: 14px;"><b>:</b></td>
+                                    <td style="font-size: 14px;"><b>SPESIFIKASI TEKNIS</b></td>
+                                    <td style="font-size: 14px;"><b>Halaman : {{ $loop->iteration }} / {{ $lampiran3->count() }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 13%; font-size: 14px;" rowspan="2"><b>PERIHAL</b></td>
+                                    <td rowspan="2" style="width: 2%; border: none; font-size: 14px;"><b> : </b></td>
+                                    <td rowspan="2" style="width: 60%; font-size: 14px;"><b>{{ strtoupper($data->perihal) }}</b></td>
+                                    <td style="width: 30%; font-size: 14px;"><b>Nomor : {{ $data->detail_number }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 14px;"><b>Tanggal : {{ tanggal_indonesia($data->date_kontrak) }}</b></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div><br></div>
+                        <div style="text-align: center; font-size: 15px;"><b>SPESIFIKASI TEKNIS</b></div>
+                        <div><br></div>
+                        @foreach ($lampiran3 as $l) 
+                            <div style="text-align: center;"><b>{{ $l->jenis_barang }}</b></div>
+                        @endforeach
+                        @foreach ($lampiran3 as $l) 
+                            @if($l->gambarnon !== null)
+                                <div style="display: grid; place-items: center;">
+                                    <img src="{{ storage_path("app/".$l->gambarnon) }}" style="display: block; margin: 20px auto; max-width: 100%; max-height: auto;">
+                                </div>
+                            @else
+                                <div style="width: 100px; height: 100px; background-color: white;"></div>
+                            @endif
+                        @endforeach
+                        <table style="border-collapse: collapse; width: 100%; border: 1px solid #ddd; text-align: left;">
+                            <thead style="background-color: #f2f2f2;">
+                                <tr>
+                                    <th style="padding: 8px; border: 1px solid #ddd;">No</th>
+                                    <th style="padding: 8px; border: 1px solid #ddd;">No. SPPB</th>
+                                    <th style="padding: 8px; border: 1px solid #ddd;">Kode Barang</th>
+                                    <th style="padding: 8px; border: 1px solid #ddd;">Jenis Barang</th>
+                                    <th style="padding: 8px; border: 1px solid #ddd;">Spesifikasi Teknis</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($lampiran3 as $l)
+                                    <tr>
+                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $loop->iteration }}</td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->no_sppb }}</td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->kode_barang }}</td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->jenis_barang }}</td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;">{!! nl2br(e($l->spesifikasi_teknis)) !!}</td>
+                                    </tr>
+                                @endforeach
+                                
+                            </tbody>
+                        </table>
+                        @if (!$loop->last)
+                            <div class="page-break"></div>
+                        @endif
+                    @endforeach --}}
+
+
+                @else
+
+                    @foreach ($lampiran3 as $l)
+                        <table style="border-collapse: collapse; width: 100%;" border="1">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 20%; font-size: 14px;"><b>LAMPIRAN III</b></td>
+                                    <td style="width: 2%; font-size: 14px;"><b>:</b></td>
+                                    <td style="font-size: 14px;"><b>SPESIFIKASI TEKNIS</b></td>
+                                    <td style="font-size: 14px;"><b>Halaman : {{ $loop->iteration }} / {{ $lampiran3->count() }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 13%; font-size: 14px;" rowspan="2"><b>PERIHAL</b></td>
+                                    <td rowspan="2" style="width: 2%; border: none; font-size: 14px;"><b> : </b></td>
+                                    <td rowspan="2" style="width: 60%; font-size: 14px;"><b>{{ strtoupper($data->perihal) }}</b></td>
+                                    <td style="width: 30%; font-size: 14px;"><b>Nomor : {{ $data->detail_number }}</b></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 14px;"><b>Tanggal : {{ tanggal_indonesia($data->date_kontrak) }}</b></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div><br></div>
+                        <div style="text-align: center; font-size: 15px;"><b>SPESIFIKASI TEKNIS</b></div>
+                        <div><br></div>
+                        <img src="{{ storage_path("app/".$l->gambar) }}" style="display: block; margin: 20px auto; max-width: 100%; max-height: auto;">
+                        @if (!$loop->last)
+                            <div class="page-break"></div>
+                        @endif
+
+                    @endforeach
+
+                @endif
+                
+                <div><br></div>
+                <div><br></div>
+                <div><br></div>
+                <div><br></div>
+                <div><br></div>
+                <div><br></div>
+                <div><br></div>
+                <div><br></div>
+                <div><br></div>
+                <div><br></div>
+
+                <table style="width: 100%;
+                        border-collapse: collapse;
+                        margin-top: 20px;">
+                    <tr>
+                        <th style="width: 50%;text-align: center; font-size: 14px;">PIHAK KEDUA,</th>
+                        <th style="width: 50%;text-align: center; font-size: 14px;">PIHAK KESATU,</th>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: top;">
+                            <div style="padding-top: 150px; text-align: center; font-size: 14px;">
+                                <div style=""><b>{{ $pihak2name }}</b></div>
+                            </div>
+                        </td>
+                        <td style="vertical-align: top;">
+                            <div style="padding-top: 150px; text-align: center; font-size: 14px;">
+                                <div style=""><b>{{ $pihak1name }}</b></div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            {{-- end lampiran 3 --}}
 
 
             {{-- disini butuh page break ke halaman selanjutnya --}}
-            {{-- <div class="page-break"></div> --}}
+            <div class="page-break"></div>
 
 
             {{-- lampiran 4 --}}

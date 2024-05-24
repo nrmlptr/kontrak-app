@@ -21,7 +21,7 @@ class NetkontrakNotification extends Notification
     public function __construct($sender, $kontrak)
     {
         //
-        $this->sender = $sender;
+        $this->sender  = $sender;
         $this->kontrak = $kontrak;
         // $this->penerimaNotif = $penerimaNotif;
     }

@@ -41,15 +41,15 @@
                                     <div class="row">
                                         <div class="col-md-4 mb-3">
                                             <label for="">Nama Vendor</label>
-                                            <input type="text" name="nm_vendor" id="filter-nama-vendor" class="form-control filter">
+                                            <input type="text" name="nm_vendor" id="filter-nama-vendor" class="form-control filter" placeholder="Masukkan Nama Vendor">
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <label for="">No SOP</label>
-                                            <input type="text" name="no_sop" id="filter-no-sop" class="form-control filter">
+                                            <input type="text" name="no_sop" id="filter-no-sop" class="form-control filter" placeholder="Masukkan Nomor SOP">
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <label for="">Perihal</label>
-                                            <input type="text" name="perihal" id="filter-perihal" class="form-control filter">
+                                            <input type="text" name="perihal" id="filter-perihal" class="form-control filter" placeholder="Masukkan Perihal">
                                         </div>
                                     </div>
                                     <div class="row align-items-center">
@@ -99,7 +99,7 @@
                                         {{-- <td>{{ count(explode(',', $d->purchase_requisition_number)) }}</td> --}}
                                         {{-- <td>{{ $d->purchase_requisition_number->count() }}</td> --}}
                                         <td>
-                                            <a href="{{ route('detailPR', ['purchasing_document_number' =>          $d->purchasing_document_number]) }}" class="btn btn-sm btn-info"><i class="fas fa-info-circle"></i></a>
+                                            <a href="{{ route('detailPR', ['purchasing_document_number' =>          $d->purchasing_document_number]) }}" class="btn btn-sm btn-info" title="Detail PR"><i class="fas fa-info-circle"></i></a>
                                         </td>
                                     </tr>
                                     @endforeach

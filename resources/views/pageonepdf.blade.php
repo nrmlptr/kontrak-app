@@ -72,7 +72,7 @@
                                     @endif
                             </td>
                         </tr>
-                        <td><br></td>
+                        {{-- <td><br></td> --}}
                         <tr>
                             <td style="vertical-align: top;text-align: left; font-size: 14px;"" colspan="2"><b>{{ $pihak2name }},</b></td>
                             <td style="text-align: justify; font-size: 14px;""> {!! @$pihak2data->akta !!}</td>
@@ -104,7 +104,7 @@
                             <td style="vertical-align: top">c. </td>
                             <td colspan="2" style="text-align: justify; font-size: 14px;">Dokumen-dokumen pengadaan terkait pelaksanaan pengadaan ini sesuai dengan Lampiran I Perjanjian ini dan merupakan bagian yang tidak terpisahkan dari Perjanjian ini.</td>
                         </tr>
-                        <td><br></td>
+                        {{-- <td><br></td> --}}
                         <tr>
                             <td colspan="3" style="text-align: justify; font-size: 14px;">Berdasarkan pertimbangan-pertimbangan tersebut di atas, Para Pihak sepakat untuk mengikatkan diri satu sama lain dalam Perjanjian ini berdasarkan ketentuan-ketentuan dan persyaratan sebagai berikut:</td>
                         </tr>

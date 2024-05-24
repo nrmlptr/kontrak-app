@@ -63,8 +63,9 @@ class KontrakExport implements FromCollection, WithHeadings
                 'Unit Kerja'                   => $unitKerja,
                 'Jenis Kontrak'                => $jeniKontrak,
                 'Status Jaminan'               => $statusJaminan,
-                'Status'                       => $contract->status,
                 'Total Nilai Harga (Incl PPN)' => @formatRupiah($contract->total_keseluruhan),
+                'Status'                       => $contract->status,
+
             ];
         });
     }
@@ -82,8 +83,9 @@ class KontrakExport implements FromCollection, WithHeadings
             'Unit Kerja',
             'Jenis Kontrak',
             'Status Jaminan',
-            'Status',
-            'Total Nilai Harga (Incl PPN)'
+            'Total Nilai Harga (Incl PPN)',
+            'Status'
+
         ];
     }
 }

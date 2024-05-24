@@ -20,8 +20,8 @@ class KontrakRevisiNotification extends Notification
      */
     public function __construct($kontraks, $noteRevisi, $userPenerima)
     {
-        $this->kontraks = $kontraks;
-        $this->noteRevisi = $noteRevisi;
+        $this->kontraks     = $kontraks;
+        $this->noteRevisi   = $noteRevisi;
         $this->userPenerima = $userPenerima;
     }
 

@@ -20,8 +20,8 @@ class UpdateKontrakNotification extends Notification
 
     public function __construct($updateKontrak, $notifKasek)
     {
-        $this->updateKontrak = $updateKontrak;
-        $this->notifKasek = $notifKasek;
+        $this->updateKontrak    = $updateKontrak;
+        $this->notifKasek       = $notifKasek;
     }
 
     /**
@@ -53,7 +53,7 @@ class UpdateKontrakNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'title'     => 'Kontrak Telah Diperbaharui!', 
+            'title'     => 'Kontrak Telah Diperbaharui!',
             'messages'  => $this->updateKontrak->pembuat . ' Telah memperbaharui kontrak dengan Nomor ' . $this->updateKontrak->detail_number . ' Silahkan review kembali. Terimakasih!',
             'url'       => route('showUpdateKontrak', $this->updateKontrak->id),
         ];

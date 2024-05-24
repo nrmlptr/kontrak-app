@@ -1,5 +1,11 @@
 @extends('layout.main')
 @section('content')
+<style>
+    .note-editable ul,
+    .content ul {
+        list-style-type: lower-alpha; /* Change ordered list to a, b, c, d */
+    }
+</style>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -24,10 +30,10 @@
             <!-- Main row -->
             <div class="row">
                 <div class="col-12">
-                    <a href="{{ route('createPasal') }}" class="btn btn-primary mb-3">Add Pasal</a>
+                    <a href="{{ route('createPasal') }}" class="btn btn-primary mb-3" title="Tambah Pasal">Add Pasal</a>
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Data Pasal Kontrak</h3>
+                            <h3 class="card-title">List Pasal Kontrak</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -64,7 +70,7 @@
                                         <th>Isi Pasal</th>
                                         <th>Urutan</th>
                                         <th>Jenis Pasal</th>
-                                        <th class="text-center" style="width: 10%;">Action</th>
+                                        <th class="text-center" style="width: 10%;">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -83,8 +89,8 @@
                                             @endif
                                         </td>
                                         <td class="d-none d-sm-table-cell" align="center">
-                                            <a href="{{ route('editPasal', ['id' => $d->id]) }}" class="btn btn-sm btn-warning mr-1"><i class="fas fa-pen"></i></a>
-                                            <a data-toggle="modal" data-target="#modal-hapus{{$d->id }}" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                            <a href="{{ route('editPasal', ['id' => $d->id]) }}" class="btn btn-sm btn-warning mr-1" title="Edit Pasal"><i class="far fa-edit"></i></a>
+                                            <a data-toggle="modal" data-target="#modal-hapus{{$d->id }}" class="btn btn-sm btn-danger" title="Delete Pasal"><i class="fas fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
                                     <div class="modal fade" id="modal-hapus{{$d->id }}">

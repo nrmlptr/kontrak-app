@@ -26,9 +26,9 @@ class SetujuiKontrakNotification extends Notification
     public function __construct($sender, $kontrak, $recipient)
     {
         //
-        $this->sender = $sender;
-        $this->kontrak = $kontrak;
-        $this->recipient = $recipient;
+        $this->sender       = $sender;
+        $this->kontrak      = $kontrak;
+        $this->recipient    = $recipient;
     }
 
     /**
@@ -69,12 +69,35 @@ class SetujuiKontrakNotification extends Notification
     //     ];
     // }
 
+    // public function toArray($notifiable)
+    // {
+    //     return [
+    //         'title'     => 'Kontrak Telah Disubmit!',
+    //         'kontrak'   => $this->kontrak->id,
+    //         'messages'  => 'Dear ' . $this->recipient->name . ', Kontrak dengan Nomor ' . $this->kontrak->detail_number . ' Telah di Submit oleh ' . $this->sender->name . ' Selaku ' . $this->sender->permission . '. Silahkan melakukan review kontrak ke tahap selanjutnya, Terimakasih!',
+    //         'url'       => route('showKontrakNotif', $this->kontrak->id),
+    //     ];
+    // }
+
     public function toArray($notifiable)
     {
+        // Mapping kode unit kerja ke alias
+        $unitKerjaAlias = [
+            '41A00' => 'Pengadaan',
+            '41A10' => 'Investasi',
+            '41A20' => 'Jasa Barum',
+            '41A30' => 'Lokal',
+            '41A40' => 'Import',
+            // Tambahkan mapping lainnya sesuai kebutuhan
+        ];
+
+        // Cari alias berdasarkan kode unit kerja, default ke kode itu sendiri jika tidak ditemukan
+        $unitKerja = $unitKerjaAlias[$this->sender->unit_kerja] ?? $this->sender->unit_kerja;
+
         return [
             'title'     => 'Kontrak Telah Disubmit!',
             'kontrak'   => $this->kontrak->id,
-            'messages'  => 'Dear ' . $this->recipient->name . ', Kontrak dengan Nomor ' . $this->kontrak->detail_number . ' Telah di Submit oleh ' . $this->sender->name . ' Selaku ' . $this->sender->permission . '. Silahkan melakukan review kontrak ke tahap selanjutnya, Terimakasih!',
+            'messages'  => 'Dear ' . $this->recipient->name . ', Kontrak dengan Nomor ' . $this->kontrak->detail_number . ' Telah di Submit oleh ' . $this->sender->name . ' Selaku ' . $this->sender->permission . $unitKerja . '. Silahkan melakukan review kontrak ke tahap selanjutnya, Terimakasih!',
             'url'       => route('showKontrakNotif', $this->kontrak->id),
         ];
     }

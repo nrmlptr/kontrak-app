@@ -25,7 +25,7 @@
             <!-- Main row -->
             <div class="row">
                 <div class="col-12">
-                    <a href="{{ route('createUser') }}" class="btn btn-primary mb-3">Add User</a>
+                    <a href="{{ route('createUser') }}" class="btn btn-primary mb-3" title="Tambah User">Add User</a>
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Data Pengguna Sistem</h3>
@@ -41,7 +41,7 @@
                                         <th>Email</th>
                                         <th>Unit Kerja</th>
                                         <th>Role</th>
-                                        <th class="text-center" style="width: 10%;">Action</th>
+                                        <th class="text-center" style="width: 10%;">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -69,8 +69,8 @@
                                         </td>
                                         <td>{{ $d->permission }}</td>
                                         <td>
-                                            <a href="{{ route('editUser', ['id' => $d->id]) }}" class="btn btn-sm btn-warning"><i class="fas fa-pen"></i></a>
-                                            <a data-toggle="modal" data-target="#modal-hapus{{$d->id }}" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                            <a href="{{ route('editUser', ['id' => $d->id]) }}" class="btn btn-sm btn-warning" title="Edit User"><i class="far fa-edit"></i></a>
+                                            <a data-toggle="modal" data-target="#modal-hapus{{$d->id }}" class="btn btn-sm btn-danger" title="Delete User"><i class="fas fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
                                     <div class="modal fade" id="modal-hapus{{ $d->id }}">

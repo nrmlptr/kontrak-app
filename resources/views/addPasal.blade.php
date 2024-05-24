@@ -1,6 +1,10 @@
 @extends('layout.main')
 @section('content')
-
+<style>
+    .note-editable ul {
+        list-style-type: lower-alpha; /* Change ordered list to a, b, c, d */
+    }
+</style>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -102,9 +106,26 @@
 <script src="{{ asset('assets/summernote-0.8.18-dist/summernote.min.js') }}"></script>
 {{-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> --}}
     <script>   
-        $(document).ready(function() {
-            $('#isi_pasal').summernote();
+        // $(document).ready(function() {
+        //     $('#isi_pasal').summernote();
             
+        // });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#isi_pasal').summernote({
+                // height: 300, // Set the height of the editor
+               toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['fontname', ['fontname']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture', 'video']],
+                        ['view', ['fullscreen', 'codeview', 'help']],
+                    ],
+            });
         });
     </script>
 @endpush

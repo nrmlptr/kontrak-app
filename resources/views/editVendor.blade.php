@@ -11,7 +11,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('vendor.index') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Edit Vendor</li>
+                        <li class="breadcrumb-item active">Edit Akta Vendor</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -31,7 +31,7 @@
                         <!-- general form elements -->
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Edit Data Vendor</h3>
+                                <h3 class="card-title">Edit Akta Vendor</h3>
                             </div>
                             <!-- /.card-header -->
                                 <div class="card-body">

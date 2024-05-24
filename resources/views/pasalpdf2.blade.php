@@ -8,15 +8,17 @@
             right: 0;
             color: black;
             font-size: 0.9em;
-            background-color: lightgray; /* Warna latar belakang */
-            padding: 10px; /* Padding untuk jarak dari konten */
-            box-sizing: border-box; /* Untuk menghitung padding dalam ukuran total */
-            top: 0;
+            padding: 10px; 
+            /* Padding untuk jarak dari konten */
+            box-sizing: border-box; 
+            /* Untuk menghitung padding dalam ukuran total */
+            top: -140px;
         }
 
         /* Mengatur awal nomor halaman */
         body {
             counter-reset: page 1; /* Mulai dari nomor 2 */
+            margin-top: -55px;
         }
 
         /* Mengatur nomor halaman untuk elemen dengan kelas .nomornya */
@@ -27,36 +29,23 @@
         /* Mengatur penambahan nomor halaman setiap kali halaman baru dimulai */
         @page {
             counter-increment: page; /* Menambah nomor halaman */
+            margin-top: 150px; /* create space for header */
         }
 
-        /* Mengatur gaya konten */
-        #content {
-            margin-top: 120px; /* Mengatur margin atas agar konten tidak bertabrakan dengan header */
-            margin-bottom: 50px; /* Mengatur margin bawah untuk memberikan jarak antara konten dan footer */
+        .note-editable ul,
+        #content ul {
+            list-style-type: lower-alpha; /* Change ordered list to a, b, c, d */
         }
-
-        /* Mengatur gaya footer */
-        #footer {
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            color: black;
-            font-size: 0.9em;
-            background-color: lightgray; /* Warna latar belakang */
-            padding: 10px; /* Padding untuk jarak dari konten */
-            box-sizing: border-box; /* Untuk menghitung padding dalam ukuran total */
-        }
-
     </style>
+    
 </head>
 <body>
 
 <div id="header">
-    <div style="padding-right: 10px; float: right;">
-        <p style="text-align: center; margin-bottom: -15px !important;">Lembar ke - <span class="nomornya"></span> -</p>
+    <div style="padding-right: 10px; float: right;margin-bottom:20px;">
+        <p style="text-align: center; margin-bottom: -30px !important;">Lembar ke - <span class="nomornya"></span> -</p>
         <p style="text-align: left;">
-            <table>
+            <table cellpadding="0" cellspacing="0">
                 <tr>
                     <td>Nomor</td>
                     <td>:</td>
@@ -70,7 +59,9 @@
             </table>
         </p>
     </div>
+    <div style="clear: both;"></div>
 </div>
+<div style="clear: both;"></div>
 
 <!-- Tambahkan id pada konten setelah tabel -->
 <div id="content">
