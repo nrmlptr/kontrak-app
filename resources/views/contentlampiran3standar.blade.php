@@ -59,9 +59,10 @@
             <div><br></div>
             <div style="text-align: center; font-size: 15px;"><b>SPESIFIKASI TEKNIS</b></div>
             <div><br></div>
-            <div style="display: flex; justify-content: center; align-items: center; margin: 20px auto; max-width: 100%; max-height: auto;">
-                <img src="{{ storage_path("app/".$l->gambar) }}" style="max-width: 100%; max-height: auto;">
+            <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+                <img src="{{ storage_path("app/".$l->gambar) }}" style="margin: 0 auto; max-width: 100%; height: auto;">
             </div>
+        
             @if (!$loop->last)
                 <div class="page-break"></div>
             @endif

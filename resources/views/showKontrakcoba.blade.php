@@ -67,11 +67,35 @@
                     <div class="col-12">
                         @if(Auth::user()->permission=='kasek' || Auth::user()->permission=='kadept' || Auth::user()->permission=='kadiv')
                             @if($data->status !== 'approvedkadiv')
-                                <a href="{{ route('createRevisi', ['id' => $data->id]) }}" class="btn btn-sm btn-warning mr-1 mb-3"><i class="fas fa-pen"></i> Revisi Kontrak</a>
+                                {{-- <a href="{{ route('createRevisi', ['id' => $data->id]) }}" class="btn btn-sm btn-warning mr-1 mb-3"><i class="fas fa-pen"></i> Revisi Kontrak</a> --}}
                                 <a href="{{ route('setujuiKontrak',$data->id) }}" id="setujuiKontrak" class="btn btn-sm btn-success mr-1 mb-3"><i class="fas fa-thumbs-up"></i> Submit Kontrak</a>
                             @endif
                         @endif
                         <a href="{{ route('cetakKontrak',$data->id) }}" target="_blank"  class="btn btn-sm btn-secondary mr-1 mb-3"><i class="nav-icon fas fa-print"></i></i> Cetak Kontrak</a>
+                        @if(Auth::user()->permission=='kasek' || Auth::user()->permission=='kadept' || Auth::user()->permission=='kadiv')
+                            @if($data->status !== 'approvedkadiv')
+                                <div class="col-xs-6 col-sm-6 col-md-6" style="position:fixed;  z-index: 1; left:65em; top: 10em;">
+                                    <form id="inputRevisi">
+                                        @csrf
+                                        <input type="hidden" name="kontraks_id" value="{{ $data->id }}">
+                                        <div class="row">
+                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                                <div class="form-group">
+                                                    <label for="revisi">Revisi Kontrak</label>
+                                                    <textarea name="revisi" id="revisi" cols="30" rows="10" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            <button class="btn btn-primary" type="button" onclick="submitRevisi()">
+                                                <span id="loading-spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                Submit
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            @endif
+                        @endif
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Detail Kontrak</h3>
@@ -339,14 +363,29 @@
                                             </tbody>
                                         </table>
                                         <span style="text-align: center;"><b>LINGKUP PERJANJIAN</b></span>
-                                        <ol>
-                                            <li style="text-align: justify;">
-                                                PIHAK KEDUA dengan ini berjanji dan mengikatkan diri untuk Jual {{  $lampiran2->perihal }}, yang kemudian dalam Perjanjian ini akan disebut dengan “barang” kepada PIHAK KESATU, demikian juga PIHAK KESATU dengan ini telah setuju dan mengikatkan diri untuk membeli barang tersebut dari PIHAK KEDUA, yang pelaksanaannya akan dituangkan di dalam Surat Order Pembelian (SOP) Nomor : {{  $lampiran2->nomor_sop }} tanggal {{ tanggal_indonesia($lampiran2->tanggal_sop) }}.
-                                            </li>
-                                            <li style="text-align: justify;">
-                                                Lingkup Perjanjian sebagaimana dimaksud Pasal 3 Perjanjian ini merupakan bagian yang tidak terpisahkan dari Perjanjian ini.
-                                            </li>
-                                        </ol>
+                                        @if ($data->jenis_kontrak == '1')
+                                            <ol>
+                                                <li style="text-align: justify;">
+                                                    PIHAK KEDUA dengan ini berjanji dan mengikatkan diri untuk Jual {{  $lampiran2->perihal }}, yang kemudian dalam Perjanjian ini akan disebut dengan “barang” kepada PIHAK KESATU, demikian juga PIHAK KESATU dengan ini telah setuju dan mengikatkan diri untuk membeli barang tersebut dari PIHAK KEDUA, yang pelaksanaannya akan dituangkan di dalam Surat Order Pembelian (SOP) Nomor : {{  $lampiran2->nomor_sop }} tanggal {{ tanggal_indonesia($lampiran2->tanggal_sop) }}.
+                                                </li>
+                                                <li style="text-align: justify;">
+                                                    Lingkup Perjanjian sebagaimana dimaksud Pasal 3 Perjanjian ini merupakan bagian yang tidak terpisahkan dari Perjanjian ini.
+                                                </li>
+                                            </ol>
+                                        @else
+                                            <ol>
+                                                <li style="text-align: justify;">
+                                                    PIHAK KEDUA dengan ini berjanji dan mengikatkan diri untuk menjual {{  $lampiran2->perihal }}.
+                                                </li>
+                                                <li style="text-align: justify">
+                                                    Surat Order Pembelian (SOP) sebagaimana disebut dalam Poin 1 di atas akan diterbitkan dan diberikan kepada PIHAK KEDUA setiap saat PIHAK KESATU  membutuhkan “Produk”.
+                                                </li>
+                                                <li style="text-align: justify;">
+                                                    PIHAK KESATU setuju untuk setiap bulan secara tertulis memberikan perkiraan kebutuhan “Produk” kepada PIHAK KEDUA.
+                                                </li>
+                                            </ol>
+                                        @endif
+                                        
                                         <table style="width: 100%;
                                                 border-collapse: collapse;
                                                 margin-top: 20px;">
@@ -509,66 +548,81 @@
                                             </tbody>
                                         </table>
                                         <span style="text-align: center;"><b>JADWAL PENYERAHAN BARANG</b></span>
-                                        <ol>
-                                            @if ($lampiran4->count()>1)
-                                                <li>
-                                                    PIHAK KEDUA sanggup dan berjanji untuk melaksanakan penyerahan barang sebagaimana
-                                                    dimaksud Pasal 5 Perjanjian ini sesuai jadwal yang tercantum dalam Surat Order Pembelian
-                                                    (SOP) Nomor : {{ $lampiran4[0]->nomor_sop }} tanggal {{ tanggal_indonesia($lampiran4[0]->tanggal_sop) }} yang diterbitkan oleh PIHAK
-                                                    KESATU yaitu sebagai berikut :
-                                                    <div><br></div>
-                                                    <table style="border-collapse: collapse; width: 100%; border: 1px solid #ddd; text-align: center;">
-                                                        <thead style="background-color: #f2f2f2;">
-                                                            <tr>
-                                                                <th style="padding: 8px; border: 1px solid #ddd;">No</th>
-                                                                <th style="padding: 8px; border: 1px solid #ddd;">No SPPB</th>
-                                                                <th style="padding: 8px; border: 1px solid #ddd;">Kode Barang</th>
-                                                                <th style="padding: 8px; border: 1px solid #ddd;">Nama Barang</th>
-                                                                <th style="padding: 8px; border: 1px solid #ddd;">Tanggal Penyerahan</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach ($lampiran4 as $l)
+                                        @if ($data->jenis_kontrak=='1')
+                                            <ol>
+                                                @if ($lampiran4->count()>1)
+                                                    <li>
+                                                        PIHAK KEDUA sanggup dan berjanji untuk melaksanakan penyerahan barang sebagaimana
+                                                        dimaksud Pasal 5 Perjanjian ini sesuai jadwal yang tercantum dalam Surat Order Pembelian
+                                                        (SOP) Nomor : {{ $lampiran4[0]->nomor_sop }} tanggal {{ tanggal_indonesia($lampiran4[0]->tanggal_sop) }} yang diterbitkan oleh PIHAK
+                                                        KESATU yaitu sebagai berikut :
+                                                        <div><br></div>
+                                                        <table style="border-collapse: collapse; width: 100%; border: 1px solid #ddd; text-align: center;">
+                                                            <thead style="background-color: #f2f2f2;">
                                                                 <tr>
-                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $loop->iteration }}</td>
-                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->no_sppb }}</td>
-                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->kode_barang }}</td>
-                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->nama_barang }}</td>
-                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->jadwal_penyerahan_barang }}</td>
+                                                                    <th style="padding: 8px; border: 1px solid #ddd;">No</th>
+                                                                    <th style="padding: 8px; border: 1px solid #ddd;">No SPPB</th>
+                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Kode Barang</th>
+                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Nama Barang</th>
+                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Tanggal Penyerahan</th>
                                                                 </tr>
-                                                            @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                    <div><br></div>
-                                                </li>
-                                            @else
-                                                <li style="text-align: justify;">
-                                                    PIHAK KEDUA sanggup dan berjanji untuk melaksanakan penyerahan barang sebagaimana
-                                                    dimaksud Pasal 5 Perjanjian ini sesuai jadwal yang tercantum dalam Surat Order Pembelian (SOP)
-                                                    Nomor : {{ @$lampiran4[0]->nomor_sop }} tanggal {{ tanggal_indonesia(@$lampiran4[0]->tanggal_sop) }} yang diterbitkan oleh PIHAK KESATU yaitu {{ @$lampiran4[0]->jadwal_penyerahan_barang }}. 
-                                                    
-                                                </li>
-                                            @endif
-                                        
-                                            <li style="text-align: justify;">
-                                                Penyerahan barang dilakukan langsung ke  
-                                                @if(@$lampiran4[0]->lokasi == 'UGM')
-                                                    Gudang Ugam              
-                                                @elseif(@$lampiran4[0]->lokasi == 'UTAS')
-                                                    Gudang Utas
-                                                @elseif(@$lampiran4[0]->lokasi == 'UMUM')
-                                                    Gudang umum
-                                                @elseif(@$lampiran4[0]->lokasi == 'TGN')
-                                                    Gudang Tasganu
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($lampiran4 as $l)
+                                                                    <tr>
+                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $loop->iteration }}</td>
+                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->no_sppb }}</td>
+                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->kode_barang }}</td>
+                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->nama_barang }}</td>
+                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->jadwal_penyerahan_barang }}</td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                        <div><br></div>
+                                                    </li>
                                                 @else
-                                                    Gudang Tengah
+                                                    <li style="text-align: justify;">
+                                                        PIHAK KEDUA sanggup dan berjanji untuk melaksanakan penyerahan barang sebagaimana
+                                                        dimaksud Pasal 5 Perjanjian ini sesuai jadwal yang tercantum dalam Surat Order Pembelian (SOP)
+                                                        Nomor : {{ @$lampiran4[0]->nomor_sop }} tanggal {{ tanggal_indonesia(@$lampiran4[0]->tanggal_sop) }} yang diterbitkan oleh PIHAK KESATU yaitu {{ @$lampiran4[0]->jadwal_penyerahan_barang }}. 
+                                                        
+                                                    </li>
                                                 @endif
-                                                PIHAK KESATU di Karawang.
-                                            </li>
-                                            <li style="text-align: justify;">
-                                                Terhadap setiap Barang yang diserahkan oleh PIHAK KEDUA dan telah dinyatakan baik sesuai dengan hasil pemeriksaan maka PIHAK KESATU akan menyatakan menerima dengan membuat Surat Penerimaan Barang (SPB).
-                                            </li>
-                                        </ol>
+                                            
+                                                <li style="text-align: justify;">
+                                                    Penyerahan barang dilakukan langsung ke  
+                                                    {{ $lampiran4[0]->lokasi }}
+                                                    {{-- @if(@$lampiran4[0]->lokasi == 'UGM')
+                                                        Gudang Ugam              
+                                                    @elseif(@$lampiran4[0]->lokasi == 'UTAS')
+                                                        Gudang Utas
+                                                    @elseif(@$lampiran4[0]->lokasi == 'UMUM')
+                                                        Gudang umum
+                                                    @elseif(@$lampiran4[0]->lokasi == 'TGN')
+                                                        Gudang Tasganu
+                                                    @else
+                                                        Gudang Tengah
+                                                    @endif --}}
+                                                    PIHAK KESATU di Karawang.
+                                                </li>
+                                                <li style="text-align: justify;">
+                                                    Terhadap setiap Barang yang diserahkan oleh PIHAK KEDUA dan telah dinyatakan baik sesuai dengan hasil pemeriksaan maka PIHAK KESATU akan menyatakan menerima dengan membuat Surat Penerimaan Barang (SPB).
+                                                </li>
+                                            </ol>
+                                        @else
+                                            <ol>
+                                                <li style="text-align: justify;">
+                                                  PIHAK KEDUA sanggup dan berjanji untuk melaksanakan penyerahan barang sebagaimana dimaksud Pasal 5 Perjanjian ini sesuai jadwal yang tercantum dalam setiap Surat Order Pembelian (SOP) yang diterbitkan oleh PIHAK KESATU.  
+                                                </li>
+                                                <li style="text-align: justify;">
+                                                    Penyerahan barang dilakukan langsung ke gudang PIHAK KESATU di Karawang.
+                                                </li>
+                                                <li style="text-align: justify;">
+                                                    Terhadap setiap Barang yang diserahkan oleh PIHAK KEDUA dan telah dinyatakan baik sesuai dengan hasil pemeriksaan maka PIHAK KESATU akan menyatakan menerima dengan membuat Surat Penerimaan Barang (SPB).
+                                                </li>
+                                            </ol>
+                                        @endif
                                         
                                         
                                         <table style="width: 100%;
@@ -621,69 +675,118 @@
                                         <div><br></div>
                                         <div style="text-align: center;"><b>HARGA BARANG </b></div>
                                         <div><br></div>
-                                        <ol>
-                                            @if ($lampiran5->count()>1)
-                                                <li>
-                                                    Harga satuan barang :                               
-                                                    <div><br></div>
-                                                    <table style="border-collapse: collapse; width: 100%; border: 1px solid #ddd; text-align: center;">
-                                                        <thead style="background-color: #f2f2f2;">
-                                                            <tr>
-                                                                <th style="padding: 8px; border: 1px solid #ddd;">No</th>
-                                                                <th style="padding: 8px; border: 1px solid #ddd;">No SPPB</th>
-                                                                <th style="padding: 8px; border: 1px solid #ddd;">Kode Barang</th>
-                                                                <th style="padding: 8px; border: 1px solid #ddd;">Nama Barang</th>
-                                                                <th style="padding: 8px; border: 1px solid #ddd;">Harga Satuan / Liter (Excl. PPN)</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @php
-                                                                $total=0;
-                                                            @endphp
-                                                            @foreach ($lampiran5 as $l)
+                                        @if($data->jenis_kontrak == '1')
+                                            <ol>
+                                                @if ($lampiran5->count()>1)
+                                                    <li>
+                                                        Harga satuan barang :                               
+                                                        <div><br></div>
+                                                        <table style="border-collapse: collapse; width: 100%; border: 1px solid #ddd; text-align: center;">
+                                                            <thead style="background-color: #f2f2f2;">
                                                                 <tr>
-                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $loop->iteration }}</td>
-                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->no_sppb }}</td>
-                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->kode_barang }}</td>
-                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->nama_barang }}</td>
-                                                                    <td style="padding: 8px; border: 1px solid #ddd;">{{ formatRupiah($l->harga_awal) }}</td>
+                                                                    <th style="padding: 8px; border: 1px solid #ddd;">No</th>
+                                                                    <th style="padding: 8px; border: 1px solid #ddd;">No SPPB</th>
+                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Kode Barang</th>
+                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Nama Barang</th>
+                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Harga Satuan / Liter (Excl. PPN)</th>
                                                                 </tr>
+                                                            </thead>
+                                                            <tbody>
                                                                 @php
-                                                                    $totalHarga=$l->harga_awal*$l->qty;
-                                                                    $total+=$totalHarga;
+                                                                    $total=0;
                                                                 @endphp
-                                                            @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                    <div><br></div>
-                                                    dengan total harga keseluruhan sebesar {{ @formatRupiah($data->total_keseluruhan) }} ({{ terbilang($data->total_keseluruhan) }} Rupiah)  sudah termasuk Pajak Pertambahan Nilai (PPN).
-                                                </li>
-                                            @else
-                                                <li style="text-align: justify;">
-                                                    Harga satuan barang {{ formatRupiah(@$lampiran5[0]->harga_awal) }} per lembar dengan total harga keseluruhan sebesar {{ @formatRupiah($data->total_keseluruhan) }} ({{ terbilang($data->total_keseluruhan) }} Rupiah) sudah termasuk Pajak Pertambahan Nilai (PPN).
-                                                </li>
-                                            @endif
-                                        
-                                            <li style="text-align: justify;">
-                                                Harga barang dimaksud butir (1) Lampiran V ini adalah franko
-                                                @if(@$lampiran5[0]->lokasi == 'UGM')
-                                                    Gudang Ugam                                                    
-                                                @elseif(@$lampiran5[0]->lokasi == 'UTAS')
-                                                    Gudang Utas
-                                                @elseif(@$lampiran5[0]->lokasi == 'UMUM')
-                                                    Gudang umum
-                                                @elseif(@$lampiran5[0]->lokasi == 'TGN')
-                                                    Gudang Tasganu
+                                                                @foreach ($lampiran5 as $l)
+                                                                    <tr>
+                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $loop->iteration }}</td>
+                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->no_sppb }}</td>
+                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->kode_barang }}</td>
+                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->nama_barang }}</td>
+                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ formatRupiah($l->harga_awal) }}</td>
+                                                                    </tr>
+                                                                    @php
+                                                                        $totalHarga=$l->harga_awal*$l->qty;
+                                                                        $total+=$totalHarga;
+                                                                    @endphp
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                        <div><br></div>
+                                                        dengan total harga keseluruhan sebesar {{ @formatRupiah($data->total_keseluruhan) }} ({{ terbilang($data->total_keseluruhan) }} Rupiah)  sudah termasuk Pajak Pertambahan Nilai (PPN).
+                                                    </li>
                                                 @else
-                                                    Gudang Tengah
+                                                    <li style="text-align: justify;">
+                                                        Harga satuan barang {{ formatRupiah(@$lampiran5[0]->harga_awal) }} per lembar dengan total harga keseluruhan sebesar {{ @formatRupiah($data->total_keseluruhan) }} ({{ terbilang($data->total_keseluruhan) }} Rupiah) sudah termasuk Pajak Pertambahan Nilai (PPN).
+                                                    </li>
                                                 @endif
-                                                PIHAK KESATU Karawang.
-                                            </li>
-                                            <li style="text-align: justify;">
-                                                Harga dimaksud pada butir (1) Lampiran V ini terdiri dari komponen-komponen harga satuan yang merupakan harga tetap dan tidak berubah oleh sebab apapun sampai dengan selesainya pelaksanaan jual beli dimaksud Pasal 12 Perjanjian ini.                        
-                                            </li>
-                                        </ol>
-                                        
+                                            
+                                                <li style="text-align: justify;">
+                                                    Harga barang dimaksud butir (1) Lampiran V ini adalah franko
+                                                    {{ $lampiran5[0]->lokasi }}
+                                                    {{-- @if(@$lampiran5[0]->lokasi == 'UGM')
+                                                        Gudang Ugam                                                    
+                                                    @elseif(@$lampiran5[0]->lokasi == 'UTAS')
+                                                        Gudang Utas
+                                                    @elseif(@$lampiran5[0]->lokasi == 'UMUM')
+                                                        Gudang umum
+                                                    @elseif(@$lampiran5[0]->lokasi == 'TGN')
+                                                        Gudang Tasganu
+                                                    @else
+                                                        Gudang Tengah
+                                                    @endif --}}
+                                                    PIHAK KESATU Karawang.
+                                                </li>
+                                                <li style="text-align: justify;">
+                                                    Harga dimaksud pada butir (1) Lampiran V ini terdiri dari komponen-komponen harga satuan yang merupakan harga tetap dan tidak berubah oleh sebab apapun sampai dengan selesainya pelaksanaan jual beli dimaksud Pasal 12 Perjanjian ini.                        
+                                                </li>
+                                            </ol>
+                                        @else
+                                            <ol>
+                                                @if ($lampiran5->count()>1)
+                                                    <li>
+                                                        Harga satuan barang :                               
+                                                        <div><br></div>
+                                                        <table style="border-collapse: collapse; width: 100%; border: 1px solid #ddd; text-align: center;">
+                                                            <thead style="background-color: #f2f2f2;">
+                                                                <tr>
+                                                                    <th style="padding: 8px; border: 1px solid #ddd;">No</th>
+                                                                    <th style="padding: 8px; border: 1px solid #ddd;">No SPPB</th>
+                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Kode Barang</th>
+                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Nama Barang</th>
+                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Harga Satuan / Liter (Excl. PPN)</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @php
+                                                                    $total=0;
+                                                                @endphp
+                                                                @foreach ($lampiran5 as $l)
+                                                                    <tr>
+                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $loop->iteration }}</td>
+                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->no_sppb }}</td>
+                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->kode_barang }}</td>
+                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->nama_barang }}</td>
+                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ formatRupiah($l->harga_awal) }}</td>
+                                                                    </tr>
+                                                                    @php
+                                                                        $totalHarga=$l->harga_awal*$l->qty;
+                                                                        $total+=$totalHarga;
+                                                                    @endphp
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                        
+                                                    </li>
+                                                @else
+                                                    <li style="text-align: justify; font-size: 14px;">
+                                                        Harga satuan barang {{ formatRupiah(@$lampiran5[0]->harga_awal) }} per lembar dengan total harga keseluruhan sebesar {{ @formatRupiah($data->total_keseluruhan) }} ({{ terbilang($data->total_keseluruhan) }} Rupiah) sudah termasuk Pajak Pertambahan Nilai (PPN).
+                                                    </li>
+                                                @endif
+                                            
+                                                <li style="text-align: justify; font-size: 14px;">
+                                                    Harga-harga Produk tersebut sebagaimana dimaksud pada Pasal 8 Perjanjian ini merupakan harga tetap dan berlaku sampai dengan tanggal {{ $lampiran5[0]->waktu_khs }}.
+                                                </li>
+                                            </ol>
+                                        @endif
                                         
                                         <table style="width: 100%;
                                                 border-collapse: collapse;
@@ -735,42 +838,88 @@
                                         <div><br></div>
                                         <div style="text-align: center;"><b>PEMBAYARAN</b></div>
                                         <div><br></div>
-                                        <ol>
-                                            <li style="text-align: justify;">
-                                                Pembayaran dari PIHAK KESATU kepada PIHAK KEDUA dilakukan setelah barang diserahkan seluruhnya oleh PIHAK KEDUA kepada PIHAK KESATU yang dinyatakan dengan dibuatkannya Surat Penerimaan Barang (SPB) oleh PIHAK KESATU, yang mana Surat Penerimaan Barang (SPB) tersebut kemudian akan melengkapi perangkat (dokumen) penagihan seperti dimaksud butir (3) Lampiran VI ini .
-                                            </li>
-                                            <li style="text-align: justify;">
-                                                Apabila ada denda terhadap PIHAK KEDUA di dalam melaksanakan jual beli dimaksud Pasal 15 Perjanjian ini, maka denda tersebut oleh PIHAK KESATU dapat langsung dibebankan pada saat pembayaran oleh PIHAK KESATU kepada PIHAK KEDUA dilakukan.
-                                            </li>
-                                            <li style="text-align: justify;">
-                                                @if (@$lampiran6->jenis_pembayaran=='1')
-                                                {{-- lansung --}}
-                                                Pelaksanaan pembayaran oleh PIHAK KESATU kepada PIHAK KEDUA dilakukan {{ $lampiran6->lama_pembayaran }} ({{ terbilang($lampiran6->lama_pembayaran) }})
-                                                hari kerja setelah perangkat penagihan dinyatakan lengkap diterima oleh PIHAK KESATU yang
-                                                terdiri antara lain : 
-                                                @else
-                                                {{-- bertahap --}}
-                                                Pelaksanaan pembayaran oleh PIHAK KESATU kepada PIHAK KEDUA di tiap tahapan
-                                                pengirimannya dilakukan {{ @$lampiran6->lama_pembayaran }} ({{ terbilang(@$lampiran6->lama_pembayaran) }}) hari kerja setelah perangkat penagihan dinyatakan lengkap
-                                                diterima oleh PIHAK KESATU yang terdiri antara lain :
-                                                @endif  
-                                                <ol>
-                                                    <li style="text-align: justify;">Kuitansi yang bermeterai cukup.</li>
-                                                    <li style="text-align: justify;">Faktur Pajak.</li>
-                                                    <li style="text-align: justify;">Invoice.</li>
-                                                    @if ($data->jenis_kontrak=='1')
-                                                        <li style="text-align: justify;">Copy Jaminan Pelaksanaan dan Surat keabsahan Jaminan (Jaminan Pelaksanaan) yang telah distempel "Verified Dep. Pengadaan Perum Peruri".
+                                        @if($data->jenis_kontrak == '1')
+
+                                            <ol>
+                                                <li style="text-align: justify;">
+                                                    Pembayaran dari PIHAK KESATU kepada PIHAK KEDUA dilakukan setelah barang diserahkan seluruhnya oleh PIHAK KEDUA kepada PIHAK KESATU yang dinyatakan dengan dibuatkannya Surat Penerimaan Barang (SPB) oleh PIHAK KESATU, yang mana Surat Penerimaan Barang (SPB) tersebut kemudian akan melengkapi perangkat (dokumen) penagihan seperti dimaksud butir (3) Lampiran VI ini .
+                                                </li>
+                                                <li style="text-align: justify;">
+                                                    Apabila ada denda terhadap PIHAK KEDUA di dalam melaksanakan jual beli dimaksud Pasal 15 Perjanjian ini, maka denda tersebut oleh PIHAK KESATU dapat langsung dibebankan pada saat pembayaran oleh PIHAK KESATU kepada PIHAK KEDUA dilakukan.
+                                                </li>
+                                                <li style="text-align: justify;">
+                                                    @if (@$lampiran6->jenis_pembayaran=='1')
+                                                    {{-- lansung --}}
+                                                    Pelaksanaan pembayaran oleh PIHAK KESATU kepada PIHAK KEDUA dilakukan {{ $lampiran6->lama_pembayaran }} ({{ terbilang($lampiran6->lama_pembayaran) }})
+                                                    hari kerja setelah perangkat penagihan dinyatakan lengkap diterima oleh PIHAK KESATU yang
+                                                    terdiri antara lain : 
+                                                    @else
+                                                    {{-- bertahap --}}
+                                                    Pelaksanaan pembayaran oleh PIHAK KESATU kepada PIHAK KEDUA di tiap tahapan
+                                                    pengirimannya dilakukan {{ @$lampiran6->lama_pembayaran }} ({{ terbilang(@$lampiran6->lama_pembayaran) }}) hari kerja setelah perangkat penagihan dinyatakan lengkap
+                                                    diterima oleh PIHAK KESATU yang terdiri antara lain :
+                                                    @endif  
+                                                    <ol>
+                                                        <li style="text-align: justify;">Kuitansi yang bermeterai cukup.</li>
+                                                        <li style="text-align: justify;">Faktur Pajak.</li>
+                                                        <li style="text-align: justify;">Invoice.</li>
+                                                        @if ($data->status_jaminan == '1')
+                                                            <li style="text-align: justify;"><i>Copy</i> Jaminan Pelaksanaan dan Surat keabsahan Jaminan (Jaminan Pelaksanaan) yang telah distempel "Verified Dep. Pengadaan Perum Peruri".
+                                                            </li>
+                                                        @endif
+                                                        <li style="text-align: justify;"><i>Copy</i> Surat Order Pembelian Nomor : {{ @$lampiran6->nomor_sop }} tanggal {{ tanggal_indonesia($data->tanggal_sop) }}.</li>
+                                                        <li style="text-align: justify;"><i>Copy</i> Perjanjian Nomor : {{ $data->detail_number }} tanggal {{ tanggal_indonesia($data->date_kontrak) }}.
                                                         </li>
-                                                    @endif
-                                                    <li style="text-align: justify;">Copy Surat Order Pembelian Nomor : {{ @$lampiran6->nomor_sop }} tanggal {{ tanggal_indonesia($data->tanggal_sop) }}.</li>
-                                                    <li style="text-align: justify;">Copy Perjanjian Nomor : {{ $data->detail_number }} tanggal {{ tanggal_indonesia($data->date_kontrak) }}.
+                                                        <li style="text-align: justify;">Surat Bukti Penyerahan Barang/Delivery Order (DO).</li>
+                                                        <li style="text-align: justify;"><i>Copy</i> Surat Penerimaan Barang (SPB).</li>
+                                                    </ol>
+                                                </li>
+                                                <p style="text-align: justify; ">Pembayaran ini merupakan bagian yang tidak terpisahkan dari Perjanjian ini.</p>
+                                            </ol>
+                                        @else
+                                            <ol>
+                                                <li style="text-align: justify;">
+                                                    Pembayaran dari PIHAK KESATU kepada PIHAK KEDUA dilakukan setelah barang diserahkan seluruhnya oleh PIHAK KEDUA kepada PIHAK KESATU yang dinyatakan dengan dibuatkannya Surat Penerimaan Barang (SPB) oleh PIHAK KESATU, yang mana Surat Penerimaan Barang (SPB) tersebut kemudian akan melengkapi perangkat (dokumen) penagihan seperti dimaksud butir (4) Lampiran VI ini .
+                                                </li>
+                                                @if (@$lampiran6->jenis_pembayaran=='2')
+                                                    {{-- bertahap --}}
+                                                    <li>
+                                                        Setiap Surat Order Pembelian (SOP) diberi tanda "Bertahap" untuk tujuan penagihan.
                                                     </li>
-                                                    <li style="text-align: justify;">Surat Bukti Penyerahan Barang/Delivery Order (DO).</li>
-                                                    <li style="text-align: justify;">Copy Surat Penerimaan Barang (SPB).</li>
-                                                </ol>
-                                            </li>
-                                            <p style="text-align: justify; ">Pembayaran ini merupakan bagian yang tidak terpisahkan dari Perjanjian ini.</p>
-                                        </ol>
+                                                @endif
+                                                <li style="text-align: justify;">
+                                                    Apabila ada denda terhadap PIHAK KEDUA di dalam melaksanakan jual beli dimaksud Pasal 16 Perjanjian ini, maka denda tersebut oleh PIHAK KESATU dapat langsung dibebankan pada saat pembayaran oleh PIHAK KESATU kepada PIHAK KEDUA dilakukan.
+                                                </li>
+                                                <li style="text-align: justify;">
+                                                    @if (@$lampiran6->jenis_pembayaran=='1')
+                                                    {{-- lansung --}}
+                                                    Pelaksanaan pembayaran oleh PIHAK KESATU kepada PIHAK KEDUA dilakukan {{ $lampiran6->lama_pembayaran }} ({{ terbilang($lampiran6->lama_pembayaran) }})
+                                                    hari kerja setelah perangkat penagihan dinyatakan lengkap diterima oleh PIHAK KESATU yang
+                                                    terdiri antara lain : 
+                                                    @else
+                                                    {{-- bertahap --}}
+                                                    Pelaksanaan pembayaran oleh PIHAK KESATU kepada PIHAK KEDUA di tiap tahapan
+                                                    pengirimannya dilakukan {{ @$lampiran6->lama_pembayaran }} ({{ terbilang(@$lampiran6->lama_pembayaran) }}) hari kerja setelah perangkat penagihan dinyatakan lengkap
+                                                    diterima oleh PIHAK KESATU yang terdiri antara lain :
+                                                    @endif  
+                                                    <ol>
+                                                        <li style="text-align: justify;">Kuitansi yang bermeterai cukup.</li>
+                                                        <li style="text-align: justify;">Faktur Pajak.</li>
+                                                        <li style="text-align: justify;"><i>Invoice.</i></li>
+                                                        @if ($data->status_jaminan == '1')
+                                                            <li style="text-align: justify;"><i>Copy</i> Jaminan Pelaksanaan dan Surat keabsahan Jaminan (Jaminan Pelaksanaan) yang telah distempel "Verified Dep. Pengadaan Perum Peruri".
+                                                            </li>
+                                                        @endif
+                                                        <li style="text-align: justify;"><i>Copy</i> Surat Order Pembelian (SOP).</li>
+                                                        <li style="text-align: justify;"><i>Copy</i> Perjanjian Nomor : {{ $data->detail_number }} tanggal {{ tanggal_indonesia($data->date_kontrak) }}.
+                                                        </li>
+                                                        <li style="text-align: justify;">Surat Bukti Penyerahan Barang/Delivery Order (DO).</li>
+                                                        <li style="text-align: justify;"><i>Copy</i> Surat Penerimaan Barang (SPB).</li>
+                                                    </ol>
+                                                </li>
+                                                <p style="text-align: justify; ">Pembayaran ini merupakan bagian yang tidak terpisahkan dari Perjanjian ini.</p>
+                                            </ol>
+                                        @endif
                                         <div><br></div>
                                         <div><br></div>
                                         <table style="width: 100%;
@@ -877,6 +1026,7 @@
                     </div>
                     <!-- /.col -->
                 </div>
+                
                 <!-- /.row (main row) -->
             </div><!-- /.container-fluid -->
         </section>
@@ -886,6 +1036,8 @@
 
 
 @push('scripts')
+    {{-- <script src="{{ asset('lte/plugins/jquery/jquery.min.js') }}"></script> --}}
+
     <script type="text/javascript">
         // import Swal from 'sweetalert2';
 
@@ -918,5 +1070,34 @@
                 }
             });
         });
+
+
+        $(document).ready(function(){
+            $('#loading-spinner').hide();
+        });
+
+
+        // submit data
+        function submitRevisi() {
+            var formRevisi = $('#inputRevisi');
+            // console.log(formRevisi);
+            
+            $.ajax({
+                method: 'POST',
+                url: "{{ route('submitRevisi') }}",
+                data: formRevisi.serialize(),
+                beforeSend: function(){
+                    $('#loading-spinner').show();
+                },
+                success: function(result) {
+                    $('#loading-spinner').hide();
+                    // console.log(result.message)
+                    if (result.redirect) {
+                        window.location.href = result.redirect; // Mengarahkan ulang halaman ke halaman monitoring
+                    }
+                }
+            });
+
+        }
     </script>
 @endpush

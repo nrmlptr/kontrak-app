@@ -2,7 +2,21 @@
     <form id="inputLampiran5">
         @csrf
         <input type="hidden" name="kontraks_id" id="kontraks_id" value="{{ $data->id }}">
+        {{-- FORM INPUT PPN JADI 1 SAJA --}}
+        <div class="row">
+            <div class="form-group col-1">
+                <label for="ppn">PPN %</label>
+                <input type="text" name="ppn" class="form-control" id="ppn" value="11" required>
+            </div>
+            <div class="form-group col-4">
+                <label for="waktu_khs">Jangka Waktu (Harga Satuan)</label>
+                <input type="text" name="waktu_khs" class="form-control" id="waktu_khs" required>
+            </div>
+        </div>
+        <hr>
+        {{-- FORM DINAMIS --}}
         <div id="loadinputlampiran5"></div>
+        {{-- FORM FOOTER TOTAL KESELURUHAN --}}
         <div class="card-footer">
             <hr>
             <div class="form-group col-3">
@@ -25,44 +39,40 @@
                     fields+=`
                 <div class="row">
                 <div class="form-group col-1">
-                    <label for="no_sppb">Nomor SPPB</label>
-                    <input type="text" name="no_sppb[]" class="form-control" value="${row.purchase_requisition_number}" required readonly>
+                    <label for="no_sppb">No.SPPB</label>
+                    <input type="text" name="no_sppb[]" class="form-control" value="${row.purchase_requisition_number}" id="nosppblampiran5" required readonly>
                     
                 </div>
                 <div class="form-group col-2">
                     <label for="nama_barang">Kode Barang</label>
-                    <input type="text" name="kode_barang[]" placeholder="Kode Barang" value="${row.material_number}" class="form-control" readonly required>
+                    <input type="text" name="kode_barang[]" placeholder="Kode Barang" value="${row.material_number}" id="kodebaranglampiran5" class="form-control" readonly required>
                     
                 </div>
                 <div class="form-group col-4">
                     <label for="nama_barang">Nama Barang</label>
-                    <input type="text" name="nama_barang[]" placeholder="Nama Barang" value="${row.material_name}" class="form-control" readonly required>
+                    <input type="text" name="nama_barang[]" placeholder="Nama Barang" value="${row.material_name}" id="nmbaranglampiran5" class="form-control" readonly required>
                     
                 </div>
                 <div class="form-group col-1">
                     <label for="satuan">Satuan</label>
-                    <input type="text" name="satuan[]" class="form-control" value="${row.purchase_order_unit_of_measure}" required readonly>
+                    <input type="text" name="satuan[]" class="form-control" value="${row.purchase_order_unit_of_measure}" id="satuanlampiran5" required readonly>
                     
                 </div>
                 <div class="form-group col-2">
                     <label for="lokasi">Lokasi Gudang</label>
-                    <input type="text" name="plant[]" class="form-control" value="${row.plant}" required readonly>                    
+                    <input type="text" name="plant[]" class="form-control" value="${row.plant}" id="plantlampiran5" required readonly>                    
                 </div>
                 <div class="form-group col-2">
                     <label for="harga_awal">Harga Sebelum PPN</label>
-                    <input type="text" name="harga_awal[]" class="form-control" value="${row.net_price}" required readonly>
+                    <input type="text" name="harga_awal[]" class="form-control" value="${row.net_price}" id="hargaawallampiran5" required readonly>
                 
                 </div>
                 <div class="form-group col-1">
                     <label for="jumlah">Jumlah</label>
-                    <input type="text" name="jumlah[]" class="form-control"  value="${row.purchase_order_quantity}" required readonly>
+                    <input type="text" name="jumlah[]" class="form-control"  value="${row.purchase_order_quantity}" id="jumlahlampiran5" required readonly>
                 
                 </div>
                
-                <div class="form-group col-1">
-                    <label for="ppn">PPN %</label>
-                    <input type="text" name="ppn[]" class="form-control" value="${row.default_ppn || 11}" data-ppn="${row.default_ppn || 11}" required>
-                </div>
                 <div class="form-group col-2">
                     <label for="harga_akhir">Total Harga + PPN</label>
                     <input type="text" name="harga_akhir[]" class="form-control" required readonly>
@@ -115,13 +125,14 @@
         // after modified fungsi perhitungan harga
         function hitungTotalHarga() {
             var totalKeseluruhan = 0;
+            var ppn = parseInt($('#ppn').val()) || 11;  // Default PPN 11% jika tidak ada nilai yang dimasukkan
 
             $('input[name="harga_akhir[]"]').each(function() {
                 var totalHarga = 0;
                 var row = $(this).closest('.row');
                 var jumlah = parseInt(row.find('input[name="jumlah[]"]').val()) || 0;
                 var hargaAwal = parseInt(row.find('input[name="harga_awal[]"]').val()) || 0;
-                var ppn = parseInt(row.find('input[name="ppn[]"]').val()) || parseInt(row.find('input[name="ppn[]"]').attr('data-ppn')) || 0;
+                // var ppn = parseInt(row.find('input[name="ppn[]"]').val()) || parseInt(row.find('input[name="ppn[]"]').attr('data-ppn')) || 0;
 
                 totalHarga = (jumlah * hargaAwal) + ((jumlah * hargaAwal) * (ppn / 100));
                 $(this).val(totalHarga.toFixed(2));
@@ -131,7 +142,11 @@
             $('input[name="total_keseluruhan"]').val(totalKeseluruhan.toFixed(2));
         }
 
-        $(document).on('input', 'input[name="jumlah[]"], input[name="harga_awal[]"], input[name="ppn[]"]', function() {
+        // $(document).on('input', 'input[name="jumlah[]"], input[name="harga_awal[]"], input[name="ppn[]"]', function() {
+        //     hitungTotalHarga();
+        // });
+
+        $(document).on('input', 'input[name="jumlah[]"], input[name="harga_awal[]"], #ppn', function() {
             hitungTotalHarga();
         });
 

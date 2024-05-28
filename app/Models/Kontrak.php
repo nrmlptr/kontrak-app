@@ -66,8 +66,11 @@ class Kontrak extends Model
 
     public function pasal()
     {
-        return $this->hasMany(PasalKontrak::class, 'jenis_pasal', 'jenis_kontrak');
+        // return $this->hasMany(PasalKontrak::class, 'jenis_kontrak', 'jenis_kontrak');
+        return $this->hasMany(PasalKontrak::class, 'jenis_kontrak', 'jenis_kontrak')
+            ->where('status_jaminan', $this->status_jaminan);
     }
+
     public function integrates()
     {
         return $this->hasMany(Integrate::class, 'purchasing_document_number', 'nomor_sop');

@@ -81,6 +81,7 @@
     </table>
     <div><br></div>
     <div style="text-align: center;"><b>DOKUMEN-DOKUMEN PENGADAAN</b></div>
+ 
 </div>
 
 @php
@@ -88,6 +89,7 @@
     $dtlampiran1 = json_decode($lampiran1->data_json, true);
 @endphp
 <div id="content">
+    <div><br></div>
     <p>
         Dalam melaksanakan jual beli barang, PIHAK KEDUA harus mengikuti syarat-syarat pelaksanaan umum yang mengikat sebagai berikut :
     </p>

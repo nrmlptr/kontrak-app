@@ -40,7 +40,7 @@
             @if (@$lampiran3[0]->jenis_spesifikasi=='2')
                 @foreach (@$lampiran3 as $l)
                     <div class="form-group col-2">
-                        <label for="inputNOSPPB">Nomor SPPB</label>
+                        <label for="inputNOSPPB">No.SPPB</label>
                         <input type="text" name="no_sppb[]" value="{{ $l->no_sppb }}" class="form-control" readonly>
                     </div>
                     <div class="form-group col-2">

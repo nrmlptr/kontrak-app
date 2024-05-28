@@ -128,31 +128,31 @@
                 dataBarang.forEach(function(row) {
                     fields += `<div class="form-group col-2">
                         <label for="nomor_sop">Nomor SOP</label>
-                        <input type="text" name="nomor_sop[]" placeholder="Nomor SOP" class="form-control" value="{{ $valueNomorSop }}" readonly required>
+                        <input type="text" name="nomor_sop[]" placeholder="Nomor SOP" class="form-control" value="{{ $valueNomorSop }}" id="nosoplampiran4" readonly required>
                     </div>
                     <div class="form-group col-2">
                         <label for="tanggal_sop">Tanggal SOP</label>
-                        <input type="date" name="tanggal_sop[]" class="form-control" value="{{ $data->tanggal_sop }}" readonly required>
+                        <input type="date" name="tanggal_sop[]" class="form-control" value="{{ $data->tanggal_sop }}" id="tglsoplampiran4" readonly required>
                     </div>
                     <div class="form-group col-2">
                         <label for="lokasi">Lokasi Gudang</label>
-                        <input type="text" name="plant[]" class="form-control" value="${row.plant}" required readonly>
+                        <input type="text" name="plant[]" class="form-control" value="${row.plant}" id="plantlampiran4" required readonly>
                     </div>
                     <div class="form-group col-1">
-                        <label for="no_sppb">Nomor SPPB</label>
-                        <input type="text" name="no_sppb[]" class="form-control" value="${row.purchase_requisition_number}" required readonly>
+                        <label for="no_sppb">No.SPPB</label>
+                        <input type="text" name="no_sppb[]" class="form-control" value="${row.purchase_requisition_number}" id="nosppblampiran4" required readonly>
                     </div>
                     <div class="form-group col-2">
                         <label for="kode_barang">Kode Barang</label>
-                        <input type="text" name="kode_barang[]" class="form-control" value="${row.material_number}" required readonly>
+                        <input type="text" name="kode_barang[]" class="form-control" value="${row.material_number}" id="kodebaranglampiran4" required readonly>
                     </div>
                     <div class="form-group col-4">
                         <label for="nama_barang">Nama Barang</label>
-                        <input type="text" name="nama_barang[]" class="form-control" value="${row.material_name}" required readonly>
+                        <input type="text" name="nama_barang[]" class="form-control" value="${row.material_name}" id="nmbaranglampiran4" required readonly>
                     </div>
                     <div class="form-group col-1">
                         <label for="satuan">Satuan</label>
-                        <input type="text" name="satuan[]" class="form-control" value="${row.purchase_order_unit_of_measure}" required readonly>
+                        <input type="text" name="satuan[]" class="form-control" value="${row.purchase_order_unit_of_measure}" id="satuanlampiran4" required readonly>
                     </div>
                     <div class="form-group col-12">
                         <label for="inputText">Jadwal Penyerahan Barang</label>

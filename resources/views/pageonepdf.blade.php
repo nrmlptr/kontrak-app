@@ -30,8 +30,12 @@
                 text-align: center;
             }
             .table-header p {
-                font-size: 12px;
+                font-size: 14px;
                 margin: 0
+            }
+
+            td.akta-text > p, span{
+                font-size: 14px !important;
             }
         </style>
 
@@ -50,7 +54,6 @@
                     <h5 style="font-weight: normal; margin: 5px 0;">Nomor: {{ $data->detail_number }}</h5>
                 </div>
 
-
                 <table style="width: 100%">
                     <tbody>
                         <tr>
@@ -64,7 +67,7 @@
                         <td><br></td>
                         <tr>
                             <td style="vertical-align: top;text-align: left; font-size: 14px;"" colspan="2"><b>{{ $pihak1name }},</b></td>
-                            <td style="text-align: justify; font-size: 14px;"">
+                            <td style="text-align: justify;" class="akta-text">
                                 @if ($data->peruritext)
                                         {!! @$data->peruritext !!}
                                     @else
@@ -72,18 +75,21 @@
                                     @endif
                             </td>
                         </tr>
-                        {{-- <td><br></td> --}}
                         <tr>
                             <td style="vertical-align: top;text-align: left; font-size: 14px;"" colspan="2"><b>{{ $pihak2name }},</b></td>
-                            <td style="text-align: justify; font-size: 14px;""> {!! @$pihak2data->akta !!}</td>
+                            <td style="text-align: justify;" class="akta-text"> 
+                                @if ($data->vendortext)
+                                        {!! @$data->vendortext !!}
+                                    @else
+                                        {!! @$pihak2data->akta !!}
+                                    @endif
+                            </td>
                         </tr>
-                        {{-- <td><br></td> --}}
                         <tr>
                             <td colspan="3" style="text-align: justify; font-size: 14px;"">
                                 Para Pihak secara sendiri-sendiri disebut <b>"Pihak"</b> dan secara bersama-sama disebut juga <b>"Para Pihak"</b>
                             </td>
                         </tr>
-                        {{-- <td><br></td> --}}
                         <tr>
                             <td colspan="3" style="text-align: justify; font-size: 14px;"">
                                 <b>Para Pihak Menerangkan</b>
@@ -104,7 +110,6 @@
                             <td style="vertical-align: top">c. </td>
                             <td colspan="2" style="text-align: justify; font-size: 14px;">Dokumen-dokumen pengadaan terkait pelaksanaan pengadaan ini sesuai dengan Lampiran I Perjanjian ini dan merupakan bagian yang tidak terpisahkan dari Perjanjian ini.</td>
                         </tr>
-                        {{-- <td><br></td> --}}
                         <tr>
                             <td colspan="3" style="text-align: justify; font-size: 14px;">Berdasarkan pertimbangan-pertimbangan tersebut di atas, Para Pihak sepakat untuk mengikatkan diri satu sama lain dalam Perjanjian ini berdasarkan ketentuan-ketentuan dan persyaratan sebagai berikut:</td>
                         </tr>

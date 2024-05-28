@@ -69,13 +69,24 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="jenis_pasal">Jenis Pasal</label>
-                                        <select class="form-control" name="jenis_pasal" id="jenis_pasal" required>
+                                        <label for="status_jaminan">Status Jaminan</label>
+                                        <select class="form-control" name="status_jaminan" id="status_jaminan" required>
                                             <option value="">Pilih</option>
                                             <option value="1">Jaminan</option>
                                             <option value="2">Tanpa Jaminan</option>
                                         </select>
-                                        @error('jenis_pasal')
+                                        @error('status_jaminan')
+                                        <small style="color: red;">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="jenis_kontrak">Jenis Kontrak</label>
+                                        <select class="form-control" name="jenis_kontrak" id="jenis_kontrak" required>
+                                            <option value="">Pilih</option>
+                                            <option value="1">Lumpsum</option>
+                                            <option value="2">Harga Satuan</option>
+                                        </select>
+                                        @error('jenis_kontrak')
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>

@@ -55,7 +55,7 @@
                     <input type="file" name="gambarnon[]" id="gambarnon[]" multiple class="form-control" >
                     </div>
                     <div class="form-group col-1">
-                    <label for="inputNOSPPB">Nomor SPPB</label>
+                    <label for="inputNOSPPB">No.SPPB</label>
                         <input type="text" name="no_sppb[]" class="form-control" value="${row.purchase_requisition_number}" readonly>
                     </div>
                     <div class="form-group col-2">

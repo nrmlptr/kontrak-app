@@ -68,10 +68,10 @@
                                 <input type="text" name="perihal[]" placeholder="Nama Header" class="form-control" value="Surat Permintaan Penawaran Harga dari PIHAK PERTAMA">
                             </div>
                             <div class="form-group col-6">
-                                <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control"  value="{{ $data->no_spph }}" readonly>
+                                <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control"  value="{{ $data->no_spph }}" id="nosurat-header1" readonly>
                             </div>
                             <div class="form-group col-6">
-                                <input type="date" name="tanggal_surat[]" class="form-control" value="{{ $data->tgl_spph }}" readonly>
+                                <input type="date" name="tanggal_surat[]" class="form-control" value="{{ $data->tgl_spph }}" id="notgl-header1" readonly>
                             </div>
                         </div>
                     </li>
@@ -138,10 +138,10 @@
                                 <input type="text" name="perihal[]" placeholder="Nama Header" class="form-control" value="Surat Pemberitahuan Pemenang Pengadaan">
                             </div>
                             <div class="form-group col-6">
-                                <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control"  value="{{ $data->no_sp3 }}" readonly>
+                                <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control"  value="{{ $data->no_sp3 }}" id="nosurat-header2" readonly>
                             </div>
                             <div class="form-group col-6">
-                                <input type="date" name="tanggal_surat[]" class="form-control" value="{{ $data->tgl_sp3_approve }}" readonly>
+                                <input type="date" name="tanggal_surat[]" class="form-control" value="{{ $data->tgl_sp3_approve }}" id="notgl-header2" readonly>
                             </div>
                         </div>
                     </li>
@@ -155,10 +155,10 @@
                                 <input type="text" name="perihal[]" placeholder="Nama Header" class="form-control" value="Surat Order Pembelian">
                             </div>
                             <div class="form-group col-6">
-                                <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control" value="{{ $valueNomorSop }}" readonly>
+                                <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control" value="{{ $valueNomorSop }}" id="nosurat-header3" readonly>
                             </div>
                             <div class="form-group col-6">
-                                <input type="date" name="tanggal_surat[]" class="form-control" value="{{ $data->tanggal_sop }}" readonly>
+                                <input type="date" name="tanggal_surat[]" class="form-control" value="{{ $data->tanggal_sop }}" id="notgl-header3" readonly>
                             </div>
                         </div>
                     </li>
@@ -172,10 +172,10 @@
                                 <input type="text" name="perihal[]" placeholder="Nama Header" class="form-control" value="Perjanjian">
                             </div>
                             <div class="form-group col-6">
-                                <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control" value="{{ $data->detail_number }}" readonly>
+                                <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control" value="{{ $data->detail_number }}" id="nosurat-header4" readonly>
                             </div>
                             <div class="form-group col-6">
-                                <input type="date" name="tanggal_surat[]" class="form-control" value="{{ $data->date_kontrak }}" readonly>
+                                <input type="date" name="tanggal_surat[]" class="form-control" value="{{ $data->date_kontrak }}" id="notgl-header4" readonly>
                             </div>
                         </div>
                     </li>
@@ -194,6 +194,7 @@
     <script type="text/javascript">
         jQuery(document).ready(function($) {
             counting_container();
+            opsi();
         });
 
         function counting_container() {

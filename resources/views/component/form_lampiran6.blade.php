@@ -17,19 +17,19 @@
         <div class="row">
             <div class="form-group col-2" id="formLangsung">
                 <label for="nomor_sop">Nomor SOP</label>
-                <input type="text" name="nomor_sop" class="form-control" value="{{ $valueNomorSop }}" readonly>
+                <input type="text" name="nomor_sop" class="form-control" value="{{ $valueNomorSop }}" id="nosoplampiran6" readonly>
             </div>
             <div class="form-group col-2" id="formLangsung2">
                 <label for="tanggal_sop">Tanggal SOP</label>
-                <input type="date" name="tanggal_sop" class="form-control" value="{{ $data->tanggal_sop }}" readonly>
+                <input type="date" name="tanggal_sop" class="form-control" value="{{ $data->tanggal_sop }}" id="tglsoplampiran6" readonly>
             </div>
             <div class="form-group col-2" id="formLangsung3">
                 <label for="no_kontrak">No Kontrak</label>
-                <input type="text" name="no_kontrak" class="form-control" value="{{ $data->detail_number }}" readonly>
+                <input type="text" name="no_kontrak" class="form-control" value="{{ $data->detail_number }}" id="nosplampiran6" readonly>
             </div>
             <div class="form-group col-2" id="formLangsung4">
                 <label for="date_kontrak">Tanggal Kontrak</label>
-                <input type="date" name="date_kontrak" class="form-control" value="{{ $data->date_kontrak }}" readonly>
+                <input type="date" name="date_kontrak" class="form-control" value="{{ $data->date_kontrak }}" id="tglsplampiran6" readonly>
             </div>
             <div class="form-group col-3" id="formLangsung5">
                 <label for="lama_pembayaran">Waktu Pembayaran (Hari)</label>

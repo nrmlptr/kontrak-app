@@ -104,11 +104,12 @@
         @foreach($lampiran3 as $l)
             @if($l->gambarnon !== null)
                 <div style="display: grid; place-items: center;">
-                    <img src="{{ storage_path("app/".$l->gambarnon) }}" style="display: block; margin: 20px auto; max-width: 100%; max-height: auto;">
+                    <img src="{{ storage_path('app/'.$l->gambarnon) }}" style="display: block; margin: 20px auto; max-width: 100%; height: auto;">
                 </div>
             @endif
         @endforeach
-        <table style="border-collapse: collapse; width: 100%; border: 1px solid #ddd; text-align: left;">
+        <div><br></div>
+        <table style="border-collapse: collapse; width: 100%; border: 2px solid #ddd; text-align: left;">
             <thead style="background-color: #f2f2f2;">
                 <tr>
                     <th style="padding: 8px; border: 1px solid #ddd;">No</th>
@@ -131,15 +132,7 @@
             </tbody>
         </table>
     @endif
-
-    <div><br></div>
-    <div><br></div>
-    <div><br></div>
-    <div><br></div>
-    <div><br></div>
-    <div><br></div>
-    <div><br></div>
-    <div><br></div>
+    
     <div><br></div>
     <div><br></div>
 

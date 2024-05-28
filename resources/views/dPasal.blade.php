@@ -69,7 +69,8 @@
                                         <th class="d-none d-sm-table-cell" style="width: 15%;">Keterangan</th>
                                         <th>Isi Pasal</th>
                                         <th>Urutan</th>
-                                        <th>Jenis Pasal</th>
+                                        <th>Status Jaminan</th>
+                                        <th>Jenis Kontrak</th>
                                         <th class="text-center" style="width: 10%;">Aksi</th>
                                     </tr>
                                 </thead>
@@ -82,10 +83,17 @@
                                         <td>{!! $d->isi_pasal !!}</td>
                                         <td>{{ $d->urutan }}</td>
                                         <td>
-                                            @if($d->jenis_pasal == '1')
-                                            <span class="badge badge-success">Jaminan</span>
+                                            @if($d->status_jaminan == '1')
+                                                <span class="badge badge-success">Jaminan</span>
                                             @else
-                                            <span class="badge badge-info">Tanpa Jaminan</span>
+                                                <span class="badge badge-info">Tanpa Jaminan</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($d->jenis_kontrak == '1')
+                                                <span class="badge badge-success">Lumpsum</span>
+                                            @else
+                                                <span class="badge badge-info">Harga Satuan</span>
                                             @endif
                                         </td>
                                         <td class="d-none d-sm-table-cell" align="center">

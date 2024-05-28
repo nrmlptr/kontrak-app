@@ -81,14 +81,30 @@
     $lampiran2=$data->lampiran2;
 @endphp
 <div id="content">
-    <ol>
-        <li style="text-align: justify; font-size: 14px;">
-                PIHAK KEDUA dengan ini berjanji dan mengikatkan diri untuk Jual {{  $lampiran2->perihal }}, yang kemudian dalam Perjanjian ini akan disebut dengan “barang” kepada PIHAK KESATU, demikian juga PIHAK KESATU dengan ini telah setuju dan mengikatkan diri untuk membeli barang tersebut dari PIHAK KEDUA, yang pelaksanaannya akan dituangkan di dalam Surat Order Pembelian (SOP) Nomor : {{  $lampiran2->nomor_sop }} tanggal {{ tanggal_indonesia($lampiran2->tanggal_sop) }}.
-        </li>
-        <li style="text-align: justify; font-size: 14px;">
-                Lingkup Perjanjian sebagaimana dimaksud Pasal 3 Perjanjian ini merupakan bagian yang tidak terpisahkan dari Perjanjian ini.
-        </li>
-    </ol>
+    @if($data->jenis_kontrak == '1')
+        <div><br></div>
+        <ol>
+            <li style="text-align: justify; font-size: 14px;">
+                    PIHAK KEDUA dengan ini berjanji dan mengikatkan diri untuk Jual {{  $lampiran2->perihal }}, yang kemudian dalam Perjanjian ini akan disebut dengan “barang” kepada PIHAK KESATU, demikian juga PIHAK KESATU dengan ini telah setuju dan mengikatkan diri untuk membeli barang tersebut dari PIHAK KEDUA, yang pelaksanaannya akan dituangkan di dalam Surat Order Pembelian (SOP) Nomor : {{  $lampiran2->nomor_sop }} tanggal {{ tanggal_indonesia($lampiran2->tanggal_sop) }}.
+            </li>
+            <li style="text-align: justify; font-size: 14px;">
+                    Lingkup Perjanjian sebagaimana dimaksud Pasal 3 Perjanjian ini merupakan bagian yang tidak terpisahkan dari Perjanjian ini.
+            </li>
+        </ol>
+    @else
+        <div><br></div>
+        <ol>
+            <li style="text-align: justify; font-size: 14px;">
+                PIHAK KEDUA dengan ini berjanji dan mengikatkan diri untuk menjual {{  $lampiran2->perihal }}.
+            </li>
+            <li style="text-align: justify; font-size: 14px;">
+                Surat Order Pembelian (SOP) sebagaimana disebut dalam Poin 1 di atas akan diterbitkan dan diberikan kepada PIHAK KEDUA setiap saat PIHAK KESATU  membutuhkan “Produk”.
+            </li>
+            <li style="text-align: justify; font-size: 14px;">
+                PIHAK KESATU setuju untuk setiap bulan secara tertulis memberikan perkiraan kebutuhan “Produk” kepada PIHAK KEDUA.
+            </li>
+        </ol>
+    @endif
     <div><br></div>
     <div><br></div>
     <div><br></div>

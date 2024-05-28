@@ -15,7 +15,7 @@
                 <input type="date" name="tanggal_sop" class="form-control" value="{{ $lampiran2->tanggal_sop }}" readonly required>
             </div>
             <div class="form-group col-12">
-                <label for="perihal">Perihal</label>
+                <label for="perihal">Ruang Lingkup</label>
                 <input type="text" name="perihal" placeholder="Perihal" class="form-control" value="{{ $lampiran2->perihal }}" required>
             </div>
 

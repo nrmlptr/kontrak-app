@@ -60,16 +60,29 @@
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>
-                                     <div class="form-group">
-                                        <label for="jenis_pasal">Jenis Kontrak</label>
-                                        <select name="jenis_pasal" id="jenis_pasal" class="form-control">
+                                    <div class="form-group">
+                                        <label for="status_jaminan">Status Jaminan</label>
+                                        <select name="status_jaminan" id="status_jaminan" class="form-control">
                                             
                                             <option value="1">Jaminan</option>
-                                            <option value="2" @if ($data->jenis_pasal=='2')
+                                            <option value="2" @if ($data->status_jaminan=='2')
                                                 selected
                                             @endif>Tanpa Jaminan</option>
                                         </select>
-                                        @error('jenis_pasal')
+                                        @error('status_jaminan')
+                                        <small style=" color: red;">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="jenis_kontrak">Jenis Kontrak</label>
+                                        <select name="jenis_kontrak" id="jenis_kontrak" class="form-control">
+                                            
+                                            <option value="1">Lumpsum</option>
+                                            <option value="2" @if ($data->jenis_kontrak=='2')
+                                                selected
+                                            @endif>Harga Satuan</option>
+                                        </select>
+                                        @error('jenis_kontrak')
                                         <small style=" color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>

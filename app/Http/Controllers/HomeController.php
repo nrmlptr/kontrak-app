@@ -220,7 +220,8 @@ class HomeController extends Controller
             'nama_pasal.required'       => 'Kolom Nama Pasal Harus Diisi.',
             'keterangan_pasal.required' => 'Kolom Keterangan Pasal harus diisi.',
             'isi_pasal.required'        => 'Kolom Isi Pasal harus diisi.',
-            'jenis_pasal.required'      => 'Kolom Jenis Pasal harus diisi.',
+            'status_jaminan.required'   => 'Kolom Status Jaminan harus diisi.',
+            'jenis_kontrak.required'    => 'Kolom Jenis Kontrak harus diisi.',
             'urutan.required'           => 'Kolom urutan harus diisi.'
         ];
 
@@ -228,7 +229,8 @@ class HomeController extends Controller
             'nama_pasal'        => 'required',
             'keterangan_pasal'  => 'required',
             'isi_pasal'         => 'required',
-            'jenis_pasal'       => 'required',
+            'status_jaminan'    => 'required',
+            'jenis_kontrak'     => 'required',
             'urutan'            => 'required',
         ], $messagesPasal);
 
@@ -240,7 +242,8 @@ class HomeController extends Controller
         $data['nama_pasal']          = $request->nama_pasal;
         $data['keterangan_pasal']    = $request->keterangan_pasal;
         $data['isi_pasal']           = $request->isi_pasal;
-        $data['jenis_pasal']         = $request->jenis_pasal;
+        $data['status_jaminan']      = $request->status_jaminan;
+        $data['jenis_kontrak']       = $request->jenis_kontrak;
         $data['urutan']              = $request->urutan;
 
         PasalKontrak::create($data);
@@ -268,7 +271,8 @@ class HomeController extends Controller
             'nama_pasal'        => 'required',
             'keterangan_pasal'  => 'required',
             'isi_pasal'         => 'required',
-            'jenis_pasal'       => 'required',
+            'status_jaminan'    => 'required',
+            'jenis_kontrak'     => 'required',
             'urutan'            => 'required',
         ]);
 
@@ -278,7 +282,8 @@ class HomeController extends Controller
         $data['nama_pasal']          = $request->nama_pasal;
         $data['keterangan_pasal']    = $request->keterangan_pasal;
         $data['isi_pasal']           = $request->isi_pasal;
-        $data['jenis_pasal']         = $request->jenis_pasal;
+        $data['status_jaminan']      = $request->status_jaminan;
+        $data['jenis_kontrak']       = $request->jenis_kontrak;
         $data['urutan']              = $request->urutan;
 
 

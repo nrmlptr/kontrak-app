@@ -6,6 +6,13 @@
     <form id="inputLampiran5">
         @csrf
         <input type="hidden" name="kontraks_id" id="kontraks_id" value="{{ $data->id }}">
+        <div class="row">
+            <div class="form-group col-1">
+                <label for="ppn">PPN %</label>
+                <input type="text" name="ppn" class="form-control" id="ppn" value="{{ $lampiran5[0]->ppn ?? 11 }}" required>
+            </div>
+        </div>
+        <hr>
         <div id="loadinputlampiran5">
             @foreach ($lampiran5 as $l)
                 @php
@@ -14,7 +21,7 @@
             
                 <div class="row">
                     <div class="form-group col-1">
-                        <label for="no_sppb">Nomor SPPB</label>
+                        <label for="no_sppb">No.SPPB</label>
                         <input type="text" name="no_sppb[]" class="form-control" value="{{ $l->no_sppb }}" required readonly>
                         
                     </div>
@@ -66,11 +73,11 @@
                         <input type="text" name="jumlah[]" class="form-control"  value="{{ $l->qty }}" required readonly>
                     
                     </div>
-                    <div class="form-group col-1">
+                    {{-- <div class="form-group col-1">
                         <label for="ppn">PPN %</label>
                         <input type="text" name="ppn[]" class="form-control"  required>
                         
-                    </div>
+                    </div> --}}
                     <div class="form-group col-2">
                         <label for="harga_akhir">Total Harga + PPN</label>
                         <input type="text" name="harga_akhir[]" class="form-control" required readonly>
@@ -80,6 +87,7 @@
                 </div>
             @endforeach
         </div>
+
         <div class="card-footer">
             <hr>
             <div class="form-group col-3">
@@ -101,13 +109,16 @@
             // Bersihkan nilai totalKeseluruhan
             var totalKeseluruhan = 0;
 
+            // Ambil nilai PPN dari input di luar loop
+            var ppn = parseInt($('#ppn').val()) || 0;
+
             // Iterasi untuk setiap barang
             $('input[name="harga_akhir[]"]').each(function() {
                 var totalHarga = 0;
                 var row = $(this).closest('.row');
                 var jumlah = parseInt(row.find('input[name="jumlah[]"]').val()) || 0;
                 var hargaAwal = parseInt(row.find('input[name="harga_awal[]"]').val()) || 0;
-                var ppn = parseInt(row.find('input[name="ppn[]"]').val()) || 0;
+                // var ppn = parseInt(row.find('input[name="ppn[]"]').val()) || 0;
 
                 // Perhitungan total harga akhir untuk barang saat ini
                 totalHarga = (jumlah * hargaAwal) + ((jumlah * hargaAwal) * (ppn / 100));
@@ -124,26 +135,42 @@
         }
     
 
-        // Event listener untuk input[name="ppn[]"]
-        $(document).on('input', 'input[name="ppn[]"]', function() {
+        // // Event listener untuk input[name="ppn[]"]
+        // $(document).on('input', 'input[name="ppn[]"]', function() {
+        //     // Panggil fungsi perhitungan setiap kali ada perubahan pada input PPN
+        //     calculateTotal();
+        // });
+
+        // Event listener untuk input PPN di luar loop
+        $(document).on('input', '#ppn', function() {
             // Panggil fungsi perhitungan setiap kali ada perubahan pada input PPN
             calculateTotal();
         });
 
-        $(document).ready(function () {
-            // Ambil nilai PPN dari variabel PHP dan simpan dalam array JavaScript
-            var ppnValues = {!! json_encode($ppnArray) !!};
+        // $(document).ready(function () {
+        //     // Ambil nilai PPN dari variabel PHP dan simpan dalam array JavaScript
+        //     var ppnValues = {!! json_encode($ppnArray) !!};
 
-            // Loop melalui semua input dengan nama ppn[] dan atur nilai PPN sesuai dengan nilai dari array ppnValues
-            $('input[name="ppn[]"]').each(function(index) {
-                // Atur nilai PPN pada setiap input berdasarkan nilai dari array ppnValues
-                $(this).val(ppnValues[index]).change();
-            });
+        //     // Loop melalui semua input dengan nama ppn[] dan atur nilai PPN sesuai dengan nilai dari array ppnValues
+        //     $('input[name="ppn[]"]').each(function(index) {
+        //         // Atur nilai PPN pada setiap input berdasarkan nilai dari array ppnValues
+        //         $(this).val(ppnValues[index]).change();
+        //     });
 
-            // Panggil fungsi perhitungan setelah mengatur nilai PPN
+        //     // Panggil fungsi perhitungan setelah mengatur nilai PPN
+        //     calculateTotal();
+        // });
+
+        // Event listener untuk input jumlah dan harga_awal
+        $(document).on('input', 'input[name="jumlah[]"], input[name="harga_awal[]"]', function() {
+            // Panggil fungsi perhitungan setiap kali ada perubahan pada input jumlah atau harga_awal
             calculateTotal();
         });
 
+        $(document).ready(function () {
+            // Panggil fungsi perhitungan saat dokumen siap
+            calculateTotal();
+        });
 
         
         //===============================================================================================

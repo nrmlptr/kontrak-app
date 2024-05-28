@@ -40,7 +40,7 @@
                 </div>
             
                 <div class=" form-group col-1">
-                    <label for="no_sppb">Nomor SPPB</label>
+                    <label for="no_sppb">No.SPPB</label>
                     <input type="text" name="no_sppb[]" class="form-control" value="{{ $l->no_sppb }}"  required >
                 </div>
                 <div class=" form-group col-2">

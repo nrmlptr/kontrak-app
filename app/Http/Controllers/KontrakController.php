@@ -1115,8 +1115,9 @@ class KontrakController extends Controller
                 'lokasi'            => $plant[$key],
                 'harga_awal'        => $harga_awal[$key],
                 'qty'               => $jumlah[$key],
-                'ppn'               => $ppn[$key],
+                'ppn'               => $ppn,
                 'harga_akhir'       => $harga_akhir[$key],
+                'waktu_khs'         => $waktu_khs,
                 'created_at'        => now(),
                 'updated_at'        => now(),
             ];
@@ -1125,11 +1126,20 @@ class KontrakController extends Controller
             Lampiran5::insert($datax);
         }
 
+
+
         // isi kolom total_keseluruhan di tabel kontraks
         $kontrak = Kontrak::find($request->kontraks_id);
         if ($kontrak) {
             $kontrak->total_keseluruhan = $request->total_keseluruhan;
             $kontrak->save();
+        }
+
+        // isi kolom waktu_khs jika jenis_kontraknya 2 == harga satuan
+        if ($kontrak) {
+            if ($kontrak->jenis_kontrak == 2) {
+                $data['waktu_khs'] = $request->waktu_khs;
+            }
         }
 
         return response()->json(['message' => 'Lampiran 5 Berhasil Dibuat']);
@@ -1806,7 +1816,8 @@ class KontrakController extends Controller
     // method show detail kontrak
     public function showKontrak(Request $request, $id)
     {
-
+        // $pasal = PasalKontrak::all();
+        // dd($pasal);
         // Mengambil data kontrak berdasarkan ID yang diberikan
         $data = Kontrak::with([
             'integrates',
@@ -1823,6 +1834,19 @@ class KontrakController extends Controller
             'logs',
             'revisiKontraks'
         ])->findOrFail($id);
+
+        // Ambil pasal yang sesuai dengan kondisi
+        $pasal = PasalKontrak::where('jenis_kontrak', $data->jenis_kontrak)
+            ->where('status_jaminan', $data->status_jaminan)
+            ->orderBy('urutan', 'ASC')
+            ->get();
+
+        // Gabungkan data kontrak dengan pasal yang sesuai
+        $data->pasal = $pasal;
+
+        // dd($data->pasal);
+
+        // dd($data->pasal);
 
         // Mengurutkan koleksi pasal berdasarkan nama_pasal sebelum mengirimkannya ke tampilan
         // $data->pasal = $data->pasal->sortBy('nama_pasal');
@@ -1869,6 +1893,15 @@ class KontrakController extends Controller
             'logs',
             'revisiKontraks'
         ])->findOrFail($id);
+
+        // Ambil pasal yang sesuai dengan kondisi
+        $pasal = PasalKontrak::where('jenis_kontrak', $data->jenis_kontrak)
+            ->where('status_jaminan', $data->status_jaminan)
+            ->orderBy('urutan', 'ASC')
+            ->get();
+
+        // Gabungkan data kontrak dengan pasal yang sesuai
+        $data->pasal = $pasal;
 
         // Mengurutkan koleksi pasal berdasarkan nama_pasal sebelum mengirimkannya ke tampilan
         // $data->pasal = $data->pasal->sortBy('nama_pasal');
@@ -1922,6 +1955,16 @@ class KontrakController extends Controller
             'logs',
             'revisiKontraks'
         ])->findOrFail($id);
+
+        // Ambil pasal yang sesuai dengan kondisi
+        $pasal = PasalKontrak::where('jenis_kontrak', $data->jenis_kontrak)
+            ->where('status_jaminan', $data->status_jaminan)
+            ->orderBy('urutan', 'ASC')
+            ->get();
+
+        // Gabungkan data kontrak dengan pasal yang sesuai
+        $data->pasal = $pasal;
+
 
         // Mengurutkan koleksi pasal berdasarkan nama_pasal sebelum mengirimkannya ke tampilan
         // $data->pasal = $data->pasal->sortBy('nama_pasal');
@@ -1987,6 +2030,15 @@ class KontrakController extends Controller
             'logs',
             'revisiKontraks'
         ])->findOrFail($id);
+
+        // Ambil pasal yang sesuai dengan kondisi
+        $pasal = PasalKontrak::where('jenis_kontrak', $data->jenis_kontrak)
+            ->where('status_jaminan', $data->status_jaminan)
+            ->orderBy('urutan', 'ASC')
+            ->get();
+
+        // Gabungkan data kontrak dengan pasal yang sesuai
+        $data->pasal = $pasal;
 
         // Mengurutkan koleksi pasal berdasarkan nama_pasal sebelum mengirimkannya ke tampilan
         // $data->pasal = $data->pasal->sortBy('nama_pasal');
@@ -2135,6 +2187,14 @@ class KontrakController extends Controller
             'revisiKontraks'
         ])->findOrFail($id);
 
+        // Ambil pasal yang sesuai dengan kondisi
+        $pasal = PasalKontrak::where('jenis_kontrak', $kontrak->jenis_kontrak)
+            ->where('status_jaminan', $kontrak->status_jaminan)
+            ->orderBy('urutan', 'ASC')
+            ->get();
+
+        // Gabungkan data kontrak dengan pasal yang sesuai
+        $kontrak->pasal = $pasal;
 
 
         // Ambil tanggal dari $data
@@ -2250,17 +2310,41 @@ class KontrakController extends Controller
         $pageone        = Storage::put('public/pdf/' . $fileName, $content);
         return $fileName;
     }
+    // private function downloadpasal($data)
+    // {
+    //     $pdf            = PDF::loadview('pasalpdf2', $data);
+    //     $fileName       = "pasal_jenis" . $data['data']->pasal[0]->status_jaminan . ".pdf"; // Nama file yang diinginkan
+    //     $content        = $pdf->download()->getOriginalContent();
+    //     $pasalpdf       = Storage::put('public/pdf/' . $fileName, $content);
+    //     return $fileName;
+    // }
     private function downloadpasal($data)
     {
-        $pdf            = PDF::loadview('pasalpdf2', $data);
-        $fileName       = "pasal_jenis" . $data['data']->pasal[0]->jenis_pasal . ".pdf"; // Nama file yang diinginkan
-        $content        = $pdf->download()->getOriginalContent();
-        $pasalpdf       = Storage::put('public/pdf/' . $fileName, $content);
+        // Ambil data kontrak terkait
+        $kontrak = $data['data'];
+
+        // Ambil jenis_kontrak dan status_jaminan dari kontrak terkait
+        $jenisKontrak = $kontrak->jenis_kontrak;
+        $statusJaminan = $kontrak->status_jaminan;
+
+        // Load view pasalpdf2 dengan data yang diberikan
+        $pdf = PDF::loadview('pasalpdf2', $data);
+
+        // Buat nama file berdasarkan jenis_kontrak dan status_jaminan
+        $fileName = "pasal_jenis" . $jenisKontrak . "_status" . $statusJaminan . ".pdf";
+
+        // Ambil konten asli dari PDF yang diunduh
+        $content = $pdf->download()->getOriginalContent();
+
+        // Simpan PDF ke penyimpanan
+        $pasalpdf = Storage::put('public/pdf/' . $fileName, $content);
+
+        // Kembalikan nama file
         return $fileName;
     }
     private function downloadcontentlampiran1($data)
     {
-       
+
         $fileName       = "lampiran1" . $data['data']->lampiran1[0] . ".pdf"; // Nama file yang diinginkan
 
         $total = 0;

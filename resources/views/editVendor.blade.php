@@ -109,6 +109,21 @@
 
         $(document).ready(function() {
             $('#akta').summernote();
+            // $('#akta').summernote({
+            //    toolbar: [
+            //         ['style', ['style']],
+            //         ['font', ['bold', 'underline', 'clear']],
+            //         ['fontsize', ['fontsize']],
+            //         ['fontname', ['fontname']],
+            //         ['color', ['color']],
+            //         ['para', ['ul', 'ol', 'paragraph']],
+            //         ['table', ['table']],
+            //         ['insert', ['link', 'picture', 'video']],
+            //         ['view', ['fullscreen', 'codeview', 'help']],
+            //     ],
+            // });
+
+
             $.get(`/dataNpwp/{{ $data->registration_no }}`, function(data) {
                 // Pastikan bahwa respons yang diterima dapat diuraikan dengan benar sebagai JSON
                 try {

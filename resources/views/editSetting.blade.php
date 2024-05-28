@@ -84,6 +84,20 @@
         
         $(document).ready(function() {
             $('#akta').summernote();
+            // $('#akta').summernote({
+            //     // height: 300, // Set the height of the editor
+            //    toolbar: [
+            //         ['style', ['style']],
+            //         ['font', ['bold', 'underline', 'clear']],
+            //         ['fontsize', ['fontsize']],
+            //         ['fontname', ['fontname']],
+            //         ['color', ['color']],
+            //         ['para', ['ul', 'ol', 'paragraph']],
+            //         ['table', ['table']],
+            //         ['insert', ['link', 'picture', 'video']],
+            //         ['view', ['fullscreen', 'codeview', 'help']],
+            //     ],
+            // });
         });
     </script>
 @endpush
