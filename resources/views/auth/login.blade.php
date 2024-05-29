@@ -16,12 +16,12 @@
     <link rel="stylesheet" href="{{ asset('lte/dist/css/adminlte.min.css') }}">
 </head>
 
-<body class="hold-transition login-page bg-image" style="background-image: url('{{ asset('lte/dist/img/peruri1.jpg') }}'); background-repeat: no-repeat; background-size: 100% auto;">
+<body class="hold-transition login-page bg-image" style="background-image: url('{{ asset('lte/dist/img/bgspoken.png') }}'); background-repeat: no-repeat; background-size: 100% auto;">
     <div class="login-box">
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <img src="{{ asset('lte/dist/img/logoperuri2.png') }}" height="50">
+                <img src="{{ asset('lte/dist/img/piccardide1.png') }}" height="50">
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
@@ -90,7 +90,8 @@
     <script src="{{ asset('lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('lte/dist/js/adminlte.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('assets/sweetalert2@11.js') }}"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
 
     <!-- notif gagal login -->
     @if($message = Session::get('failed'))

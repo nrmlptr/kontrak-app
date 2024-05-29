@@ -9,10 +9,11 @@
     <title>Monitoring Kontrak System | Pengadaan</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('lte/dist/img/logoperuri.ico') }}"/>
+    <link rel="icon" type="image/x-icon" href="{{ asset('lte/dist/img/logoide1.ico') }}"/>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('lte/plugins/fontawesome-free/css/all.min.css') }}">
@@ -62,6 +63,20 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh; /* Pastikan wrapper mencakup setidaknya tinggi viewport */
+        }
+
+        .brand-text {
+            font-family: 'Poppins', sans-serif; /* Ubah font sesuai keinginan */
+            color: #3498db; /* Warna biru cerah */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Efek bayangan */
+            letter-spacing: 2px; /* Jarak antar huruf */
+            background: linear-gradient(45deg, white, #a55fef, #6098f9); /* Latar belakang gradient */
+            -webkit-background-clip: text;
+            color: transparent;
+            font-weight: 700; /* Tebal font */
+        }
+        .font-weight-light {
+            font-weight: 300; /* Mengatur ketebalan font */
         }
     </style>
 
@@ -127,9 +142,9 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="index3.html" class="brand-link">
-                <img src="{{ asset('lte/dist/img/logoperuri2.png') }}" alt="Peruri Logo" class="brand-image" style="opacity: .8">
-                <hr>
-                <span class="brand-text font-weight-light"></span>
+                <img src="{{ asset('lte/dist/img/logoide1.png') }}" alt="Kontrak Logo" class="brand-image" style="opacity: .8">
+                {{-- <hr> --}}
+                <span class="brand-text font-weight-light">SPOKEN</span>
             </a>
 
             <!-- Sidebar -->

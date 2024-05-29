@@ -74,12 +74,12 @@
                         <a href="{{ route('cetakKontrak',$data->id) }}" target="_blank"  class="btn btn-sm btn-secondary mr-1 mb-3"><i class="nav-icon fas fa-print"></i></i> Cetak Kontrak</a>
                         @if(Auth::user()->permission=='kasek' || Auth::user()->permission=='kadept' || Auth::user()->permission=='kadiv')
                             @if($data->status !== 'approvedkadiv')
-                                <div class="col-xs-6 col-sm-6 col-md-6" style="position:fixed;  z-index: 1; left:65em; top: 10em;">
+                                <div class="" style="position:fixed; z-index: 1; right: 5em; top: 10em; width: 25%;">
                                     <form id="inputRevisi">
                                         @csrf
                                         <input type="hidden" name="kontraks_id" value="{{ $data->id }}">
                                         <div class="row">
-                                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                            <div class="col-12">
                                                 <div class="form-group">
                                                     <label for="revisi">Revisi Kontrak</label>
                                                     <textarea name="revisi" id="revisi" cols="30" rows="10" class="form-control"></textarea>
