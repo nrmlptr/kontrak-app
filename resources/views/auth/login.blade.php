@@ -4,7 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Aplikasi Kontrak | Login</title>
+    <title>SAKTI | Login</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('lte/dist/img/logoide3.ico') }}" sizes="192x192"/>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -21,7 +23,7 @@
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <img src="{{ asset('lte/dist/img/piccardide1.png') }}" height="50">
+                <img src="{{ asset('lte/dist/img/SAKTI.png') }}" height="50">
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>

@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Monitoring Kontrak System | Pengadaan</title>
+    <title>SAKTI | Dept.Pengadaan</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('lte/dist/img/logoide1.ico') }}"/>
+    <link rel="icon" type="image/x-icon" href="{{ asset('lte/dist/img/logoide3.ico') }}" sizes="192x192"/>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -142,9 +142,9 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="index3.html" class="brand-link">
-                <img src="{{ asset('lte/dist/img/logoide1.png') }}" alt="Kontrak Logo" class="brand-image" style="opacity: .8">
+                <img src="{{ asset('lte/dist/img/logoide3.png') }}" alt="Kontrak Logo" class="brand-image" style="opacity: .8">
                 {{-- <hr> --}}
-                <span class="brand-text font-weight-light">SPOKEN</span>
+                <span class="brand-text font-weight-light">SAKTI</span>
             </a>
 
             <!-- Sidebar -->
