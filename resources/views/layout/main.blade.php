@@ -283,21 +283,26 @@
                             </li>
                         @endif
                             
-                        {{-- MENU CONTROL USER DAN PASAL  --}}
-                        @if(Auth::user()->permission=='admin')
+                        {{-- MENU CONTROL PASAL  --}}
+                        @if(Auth::user()->permission=='admin' || Auth::user()->permission=='writer')
                             <li class="nav-header">MENU TAMBAHAN</li>
-                            <li class="nav-item">
-                                <a href="{{ route('index') }}" class="nav-link">
-                                    <i class=" fas fa-user"></i>
-                                    <p>User</p>
-                                </a>
-                            </li>
                             <li class="nav-item">
                                 <a href="{{ route('vPasal') }}" class="nav-link">
                                     <i class=" fas fa-book"></i>
                                     <p>Pasal</p>
                                 </a>
                             </li> 
+                        @endif
+
+                         {{-- MENU CONTROL USER --}}
+                        @if(Auth::user()->permission=='admin')
+                            {{-- <li class="nav-header">MENU TAMBAHAN</li> --}}
+                            <li class="nav-item">
+                                <a href="{{ route('index') }}" class="nav-link">
+                                    <i class=" fas fa-user"></i>
+                                    <p>User</p>
+                                </a>
+                            </li>
                         @endif
 
                         <hr>

@@ -92,8 +92,8 @@
                 <div class="row">
                     
                     <!-- kotak buat grafik proses kontrak -->
-                    <div class="col-md-6 col-sm-6">
-                        <div class="x_panel">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="x_panel"> 
                             <div class="x_title">
                                 <figure class="highcharts-figure">
                                     <div id="grafikStatus"></div>
@@ -101,6 +101,9 @@
                             </div>
                         </div>
                     </div>  
+ 
+                </div>
+                <div class="row">
                     <!-- kotak untuk grafik kontrak per status jaminan -->
                     <div class="col-md-6 col-sm-6  ">
                         <div class="x_panel">
@@ -113,9 +116,6 @@
                             </div>
                         </div>
                     </div>   
-                </div>
-                <div class="row">
-                    
                     <!-- kotak buat grafik kontrak per jenis kontrak -->
                     <div class="col-md-6 col-sm-6">
                         <div class="x_panel">
@@ -126,8 +126,12 @@
                             </div>
                         </div>
                     </div>  
+                     
+                </div>
+
+                <div class="row">
                     <!-- kotak untuk grafik per nama vendor -->
-                    <div class="col-md-6 col-sm-6  ">
+                    <div class="col-md-12 col-sm-12  ">
                         <div class="x_panel">
                             <div class="x_title">
                                 <figure class="highcharts-figure">
@@ -137,23 +141,20 @@
                                 </figure>
                             </div>
                         </div>
-                    </div>   
-                </div>
+                    </div>  
 
-                <div class="row">
-                    
                     <!-- kotak buat grafik kontrak per jenis kontrak -->
-                    <div class="col-md-6 col-sm-6">
+                    {{-- <div class="col-md-6 col-sm-6">
                         <div class="x_panel">
                             <div class="x_title">
                                 <figure class="highcharts-figure">
-                                    <div id="container"></div>
+                                    <div id=""></div>
                                 </figure>
                             </div>
                         </div>
-                    </div>  
+                    </div>   --}}
                     <!-- kotak untuk grafik per nama vendor -->
-                    <div class="col-md-6 col-sm-6  ">
+                    {{-- <div class="col-md-6 col-sm-6  ">
                         <div class="x_panel">
                             <div class="x_title">
                                 <figure class="highcharts-figure">
@@ -163,7 +164,7 @@
                                 </figure>
                             </div>
                         </div>
-                    </div>   
+                    </div>    --}}
                 </div>
                 <!-- /.row (main row) -->
             </div><!-- /.container-fluid -->
@@ -197,13 +198,46 @@
 
     // GRAFIK STATUS KONTRAK 
     $(document).ready(function() {
-         Highcharts.chart('grafikStatus', {
+        // Deskripsi status disimpan dalam objek terpisah
+        var statusDescriptions = {
+            'draft': 'Tahap Pembuatan Kontrak dan Lampiran.',
+            'reviewkasek' :      'Tahap Pemeriksaan Kasek.',
+            'revisikasek':      'Kasek Memberi Revisi Pada Kontrak.',
+            'editedkasek':      'Staff/Admin yang membuat kontrak telah Perbarui Kontrak Sesuai Revisi Kasek.',
+            'approvedkasek':    'Tahap Submit Kontrak oleh Kasek.',
+            'reviewkadept':     'Tahap Pemeriksaan Kadept.',
+            'revisikadept':     'Kadept Memberi Revisi Pada Kontrak.',
+            'editedkadept':     'Staff/Admin yang membuat kontrak telah Perbarui Kontrak Sesuai Revisi Kadept.',
+            'approvedkadept':   'Tahap Submit Kontrak oleh Kadept.',
+            'reviewkadiv':      'Tahap Pemeriksaan Kadiv.',
+            'revisikadiv':      'Kadiv Memberi Revisi Pada Kontrak.',
+            'editedkadiv':     'Staff/Admin yang membuat kontrak telah Perbarui Kontrak Sesuai Revisi Kadiv.',
+        };
+
+        Highcharts.chart('grafikStatus', {
             chart: {
                 type: 'pie'
             },
             title: {
               text: 'PROSES PEMBUATAN KONTRAK'
             },
+            // subtitle: {
+            //     text: '<hr><b>Draft:</b> Kontrak sudah dibuat, sedang proses pembuatan lampiran oleh staff.<br>' +
+            //         '<b>Review:</b> Kontrak sedang dalam tahap review oleh manajer.<br>' +
+            //         '<b>Approved:</b> Kontrak sudah disetujui dan siap untuk ditandatangani.<br>' +
+            //         '<b>Signed:</b> Kontrak sudah ditandatangani oleh kedua belah pihak.<br>' +
+            //         '<b>Completed:</b> Semua proses pembuatan kontrak telah selesai.',
+            //     useHTML: true,
+            //     align: 'left',
+            //     verticalAlign: 'bottom',
+            //     x: 0,
+            //     y: 20,
+            //     style: {
+            //         fontSize: '0.9em',
+            //         color: '#333333',
+            //         lineHeight: '1.5em'  // Menambahkan jarak antar baris
+            //     }
+            // },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.y}</b>'
             },
@@ -219,9 +253,27 @@
                             textOutline: 'none',
                             opacity: 0.7
                         }
-                    }
+                    },
+                    showInLegend: true
                 }
             },
+            // legend: {
+            //     enabled: true,
+            //     layout: 'vertical',
+            //     align: 'right',
+            //     verticalAlign: 'middle',
+            //     itemStyle: {
+            //         fontSize: '1.1em',
+            //         fontWeight: 'bold',
+            //         color: '#333333'
+            //     },
+            //     itemMarginTop: 10,
+            //     itemMarginBottom: 10,
+            //     labelFormatter: function() {
+            //         // Menggunakan this.name untuk mendapatkan deskripsi dari objek statusDescriptions
+            //         return this.name + ': ' + (statusDescriptions[this.name] || 'Deskripsi tidak tersedia');
+            //     }
+            // },
             series: [{
                 name: 'Jumlah',
                 colorByPoint: true,
