@@ -6,12 +6,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <!-- <h1 class="m-0">Data Pengguna Sistem</h1> -->
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('indexSOP') }}">Back</a></li>
-                        <li class="breadcrumb-item active">Detail PR</li>
+                        <li class="breadcrumb-item active">Detail PR - SOP</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->

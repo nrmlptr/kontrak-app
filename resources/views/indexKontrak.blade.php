@@ -6,7 +6,6 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <!-- <h1 class="m-0">Data Pengguna Sistem</h1> -->
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -117,7 +116,7 @@
                             <table id="kontrakdatatable" class="table table-bordered table-striped">
                                 <thead align="center">
                                     <tr>                                        
-                                        @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin')
+                                        @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('writer'))
                                             <th style="width: 10%">U/D</th>
                                             <th>Aksi</th>
                                         @endif
@@ -132,7 +131,6 @@
                                         <th>Unit Kerja</th>
                                         <th>Jenis Kontrak</th>
                                         <th>Status Jaminan</th>
-                                        {{-- <th>Status</th> --}}
                                         <th>Total Harga (Incl PPN)</th>
                                     </tr>
                                 </thead>
@@ -140,7 +138,7 @@
                                     @foreach($data as $d)
                                         <tr>
                                             
-                                            @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin')
+                                            @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('writer'))
                                                 @if($d->status == 'approvedkadiv')
                                                     <td class="d-none d-sm-table-cell">
                                                         <span class="badge badge-warning mb-2"> Status Doc : 
@@ -163,7 +161,7 @@
                                                     $cekPembuat = Auth::user()->name;
                                                 @endphp
                                                 {{-- buat kondisi untuk admin dan writer karena ada tombol addLampiran jadi disitu dicek dlu apakah kontrak tersebut pembuatnya sama dengan name user yang lagi login? kalau iya, baru bisa addLampiran atau hapus, kalau engga berarti forbidden --}}
-                                                @if($d->pembuat == $cekPembuat || Auth::user()->permission=='admin') 
+                                                @if($d->pembuat == $cekPembuat || Auth::user()->hasRole('admin')) 
                                                     <td><a data-toggle="modal" data-target="#modal-hapus-kontrak{{$d->id }}" class="btn btn-sm btn-danger" title="Hapus Kontrak"><i class="fas fa-trash-alt"></i></a><br>
                                                     {{-- Check if Lampiran7 exists for this kontraks_id --}}
                                                     @php
@@ -245,36 +243,7 @@
                                                     <span class="badge badge-secondary">Tanpa Jaminan</span>
                                                 @endif
                                             </td>
-                                            {{-- <td>
-                                                @if($d->status == 'draft')
-                                                    <span class="badge badge-warning">draft</span>
-                                                @elseif($d->status == 'reviewkasek')
-                                                    <span class="badge badge-info">Review Kasek</span>
-                                                @elseif($d->status == 'revisikasek')
-                                                    <span class="badge badge-danger">Revisi by Kasek</span>
-                                                @elseif($d->status == 'editedkasek')
-                                                    <span class="badge badge-warning">Diperiksa ulang by Kasek</span>
-                                                @elseif($d->status == 'approvedkasek')
-                                                    <span class="badge badge-success">Disetujui Kasek</span>
-                                                @elseif($d->status == 'reviewkadept')
-                                                    <span class="badge badge-info">Review Kadept</span>
-                                                @elseif($d->status == 'revisikadept')
-                                                    <span class="badge badge-danger">Revisi by Kadept</span>
-                                                @elseif($d->status == 'editedkadept')
-                                                    <span class="badge badge-warning">Diperiksa ulang by Kasek</span>
-                                                @elseif($d->status == 'approvedkadept')
-                                                    <span class="badge badge-success">Disetujui Kadept</span>
-                                                @elseif($d->status == 'reviewkadiv')
-                                                    <span class="badge badge-info">Review Kadiv</span>
-                                                @elseif($d->status == 'revisikadiv')
-                                                    <span class="badge badge-danger">Revisi by Kadiv</span>
-                                                @elseif($d->status == 'editedkadiv')
-                                                    <span class="badge badge-warning">Diperiksa ulang by Kasek</span>
-                                                @else
-                                                    <span class="badge badge-success">Disetujui Kadiv (NET)</span>
-                                                @endif
-                                            </td> --}}
-                                            <th>{{ @formatRupiah($d->total_keseluruhan) }}</th>
+                                            <td>{{ @formatRupiah($d->total_keseluruhan) }}</td>
                                            
                                         </tr>
                                         <div class="modal fade" id="modal-hapus-kontrak{{ $d->id }}">
@@ -423,43 +392,6 @@
                 ]
             });
         });
-
-
-        // $(document).ready(function() {
-        //     $('#kontrakdatatable').DataTable({
-        //         "paging": true,
-        //         "lengthChange": true,
-        //         "pageLength": 10,
-        //         "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'semua']],
-        //         "searching": true,
-        //         "ordering": false,
-        //         "info": true,
-        //         "autoWidth": false,
-        //         "responsive": true,
-        //         "processing": true,
-        //         "dom": '<"top"Blf<"clear">>rt<"bottom"ip<"clear">>',
-        //         "buttons": [
-        //             {
-        //                 extend: 'excel',
-        //                 filename: 'Data_Kontrak_Dept_Pengadaan',
-        //                 title: 'Data Kontrak | Dept Pengadaan',
-        //                 exportOptions: {
-        //                     columns: [ 2,3,4,5,6,7,8,9,10,11,12,13]
-        //                 }
-        //             },
-        //             {
-        //                 extend: 'pdf',
-        //                 filename: 'Data_Kontrak_Dept_Pengadaan',
-        //                 title: 'Data Kontrak | Dept Pengadaan',
-        //                 orientation: 'landscape',
-        //                 exportOptions: {
-        //                     columns: [ 2,3,4,5,6,7,8,9,10,11,12,13]
-        //                 }
-        //             }
-        //         ]
-        //     });
-        // });
-
 
     </script>
 

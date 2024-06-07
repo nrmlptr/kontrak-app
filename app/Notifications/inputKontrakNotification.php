@@ -11,7 +11,6 @@ class inputKontrakNotification extends Notification
 {
     use Queueable;
 
-    // private $pembuat;
     private $pembuatKontrak;
     private $notifKasek;
 
@@ -23,7 +22,6 @@ class inputKontrakNotification extends Notification
         //
 
         $this->notifKasek = $notifKasek;
-        // $this->pembuat = $pembuat;
         $this->pembuatKontrak = $pembuatKontrak;
     }
 

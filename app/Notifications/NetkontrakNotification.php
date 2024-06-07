@@ -13,7 +13,6 @@ class NetkontrakNotification extends Notification
 
     private $sender;
     private $kontrak;
-    // private $penerimaNotif;
 
     /**
      * Create a new notification instance.
@@ -23,7 +22,6 @@ class NetkontrakNotification extends Notification
         //
         $this->sender  = $sender;
         $this->kontrak = $kontrak;
-        // $this->penerimaNotif = $penerimaNotif;
     }
 
     /**
@@ -54,11 +52,14 @@ class NetkontrakNotification extends Notification
      */
     public function toArray(object $notifiable): array
     {
+
+        $senderRoles = $this->sender->roles->pluck('name')->implode(', ');
+
         return [
-            //
+
             'title'     => 'Kontrak Telah Disetujui (NET KADIV)!',
             'kontrak'   => $this->kontrak->id,
-            'messages'  => 'Kontrak dengan Nomor ' . $this->kontrak->detail_number . ' Telah di Approved NET Oleh  ' . $this->sender->name . ' Selaku ' . $this->sender->permission . '. Terimakasih!',
+            'messages'  => 'Kontrak dengan Nomor ' . $this->kontrak->detail_number . ' Telah di Approved NET Oleh  ' . $this->sender->name . ' Selaku ' . $senderRoles . '. Terimakasih!',
             'url'       => route('showKontrakNotif', $this->kontrak->id),
         ];
     }

@@ -115,7 +115,8 @@
                             <table id="kontrakOPdatatable" class="table table-bordered table-striped">
                                 <thead align="center">
                                     <tr>                                        
-                                        @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin')
+                                        {{-- @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin') --}}
+                                        @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('writer'))
                                             <th style="width: 10%">U/D</th>
                                             <th>Aksi</th>
                                         @endif
@@ -139,7 +140,8 @@
                                     @foreach($data as $d)
                                         <tr>
                                             
-                                            @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin')
+                                            {{-- @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin') --}}
+                                            @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('writer'))
                                                 @if($d->status == 'approvedkadiv')
                                                     <td class="d-none d-sm-table-cell">
                                                         <span class="badge badge-warning mb-2"> Status Doc : 
@@ -162,7 +164,7 @@
                                                     $cekPembuat = Auth::user()->name;
                                                 @endphp
                                                 {{-- buat kondisi untuk admin dan writer karena ada tombol addLampiran jadi disitu dicek dlu apakah kontrak tersebut pembuatnya sama dengan name user yang lagi login? kalau iya, baru bisa addLampiran atau hapus data kontrak, kalau engga berarti forbidden --}}
-                                                @if($d->pembuat == $cekPembuat)
+                                                @if($d->pembuat == $cekPembuat || Auth::user()->hasRole('admin'))
                                                     <td><a data-toggle="modal" data-target="#modal-hapus-kontrak{{$d->id }}" class="btn btn-sm btn-danger" title="Hapus Kontrak"><i class="fas fa-trash-alt"></i></a><br>
                                                     {{-- Check if Lampiran7 exists for this kontraks_id --}}
                                                     @php

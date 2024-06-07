@@ -6,15 +6,13 @@ use App\Models\Integrate;
 use App\Models\Kontrak;
 use App\Models\PasalKontrak;
 use App\Models\User;
-use App\Models\Vendor;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-// use Illuinate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
-    //
     public function dashboard()
     {
 
@@ -26,10 +24,6 @@ class HomeController extends Controller
 
         // ambil nilai data kontrak yang statusnya selain approvedkadiv
         $dataKontrakProses = Kontrak::whereNotIn('status', ['approvedkadiv'])->get();
-
-
-        // Ambil data kontrak dari tabel kontrak
-        // $dataKontrak = Kontrak::all();
 
         // Ubah struktur data untuk sesuaikan dengan format yang diterima oleh Highcharts
         $dataStatus = $dataKontrak->groupBy('status')->map(function ($group) {
@@ -58,31 +52,26 @@ class HomeController extends Controller
         $topVendors = $KontrakPerVendor->sortDesc()->take(10);
 
         // dd(auth()->user()->getRoleNames());
-        return view('dashboard', compact('dataKontrak', 'dataSOP', 'dataKontrakAKDV', 'dataKontrakProses', 'dataStatus', 'KontrakPerStatusJaminan', 'KontrakperJenisKontrak', 'topVendors'));
+        return view('dashboard.dashboard', compact('dataKontrak', 'dataSOP', 'dataKontrakAKDV', 'dataKontrakProses', 'dataStatus', 'KontrakPerStatusJaminan', 'KontrakperJenisKontrak', 'topVendors'));
     }
 
 
-    // method view data user
+    // FUNGSI VIEW ALL DATA USER ===============================================================================================
     public function index()
     {
-        // echo 'ini method index';
-
-        // if (auth()->user()->can('view_user')) {
         $data = User::get();
-        return view('index', compact('data'));
-        // }
-
-        // return abort(403);
-
+        return view('users.index', compact('data'));
     }
 
-    // method buka form adduser
+    // FUNGSI VIEW ADD DATA USER ===============================================================================================
     public function addUser()
     {
-        return view('addUser');
+        $roles = Role::All();
+        // dd($roles);
+        return view('users.addUser', compact('roles'));
     }
 
-    // method save adduser
+    // FUNGSI SAVE INPUTAN DATA USER ===========================================================================================
     public function loadUser(Request $request)
     {
         // dd($request->all());
@@ -92,7 +81,7 @@ class HomeController extends Controller
             'email.required'        => 'Kolom email harus diisi.',
             'unit_kerja.required'   => 'Kolom unit kerja harus diisi.',
             'password.required'     => 'Kolom password harus diisi.',
-            'permission.required'   => 'Kolom permission harus diisi.'
+            // 'permission.required'   => 'Kolom permission harus diisi.'
         ];
 
         $validator = Validator::make($request->all(), [
@@ -101,23 +90,33 @@ class HomeController extends Controller
             'email'         => 'required|email',
             'unit_kerja'    => 'required',
             'password'      => 'required',
-            'permission'    => 'required'
+            // 'permission'    => 'required',
+            'roles' => 'required',
         ], $messages);
 
         if ($validator->fails())
-            // flash()->addFlash('error', 'Gagal menyimpan data user, pastikan semua kolom terisi!');
             return redirect()->back()->withInput()->withErrors($validator);
 
 
         // yang berada dalam index array merupakan field yg ada di db
-        $data['name']           = $request->nama;
-        $data['username']       = $request->username;
-        $data['email']          = $request->email;
-        $data['unit_kerja']     = $request->unit_kerja;
-        $data['password']       = Hash::make($request->password);
-        $data['permission']     = $request->permission;
+        // $data['name']           = $request->nama;
+        // $data['username']       = $request->username;
+        // $data['email']          = $request->email;
+        // $data['unit_kerja']     = $request->unit_kerja;
+        // $data['password']       = Hash::make($request->password);
+        // $data['permission']     = $request->permission;
 
-        User::create($data);
+        // User::create($data);
+
+        $user = User::create([
+            'name'          => $request->nama,
+            'username'      => $request->username,
+            'email'         => $request->email,
+            'unit_kerja'    => $request->unit_kerja,
+            'password'      => Hash::make($request->password),
+        ]);
+
+        $user->roles()->sync($request->roles);
 
         // NOTIFIKASI
         flash()->addFlash('success', 'Berhasil Menyimpan Data User!');
@@ -125,21 +124,23 @@ class HomeController extends Controller
         return redirect()->route('index');
     }
 
-
-    // method buka form edituser
+    // FUNGSI VIEW EDIT DATA USER ===============================================================================================
     public function editUser(Request $request, $id)
     {
-        $data = User::find($id);
+        $data   = User::find($id);
+        $roles  = Role::All();
 
         // dd($data);    -> cek datanya keambil gak?
 
-        return view('editUser', compact('data'));
+        return view('users.editUser', compact('data', 'roles'));
     }
 
-    // method proses simpan data edit user
+    // FUNGSI SIMPAN EDITAN DATA USER ===========================================================================================
     public function updateUser(Request $request, $id)
     {
         // dd($request->all()); //cek datanya berhasil kekirim gak?
+        // Ambil user berdasarkan ID
+        $user = User::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
             'nama'          => 'required',
@@ -147,7 +148,8 @@ class HomeController extends Controller
             'email'         => 'required|email',
             'unit_kerja'    => 'required',
             'password'      => 'nullable',
-            'permission'    => 'required'
+            // 'permission'    => 'required',
+            'roles'         => 'required'
         ]);
 
         if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
@@ -164,8 +166,13 @@ class HomeController extends Controller
         }
 
         // dd($data);
+        // update user data
+        // User::whereId($id)->update($data);
 
-        User::whereId($id)->update($data);
+        $user->update($data);
+
+        // sinkronisasi roles di tabel role_user
+        $user->roles()->sync($request->roles);
 
         // NOTIFIKASI 
         flash()->addFlash('success', 'Berhasil Perbarui Data User!');
@@ -174,6 +181,7 @@ class HomeController extends Controller
     }
 
 
+    // FUNGSI DELETE DATA USER ===============================================================================================
     public function deleteUser(Request $request, $id)
     {
         $data = User::find($id);
@@ -188,30 +196,39 @@ class HomeController extends Controller
         return redirect()->route('index');
     }
 
-
-
+    // FUNGSI VIEW ALL DATA PASAL ==========================================-==================================================
     public function vPasal(Request $request)
     {
+        // Inisialisasi query dasar untuk PasalKontrak
+        $query = PasalKontrak::query();
 
-        $dataPasal = PasalKontrak::get();
-        // dd($dataPasal)->count();
-        // dd($dataPasal);
+        // dd($query);
 
-
-        // search by jenis pasal (jaminan atau tanpa jaminan)
-        if ($request->jenis_pasal) {
-            $data = PasalKontrak::where('jenis_pasal', 'LIKE', '%' . $request->jenis_pasal . '%')->get();
+        // Filter berdasarkan jenis_kontrak jika parameter ada dalam request
+        if ($request->jenis_kontrak) {
+            $query->where('jenis_kontrak', 'LIKE', '%' . $request->jenis_kontrak . '%');
         }
 
+        // Filter berdasarkan status_jaminan jika parameter ada dalam request
+        if ($request->status_jaminan) {
+            $query->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%');
+        }
 
-        return view('dPasal', compact('dataPasal'));
+        // Eksekusi query dan dapatkan hasil
+        $dataPasal = $query->get();
+
+        // dd($dataPasal);
+        // Kirim hasil filter ke view
+        return view('pasal.dPasal', compact('dataPasal'));
     }
 
+    // FUNGSI VIEW ADD DATA PASAL =============================================================================================
     public function addPasal()
     {
-        return view('addPasal');
+        return view('pasal.addPasal');
     }
 
+    // FUNGSI SAVE INPUTAN DATA PASAL =========================================================================================
     public function loadPasal(Request $request)
     {
         // dd($request->all());
@@ -235,7 +252,6 @@ class HomeController extends Controller
         ], $messagesPasal);
 
         if ($validator->fails())
-            // flash()->addFlash('error', 'Gagal menyimpan data pasal, pastikan semua kolom terisi!');
             return redirect()->back()->withInput()->withErrors($validator);
 
         // yang berada dalam index array merupakan field yg ada di db
@@ -254,15 +270,17 @@ class HomeController extends Controller
         return redirect()->route('vPasal');
     }
 
+    // FUNGSI VIEW EDIT DATA PASAL =============================================================================================
     public function editPasal(Request $request, $id)
     {
         $data = PasalKontrak::find($id);
 
         // dd($data);    
 
-        return view('editPasal', compact('data'));
+        return view('pasal.editPasal', compact('data'));
     }
 
+    // FUNGSI SAVE EDITAN DATA PASAL ==========================================-==================================================
     public function updatePasal(Request $request, $id)
     {
         // dd($request->all());
@@ -295,6 +313,7 @@ class HomeController extends Controller
         return redirect()->route('vPasal');
     }
 
+    // FUNGSI DELETE DATA PASAL =============================================================================================
     public function deletePasal(Request $request, $id)
     {
         $data = PasalKontrak::find($id);

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -66,7 +65,6 @@ class Kontrak extends Model
 
     public function pasal()
     {
-        // return $this->hasMany(PasalKontrak::class, 'jenis_kontrak', 'jenis_kontrak');
         return $this->hasMany(PasalKontrak::class, 'jenis_kontrak', 'jenis_kontrak')
             ->where('status_jaminan', $this->status_jaminan);
     }
@@ -113,14 +111,4 @@ class Kontrak extends Model
             ->groupByRaw('YEAR(date_kontrak)')
             ->get();
     }
-
-    // public function log()
-    // {
-    //     return $this->hasMany(LogContract::class, 'kontraks_id'); // Menggunakan hasMany karena satu kontrak dapat memiliki banyak log
-    // }
-
-    // public function log()
-    // {
-    //     return $this->hasMany(LogContract::class, 'kontraks_id');
-    // }
 }

@@ -6,7 +6,6 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <!-- <h1 class="m-0">Data Pengguna Sistem</h1> -->
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -77,7 +76,6 @@
                                     <div class="row align-items-center">
                                         <div class="col-12">
                                             <label for="">Tanggal SP</label>
-                                            {{-- <hr> --}}
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -92,7 +90,6 @@
                                             </div>
                                         </div>
                                         <div class="col-md-4 mt-3 input-group-append">
-                                            {{-- <br> --}}
                                             <button type="submit" class="btn btn-primary" title="Search Data"><i class="fa fa-search"></i></button>
                                         </div>
                                     </div>
@@ -101,7 +98,7 @@
                             <table id="kontrakAKdatatable" class="table table-bordered table-striped">
                                 <thead align="center">
                                     <tr>
-                                        @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin')
+                                        @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('writer'))
                                             <th style="width: 8%;">Action</th>
                                         @endif
                                         <th>No</th>
@@ -122,7 +119,7 @@
                                 <tbody align="center">
                                     @foreach($data as $d)
                                         <tr>
-                                            @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin')
+                                            @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('writer'))
                                                 <td class="d-none d-sm-table-cell">
                                                     <span class="badge badge-warning mb-2">
                                                         StatusDoc:
@@ -200,35 +197,6 @@
                                                     <span class="badge badge-secondary">Tanpa Jaminan</span>
                                                 @endif
                                             </td>
-                                            {{-- <td>
-                                                @if($d->status == 'draft')
-                                                    <span class="badge badge-warning">draft</span>
-                                                @elseif($d->status == 'reviewkasek')
-                                                    <span class="badge badge-info">Review Kasek</span>
-                                                @elseif($d->status == 'revisikasek')
-                                                    <span class="badge badge-danger">Revisi by Kasek</span>
-                                                @elseif($d->status == 'editedkasek')
-                                                    <span class="badge badge-warning">Diperiksa ulang by Kasek</span>
-                                                @elseif($d->status == 'approvedkasek')
-                                                    <span class="badge badge-success">Disetujui Kasek</span>
-                                                @elseif($d->status == 'reviewkadept')
-                                                    <span class="badge badge-info">Review Kadept</span>
-                                                @elseif($d->status == 'revisikadept')
-                                                    <span class="badge badge-danger">Revisi by Kadept</span>
-                                                @elseif($d->status == 'editedkadept')
-                                                    <span class="badge badge-warning">Diperiksa ulang by Kasek</span>
-                                                @elseif($d->status == 'approvedkadept')
-                                                    <span class="badge badge-success">Disetujui Kadept</span>
-                                                @elseif($d->status == 'reviewkadiv')
-                                                    <span class="badge badge-info">Review Kadiv</span>
-                                                @elseif($d->status == 'revisikadiv')
-                                                    <span class="badge badge-danger">Revisi by Kadiv</span>
-                                                @elseif($d->status == 'editedkadiv')
-                                                    <span class="badge badge-warning">Diperiksa ulang by Kasek</span>
-                                                @else
-                                                    <span class="badge badge-success">Disetujui Kadiv (NET)</span>
-                                                @endif
-                                            </td> --}}
                                             <th>{{ @formatRupiah($d->total_keseluruhan) }}</th>
                                         </tr>
                                         <div class="modal fade" id="modal-upload-doc{{ $d->id }}">

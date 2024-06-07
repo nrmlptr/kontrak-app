@@ -6,7 +6,6 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <!-- <h1 class="m-0">Data Pengguna Sistem</h1> -->
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -55,7 +54,6 @@
                                     <div class="row align-items-center">
                                         <div class="col-12">
                                             <label for="">Tanggal SOP</label>
-                                            {{-- <hr> --}}
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -70,7 +68,6 @@
                                             </div>
                                         </div>
                                         <div class="col-md-4 mt-3 input-group-append">
-                                            {{-- <br> --}}
                                             <button type="submit" class="btn btn-primary" title="Search Data"><i class="fa fa-search"></i></button>
                                         </div>
                                     </div>
@@ -90,18 +87,16 @@
                                 </thead>
                                 <tbody align="center">
                                     @foreach($data as $d)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $d->purchasing_document_number }}</td>
-                                        <td style="width: 12%;">{{ date('d-m-Y', strtotime($d->document_date)) }}</td>
-                                        <td>{{ $d->tender_name }}</td>
-                                        <td>{{ $d->vendor_name }}</td>
-                                        {{-- <td>{{ count(explode(',', $d->purchase_requisition_number)) }}</td> --}}
-                                        {{-- <td>{{ $d->purchase_requisition_number->count() }}</td> --}}
-                                        <td>
-                                            <a href="{{ route('detailPR', ['purchasing_document_number' =>          $d->purchasing_document_number]) }}" class="btn btn-sm btn-info" title="Detail PR"><i class="fas fa-info-circle"></i></a>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $d->purchasing_document_number }}</td>
+                                            <td style="width: 12%;">{{ date('d-m-Y', strtotime($d->document_date)) }}</td>
+                                            <td>{{ $d->tender_name }}</td>
+                                            <td>{{ $d->vendor_name }}</td>
+                                            <td>
+                                                <a href="{{ route('detailPR', ['purchasing_document_number' =>          $d->purchasing_document_number]) }}" class="btn btn-sm btn-info" title="Detail PR"><i class="fas fa-info-circle"></i></a>
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>

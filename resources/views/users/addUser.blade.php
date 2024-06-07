@@ -11,7 +11,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
                         <li class="breadcrumb-item active">Add User</li>
                     </ol>
                 </div><!-- /.col -->
@@ -62,9 +62,9 @@
                                         <label for="unit_kerja">Unit Kerja</label>
                                         <select class="form-control" name="unit_kerja" id="unit_kerja" required>
                                             <option value=""><b>-- Pilih Unit Kerja --</b></option>
-                                            <option value="41A">Admin</option>
-                                            <option value="41AKDV">Kepala Divisi</option>
-                                            <option value="41A00">Kepala Department</option>
+                                            {{-- <option value="41A">Admin</option> --}}
+                                            <option value="4100">Kepala Divisi</option>
+                                            <option value="41KDP">Kepala Department</option>
                                             <option value="41A10">Investasi</option>
                                             <option value="41A20">Jasa Barum</option>
                                             <option value="41A30">Lokal</option>
@@ -77,15 +77,21 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="NamaPengguna">Role</label>
-                                        <select class="form-control" name="permission" id="permission" required>
+                                        {{-- <select class="form-control" name="permission" id="permission" required>
                                             <option value=""><b>-- Pilih Role --</b></option>
                                             <option value="admin">admin</option>
                                             <option value="writer">writer</option>
                                             <option value="kasek">kasek</option>
                                             <option value="kadept">kadept</option>
                                             <option value="kadiv">kadiv</option>
+                                        </select> --}}
+                                        <select name="roles" class="form-control" required>
+                                            <option value=""><b>-- Pilih Role --</b></option>
+                                            @foreach($roles as $role)
+                                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                            @endforeach
                                         </select>
-                                        @error('permission')
+                                        @error('roles')
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>

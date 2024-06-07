@@ -156,7 +156,7 @@
                     </div> -->
                     <div class="info">
                         <span class="badge badge-info">Hallo, {{ Auth::user()->name .' - '. Auth::user()->unit_kerja }}</span><br>
-                        <span class="badge badge-secondary mt-2">Your Role as {{ Auth::user()->permission }}</span>
+                        <span class="badge badge-secondary mt-2">Your Role as {{ implode(', ', Auth::user()->roles->pluck('name')->toArray()) }}</span>
                         <a href="#" class="d-block"></a>
                     </div>
                 </div>
@@ -172,7 +172,9 @@
                         </div>
                     </div>
                 </div> --}}
-
+                @php
+                    $permissions = Auth::user()->getPermissions();
+                @endphp
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -186,7 +188,6 @@
                                 </p>
                             </a>
                         </li>
-                        <hr>
                         {{-- MENU INPUT KONTRAK DAN LAMPIRAN --}}
                         <li class="nav-header">MENU KONTRAK MANAGEMENT</li>
                         <li class="nav-item">
@@ -207,7 +208,9 @@
                                     </a>
                                 </li>
 
-                                @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin')
+                                {{-- @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin') --}}
+                                {{-- @if(in_array('view-addKontrak', $permissions)) --}}
+                                @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('writer'))
                                     <li class="nav-item">
                                         <a href="{{ route('creatKontrak') }}" class="nav-link">
                                             <i class="nav-icon fas fa-edit"></i>
@@ -256,7 +259,9 @@
                         </li>
 
                         {{-- MENU SETTING AKTA VENDOR DAN PERURI --}}
-                        @if(Auth::user()->permission == 'admin' || Auth::user()->permission == 'writer')
+                        {{-- @if(Auth::user()->permission == 'admin' || Auth::user()->permission == 'writer') --}}
+                        @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('writer'))
+
                             <li class="nav-header">MENU AKTA MANAGEMENT</li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
@@ -284,7 +289,8 @@
                         @endif
                             
                         {{-- MENU CONTROL PASAL  --}}
-                        @if(Auth::user()->permission=='admin' || Auth::user()->permission=='writer')
+                        {{-- @if(Auth::user()->permission=='admin' || Auth::user()->permission=='writer') --}}
+                        @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('writer'))
                             <li class="nav-header">MENU TAMBAHAN</li>
                             <li class="nav-item">
                                 <a href="{{ route('vPasal') }}" class="nav-link">
@@ -294,14 +300,39 @@
                             </li> 
                         @endif
 
-                         {{-- MENU CONTROL USER --}}
-                        @if(Auth::user()->permission=='admin')
-                            {{-- <li class="nav-header">MENU TAMBAHAN</li> --}}
+                        {{-- MENU CONTROL USER --}}
+                        @if(Auth::user()->hasRole('admin'))
+                        {{-- @if(Auth::user()->permission=='admin') --}}
+                            <br>
+                            <li class="nav-header">MENU USER MANAGEMENT</li>
                             <li class="nav-item">
-                                <a href="{{ route('index') }}" class="nav-link">
-                                    <i class=" fas fa-user"></i>
-                                    <p>User</p>
+                                <a href="#" class="nav-link">
+                                    <i class="fas fa-user"></i>
+                                    <p>
+                                        <span style="margin-left: 5px;">USER MANAGEMENT</span>
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
                                 </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('index') }}" class="nav-link">
+                                            <i class=" fas fa-user"></i>
+                                            <p>User</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ route('role') }}" class="nav-link">
+                                            <i class="fas fa-burn"></i>
+                                            <p>Role</p>
+                                        </a>
+                                    </li>
+                                    {{-- <li class="nav-item">
+                                        <a href="{{ route('permissions') }}" class="nav-link">
+                                            <i class=" fas fa-user-lock"></i>
+                                            <p>Permission</p>
+                                        </a>
+                                    </li> --}}
+                                </ul>
                             </li>
                         @endif
 

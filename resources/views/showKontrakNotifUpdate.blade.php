@@ -65,14 +65,19 @@
                 <!-- Main row -->
                 <div class="row">
                     <div class="col-12">
-                        @if(Auth::user()->permission=='kasek' || Auth::user()->permission=='kadept' || Auth::user()->permission=='kadiv')
+                        {{-- @if(Auth::user()->permission=='kasek' || Auth::user()->permission=='kadept' || Auth::user()->permission=='kadiv') --}}
+                        @if(Auth::user()->hasRole('kasek') || Auth::user()->hasRole('kadept') || Auth::user()->hasRole('kadiv'))
                             @if($data->status !== 'approvedkadiv')
                                 {{-- <a href="{{ route('createRevisi', ['id' => $data->id]) }}" class="btn btn-sm btn-warning mr-1 mb-3"><i class="fas fa-pen"></i> Revisi Kontrak</a> --}}
                                 <a href="{{ route('setujuiKontrak',$data->id) }}" id="setujuiKontrak" class="btn btn-sm btn-success mr-1 mb-3"><i class="fas fa-thumbs-up"></i> Submit Kontrak</a>
                             @endif
                         @endif
+                        
                         <a href="{{ route('cetakKontrak',$data->id) }}" target="_blank"  class="btn btn-sm btn-secondary mr-1 mb-3"><i class="nav-icon fas fa-print"></i></i> Cetak Kontrak</a>
-                        @if(Auth::user()->permission=='kasek' || Auth::user()->permission=='kadept' || Auth::user()->permission=='kadiv')
+
+                        {{-- @if(Auth::user()->permission=='kasek' || Auth::user()->permission=='kadept' || Auth::user()->permission=='kadiv') --}}
+                        @if(Auth::user()->hasRole('kasek') || Auth::user()->hasRole('kadept') || Auth::user()->hasRole('kadiv'))
+
                             @if($data->status !== 'approvedkadiv')
                                 <div class="" style="position:fixed; z-index: 1; right: 5em; top: 10em; width: 25%;">
                                     <form id="inputRevisi">
@@ -117,7 +122,7 @@
                                             <td>Posisi</td>
                                             <td></td>
                                             <td>:</td>
-                                            <td colspan="2"><b>{{ $revisi->user->permission }}</b></td>
+                                            <td colspan="2"><b>{{ $revisi->user->roles->first()->name }}</b></td>
                                         </tr>
                                         <tr>
                                             <td>Detail</td>

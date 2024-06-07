@@ -32,7 +32,7 @@
                         <!-- general form elements -->
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Tambah Data User</h3>
+                                <h3 class="card-title">Edit Data User</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
@@ -62,13 +62,8 @@
                                     <div class="form-group">
                                         <label for="unit_kerja">Unit Kerja</label>
                                         <select class="form-control" name="unit_kerja" id="unit_kerja">
-                                            @php
-                                                
-                                            @endphp
                                             <option value="{{ $data->unit_kerja }}" selected>
-                                                @if($data->unit_kerja === '41A')
-                                                    Admin
-                                                @elseif($data->unit_kerja === '41KDV')
+                                                @if($data->unit_kerja === '4100')
                                                     Kepala Divisi
                                                 @elseif($data->unit_kerja === '41KDP')
                                                     Kepala Department
@@ -85,32 +80,27 @@
                                                 @endif
                                             </option>
                                             <option value="">Pilih Unit Kerja</option>
-                                            <option value="41A">Admin</option>
-                                            <option value="41KDV">Kepala Divisi</option>
+                                            <option value="4100">Kepala Divisi</option>
                                             <option value="41KDP">Kepala Department</option>
                                             <option value="41A10">Investasi</option>
                                             <option value="41A20">Jasa Barum</option>
                                             <option value="41A30">Lokal</option>
                                             <option value="41A40">Import</option>
                                         </select>
-                                        {{-- <input type="text" class="form-control" name="unit_kerja" value="{{ $data->unit_kerja }}" id="unit_kerja"> --}}
                                         @error('unit_kerja')
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="permission">Role</label>
-                                        <select name="permission" id="permission" class="form-control">
-                                            <option value="{{ $data->permission }}" selected>{{ $data->permission }}</option>
+                                        <label for="roles">Roles</label>
+                                        <select name="roles" class="form-control" required>
                                             <option value=''>-- Pilih Role --</option>
-                                            <option value="admin">admin</option>
-                                            <option value="writer">writer</option>
-                                            <option value="kasek">kasek</option>
-                                            <option value="kadept">kadept</option>
-                                            <option value="kadiv">kadiv</option>
+                                            @foreach($roles as $role)
+                                                <option value="{{ $role->id }}" {{ $data->roles->contains($role->id) ? 'selected' : '' }}>{{ $role->name }}</option>
+                                            @endforeach
                                         </select>
-                                        @error('permission')
-                                        <small style=" color: red;">{{ $message }}</small>
+                                        @error('roles')
+                                            <small style=" color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>
                                     <div class="form-group">

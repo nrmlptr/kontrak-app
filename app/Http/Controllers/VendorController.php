@@ -3,21 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Integrate;
-use App\Models\Vendor;
 use Illuminate\Http\Request;
-use GuzzleHttp\Client;
-use Datatables;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use File;
 use Illuminate\Support\Facades\Http;
-use PDF;
 
 
 class VendorController extends Controller
 {
+    // FUNCTION VIEW ALL DATA VENDOR ============================================================================================
     public function index(Request $request)
     {
         $data = Integrate::with('vendortext')->groupBy('purchasing_document_number')->get();
@@ -67,8 +59,10 @@ class VendorController extends Controller
                 ->get();
         }
 
-        return view('indexVendor', compact('data'));
+        return view('vendor.indexVendor', compact('data'));
     }
+
+    // FUNCTION BUKA VIEW EDIT VENDOR ========================================================================================
 
     public function edit($registration_no)
     {
@@ -77,8 +71,10 @@ class VendorController extends Controller
         }])
             ->where(['integrates.registration_no' => $registration_no])
             ->firstOrFail();
-        return view('editVendor', compact('data'));
+        return view('vendor.editVendor', compact('data'));
     }
+
+    // FUNCTION UPDATE AKTA VENDOR ============================================================================================
 
     public function update(Request $request, $registration_no)
     {
@@ -100,18 +96,7 @@ class VendorController extends Controller
         return redirect()->route('vendor.index');
     }
 
-
-
-    // public function npwp_data($no_vendor)
-    // {
-    //     $dataNpwp = json_decode(Http::timeout(60)
-    //         ->withOptions(['verify' => false])
-    //         ->get("https://scm.peruri.co.id/Api/getSIapdaNPWP/$no_vendor"), true);
-    //     $npwpnya = $dataNpwp['tax_document_number'];
-    //     dd($npwpnya);
-    //     return response()->json(['tax_document_number' => $npwpnya]);
-    // }
-
+    // FUNCTION GET NPWP VENDOR ============================================================================================
 
     public function npwp_data($no_vendor)
     {
@@ -119,7 +104,6 @@ class VendorController extends Controller
             ->withOptions(['verify' => false])
             ->get("https://scm.peruri.co.id/Api/getSIapdaNPWP/$no_vendor");
 
-        // Check if the HTTP request was successful (status code 2xx)
         if ($response->successful()) {
             $dataNpwp = $response->json();
             // dd($dataNpwp);
@@ -155,6 +139,7 @@ class VendorController extends Controller
         }
     }
 
+    // FUNCTION GET PEJABAT VENDOR ==========================================================================================
 
     public function Pejabat_vendor($no_vendor)
     {
@@ -162,12 +147,11 @@ class VendorController extends Controller
             ->withOptions(['verify' => false])
             ->get("https://scm.peruri.co.id/Api/getsiapdainfo/$no_vendor");
 
-        // Check if the HTTP request was successful (status code 2xx)
         if ($response->successful()) {
             $dataNama = $response->json();
             // dd($dataNama);
 
-            // Inisialisasi variabel untuk menyimpan nomor NPWP
+            // Inisialisasi variabel untuk menyimpan nama pejabat vendor
             $namaPejabat = null;
 
             // Iterasi melalui setiap baris data
@@ -182,14 +166,12 @@ class VendorController extends Controller
                 }
             }
 
-            // dd($npwpnya);
-
-            // Periksa apakah nomor NPWP ditemukan
+            // Periksa apakah nama pejabatnya ditemukan
             if ($namaPejabat !== '') {
-                // Kembalikan nomor NPWP dalam response JSON
+                // Kembalikan nama pejabatnya dalam response JSON
                 return response()->json(['full_name' => $namaPejabat]);
             } else {
-                // Jika tidak ada nomor NPWP yang ditemukan, kembalikan response kosong
+                // Jika tidak ada nama pejabat yang ditemukan, kembalikan response kosong
                 return response()->json(['message' => 'Nama Pejabat tidak ditemukan.'], 404);
             }
         } else {
@@ -197,6 +179,44 @@ class VendorController extends Controller
             return response()->json(['message' => 'Gagal mengambil data Pejabat Vendor.'], $response->status());
         }
     }
+
+    // FUNCTION GET ALAMAT VENDOR ============================================================================================
+
+    public function Alamat_vendor($no_vendor)
+    {
+        $response = Http::timeout(60)
+            ->withOptions(['verify' => false])
+            ->get("https://scm.peruri.co.id/Api/getsiapdainfo/$no_vendor");
+
+        if ($response->successful()) {
+            $data = $response->json();
+
+            // Inisialisasi variabel untuk menyimpan alamat lengkap
+            $alamatLengkap = null;
+
+            // Iterasi melalui setiap baris data
+            foreach ($data as $row) {
+                // Gabungkan data alamat menjadi satu string
+                $alamatLengkap = $row['alamat'] . ', ' . $row['sub_district'] . ', ' . $row['kota'] . ', ' . $row['provinsi'];
+                // Keluar dari loop karena sudah ditemukan data yang sesuai
+                break;
+            }
+
+            // dd($alamatLengkap);
+            // Periksa apakah alamat lengkapnya ditemukan
+            if ($alamatLengkap !== null) {
+                // Kembalikan alamat lengkapnya dalam response JSON
+                return response()->json(['alamat' => $alamatLengkap]);
+            } else {
+                // Jika tidak ada alamat yang ditemukan, kembalikan response kosong
+                return response()->json(['message' => 'Alamat tidak ditemukan.'], 404);
+            }
+        } else {
+            // Jika request tidak berhasil, kembalikan response error
+            return response()->json(['message' => 'Gagal mengambil data Alamat Vendor.'], $response->status());
+        }
+    }
+
 
     // end class
 }

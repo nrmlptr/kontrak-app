@@ -38,16 +38,13 @@
                                     
                                     <div class="form-group">
                                         <label for="pihakname">Nama Pihak</label>
-                                        <input type="text" class="form-control" name="pihakname" 
-                                           
-                                                value="{{ @$setting->peruri_pihakname }}"
+                                        <input type="text" class="form-control" name="pihakname" value="{{ @$setting->peruri_pihakname }}"
                                         id="pihakname" required>
                                         @error('pihakname')
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>
                                     
-                                     
                                     <div class="form-group">
                                         <label for="akta">Akta Peruri</label>
                                         <textarea type="text" class="form-control" name="akta" id="akta">{!! @$setting->peruri_akta !!}</textarea required>
@@ -84,20 +81,6 @@
         
         $(document).ready(function() {
             $('#akta').summernote();
-            // $('#akta').summernote({
-            //     // height: 300, // Set the height of the editor
-            //    toolbar: [
-            //         ['style', ['style']],
-            //         ['font', ['bold', 'underline', 'clear']],
-            //         ['fontsize', ['fontsize']],
-            //         ['fontname', ['fontname']],
-            //         ['color', ['color']],
-            //         ['para', ['ul', 'ol', 'paragraph']],
-            //         ['table', ['table']],
-            //         ['insert', ['link', 'picture', 'video']],
-            //         ['view', ['fullscreen', 'codeview', 'help']],
-            //     ],
-            // });
         });
     </script>
 @endpush

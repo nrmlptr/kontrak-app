@@ -59,15 +59,14 @@
                                                 <span class="badge badge-success">Lokal</span>
                                             @elseif($d->unit_kerja == '41A40')
                                                 <span class="badge badge-primary">Import</span>
-                                            @elseif($d->unit_kerja == '41A00')
+                                            @elseif($d->unit_kerja == '41KDP')
                                                 <span class="badge badge-dark">Kepala Department</span>
-                                            @elseif($d->unit_kerja == '41KDV')
-                                                <span class="badge badge-dark">Kepala Divisi</span>
                                             @else
-                                                <span class="badge badge-dark">Admin</span>
+                                                <span class="badge badge-dark">Kepala Divisi</span>
                                             @endif
                                         </td>
-                                        <td>{{ $d->permission }}</td>
+                                        {{-- <td>{{ $d->permission }}</td> --}}
+                                        <td>{{ $d->roles->pluck('name')->join(', ') }}</td>
                                         <td>
                                             <a href="{{ route('editUser', ['id' => $d->id]) }}" class="btn btn-sm btn-warning" title="Edit User"><i class="far fa-edit"></i></a>
                                             <a data-toggle="modal" data-target="#modal-hapus{{$d->id }}" class="btn btn-sm btn-danger" title="Delete User"><i class="fas fa-trash-alt"></i></a>

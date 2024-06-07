@@ -25,7 +25,7 @@
             <!-- Main row -->
             <div class="row">
                 <div class="col-12">
-                    @if(Auth::user()->permission =='writer' || Auth::user()->permission=='admin')
+                    @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('writer'))
                         <a href="{{ route('editLampiran', ['id' => $revisi->kontraks_id]) }}" class="btn btn-primary mb-3">Edit Lampiran</a>
                     @endif
                     <div class="card">
@@ -45,7 +45,7 @@
                                     <td>Posisi</td>
                                     <td></td>
                                     <td>:</td>
-                                    <td colspan="2"><b>{{ $revisi->user->permission }}</b></td>
+                                    <td colspan="2"><b>{{ $revisi->user->roles->first()->name }}</b></td>
                                 </tr>
                                 <tr>
                                     <td>Detail</td>

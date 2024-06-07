@@ -6,12 +6,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <!-- <h1 class="m-0">Data Pengguna Sistem</h1> -->
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Vendor Akta Setting</li>
+                        <li class="breadcrumb-item active">Akta Vendor Setting</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -41,27 +40,24 @@
                                 @csrf
                                     <div class="row">
                                          <div class="col-md-3 mb-3">
-                                            <label for="">No Registration</label>
+                                            <label for="noRegisVendor">No Registration</label>
                                             <input type="text" name="no_regis" id="filter-no-registration" class="form-control filter" placeholder="Masukkan Nomor Registration Vendor">
                                         </div>
                                         <div class="col-md-3 mb-3">
-                                            <label for="">No SOP</label>
+                                            <label for="noSOP">No SOP</label>
                                             <input type="text" name="no_sop" id="filter-no-sop" class="form-control filter" placeholder="Masukkan Nomor SOP">
                                         </div>
                                         <div class="col-md-4 mb-3">
-                                            <label for="">Nama Vendor</label>
+                                            <label for="namaVendor">Nama Vendor</label>
                                             <input type="text" name="nm_vendor" id="filter-nama-vendor" class="form-control filter" placeholder="Masukkan Nama Vendor">
                                         </div>
                                         <div class="col-md-2 mb-3 mt-1 input-group-append">
-                                            {{-- <br> --}}
                                             <button type="submit" class="btn btn-primary" title="Search Data"><i class="fa fa-search"></i></button>
                                         </div>
                                     </div>
                                     
                                 </form>
                             </div>
-
-
 
                             <table id="example3" class="table table-bordered table-striped">
                                 <thead align="center">
@@ -75,7 +71,6 @@
                                 <tbody align="center">
                                     @foreach($data as $d)
                                     <tr>
-                                        
                                         <td>
                                             <a href="{{ route('vendor.edit',$d->registration_no) }}" class="btn btn-sm btn-warning" title="Edit Akta Vendor"><i class="far fa-edit"></i></a>
                                         </td>
@@ -83,8 +78,6 @@
                                         <td>{{ $d->purchasing_document_number }}</td>
                                         <td>{{ $d->vendor_name }}</td>
                                     </tr>
-                                    
-                                    <!-- /.modal -->
                                     @endforeach
                                 </tbody>
                             </table>

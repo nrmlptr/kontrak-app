@@ -47,9 +47,7 @@
                                 <p><b>Jumlah SOP/PO/SPK</b></p>
                             </div>
                             <div class="icon">
-                                {{-- <i class="fa-solid fa-chart-simple"></i> --}}
                                 <i class="nav-icon fas fa-chart-bar"></i>
-                                {{-- <i class="ion ion-stats-bars"></i> --}}
                             </div>
                             <a href="{{ route('indexSOP') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
@@ -60,7 +58,6 @@
                         <div class="small-box bg-warning">
                             <div class="inner">
                                 <h3>{{ $dataKontrakAKDV->count() }}</h3>
-
                                 <p><b>Kontrak Disetujui Kadiv</b></p>
                             </div>
                             <div class="icon">
@@ -196,7 +193,7 @@
 
 <script type="text/javascript">
 
-    // GRAFIK STATUS KONTRAK 
+    // GRAFIK STATUS KONTRAK =================================================================================================
     $(document).ready(function() {
         // Deskripsi status disimpan dalam objek terpisah
         var statusDescriptions = {
@@ -221,23 +218,6 @@
             title: {
               text: 'PROSES PEMBUATAN KONTRAK'
             },
-            // subtitle: {
-            //     text: '<hr><b>Draft:</b> Kontrak sudah dibuat, sedang proses pembuatan lampiran oleh staff.<br>' +
-            //         '<b>Review:</b> Kontrak sedang dalam tahap review oleh manajer.<br>' +
-            //         '<b>Approved:</b> Kontrak sudah disetujui dan siap untuk ditandatangani.<br>' +
-            //         '<b>Signed:</b> Kontrak sudah ditandatangani oleh kedua belah pihak.<br>' +
-            //         '<b>Completed:</b> Semua proses pembuatan kontrak telah selesai.',
-            //     useHTML: true,
-            //     align: 'left',
-            //     verticalAlign: 'bottom',
-            //     x: 0,
-            //     y: 20,
-            //     style: {
-            //         fontSize: '0.9em',
-            //         color: '#333333',
-            //         lineHeight: '1.5em'  // Menambahkan jarak antar baris
-            //     }
-            // },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.y}</b>'
             },
@@ -289,7 +269,7 @@
         });
     });
 
-    // GRAFIK KONTRAK BY STATUS JAMINAN
+    // GRAFIK KONTRAK BY STATUS JAMINAN ======================================================================================
     @php
         // Membuat array untuk kategori dan data
         $categories = [];
@@ -354,8 +334,7 @@
         });
     });
 
-
-    // GRAFIK KONTRAK BY jenis kontrak
+    // GRAFIK KONTRAK BY JENIS KONTRAK =======================================================================================
     @php
         // Membuat array untuk kategori dan data
         $categories = [];
@@ -377,7 +356,6 @@
             'dataKontrak' => $dataKontrak
         ];
     @endphp
-
 
     $(document).ready(function() {
         Highcharts.chart('grafikKontrakPerJK', {
@@ -420,7 +398,7 @@
         });
     });
 
-    // GRAFIK KONTRAK BY VENDOR
+    // GRAFIK KONTRAK TOP 10 VENDOR ==========================================================================================
     @php
         // Membuat array untuk kategori dan data
         $categories = [];

@@ -6,15 +6,10 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Models\User;
-use App\Models\Kontrak;
 
 class SetujuiKontrakNotification extends Notification
 {
     use Queueable;
-    // private $user;
-    // private $kontrak;
-    // private $kadept;
     private $sender;
     private $kontrak;
     private $recipient;
@@ -57,33 +52,11 @@ class SetujuiKontrakNotification extends Notification
      *
      * @return array<string, mixed>
      */
-    // public function toArray(object $notifiable): array
-    // {
-    //     return [
-    //         //
-    //         'title' => 'Notifikasi Submit Draft Kontrak',
-    //         'kontrak' => $this->kontrak->id,
-    //         'messages' => ' Dear ' . $this->kontrak->logs->user->name . ' Kontrak dengan Detail ' . $this->kontrak->detail_number . ' Telah di Submit oleh ' . $this->kontrak->logs->user->name . ' sebagai ' . $this->kontrak->logs->user->permission . ' Silahkan melakukan review kontrak ke tahap selanjutnya, terimakasih!',
-    //         'url'   => route('showKontrakNotif', $this->kontrak->id),
-
-    //     ];
-    // }
-
-    // public function toArray($notifiable)
-    // {
-    //     return [
-    //         'title'     => 'Kontrak Telah Disubmit!',
-    //         'kontrak'   => $this->kontrak->id,
-    //         'messages'  => 'Dear ' . $this->recipient->name . ', Kontrak dengan Nomor ' . $this->kontrak->detail_number . ' Telah di Submit oleh ' . $this->sender->name . ' Selaku ' . $this->sender->permission . '. Silahkan melakukan review kontrak ke tahap selanjutnya, Terimakasih!',
-    //         'url'       => route('showKontrakNotif', $this->kontrak->id),
-    //     ];
-    // }
-
     public function toArray($notifiable)
     {
         // Mapping kode unit kerja ke alias
         $unitKerjaAlias = [
-            '41A00' => 'Pengadaan',
+            '41KDP' => 'Pengadaan',
             '41A10' => 'Investasi',
             '41A20' => 'Jasa Barum',
             '41A30' => 'Lokal',
@@ -91,13 +64,16 @@ class SetujuiKontrakNotification extends Notification
             // Tambahkan mapping lainnya sesuai kebutuhan
         ];
 
+        // Ambil semua peran pengirim dan gabungkan menjadi string
+        $senderRoles = $this->sender->roles->pluck('name')->implode(', ');
+
         // Cari alias berdasarkan kode unit kerja, default ke kode itu sendiri jika tidak ditemukan
         $unitKerja = $unitKerjaAlias[$this->sender->unit_kerja] ?? $this->sender->unit_kerja;
 
         return [
             'title'     => 'Kontrak Telah Disubmit!',
             'kontrak'   => $this->kontrak->id,
-            'messages'  => 'Dear ' . $this->recipient->name . ', Kontrak dengan Nomor ' . $this->kontrak->detail_number . ' Telah di Submit oleh ' . $this->sender->name . ' Selaku ' . $this->sender->permission . $unitKerja . '. Silahkan melakukan review kontrak ke tahap selanjutnya, Terimakasih!',
+            'messages'  => 'Dear ' . $this->recipient->name . ', Kontrak dengan Nomor ' . $this->kontrak->detail_number . ' Telah di Submit oleh ' . $this->sender->name . ' Selaku   ' .  $senderRoles .' '. $unitKerja . '. Silahkan melakukan review kontrak ke tahap selanjutnya, Terimakasih!',
             'url'       => route('showKontrakNotif', $this->kontrak->id),
         ];
     }
