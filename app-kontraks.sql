@@ -3932,11 +3932,14 @@ CREATE TABLE IF NOT EXISTS `kontraks` (
   KEY `detail_number` (`detail_number`),
   KEY `number` (`number`),
   KEY `status_jaminan` (`status_jaminan`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table app_kontraks.kontraks: ~1 rows (approximately)
+-- Dumping data for table app_kontraks.kontraks: ~4 rows (approximately)
 INSERT INTO `kontraks` (`id`, `number`, `detail_number`, `nm_vendor`, `perihal`, `date_kontrak`, `nomor_sop`, `tanggal_sop`, `pembuat`, `unit_kerja`, `jenis_kontrak`, `status_jaminan`, `status`, `total_keseluruhan`, `peruritext`, `vendortext`, `dockontrak`, `tipedoc`, `ukdok`, `statusdoc`, `created_at`, `updated_at`) VALUES
-	(1, '12', 'SP-12/VIII/2024', 'PT. DANISA EKA ABADI', 'PENGADAAN PLASTIK SHRINK GULUNG', '2023-02-06', '4100006182', '2023-02-06', 'Mas Rezki', '41A30', 1, 1, 'approvedkadiv', 344322000000, '<p style="text-align: justify; "><span style="font-size: 14px;">﻿</span><span style="font-size: 14px;">yang dalam hal ini jabatannya selaku Pelaksana Operasional Harian (POH)\r\nKepala Divisi Pengadaan dan Fasilitas Umum sesuai Nota Dinas Direktorat\r\nSDM, Teknologi dan Informasi Nomor : 9/Dir. SDM &amp; TI/II/2024 tanggal\r\n01 Februari 2024 Tentang Penunjukan POH Kepala Divisi Pengadaan dan\r\nFasilitas Umum, dari dan oleh karena itu bertindak untuk dan atas nama Perum\r\nPercetakan Uang RI yang didirikan untuk terakhir kalinya berdasarkan\r\nPeraturan Pemerintah RI Nomor : 6 Tahun 2019 tanggal 19 Februari 2019\r\ntentang Perusahaan Umum (Perum) Percetakan Uang Republik Indonesia,\r\nyang berkedudukan hukum di Jalan Palatehan No. 4, Kebayoran Baru, Jakarta\r\nSelatan 12160, yang selanjutnya dalam perbuatan hukum ini disebut sebagai :</span></p><p style="text-align: center;"><span style="font-size: 14px;"><b>-------------------------------------------- PIHAK KESATU -------------------------------------------</b></span><br></p>', '<p align="justify">yang dalam hal ini dalam jabatannya selaku Direktur dari dan oleh karena itu bertindak untuk dan atas nama PT. Danisa Eka Abadi, yang didirikan berdasarkan Akta Notaris Nomor : 04 tanggal 01 Juli 2020 yang dibuat oleh Notaris Aisyah Ratu Juliana Siregar, S.H., M.Kn. Notaris di Kota Sukabumi dan telah diubah untuk terakhir kalinya dengan Akta Notaris Nomor : 062 tanggal 04 Agustus 2023 yang dibuat oleh Notaris Dwi Suswanti, S.H., M.Kn. Notaris di Kota Cilegon yang dibuat berdasarkan Hukum Negara Republik Indonesia, yang berkedudukan hukum di Jalan Sultan Iskandar Muda No. 181 Kota Administrasi Jakarta Selatan, dengan Nomor Pokok Wajib Pajak (NPWP) Nomor: 95.258.793.9-013.000 yang untuk selanjutnya dalam perbuatan hukum ini disebut sebagai :</p><p align="center"><b>-------------------------------------------- PIHAK KEDUA -------------------------------------------</b><br></p>', 'public/uploads/document_kontrak/1717665816-kontrak_1-2.pdf', 'pdf', 38152, 'DRAFT', '2024-06-06 06:41:50', '2024-06-06 09:23:36');
+	(1, '12', 'SP-12/VIII/2024', 'PT. DANISA EKA ABADI', 'PENGADAAN PLASTIK SHRINK GULUNG', '2023-02-06', '4100006182', '2023-02-06', 'Mas Rezki', '41A30', 1, 1, 'approvedkadiv', 344322000000, '<p style="text-align: justify; "><span style="font-size: 14px;">﻿</span><span style="font-size: 14px;">yang dalam hal ini jabatannya selaku Pelaksana Operasional Harian (POH)\r\nKepala Divisi Pengadaan dan Fasilitas Umum sesuai Nota Dinas Direktorat\r\nSDM, Teknologi dan Informasi Nomor : 9/Dir. SDM &amp; TI/II/2024 tanggal\r\n01 Februari 2024 Tentang Penunjukan POH Kepala Divisi Pengadaan dan\r\nFasilitas Umum, dari dan oleh karena itu bertindak untuk dan atas nama Perum\r\nPercetakan Uang RI yang didirikan untuk terakhir kalinya berdasarkan\r\nPeraturan Pemerintah RI Nomor : 6 Tahun 2019 tanggal 19 Februari 2019\r\ntentang Perusahaan Umum (Perum) Percetakan Uang Republik Indonesia,\r\nyang berkedudukan hukum di Jalan Palatehan No. 4, Kebayoran Baru, Jakarta\r\nSelatan 12160, yang selanjutnya dalam perbuatan hukum ini disebut sebagai :</span></p><p style="text-align: center;"><span style="font-size: 14px;"><b>-------------------------------------------- PIHAK KESATU -------------------------------------------</b></span><br></p>', '<p align="justify">yang dalam hal ini dalam jabatannya selaku Direktur dari dan oleh karena itu bertindak untuk dan atas nama PT. Danisa Eka Abadi, yang didirikan berdasarkan Akta Notaris Nomor : 04 tanggal 01 Juli 2020 yang dibuat oleh Notaris Aisyah Ratu Juliana Siregar, S.H., M.Kn. Notaris di Kota Sukabumi dan telah diubah untuk terakhir kalinya dengan Akta Notaris Nomor : 062 tanggal 04 Agustus 2023 yang dibuat oleh Notaris Dwi Suswanti, S.H., M.Kn. Notaris di Kota Cilegon yang dibuat berdasarkan Hukum Negara Republik Indonesia, yang berkedudukan hukum di Jalan Sultan Iskandar Muda No. 181 Kota Administrasi Jakarta Selatan, dengan Nomor Pokok Wajib Pajak (NPWP) Nomor: 95.258.793.9-013.000 yang untuk selanjutnya dalam perbuatan hukum ini disebut sebagai :</p><p align="center"><b>-------------------------------------------- PIHAK KEDUA -------------------------------------------</b><br></p>', 'public/uploads/document_kontrak/1717665816-kontrak_1-2.pdf', 'pdf', 38152, 'DRAFT', '2024-06-06 06:41:50', '2024-06-06 09:23:36'),
+	(2, '90', 'SP-90/VIII/2024', 'PT. MANGGALA EKA SAKTI', 'PENGADAAN COATING CLEANING SOLVENT', '2023-02-10', '4100006196', '2023-02-10', 'Mba Intan', '41A20', 2, 1, 'revisikasek', 253912500000, '<p style="text-align: justify; "><span style="font-size: 14px;">﻿</span><span style="font-size: 14px;">yang dalam hal ini jabatannya selaku Pelaksana Operasional Harian (POH)\r\nKepala Divisi Pengadaan dan Fasilitas Umum sesuai Nota Dinas Direktorat\r\nSDM, Teknologi dan Informasi Nomor : 9/Dir. SDM & TI/II/2024 tanggal\r\n01 Februari 2024 Tentang Penunjukan POH Kepala Divisi Pengadaan dan\r\nFasilitas Umum, dari dan oleh karena itu bertindak untuk dan atas nama Perum\r\nPercetakan Uang RI yang didirikan untuk terakhir kalinya berdasarkan\r\nPeraturan Pemerintah RI Nomor : 6 Tahun 2019 tanggal 19 Februari 2019\r\ntentang Perusahaan Umum (Perum) Percetakan Uang Republik Indonesia,\r\nyang berkedudukan hukum di Jalan Palatehan No. 4, Kebayoran Baru, Jakarta\r\nSelatan 12160, yang selanjutnya dalam perbuatan hukum ini disebut sebagai :</span></p><p style="text-align: center;"><span style="font-size: 14px;">-------------------------------------------- PIHAK KESATU -------------------------------------------</span><br></p>', '<p align="justify">yang dalam hal ini dalam jabatannya selaku Direktur dari dan oleh karena itu bertindak untuk dan atas nama PT. MANGGALA EKA SAKTI, yang didirikan berdasarkan Akta Notaris Nomor : 04 tanggal 01 Juli 2020 yang dibuat oleh Notaris Aisyah Ratu Juliana Siregar, S.H., M.Kn. Notaris di Kota Sukabumi dan telah diubah untuk terakhir kalinya dengan Akta Notaris Nomor : 062 tanggal 04 Agustus 2023 yang dibuat oleh Notaris Dwi Suswanti, S.H., M.Kn. Notaris di Kota Cilegon yang dibuat berdasarkan Hukum Negara Republik Indonesia, yang berkedudukan hukum di Graha Yapetri Lt. IV, Jl. Sunan Kalijaga No. 65B Melawai - Jakarta Selatan, Jakarta, Kebayoran Baru, KOTA ADM. JAKARTA SELATAN, DKI JAKARTA, dengan Nomor Pokok Wajib Pajak (NPWP) Nomor: 719016842064000 yang untuk selanjutnya dalam perbuatan hukum ini disebut sebagai :</p><p align="center"><b>-------------------------------------------- PIHAK KEDUA -------------------------------------------</b><br></p>', NULL, NULL, NULL, NULL, '2024-06-11 01:03:05', '2024-06-11 03:57:34'),
+	(3, '111', 'SP-111/VIII/2024', 'PT. MANROLAND INDONESIA', 'PENGADAAN RUBBER SHAFT INFEED MANROLAND', '2023-01-03', '4100006108', '2023-01-03', 'Mba Intan', '41A20', 2, 1, 'reviewkasek', 12820500000, '<p style="text-align: justify; "><span style="font-size: 14px;">﻿</span><span style="font-size: 14px;">yang dalam hal ini jabatannya selaku Pelaksana Operasional Harian (POH)\r\nKepala Divisi Pengadaan dan Fasilitas Umum sesuai Nota Dinas Direktorat\r\nSDM, Teknologi dan Informasi Nomor : 9/Dir. SDM &amp; TI/II/2024 tanggal\r\n01 Februari 2024 Tentang Penunjukan POH Kepala Divisi Pengadaan dan\r\nFasilitas Umum, dari dan oleh karena itu bertindak untuk dan atas nama Perum\r\nPercetakan Uang RI yang didirikan untuk terakhir kalinya berdasarkan\r\nPeraturan Pemerintah RI Nomor : 6 Tahun 2019 tanggal 19 Februari 2019\r\ntentang Perusahaan Umum (Perum) Percetakan Uang Republik Indonesia,\r\nyang berkedudukan hukum di Jalan Palatehan No. 4, Kebayoran Baru, Jakarta\r\nSelatan 12160, yang selanjutnya dalam perbuatan hukum ini disebut sebagai :</span></p><p style="text-align: center;"><span style="font-size: 14px;"><b>-------------------------------------------- PIHAK KESATU -------------------------------------------</b></span><br></p>', '<p align="justify">yang dalam hal ini dalam jabatannya selaku Direktur dari dan oleh karena itu bertindak untuk dan atas nama PT. MANROLAND INDONESIA, yang didirikan berdasarkan Akta Notaris Nomor : 04 tanggal 01 Juli 2020 yang dibuat oleh Notaris Aisyah Ratu Juliana Siregar, S.H., M.Kn. Notaris di Kota Sukabumi dan telah diubah untuk terakhir kalinya dengan Akta Notaris Nomor : 062 tanggal 04 Agustus 2023 yang dibuat oleh Notaris Dwi Suswanti, S.H., M.Kn. Notaris di Kota Cilegon yang dibuat berdasarkan Hukum Negara Republik Indonesia, yang berkedudukan hukum di MANAGEMENT BUILDING LT. 2, JL. BUNCIT RAYA KAV. 100 RT 001 RW.007,PEJATEN BARAT,PASAR MINGGU,JAKART, Pasar Minggu, KOTA ADM. JAKARTA SELATAN, DKI JAKARTA, dengan Nomor Pokok Wajib Pajak (NPWP) Nomor: 03.007.507.1-056.000 yang untuk selanjutnya dalam perbuatan hukum ini disebut sebagai :</p><p align="center"><b>-------------------------------------------- PIHAK KEDUA -------------------------------------------</b><br></p>', NULL, NULL, NULL, NULL, '2024-06-11 01:47:54', '2024-06-11 01:50:41'),
+	(4, '000', 'SP-000/VIII/2024', 'PT. KERTAS PADALARANG', 'PENGADAAN LEMBAR KERTAS SEMENTARA PEC. S TE 2022 DAN LEMBAR KERTAS SEMENTARA PEC. U TE 2022', '2023-01-13', '4100006127', '2023-01-13', 'Mba Intan', '41A20', 1, 2, 'reviewkasek', 141802500000, '<p align="justify">yang dalam hal ini jabatannya selaku Pelaksana Operasional Harian (POH) Kepala Divisi Pengadaan dan Fasilitas Umum sesuai Nota Dinas Direktorat SDM, Teknologi dan Informasi Nomor : 9/Dir. SDM & TI/II/2024 tanggal 01 Februari 2024 Tentang Penunjukan POH Kepala Divisi Pengadaan dan Fasilitas Umum, dari dan oleh karena itu bertindak untuk dan atas nama Perum Percetakan Uang RI yang didirikan untuk terakhir kalinya berdasarkan Peraturan Pemerintah RI Nomor : 6 Tahun 2019 tanggal 19 Februari 2019 tentang Perusahaan Umum (Perum) Percetakan Uang Republik Indonesia, yang berkedudukan hukum di Jalan Palatehan No. 4, Kebayoran Baru, Jakarta Selatan 12160, yang selanjutnya dalam perbuatan hukum ini disebut sebagai : TES123</p><p align="center"><b>-------------------------------------------- PIHAK KESATU -------------------------------------------</b><br></p>', '<p style="text-align: justify;">yang dalam hal ini jabatannya selaku Direktur Utama dari dan oleh karena itu bertindak untuk dan atas nama PT. KERTAS PADALARANG yang didirikan dengan Akta Notaris Nomor: 4 tanggal 1 April 1992 yang dibuat dihadapan Masri Husen S.H., Notaris di Bandung dan telah diubah untuk terakhir kalinya dengan Akta Notaris Nomor: 152 tanggal 09 Desember 2021 yang dibuat oleh Ekaputri MS Respati, Sarjana Hukum, M.H, M.Kn, Notaris di Bandung yang dibuat berdasarkan Hukum Negara RI, yang berkedudukan hukum di Jalan Cihaliwung No.181 Padalarang, Padalarang, KAB. BANDUNG BARAT, JAWA BARAT,&nbsp; dengan Nomor Pokok Wajib Pajak (NPWP) Nomor: 01.000.015.6-051.000 yang untuk selanjutnya dalam perbuatan hukum ini disebut sebagai :</p><p style="text-align: center; "><b>---------------------------------------- PIHAK KEDUA ------------------------------------</b></p>', NULL, NULL, NULL, NULL, '2024-06-11 02:08:11', '2024-06-11 02:10:07');
 
 -- Dumping structure for table app_kontraks.lampiran1s
 CREATE TABLE IF NOT EXISTS `lampiran1s` (
@@ -3947,11 +3950,14 @@ CREATE TABLE IF NOT EXISTS `lampiran1s` (
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `kontraks_id` (`kontraks_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table app_kontraks.lampiran1s: ~0 rows (approximately)
+-- Dumping data for table app_kontraks.lampiran1s: ~3 rows (approximately)
 INSERT INTO `lampiran1s` (`id`, `kontraks_id`, `data_json`, `created_at`, `updated_at`) VALUES
-	(1, 1, '[{"nomor_urut":1,"perihal":"Surat Permintaan Penawaran Harga dari PIHAK PERTAMA","nomor_surat":"PBP\\/2023\\/00032","tanggal_surat":"2023-01-16"},{"nomor_urut":2,"perihal":"Surat Permintaan Penawaran Harga dari PIHAK KEDUA","nomor_surat":"cek","tanggal_surat":"2024-12-02"},{"nomor_urut":3,"perihal":"Surat Permintaan Penurunan Harga dari PIHAK KESATU","nomor_surat":"tes","tanggal_surat":"2024-02-13"},{"nomor_urut":4,"perihal":"Surat Penurunan Harga dari PIHAK KEDUA","nomor_surat":"tes2","tanggal_surat":"2024-12-02"},{"nomor_urut":5,"perihal":"Surat Pemberitahuan Pemenang Pengadaan","nomor_surat":"SP3\\/PBP\\/2023\\/00032","tanggal_surat":"2023-02-02"},{"nomor_urut":6,"perihal":"Surat Order Pembelian","nomor_surat":"PBP234100006182","tanggal_surat":"2023-02-06"},{"nomor_urut":7,"perihal":"Perjanjian","nomor_surat":"SP-12\\/VIII\\/2024","tanggal_surat":"2023-02-06"}]', '2024-06-06 07:12:57', '2024-06-06 07:12:57');
+	(1, 1, '[{"nomor_urut":1,"perihal":"Surat Permintaan Penawaran Harga dari PIHAK PERTAMA","nomor_surat":"PBP\\/2023\\/00032","tanggal_surat":"2023-01-16"},{"nomor_urut":2,"perihal":"Surat Permintaan Penawaran Harga dari PIHAK KEDUA","nomor_surat":"cek","tanggal_surat":"2024-12-02"},{"nomor_urut":3,"perihal":"Surat Permintaan Penurunan Harga dari PIHAK KESATU","nomor_surat":"tes","tanggal_surat":"2024-02-13"},{"nomor_urut":4,"perihal":"Surat Penurunan Harga dari PIHAK KEDUA","nomor_surat":"tes2","tanggal_surat":"2024-12-02"},{"nomor_urut":5,"perihal":"Surat Pemberitahuan Pemenang Pengadaan","nomor_surat":"SP3\\/PBP\\/2023\\/00032","tanggal_surat":"2023-02-02"},{"nomor_urut":6,"perihal":"Surat Order Pembelian","nomor_surat":"PBP234100006182","tanggal_surat":"2023-02-06"},{"nomor_urut":7,"perihal":"Perjanjian","nomor_surat":"SP-12\\/VIII\\/2024","tanggal_surat":"2023-02-06"}]', '2024-06-06 07:12:57', '2024-06-06 07:12:57'),
+	(2, 2, '[{"nomor_urut":1,"perihal":"Surat Permintaan Penawaran Harga dari PIHAK PERTAMA","nomor_surat":"PBP\\/2023\\/00093","tanggal_surat":"2023-02-01"},{"nomor_urut":2,"perihal":"Surat Permintaan Penawaran Harga dari PIHAK KEDUA","nomor_surat":"DF\\/022\\/TES\\/KONTRAK2","tanggal_surat":"2024-06-06"},{"nomor_urut":3,"perihal":"Surat Permintaan Penurunan Harga dari PIHAK KESATU","nomor_surat":"CEK\\/02\\/001","tanggal_surat":"2024-07-06"},{"nomor_urut":4,"perihal":"Surat Penurunan Harga dari PIHAK KEDUA","nomor_surat":"TES\\/KONTRAK2\\/LAMPIRAN1","tanggal_surat":"2024-08-06"},{"nomor_urut":5,"perihal":"Surat Pemberitahuan Pemenang Pengadaan","nomor_surat":"SP3\\/PBP\\/2023\\/00093","tanggal_surat":"2023-02-10"},{"nomor_urut":6,"perihal":"Surat Order Pembelian","nomor_surat":"PBP234100006196","tanggal_surat":"2023-02-10"},{"nomor_urut":7,"perihal":"Perjanjian","nomor_surat":"SP-90\\/VIII\\/2024","tanggal_surat":"2023-02-10"}]', '2024-06-11 01:04:11', '2024-06-11 01:04:11'),
+	(3, 3, '[{"nomor_urut":1,"perihal":"Surat Permintaan Penawaran Harga dari PIHAK PERTAMA","nomor_surat":"PNP\\/2022\\/00396","tanggal_surat":"2022-12-20"},{"nomor_urut":2,"perihal":"Surat Permintaan Penawaran Harga dari PIHAK KEDUA","nomor_surat":"TES","tanggal_surat":"2024-01-06"},{"nomor_urut":3,"perihal":"Surat Permintaan Penurunan Harga dari PIHAK KESATU","nomor_surat":"CEK2","tanggal_surat":"2024-02-06"},{"nomor_urut":4,"perihal":"Surat Penurunan Harga dari PIHAK KEDUA","nomor_surat":"TES","tanggal_surat":"2024-03-06"},{"nomor_urut":5,"perihal":"Surat Pemberitahuan Pemenang Pengadaan","nomor_surat":"SP3\\/PNP\\/2022\\/00396","tanggal_surat":"2023-01-03"},{"nomor_urut":6,"perihal":"Surat Order Pembelian","nomor_surat":"PNP234100006108","tanggal_surat":"2023-01-03"},{"nomor_urut":7,"perihal":"Perjanjian","nomor_surat":"SP-111\\/VIII\\/2024","tanggal_surat":"2023-01-03"}]', '2024-06-11 01:50:00', '2024-06-11 01:50:00'),
+	(4, 4, '[{"nomor_urut":1,"perihal":"Surat Permintaan Penawaran Harga dari PIHAK PERTAMA","nomor_surat":"PBP\\/2022\\/00707","tanggal_surat":"2022-12-30"},{"nomor_urut":2,"perihal":"Surat Permintaan Penawaran Harga dari PIHAK KEDUA","nomor_surat":"TES1","tanggal_surat":"2024-02-06"},{"nomor_urut":3,"perihal":"Surat Permintaan Penurunan Harga dari PIHAK KESATU","nomor_surat":"CEK","tanggal_surat":"2024-03-06"},{"nomor_urut":4,"perihal":"Surat Penurunan Harga dari PIHAK KEDUA","nomor_surat":"PPP","tanggal_surat":"2024-04-06"},{"nomor_urut":5,"perihal":"Surat Pemberitahuan Pemenang Pengadaan","nomor_surat":"SP3\\/PBP\\/2022\\/00707","tanggal_surat":"2023-01-10"},{"nomor_urut":6,"perihal":"Surat Order Pembelian","nomor_surat":"PBP234100006127","tanggal_surat":"2023-01-13"},{"nomor_urut":7,"perihal":"Perjanjian","nomor_surat":"SP-000\\/VIII\\/2024","tanggal_surat":"2023-01-13"}]', '2024-06-11 02:08:49', '2024-06-11 02:08:49');
 
 -- Dumping structure for table app_kontraks.lampiran2s
 CREATE TABLE IF NOT EXISTS `lampiran2s` (
@@ -3964,11 +3970,14 @@ CREATE TABLE IF NOT EXISTS `lampiran2s` (
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `kontraks_id` (`kontraks_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table app_kontraks.lampiran2s: ~0 rows (approximately)
+-- Dumping data for table app_kontraks.lampiran2s: ~3 rows (approximately)
 INSERT INTO `lampiran2s` (`id`, `kontraks_id`, `perihal`, `nomor_sop`, `tanggal_sop`, `created_at`, `updated_at`) VALUES
-	(1, 1, 'PENGADAAN PLASTIK SHRINK GULUNG', 'PBP234100006182', '2023-02-06', '2024-06-06 07:13:01', '2024-06-06 07:13:01');
+	(1, 1, 'PENGADAAN PLASTIK SHRINK GULUNG', 'PBP234100006182', '2023-02-06', '2024-06-06 07:13:01', '2024-06-06 07:13:01'),
+	(2, 2, 'PENGADAAN COATING CLEANING SOLVENT', 'PBP234100006196', '2023-02-10', '2024-06-11 01:04:15', '2024-06-11 01:04:15'),
+	(3, 3, 'PENGADAAN RUBBER SHAFT INFEED MANROLAND', 'PNP234100006108', '2023-01-03', '2024-06-11 01:50:03', '2024-06-11 01:50:03'),
+	(4, 4, 'PENGADAAN LEMBAR KERTAS SEMENTARA PEC. S TE 2022 DAN LEMBAR KERTAS SEMENTARA PEC. U TE 2022', 'PBP234100006127', '2023-01-13', '2024-06-11 02:08:53', '2024-06-11 02:08:53');
 
 -- Dumping structure for table app_kontraks.lampiran3s
 CREATE TABLE IF NOT EXISTS `lampiran3s` (
@@ -3986,11 +3995,23 @@ CREATE TABLE IF NOT EXISTS `lampiran3s` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `kontraks_id` (`kontraks_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table app_kontraks.lampiran3s: ~0 rows (approximately)
+-- Dumping data for table app_kontraks.lampiran3s: ~13 rows (approximately)
 INSERT INTO `lampiran3s` (`id`, `kontraks_id`, `jenis_spesifikasi`, `gambar`, `spesifikasi_teknis`, `gambarnon`, `no_sppb`, `kode_barang`, `jenis_barang`, `satuan`, `created_at`, `updated_at`) VALUES
-	(1, 1, 2, NULL, 'tes 123', NULL, '11012277', '151-000717', 'PLASTIK SHRINK GULUNG L=30CM,TB=15MIKRON', 'ROL', '2024-06-06 07:13:10', '2024-06-06 07:13:10');
+	(1, 1, 2, NULL, 'tes 123', NULL, '11012277', '151-000717', 'PLASTIK SHRINK GULUNG L=30CM,TB=15MIKRON', 'ROL', '2024-06-06 07:13:10', '2024-06-06 07:13:10'),
+	(2, 2, 1, 'public/uploads/spesifikasi_teknis/1718067890_001-STD.jpg', NULL, NULL, NULL, NULL, NULL, NULL, '2024-06-11 01:04:50', '2024-06-11 01:04:50'),
+	(3, 2, 1, 'public/uploads/spesifikasi_teknis/1718067890_002-STD.jpg', NULL, NULL, NULL, NULL, NULL, NULL, '2024-06-11 01:04:50', '2024-06-11 01:04:50'),
+	(4, 2, 1, 'public/uploads/spesifikasi_teknis/1718067890_003-STD.jpg', NULL, NULL, NULL, NULL, NULL, NULL, '2024-06-11 01:04:50', '2024-06-11 01:04:50'),
+	(5, 2, 1, 'public/uploads/spesifikasi_teknis/1718067890_004-STD.jpg', NULL, NULL, NULL, NULL, NULL, NULL, '2024-06-11 01:04:50', '2024-06-11 01:04:50'),
+	(6, 2, 1, 'public/uploads/spesifikasi_teknis/1718067890_005-STD.jpg', NULL, NULL, NULL, NULL, NULL, NULL, '2024-06-11 01:04:50', '2024-06-11 01:04:50'),
+	(7, 2, 1, 'public/uploads/spesifikasi_teknis/1718067890_006-STD.jpg', NULL, NULL, NULL, NULL, NULL, NULL, '2024-06-11 01:04:50', '2024-06-11 01:04:50'),
+	(8, 2, 1, 'public/uploads/spesifikasi_teknis/1718067890_007-STD.jpg', NULL, NULL, NULL, NULL, NULL, NULL, '2024-06-11 01:04:50', '2024-06-11 01:04:50'),
+	(9, 2, 1, 'public/uploads/spesifikasi_teknis/1718067890_008-STD.jpg', NULL, NULL, NULL, NULL, NULL, NULL, '2024-06-11 01:04:50', '2024-06-11 01:04:50'),
+	(10, 2, 1, 'public/uploads/spesifikasi_teknis/1718067890_009-STD.jpg', NULL, NULL, NULL, NULL, NULL, NULL, '2024-06-11 01:04:50', '2024-06-11 01:04:50'),
+	(11, 3, 2, NULL, '20 Juni 2024', NULL, '11012004', '143-004609', 'RUBBER SHAFT INFEED MANROLAND', 'BH', '2024-06-11 01:50:15', '2024-06-11 01:50:15'),
+	(12, 4, 2, NULL, '15 Juni 2024', NULL, '11011982', '121-000472', 'LEMBAR KERTAS SEMENTARA PEC. S TE 2022', 'LBR', '2024-06-11 02:09:35', '2024-06-11 02:09:35'),
+	(13, 4, 2, NULL, '16 Juni 2024', 'public/uploads/spesifikasi_teknis/nonstandarlab/1718071775_peruri1.jpg', '11011983', '121-000474', 'LEMBAR KERTAS SEMENTARA PEC. U TE 2022', 'LBR', '2024-06-11 02:09:35', '2024-06-11 02:09:35');
 
 -- Dumping structure for table app_kontraks.lampiran4s
 CREATE TABLE IF NOT EXISTS `lampiran4s` (
@@ -4008,11 +4029,15 @@ CREATE TABLE IF NOT EXISTS `lampiran4s` (
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `kontraks_id` (`kontraks_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table app_kontraks.lampiran4s: ~0 rows (approximately)
+-- Dumping data for table app_kontraks.lampiran4s: ~5 rows (approximately)
 INSERT INTO `lampiran4s` (`id`, `kontraks_id`, `nomor_sop`, `tanggal_sop`, `jadwal_penyerahan_barang`, `lokasi`, `satuan`, `kode_barang`, `nama_barang`, `no_sppb`, `created_at`, `updated_at`) VALUES
-	(1, 1, 'PBP234100006182', '2023-02-06', '24 desember 2024', 'Gudang UGAM', 'ROL', '151-000717', 'PLASTIK SHRINK GULUNG L=30CM,TB=15MIKRON', '11012277', '2024-06-06 07:13:20', '2024-06-06 07:13:20');
+	(1, 1, 'PBP234100006182', '2023-02-06', '24 desember 2024', 'Gudang UGAM', 'ROL', '151-000717', 'PLASTIK SHRINK GULUNG L=30CM,TB=15MIKRON', '11012277', '2024-06-06 07:13:20', '2024-06-06 07:13:20'),
+	(2, 2, 'PBP234100006196', '2023-02-10', '11 Juni 2024', 'Gudang UTAS', 'L', '114-000201', 'COATING CLEANING SOLVENT', '11012518', '2024-06-11 01:05:07', '2024-06-11 01:05:07'),
+	(3, 3, 'PNP234100006108', '2023-01-03', '30 Juni 2024', 'Gudang Umum', 'BH', '143-004609', 'RUBBER SHAFT INFEED MANROLAND', '11012004', '2024-06-11 01:50:23', '2024-06-11 01:50:23'),
+	(4, 4, 'PBP234100006127', '2023-01-13', '20 Juni 2024', 'Gudang UTAS', 'LBR', '121-000472', 'LEMBAR KERTAS SEMENTARA PEC. S TE 2022', '11011982', '2024-06-11 02:09:46', '2024-06-11 02:09:46'),
+	(5, 4, 'PBP234100006127', '2023-01-13', '20 Juni 2024', 'Gudang UTAS', 'LBR', '121-000474', 'LEMBAR KERTAS SEMENTARA PEC. U TE 2022', '11011983', '2024-06-11 02:09:46', '2024-06-11 02:09:46');
 
 -- Dumping structure for table app_kontraks.lampiran5s
 CREATE TABLE IF NOT EXISTS `lampiran5s` (
@@ -4032,11 +4057,15 @@ CREATE TABLE IF NOT EXISTS `lampiran5s` (
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `kontraks_id` (`kontraks_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table app_kontraks.lampiran5s: ~0 rows (approximately)
+-- Dumping data for table app_kontraks.lampiran5s: ~5 rows (approximately)
 INSERT INTO `lampiran5s` (`id`, `kontraks_id`, `no_sppb`, `kode_barang`, `nama_barang`, `satuan`, `lokasi`, `harga_awal`, `qty`, `ppn`, `harga_akhir`, `waktu_khs`, `created_at`, `updated_at`) VALUES
-	(1, 1, '11012277', '151-000717', 'PLASTIK SHRINK GULUNG L=30CM,TB=15MIKRON', 'ROL', 'Gudang UGAM', 2585000, 120000, 11, 344322000000, NULL, '2024-06-06 07:13:26', '2024-06-06 07:13:26');
+	(1, 1, '11012277', '151-000717', 'PLASTIK SHRINK GULUNG L=30CM,TB=15MIKRON', 'ROL', 'Gudang UGAM', 2585000, 120000, 11, 344322000000, NULL, '2024-06-06 07:13:26', '2024-06-06 07:13:26'),
+	(2, 2, '11012518', '114-000201', 'COATING CLEANING SOLVENT', 'L', 'Gudang UTAS', 152500, 1500000, 11, 253912500000, '31 Desember 2024', '2024-06-11 01:05:17', '2024-06-11 01:05:17'),
+	(3, 3, '11012004', '143-004609', 'RUBBER SHAFT INFEED MANROLAND', 'BH', 'Gudang Umum', 11550000, 1000, 11, 12820500000, '31 Desember 2024', '2024-06-11 01:50:31', '2024-06-11 01:50:31'),
+	(4, 4, '11011982', '121-000472', 'LEMBAR KERTAS SEMENTARA PEC. S TE 2022', 'LBR', 'Gudang UTAS', 1210, 50000000, 11, 67155000000, NULL, '2024-06-11 02:09:55', '2024-06-11 02:09:55'),
+	(5, 4, '11011983', '121-000474', 'LEMBAR KERTAS SEMENTARA PEC. U TE 2022', 'LBR', 'Gudang UTAS', 1345, 50000000, 11, 74647500000, NULL, '2024-06-11 02:09:55', '2024-06-11 02:09:55');
 
 -- Dumping structure for table app_kontraks.lampiran6s
 CREATE TABLE IF NOT EXISTS `lampiran6s` (
@@ -4052,11 +4081,14 @@ CREATE TABLE IF NOT EXISTS `lampiran6s` (
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `kontraks_id` (`kontraks_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table app_kontraks.lampiran6s: ~0 rows (approximately)
+-- Dumping data for table app_kontraks.lampiran6s: ~3 rows (approximately)
 INSERT INTO `lampiran6s` (`id`, `kontraks_id`, `nomor_sop`, `tanggal_sop`, `no_kontrak`, `date_kontrak`, `jenis_pembayaran`, `lama_pembayaran`, `created_at`, `updated_at`) VALUES
-	(2, 1, 'PBP234100006182', '2023-02-06', 'SP-12/VIII/2024', '2023-02-06', 1, '60', '2024-06-06 08:13:51', '2024-06-06 08:13:51');
+	(2, 1, 'PBP234100006182', '2023-02-06', 'SP-12/VIII/2024', '2023-02-06', 1, '60', '2024-06-06 08:13:51', '2024-06-06 08:13:51'),
+	(3, 2, 'PBP234100006196', '2023-02-10', 'SP-90/VIII/2024', '2023-02-10', 1, '60', '2024-06-11 01:05:23', '2024-06-11 01:05:23'),
+	(4, 3, 'PNP234100006108', '2023-01-03', 'SP-111/VIII/2024', '2023-01-03', 1, '17', '2024-06-11 01:50:35', '2024-06-11 01:50:35'),
+	(5, 4, 'PBP234100006127', '2023-01-13', 'SP-000/VIII/2024', '2023-01-13', 1, '12', '2024-06-11 02:10:03', '2024-06-11 02:10:03');
 
 -- Dumping structure for table app_kontraks.lampiran7s
 CREATE TABLE IF NOT EXISTS `lampiran7s` (
@@ -4068,11 +4100,14 @@ CREATE TABLE IF NOT EXISTS `lampiran7s` (
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `kontraks_id` (`kontraks_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table app_kontraks.lampiran7s: ~0 rows (approximately)
+-- Dumping data for table app_kontraks.lampiran7s: ~3 rows (approximately)
 INSERT INTO `lampiran7s` (`id`, `kontraks_id`, `alamat_vendor`, `alamat_peruri`, `created_at`, `updated_at`) VALUES
-	(6, 1, 'PT.DANISA EKA ABADI<br>Jl. Sultan Iskandar Muda No.181<br>Kebayoran Lama<br>KOTA ADM. JAKARTA SELATAN<br>DKI JAKARTA<br>12240<br>INDONESIA tes update rivisian dari kadiv tapi oleh admin, karena staff yang buatnya lagi cuti<br>', 'PERUM PERCETAKAN UANG REPUBLIK INDONESIA\r\n                    <br>\r\n                    Jalan Palatehan No.4 Blok K-V\r\n                    <br>\r\n                    Kebayoran Baru\r\n                    <br>\r\n                    Jakarta Selatan 12160\r\n                    <br>\r\n                    Indonesia', '2024-06-06 09:09:25', '2024-06-06 09:09:25');
+	(6, 1, 'PT.DANISA EKA ABADI<br>Jl. Sultan Iskandar Muda No.181<br>Kebayoran Lama<br>KOTA ADM. JAKARTA SELATAN<br>DKI JAKARTA<br>12240<br>INDONESIA tes update rivisian dari kadiv tapi oleh admin, karena staff yang buatnya lagi cuti<br>', 'PERUM PERCETAKAN UANG REPUBLIK INDONESIA\r\n                    <br>\r\n                    Jalan Palatehan No.4 Blok K-V\r\n                    <br>\r\n                    Kebayoran Baru\r\n                    <br>\r\n                    Jakarta Selatan 12160\r\n                    <br>\r\n                    Indonesia', '2024-06-06 09:09:25', '2024-06-06 09:09:25'),
+	(7, 2, '<b>PT.MANGGALA EKA SAKTI</b><br>Graha Yapetri Lt. IV, Jl. Sunan Kalijaga No. 65B Melawai - Jakarta Selatan, Jakarta<br>Kebayoran Baru<br>KOTA ADM. JAKARTA SELATAN<br>DKI JAKARTA<br>12160<br><u>INDONESIA</u>', '<b>PERUM PERCETAKAN UANG REPUBLIK INDONESIA</b>\r\n                    <br>\r\n                    Jalan Palatehan No.4 Blok K-V\r\n                    <br>\r\n                    Kebayoran Baru\r\n                    <br>\r\n                    Jakarta Selatan 12160\r\n                    <br>\r\n                    <u>Indonesia</u>', '2024-06-11 01:05:43', '2024-06-11 01:05:43'),
+	(8, 3, 'PT<br>MANROLAND INDONESIA<br>MANAGEMENT BUILDING LT. 2, JL. BUNCIT RAYA KAV. 100 RT 001\r\nRW.007,PEJATEN BARAT,PASAR MINGGU,JAKART<br>Pasar Minggu<br>KOTA ADM. JAKARTA SELATAN<br>DKI JAKARTA<br>12510<br>INDONESIA', 'PERUM PERCETAKAN UANG REPUBLIK INDONESIA\r\n                    <br>\r\n                    Jalan Palatehan No.4 Blok K-V\r\n                    <br>\r\n                    Kebayoran Baru\r\n                    <br>\r\n                    Jakarta Selatan 12160\r\n                    <br>\r\n                    Indonesia', '2024-06-11 01:50:41', '2024-06-11 01:50:41'),
+	(9, 4, 'PT<br>KERTAS PADALARANG <br>Jalan Cihaliwung No.181 Padalarang<br>Padalarang<br>KAB. BANDUNG BARAT<br>JAWA BARAT<br>40553<br>INDONESIA', 'PERUM PERCETAKAN UANG REPUBLIK INDONESIA\r\n                    <br>\r\n                    Jalan Palatehan No.4 Blok K-V\r\n                    <br>\r\n                    Kebayoran Baru\r\n                    <br>\r\n                    Jakarta Selatan 12160\r\n                    <br>\r\n                    Indonesia', '2024-06-11 02:10:07', '2024-06-11 02:10:07');
 
 -- Dumping structure for table app_kontraks.log_contracts
 CREATE TABLE IF NOT EXISTS `log_contracts` (
@@ -4086,9 +4121,9 @@ CREATE TABLE IF NOT EXISTS `log_contracts` (
   KEY `log_contracts_kontraks_id_index` (`kontraks_id`),
   KEY `log_contracts_status_index` (`status`),
   KEY `log_contracts_user_id_index` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table app_kontraks.log_contracts: ~0 rows (approximately)
+-- Dumping data for table app_kontraks.log_contracts: ~27 rows (approximately)
 INSERT INTO `log_contracts` (`id`, `kontraks_id`, `status`, `user_id`, `created_at`, `updated_at`) VALUES
 	(1, 1, 'draft', 3, '2024-06-06 06:41:50', '2024-06-06 06:41:50'),
 	(2, 1, 'reviewkasek', 3, '2024-06-06 07:13:37', '2024-06-06 07:13:37'),
@@ -4112,7 +4147,14 @@ INSERT INTO `log_contracts` (`id`, `kontraks_id`, `status`, `user_id`, `created_
 	(20, 1, 'reviewkadept', 4, '2024-06-06 09:19:14', '2024-06-06 09:19:14'),
 	(21, 1, 'approvedkadept', 7, '2024-06-06 09:19:32', '2024-06-06 09:19:32'),
 	(22, 1, 'reviewkadiv', 7, '2024-06-06 09:19:34', '2024-06-06 09:19:34'),
-	(23, 1, 'approvedkadiv', 8, '2024-06-06 09:19:52', '2024-06-06 09:19:52');
+	(23, 1, 'approvedkadiv', 8, '2024-06-06 09:19:52', '2024-06-06 09:19:52'),
+	(24, 2, 'draft', 20, '2024-06-11 01:03:05', '2024-06-11 01:03:05'),
+	(25, 2, 'reviewkasek', 20, '2024-06-11 01:05:43', '2024-06-11 01:05:43'),
+	(26, 3, 'draft', 20, '2024-06-11 01:47:54', '2024-06-11 01:47:54'),
+	(27, 3, 'reviewkasek', 20, '2024-06-11 01:50:41', '2024-06-11 01:50:41'),
+	(28, 4, 'draft', 20, '2024-06-11 02:08:11', '2024-06-11 02:08:11'),
+	(29, 4, 'reviewkasek', 20, '2024-06-11 02:10:07', '2024-06-11 02:10:07'),
+	(30, 2, 'revisikasek', 17, '2024-06-11 03:57:34', '2024-06-11 03:57:34');
 
 -- Dumping structure for table app_kontraks.migrations
 CREATE TABLE IF NOT EXISTS `migrations` (
@@ -4186,7 +4228,7 @@ CREATE TABLE IF NOT EXISTS `notifications` (
   KEY `notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table app_kontraks.notifications: ~0 rows (approximately)
+-- Dumping data for table app_kontraks.notifications: ~26 rows (approximately)
 INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `data`, `read_at`, `created_at`, `updated_at`) VALUES
 	('0ac5fbd9-268f-4c3a-a809-eb365d1b91a5', 'App\\Notifications\\inputKontrakNotification', 'App\\Models\\User', 4, '{"title":"Kontrak Baru Telah Dibuat!","messages":"Mas Rezki Telah membuat kontrak baru, silahkan melakukan review. Terimakasih!","url":"http:\\/\\/127.0.0.1:8000\\/Kontrakshow1\\/1"}', NULL, '2024-06-06 07:12:16', '2024-06-06 07:12:16'),
 	('0f32e67d-63e2-4542-8fdd-cd12bec0cd2e', 'App\\Notifications\\SetujuiKontrakNotification', 'App\\Models\\User', 7, '{"title":"Kontrak Telah Disubmit!","kontrak":1,"messages":"Dear Ibu Ika, Kontrak dengan Nomor SP-12\\/VIII\\/2024 Telah di Submit oleh Mba Citra Selaku kasekLokal. Silahkan melakukan review kontrak ke tahap selanjutnya, Terimakasih!","url":"http:\\/\\/127.0.0.1:8000\\/showKontrakNotif\\/1"}', '2024-06-06 08:37:31', '2024-06-06 08:35:30', '2024-06-06 08:37:31'),
@@ -4197,18 +4239,22 @@ INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `
 	('4f605a88-7c94-459e-8279-37a51d08eaf4', 'App\\Notifications\\UpdateKontrakNotification', 'App\\Models\\User', 4, '{"title":"Kontrak Telah Diperbaharui!","messages":"Mas Rezki Telah memperbaharui kontrak dengan Nomor SP-12\\/VIII\\/2024 Silahkan review kembali. Terimakasih!","url":"http:\\/\\/127.0.0.1:8000\\/showUpdateKontrak\\/1"}', '2024-06-06 08:16:57', '2024-06-06 08:13:53', '2024-06-06 08:16:57'),
 	('51d723cd-9154-4b1f-96af-d6343ff942ad', 'App\\Notifications\\RevisiKontrakNotification', 'App\\Models\\User', 4, '{"kontraks_id":"1","user_id":8,"title":"Ada Revisi Kontrak!","messages":"Pa Rezi Memberikan Revisi pada Kontrak","url":"http:\\/\\/127.0.0.1:8000\\/showRevisiNotif\\/1"}', '2024-06-06 09:06:09', '2024-06-06 09:05:19', '2024-06-06 09:06:09'),
 	('5811149f-92ae-4673-8e6a-edb5a66d9028', 'App\\Notifications\\SetujuiKontrakNotification', 'App\\Models\\User', 8, '{"title":"Kontrak Telah Disubmit!","kontrak":1,"messages":"Dear Pa Rezi, Kontrak dengan Nomor SP-12\\/VIII\\/2024 Telah di Submit oleh Ibu Ika Selaku   kadept41KDP. Silahkan melakukan review kontrak ke tahap selanjutnya, Terimakasih!","url":"http:\\/\\/127.0.0.1:8000\\/showKontrakNotif\\/1"}', '2024-06-06 09:04:53', '2024-06-06 09:02:49', '2024-06-06 09:04:53'),
+	('5ab2ffb3-35b7-4035-83a3-da4fa5f53be3', 'App\\Notifications\\inputKontrakNotification', 'App\\Models\\User', 17, '{"title":"Kontrak Baru Telah Dibuat!","messages":"Mba Intan Telah membuat kontrak baru, silahkan melakukan review. Terimakasih!","url":"http:\\/\\/127.0.0.1:8000\\/Kontrakshow1\\/2"}', '2024-06-11 03:53:35', '2024-06-11 01:05:43', '2024-06-11 03:53:35'),
 	('65c18710-caf6-4634-a52a-ac4d42955f0f', 'App\\Notifications\\SetujuiKontrakNotification', 'App\\Models\\User', 7, '{"title":"Kontrak Telah Disubmit!","kontrak":1,"messages":"Dear Ibu Ika, Kontrak dengan Nomor SP-12\\/VIII\\/2024 Telah di Submit oleh Mba Citra Selaku   kasekLokal. Silahkan melakukan review kontrak ke tahap selanjutnya, Terimakasih!","url":"http:\\/\\/127.0.0.1:8000\\/showKontrakNotif\\/1"}', '2024-06-06 09:19:28', '2024-06-06 09:19:14', '2024-06-06 09:19:28'),
 	('70812067-2eba-4abe-927e-5a192d25c043', 'App\\Notifications\\RevisiKontrakNotification', 'App\\Models\\User', 3, '{"kontraks_id":"1","user_id":4,"title":"Ada Revisi Kontrak!","messages":"Mba Citra Memberikan Revisi pada Kontrak","url":"http:\\/\\/127.0.0.1:8000\\/showRevisiNotif\\/1"}', '2024-06-06 07:43:57', '2024-06-06 07:39:47', '2024-06-06 07:43:57'),
+	('709f4137-91c2-4ce7-a2a1-396c6d8ec279', 'App\\Notifications\\inputKontrakNotification', 'App\\Models\\User', 17, '{"title":"Kontrak Baru Telah Dibuat!","messages":"Mba Intan Telah membuat kontrak baru, silahkan melakukan review. Terimakasih!","url":"http:\\/\\/127.0.0.1:8000\\/Kontrakshow1\\/3"}', NULL, '2024-06-11 01:50:41', '2024-06-11 01:50:41'),
 	('81ca0158-a85e-49b6-9c3b-4cf537ea910b', 'App\\Notifications\\UpdateKontrakNotification', 'App\\Models\\User', 4, '{"title":"Kontrak Telah Diperbaharui!","messages":"Mas Rezki Telah memperbaharui kontrak dengan Nomor SP-12\\/VIII\\/2024 Silahkan review kembali. Terimakasih!","url":"http:\\/\\/127.0.0.1:8000\\/showUpdateKontrak\\/1"}', '2024-06-06 09:18:49', '2024-06-06 09:09:25', '2024-06-06 09:18:49'),
 	('894ab59a-1da3-4854-b5ff-7cc594eb5550', 'App\\Notifications\\RevisiKontrakNotification', 'App\\Models\\User', 3, '{"kontraks_id":"1","user_id":8,"title":"Ada Revisi Kontrak!","messages":"Pa Rezi Memberikan Revisi pada Kontrak","url":"http:\\/\\/127.0.0.1:8000\\/showRevisiNotif\\/1"}', '2024-06-06 09:06:22', '2024-06-06 09:05:19', '2024-06-06 09:06:22'),
 	('9ed7ed7f-3a12-4279-9e9a-3f65fcce4131', 'App\\Notifications\\RevisiKontrakNotification', 'App\\Models\\User', 3, '{"kontraks_id":"1","user_id":7,"title":"Ada Revisi Kontrak!","messages":"Ibu Ika Memberikan Revisi pada Kontrak","url":"http:\\/\\/127.0.0.1:8000\\/showRevisiNotif\\/1"}', '2024-06-06 09:30:07', '2024-06-06 08:38:00', '2024-06-06 09:30:07'),
 	('aa96447e-8239-48ff-beef-b3f7dafd5632', 'App\\Notifications\\NetkontrakNotification', 'App\\Models\\User', 4, '{"title":"Kontrak Telah Disetujui (NET KADIV)!","kontrak":1,"messages":"Kontrak dengan Nomor SP-12\\/VIII\\/2024 Telah di Approved NET Oleh  Pa Rezi Selaku . Terimakasih!","url":"http:\\/\\/127.0.0.1:8000\\/showKontrakNotif\\/1"}', '2024-06-06 09:20:14', '2024-06-06 09:19:52', '2024-06-06 09:20:14'),
 	('c59c9a7e-8621-4ba4-83c5-7aac118fb342', 'App\\Notifications\\RevisiKontrakNotification', 'App\\Models\\User', 7, '{"kontraks_id":"1","user_id":8,"title":"Ada Revisi Kontrak!","messages":"Pa Rezi Memberikan Revisi pada Kontrak","url":"http:\\/\\/127.0.0.1:8000\\/showRevisiNotif\\/1"}', '2024-06-06 09:05:55', '2024-06-06 09:05:19', '2024-06-06 09:05:55'),
+	('d30b9d46-2727-45ec-acf1-0ad6ebbf3f2d', 'App\\Notifications\\RevisiKontrakNotification', 'App\\Models\\User', 20, '{"kontraks_id":"2","user_id":17,"title":"Ada Revisi Kontrak!","messages":"Mba Dini Memberikan Revisi pada Kontrak","url":"http:\\/\\/127.0.0.1:8000\\/showRevisiNotif\\/2"}', NULL, '2024-06-11 03:57:34', '2024-06-11 03:57:34'),
 	('db413d67-a61e-4c1e-b4f8-c3e561b96378', 'App\\Notifications\\UpdateKontrakNotification', 'App\\Models\\User', 4, '{"title":"Kontrak Telah Diperbaharui!","messages":"Mas Rezki Telah memperbaharui kontrak dengan Nomor SP-12\\/VIII\\/2024 Silahkan review kembali. Terimakasih!","url":"http:\\/\\/127.0.0.1:8000\\/showUpdateKontrak\\/1"}', '2024-06-06 08:05:12', '2024-06-06 07:59:58', '2024-06-06 08:05:12'),
 	('ddc26c22-a6bb-4168-b533-e5aa19da1265', 'App\\Notifications\\NetkontrakNotification', 'App\\Models\\User', 3, '{"title":"Kontrak Telah Disetujui (NET KADIV)!","kontrak":1,"messages":"Kontrak dengan Nomor SP-12\\/VIII\\/2024 Telah di Approved NET Oleh  Pa Rezi Selaku . Terimakasih!","url":"http:\\/\\/127.0.0.1:8000\\/showKontrakNotif\\/1"}', '2024-06-06 09:29:54', '2024-06-06 09:19:52', '2024-06-06 09:29:54'),
 	('e0d67402-d3a2-4132-a5b5-1a143e946e25', 'App\\Notifications\\inputKontrakNotification', 'App\\Models\\User', 4, '{"title":"Kontrak Baru Telah Dibuat!","messages":"Mas Rezki Telah membuat kontrak baru, silahkan melakukan review. Terimakasih!","url":"http:\\/\\/127.0.0.1:8000\\/Kontrakshow1\\/1"}', '2024-06-06 07:14:03', '2024-06-06 07:13:37', '2024-06-06 07:14:03'),
 	('e302e826-6eb1-4943-ad2a-9d6e12d58644', 'App\\Notifications\\RevisiKontrakNotification', 'App\\Models\\User', 4, '{"kontraks_id":"1","user_id":7,"title":"Ada Revisi Kontrak!","messages":"Ibu Ika Memberikan Revisi pada Kontrak","url":"http:\\/\\/127.0.0.1:8000\\/showRevisiNotif\\/1"}', '2024-06-06 09:00:51', '2024-06-06 09:00:10', '2024-06-06 09:00:51'),
 	('ec3387fa-d363-41c1-b1f2-bdfa6d68a2ab', 'App\\Notifications\\UpdateKontrakNotification', 'App\\Models\\User', 4, '{"title":"Kontrak Telah Diperbaharui!","messages":"Mas Rezki Telah memperbaharui kontrak dengan Nomor SP-12\\/VIII\\/2024 Silahkan review kembali. Terimakasih!","url":"http:\\/\\/127.0.0.1:8000\\/showUpdateKontrak\\/1"}', '2024-06-06 09:01:43', '2024-06-06 09:01:34', '2024-06-06 09:01:43'),
+	('ed9aaf4a-fec0-41aa-a6bb-02e7c6daea18', 'App\\Notifications\\inputKontrakNotification', 'App\\Models\\User', 17, '{"title":"Kontrak Baru Telah Dibuat!","messages":"Mba Intan Telah membuat kontrak baru, silahkan melakukan review. Terimakasih!","url":"http:\\/\\/127.0.0.1:8000\\/Kontrakshow1\\/4"}', NULL, '2024-06-11 02:10:07', '2024-06-11 02:10:07'),
 	('f91becda-07ea-4864-8889-9eca17eaaa2c', 'App\\Notifications\\RevisiKontrakNotification', 'App\\Models\\User', 3, '{"kontraks_id":"1","user_id":4,"title":"Ada Revisi Kontrak!","messages":"Mba Citra Memberikan Revisi pada Kontrak","url":"http:\\/\\/127.0.0.1:8000\\/showRevisiNotif\\/1"}', '2024-06-06 08:10:34', '2024-06-06 08:05:40', '2024-06-06 08:10:34');
 
 -- Dumping structure for table app_kontraks.pasal-kontrak
@@ -4318,7 +4364,7 @@ CREATE TABLE IF NOT EXISTS `password_reset_tokens` (
 CREATE TABLE IF NOT EXISTS `permissions` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'web',
   `detail` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -4326,7 +4372,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
   UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table app_kontraks.permissions: ~9 rows (approximately)
+-- Dumping data for table app_kontraks.permissions: ~20 rows (approximately)
 INSERT INTO `permissions` (`id`, `name`, `guard_name`, `detail`, `created_at`, `updated_at`) VALUES
 	(3, 'viewUser', 'web', 'Halaman Data User', NULL, '2024-06-06 04:38:20'),
 	(4, 'view-addUser', 'web', 'Halaman Tambah Data User', NULL, '2024-06-05 07:34:51'),
@@ -4336,18 +4382,18 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `detail`, `created_at`, `
 	(8, 'view-addPasal', 'web', 'Halaman Tambah Data Pasal', NULL, '2024-06-06 04:40:53'),
 	(10, 'view-ReviewKontrak', 'web', 'Halaman Untuk Review Kontrak', '2024-06-05 08:08:45', '2024-06-05 08:08:45'),
 	(11, 'view-addKontrak', 'web', 'Halaman Untuk Buat Kontrak', '2024-06-05 08:35:01', '2024-06-06 04:36:59'),
-	(13, 'view-inputLampiran', '', 'Halaman Untuk Input Lampiran', '2024-06-06 04:37:55', '2024-06-06 04:37:55'),
-	(14, 'view-editPasal', '', 'Halaman Ubah Data Pasal', '2024-06-06 04:41:45', '2024-06-06 04:41:45'),
-	(15, 'view-deletePasal', '', 'Halaman Hapus Data Pasal', '2024-06-06 04:43:00', '2024-06-06 04:43:00'),
-	(16, 'view-editLampiran', '', 'Halaman Untuk Ubah Lampiran', '2024-06-06 04:49:00', '2024-06-06 04:49:00'),
-	(17, 'view-SubmitKontrak', '', 'Tombol Submit Kontrak', '2024-06-06 04:54:37', '2024-06-06 04:54:37'),
-	(18, 'view-addRevisi', '', 'Halaman Input Revisi/Koreksi pada Kontrak', '2024-06-06 04:55:44', '2024-06-06 04:55:44'),
-	(19, 'view-deteleKontrak', '', 'Tombol Hapus Kontrak', '2024-06-06 04:57:29', '2024-06-06 04:57:29'),
-	(20, 'viewRole', '', 'Halaman Data Role', '2024-06-06 05:02:39', '2024-06-06 05:02:39'),
-	(21, 'view-editRole', '', 'Halaman Ubah Data Role', '2024-06-06 05:03:58', '2024-06-06 05:03:58'),
-	(22, 'view-deleteRole', '', 'Halaman Hapus Data Role', '2024-06-06 06:04:04', '2024-06-06 06:04:04'),
-	(23, 'viewPermission', '', 'Halaman Data Permission', '2024-06-06 06:05:04', '2024-06-06 06:05:04'),
-	(24, 'view-addRole', '', 'Halaman Tambah Data Role', '2024-06-06 06:11:27', '2024-06-06 06:11:27');
+	(13, 'view-inputLampiran', 'web', 'Halaman Untuk Input Lampiran', '2024-06-06 04:37:55', '2024-06-06 04:37:55'),
+	(14, 'view-editPasal', 'web', 'Halaman Ubah Data Pasal', '2024-06-06 04:41:45', '2024-06-06 04:41:45'),
+	(15, 'view-deletePasal', 'web', 'Halaman Hapus Data Pasal', '2024-06-06 04:43:00', '2024-06-06 04:43:00'),
+	(16, 'view-editLampiran', 'web', 'Halaman Untuk Ubah Lampiran', '2024-06-06 04:49:00', '2024-06-06 04:49:00'),
+	(17, 'view-SubmitKontrak', 'web', 'Tombol Submit Kontrak', '2024-06-06 04:54:37', '2024-06-06 04:54:37'),
+	(18, 'view-addRevisi', 'web', 'Halaman Input Revisi/Koreksi pada Kontrak', '2024-06-06 04:55:44', '2024-06-06 04:55:44'),
+	(19, 'view-deteleKontrak', 'web', 'Tombol Hapus Kontrak', '2024-06-06 04:57:29', '2024-06-06 04:57:29'),
+	(20, 'viewRole', 'web', 'Halaman Data Role', '2024-06-06 05:02:39', '2024-06-06 05:02:39'),
+	(21, 'view-editRole', 'web', 'Halaman Ubah Data Role', '2024-06-06 05:03:58', '2024-06-06 05:03:58'),
+	(22, 'view-deleteRole', 'web', 'Halaman Hapus Data Role', '2024-06-06 06:04:04', '2024-06-06 06:04:04'),
+	(23, 'viewPermission', 'web', 'Halaman Data Permission', '2024-06-06 06:05:04', '2024-06-06 06:05:04'),
+	(24, 'view-addRole', 'web', 'Halaman Tambah Data Role', '2024-06-06 06:11:27', '2024-06-06 06:11:27');
 
 -- Dumping structure for table app_kontraks.personal_access_tokens
 CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
@@ -4380,34 +4426,37 @@ CREATE TABLE IF NOT EXISTS `revisi_kontraks` (
   PRIMARY KEY (`id`),
   KEY `kontraks_id` (`kontraks_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table app_kontraks.revisi_kontraks: ~0 rows (approximately)
+-- Dumping data for table app_kontraks.revisi_kontraks: ~4 rows (approximately)
 INSERT INTO `revisi_kontraks` (`id`, `kontraks_id`, `revisi`, `user_id`, `statusrevisi`, `created_at`, `updated_at`) VALUES
 	(1, 1, 'tes notif pergantian logic user management', 4, 'Y', '2024-06-06 07:39:47', '2024-06-06 09:01:59'),
 	(2, 1, 'tes sekali lagi for making sure', 4, 'Y', '2024-06-06 08:05:40', '2024-06-06 08:35:28'),
 	(3, 1, 'tes revisi dari kadept stelah perubahan logic', 7, 'Y', '2024-06-06 08:38:00', '2024-06-06 09:19:32'),
 	(4, 1, 'cek revisi dari kadept dengan logic baru', 7, 'Y', '2024-06-06 09:00:10', '2024-06-06 09:02:47'),
-	(5, 1, 'cek revisi dari kadiv dengan logic baruuuu', 8, 'Y', '2024-06-06 09:05:19', '2024-06-06 09:19:52');
+	(5, 1, 'cek revisi dari kadiv dengan logic baruuuu', 8, 'Y', '2024-06-06 09:05:19', '2024-06-06 09:19:52'),
+	(6, 2, 'tes revisi', 17, 'N', '2024-06-11 03:57:34', '2024-06-11 03:57:34');
 
 -- Dumping structure for table app_kontraks.roles
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'web',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `roles_name_guard_name_unique` (`name`,`guard_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table app_kontraks.roles: ~5 rows (approximately)
+-- Dumping data for table app_kontraks.roles: ~7 rows (approximately)
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
 	(6, 'admin', 'web', NULL, NULL),
 	(7, 'writer', 'web', NULL, NULL),
 	(8, 'kasek', 'web', NULL, NULL),
 	(9, 'kadept', 'web', NULL, NULL),
-	(10, 'kadiv', 'web', NULL, NULL);
+	(10, 'kadiv', 'web', NULL, NULL),
+	(15, 'admin2', 'web', '2024-06-06 09:40:52', '2024-06-06 09:40:52'),
+	(16, 'cek', 'web', '2024-06-07 08:09:02', '2024-06-07 08:09:02');
 
 -- Dumping structure for table app_kontraks.role_has_permissions
 CREATE TABLE IF NOT EXISTS `role_has_permissions` (
@@ -4433,9 +4482,9 @@ CREATE TABLE IF NOT EXISTS `role_permission` (
   KEY `role_permission_permission_id_foreign` (`permission_id`),
   CONSTRAINT `role_permission_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
   CONSTRAINT `role_permission_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table app_kontraks.role_permission: ~9 rows (approximately)
+-- Dumping data for table app_kontraks.role_permission: ~37 rows (approximately)
 INSERT INTO `role_permission` (`id`, `role_id`, `permission_id`, `created_at`, `updated_at`) VALUES
 	(1, 6, 3, NULL, NULL),
 	(2, 6, 4, NULL, NULL),
@@ -4471,8 +4520,11 @@ INSERT INTO `role_permission` (`id`, `role_id`, `permission_id`, `created_at`, `
 	(37, 9, 17, NULL, NULL),
 	(38, 9, 18, NULL, NULL),
 	(39, 10, 10, NULL, NULL),
-	(40, 10, 17, NULL, NULL),
-	(41, 10, 18, NULL, NULL);
+	(41, 10, 18, NULL, NULL),
+	(42, 15, 3, NULL, NULL),
+	(43, 15, 18, NULL, NULL),
+	(44, 10, 17, NULL, NULL),
+	(45, 16, 3, NULL, NULL);
 
 -- Dumping structure for table app_kontraks.role_user
 CREATE TABLE IF NOT EXISTS `role_user` (
@@ -4486,15 +4538,14 @@ CREATE TABLE IF NOT EXISTS `role_user` (
   KEY `role_user_user_id_foreign` (`user_id`),
   CONSTRAINT `role_user_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
   CONSTRAINT `role_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table app_kontraks.role_user: ~19 rows (approximately)
+-- Dumping data for table app_kontraks.role_user: ~22 rows (approximately)
 INSERT INTO `role_user` (`id`, `role_id`, `user_id`, `created_at`, `updated_at`) VALUES
 	(1, 6, 5, NULL, NULL),
 	(4, 7, 25, NULL, NULL),
 	(6, 7, 3, NULL, NULL),
 	(7, 8, 4, NULL, NULL),
-	(8, 7, 6, NULL, NULL),
 	(9, 9, 7, NULL, NULL),
 	(10, 10, 8, NULL, NULL),
 	(11, 7, 10, NULL, NULL),
@@ -4509,7 +4560,12 @@ INSERT INTO `role_user` (`id`, `role_id`, `user_id`, `created_at`, `updated_at`)
 	(21, 7, 23, NULL, NULL),
 	(22, 6, 21, '2024-06-05 08:20:22', NULL),
 	(24, 6, 1, '2024-06-06 06:13:45', NULL),
-	(25, 7, 26, '2024-06-06 06:15:19', NULL);
+	(25, 7, 26, '2024-06-06 06:15:19', NULL),
+	(28, 7, 29, '2024-06-07 08:24:12', NULL),
+	(29, 6, 6, '2024-06-07 08:32:14', NULL),
+	(30, 7, 30, '2024-06-07 08:33:26', NULL),
+	(31, 7, 31, '2024-06-07 08:36:18', NULL),
+	(32, 7, 32, '2024-06-07 08:37:20', NULL);
 
 -- Dumping structure for table app_kontraks.settings
 CREATE TABLE IF NOT EXISTS `settings` (
@@ -4523,7 +4579,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
 
 -- Dumping data for table app_kontraks.settings: ~0 rows (approximately)
 INSERT INTO `settings` (`id`, `peruri_akta`, `peruri_pihakname`, `created_at`, `updated_at`) VALUES
-	(1, '<p style="text-align: justify; "><span style="font-size: 14px;">﻿</span><span style="font-size: 14px;">yang dalam hal ini jabatannya selaku Pelaksana Operasional Harian (POH)\r\nKepala Divisi Pengadaan dan Fasilitas Umum sesuai Nota Dinas Direktorat\r\nSDM, Teknologi dan Informasi Nomor : 9/Dir. SDM &amp; TI/II/2024 tanggal\r\n01 Februari 2024 Tentang Penunjukan POH Kepala Divisi Pengadaan dan\r\nFasilitas Umum, dari dan oleh karena itu bertindak untuk dan atas nama Perum\r\nPercetakan Uang RI yang didirikan untuk terakhir kalinya berdasarkan\r\nPeraturan Pemerintah RI Nomor : 6 Tahun 2019 tanggal 19 Februari 2019\r\ntentang Perusahaan Umum (Perum) Percetakan Uang Republik Indonesia,\r\nyang berkedudukan hukum di Jalan Palatehan No. 4, Kebayoran Baru, Jakarta\r\nSelatan 12160, yang selanjutnya dalam perbuatan hukum ini disebut sebagai :</span></p><p style="text-align: center;"><span style="font-size: 14px;">-------------------------------------------- PIHAK KESATU -------------------------------------------</span><br></p>', 'Rezi Syahputra', '2024-03-30 04:09:18', '2024-05-28 04:08:58');
+	(1, '<p align="justify">yang dalam hal ini jabatannya selaku Pelaksana Operasional Harian (POH) Kepala Divisi Pengadaan dan Fasilitas Umum sesuai Nota Dinas Direktorat SDM, Teknologi dan Informasi Nomor : 9/Dir. SDM &amp; TI/II/2024 tanggal 01 Februari 2024 Tentang Penunjukan POH Kepala Divisi Pengadaan dan Fasilitas Umum, dari dan oleh karena itu bertindak untuk dan atas nama Perum Percetakan Uang RI yang didirikan untuk terakhir kalinya berdasarkan Peraturan Pemerintah RI Nomor : 6 Tahun 2019 tanggal 19 Februari 2019 tentang Perusahaan Umum (Perum) Percetakan Uang Republik Indonesia, yang berkedudukan hukum di Jalan Palatehan No. 4, Kebayoran Baru, Jakarta Selatan 12160, yang selanjutnya dalam perbuatan hukum ini disebut sebagai : TES123</p><p align="center"><b>-------------------------------------------- PIHAK KESATU -------------------------------------------</b><br></p>', 'Rezi Syahputra', NULL, '2024-06-11 02:07:10');
 
 -- Dumping structure for table app_kontraks.spesifikasi_teknis
 CREATE TABLE IF NOT EXISTS `spesifikasi_teknis` (
@@ -4552,30 +4608,34 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `users_email_unique` (`email`),
   KEY `unit_kerja` (`unit_kerja`),
   KEY `permission` (`permission`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table app_kontraks.users: ~21 rows (approximately)
+-- Dumping data for table app_kontraks.users: ~23 rows (approximately)
 INSERT INTO `users` (`id`, `name`, `username`, `email`, `unit_kerja`, `email_verified_at`, `password`, `remember_token`, `permission`, `created_at`, `updated_at`) VALUES
 	(1, 'Nuramalia Putri', 'nramalptr', 'nuramaliaap24@gmail.com', '41A20', NULL, '$2y$12$29rhJQKihZnI8CvoQdQ9n.88DrHWHqdUtMAw4zW7nbwCFhxV6H7VK', NULL, NULL, '2024-03-05 05:59:44', '2024-06-05 08:12:14'),
 	(3, 'Mas Rezki', 'Lrezki', 'rezki@gmail.com', '41A30', NULL, '$2y$12$ZBFI9GvuhFTJjtH0XySCu.r8agM0uUuJ1vMj7bQPLozv/NyVE2g/2', NULL, NULL, '2024-03-05 17:58:15', '2024-06-05 08:12:22'),
-	(4, 'Mba Citra', 'Lcitra', 'citra@gmail.com', '41A30', NULL, '$2y$12$Erj2mNie/XZsLDMCbNQGAu5pUDv63/CnW7gPcFrlXAJsLcPjELrsK', NULL, NULL, '2024-03-05 17:58:31', '2024-06-05 08:12:29'),
-	(5, 'Mba Annisa D', 'Jnisa', 'annisa@gmail.com', '41A20', NULL, '$2y$12$owZQVAoK9yRL5Q.Z1.siWete8cU4VIsErnxsQvxbZregcApOyQZgW', NULL, NULL, '2024-03-06 01:41:44', '2024-06-06 02:42:44'),
-	(6, 'Mas Heru', 'heru_import', 'heruimport@gmail.com', '41A40', NULL, '$2y$12$M7YiFs7DuVHADXstIHQt8OUZphsgQgNS8GRSKxc/aTHxNaDimwHhW', NULL, NULL, '2024-03-06 01:43:03', '2024-06-05 08:12:39'),
+	(4, 'Mba Citra', 'Lcitra', 'citra@gmail.com', '41A30', NULL, '$2y$12$cPfhY/jYU5Qr85zX4kBhB.joL7gY38myzp5sXAeVa3eAB/sjRVuxi', NULL, NULL, '2024-03-05 17:58:31', '2024-06-07 08:33:50'),
+	(5, 'Mba Annisa D', 'adminNisa', 'annisa@gmail.com', '41A20', NULL, '$2y$12$owZQVAoK9yRL5Q.Z1.siWete8cU4VIsErnxsQvxbZregcApOyQZgW', NULL, NULL, '2024-03-06 01:41:44', '2024-06-07 08:29:17'),
+	(6, 'Mas Heru', 'adminHeru', 'heruimport@gmail.com', '41A40', NULL, '$2y$12$42FiIfCtQs0N2J2rrwsVuuJQtrhSWqeR4mrUHG4MxY0z6WQDiqjoy', NULL, NULL, '2024-03-06 01:43:03', '2024-06-07 08:35:37'),
 	(7, 'Ibu Ika', 'kadept', 'ibuIka@gmail.com', '41KDP', NULL, '$2y$12$wqgSyNqjXAYD3W1IJnh2.e3d3y.IR/b5C/tsPzHpK8yOELtJJv7bO', NULL, NULL, '2024-03-07 01:27:54', '2024-06-05 08:13:09'),
 	(8, 'Pa Rezi', 'kadiv', 'nbnsyrfh@gmail.com', '4100', NULL, '$2y$12$yQZI1l.5fIVkJBrzYHvUNu9lKl1b1hsjho37MV4XJNeRjjWPfaXv2', NULL, NULL, '2024-03-07 02:22:51', '2024-06-06 06:23:08'),
 	(10, 'Mba Resti', 'resti_inves', 'resti00@gmail.com', '41A10', NULL, '$2y$12$bJq2IdH1wX96pr1y/rzvBO6RFSmvl0WsNurJmKQj/Mb69kTkpDghK', NULL, NULL, '2024-03-14 07:41:04', '2024-06-05 08:17:13'),
-	(11, 'Mba Endar', 'endar_lokal', 'endar77@gmail.com', '41A30', NULL, '$2y$12$lhv.q6poULle7sT89Gj/1Ol0KNFFwhvXYHnJ..g1TbCftl14kOscG', NULL, NULL, '2024-03-14 18:42:54', '2024-06-05 08:17:24'),
-	(12, 'Mba Hae', 'hae_lokal', 'hae@gmail.com', '41A30', NULL, '$2y$12$rOrx1OQPPobFcaCyxt86x.r4dq3rIMK05Gh13ky6Azlt8emQneL7C', NULL, NULL, '2024-03-14 18:49:01', '2024-06-05 08:17:33'),
-	(16, 'Yohana', 'yohana_lokal', 'yohana@gmail.com', '41A30', NULL, '$2y$12$Kb5creIyId0H30sc3HFgQ.wXXztEXbBtAocksZWwaKtp72ld7lDOK', NULL, NULL, '2024-05-08 04:06:48', '2024-06-05 08:17:45'),
+	(11, 'Mba Endar', 'Lendar', 'endar77@gmail.com', '41A30', NULL, '$2y$12$lhv.q6poULle7sT89Gj/1Ol0KNFFwhvXYHnJ..g1TbCftl14kOscG', NULL, NULL, '2024-03-14 18:42:54', '2024-06-07 08:28:09'),
+	(12, 'Mba Hae', 'Lhae', 'hae@gmail.com', '41A30', NULL, '$2y$12$rOrx1OQPPobFcaCyxt86x.r4dq3rIMK05Gh13ky6Azlt8emQneL7C', NULL, NULL, '2024-03-14 18:49:01', '2024-06-07 08:28:27'),
+	(16, 'Yohana', 'adminYohana', 'yohana@gmail.com', '41A30', NULL, '$2y$12$h4N8jSgJlosOmEmg.lr2o.UvUU90gr6gjcNcMHPFYJTvtX0FFu9v2', NULL, NULL, '2024-05-08 04:06:48', '2024-06-07 08:34:26'),
 	(17, 'Mba Dini', 'dini_jasa', 'dini@gmail.com', '41A20', NULL, '$2y$12$9yqeNqSC9LwcxqIQvRLu4.b33GZTOA4/EBS6sBsh4Rl7IgvGa0J2S', NULL, NULL, '2024-05-08 04:12:32', '2024-06-05 08:17:54'),
 	(18, 'Mas Rahmat', 'rahmat_inves', 'rahmat@gmail.com', '41A10', NULL, '$2y$12$WHwYCjUW.hADOCM37RxeleTulHNB0eyH4nSBUynEQyi4VjSn8Q3gy', NULL, NULL, '2024-05-08 04:14:18', '2024-06-05 08:18:03'),
 	(19, 'Mas Ardi', 'ardi_import', 'ardi@gmail.com', '41A40', NULL, '$2y$12$TU5qu2BEU63WdUMq1RzMDOppdlFa2ZBAzFFEDQYa5tjK4YBTYvOQm', NULL, NULL, '2024-05-08 04:14:53', '2024-06-05 08:18:15'),
 	(20, 'Mba Intan', 'intan_jasa', 'intan@gmail.com', '41A20', NULL, '$2y$12$lZ42kZQMdteM5HFqE00gbesAwfhl6eEUKutYAab76/PmKrndxIebm', NULL, NULL, '2024-05-08 04:16:06', '2024-06-05 08:18:24'),
-	(21, 'Mas Arya', 'arya_inves', 'arya@gmail.com', '41A10', NULL, '$2y$12$fO5y1GvLeRO.qRzc9lyDK.K8/qShAOENGSqTm6OA8uA2PDk5vlFSa', NULL, NULL, '2024-05-08 04:21:09', '2024-06-05 08:18:34'),
-	(22, 'Mas Restu Prasertyo', 'restu_lokal', 'restu@gmail.com', '41A30', NULL, '$2y$12$CIGymBT.DKh/N/qcOR.fUu1QExd/CHNq1Uj/ybGdTCO/hj2DbzbjC', NULL, NULL, '2024-05-08 09:02:11', '2024-06-05 08:18:41'),
+	(21, 'Mas Arya', 'adminArya', 'arya@gmail.com', '41A10', NULL, '$2y$12$fCbhjhU.rML/vM8iWLFWXub9caoNW52Qs3hp3oi/caaRM3Yim./MK', NULL, NULL, '2024-05-08 04:21:09', '2024-06-07 08:35:07'),
+	(22, 'Mas Restu Prasertyo', 'adminRestu', 'restu@gmail.com', '41A30', NULL, '$2y$12$CIGymBT.DKh/N/qcOR.fUu1QExd/CHNq1Uj/ybGdTCO/hj2DbzbjC', NULL, NULL, '2024-05-08 09:02:11', '2024-06-07 08:31:37'),
 	(23, 'zahra', 'zahra', 'zahra@gmail.com', '41A40', NULL, '$2y$12$plMqtYyANr/TauoyQ0PCieCafy96wsuT04FzQHHlJlE8hcu2za7eG', NULL, NULL, '2024-06-05 04:13:28', '2024-06-05 08:18:49'),
-	(25, 'Dara Rizqi khoerunnisa', 'dararizqi', 'dara@gmail.com', '41A40', NULL, '$2y$12$jOh8f5JMI0OsamZi0ryl5.1e7O0DG.5p00XNdR6tFvHqS39.znaS6', NULL, NULL, '2024-06-05 06:24:35', '2024-06-06 06:18:01'),
-	(26, 'Mas Adi', 'adi_jasa', 'adi@gmail.com', '41A20', NULL, '$2y$12$9brEjpNHQXkvILT47enHjOVZ9w6U30NTmAaYFd0uxbxvj/5kyDO9q', NULL, NULL, '2024-06-06 06:15:19', '2024-06-06 06:17:50');
+	(25, 'Mas Tiyas', 'tiyas_import', 'tiyas@gmail.com', '41A40', NULL, '$2y$12$ZX3Tdna4oxZyqOHG2vbZcuqJR1pbDK7l1IzOCHl7PZ571zgN8v9Tu', NULL, NULL, '2024-06-05 06:24:35', '2024-06-07 08:38:33'),
+	(26, 'Mas Adi', 'adi_jasa', 'adi@gmail.com', '41A20', NULL, '$2y$12$9brEjpNHQXkvILT47enHjOVZ9w6U30NTmAaYFd0uxbxvj/5kyDO9q', NULL, NULL, '2024-06-06 06:15:19', '2024-06-06 06:17:50'),
+	(29, 'yohana', 'Lyohana', 'yohana2@gmail.com', '41A30', NULL, '$2y$12$punwL6k/izgJJyTWI39LHeKaIo53Bx.ndloZlcTpRKWOVRYYXLxIG', NULL, NULL, '2024-06-07 08:24:12', '2024-06-07 08:24:12'),
+	(30, 'Mas Heru', 'heru_import', 'heru2@gmail.com', '41A40', NULL, '$2y$12$oZlDBrtn2xqLzmWWRvBokOIK0eL/7sMmrNYyrKIxa5VOJNywBwvAS', NULL, NULL, '2024-06-07 08:33:26', '2024-06-07 08:33:26'),
+	(31, 'Mas Arya', 'arya_inves', 'arya2@gmail.com', '41A10', NULL, '$2y$12$FtnnGTnlRVtsv6YaXqB4C.LowbbEuhZZAC90.B43Qvf7ccWSbf8oK', NULL, NULL, '2024-06-07 08:36:18', '2024-06-07 08:36:18'),
+	(32, 'Anisa', 'annisa_jasa', 'annisa2@gmail.com', '41A20', NULL, '$2y$12$BbWxBuVSli5.brG0qIonJ.K8pVcIBzksMKPXhUyoJtPHgHS2lnvAG', NULL, NULL, '2024-06-07 08:37:20', '2024-06-07 08:37:20');
 
 -- Dumping structure for table app_kontraks.vendors
 CREATE TABLE IF NOT EXISTS `vendors` (
@@ -4604,13 +4664,18 @@ CREATE TABLE IF NOT EXISTS `vendors` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `registration_no` (`registration_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table app_kontraks.vendors: ~0 rows (approximately)
+-- Dumping data for table app_kontraks.vendors: ~8 rows (approximately)
 INSERT INTO `vendors` (`id`, `registration_no`, `sap_code`, `vendor_name`, `company_type`, `alamat`, `sub_district`, `kota`, `provinsi`, `kode_pos`, `negara`, `board_type`, `primary_data`, `full_name`, `citizenship`, `position`, `email`, `phone_number`, `website`, `company_email`, `location_category`, `created_at`, `updated_at`) VALUES
 	(1, '00001850', '0010000987', 'DANISA EKA ABADI', 'PT', 'Jl. Sultan Iskandar Muda No.181', 'Kebayoran Lama', 'KOTA ADM. JAKARTA SELATAN', 'DKI JAKARTA', '12240', 'INDONESIA', 'BOD (Board of Director) &ndash; Direksi', '1', 'Cecep Hidayat', 'Warga Negara Indonesia', 'Direktur', 'info.danisaeka@gmail.com', '087773375343', 'www.danisa.co.id', 'info.danisaeka@gmail.com', 'Head Office', '2024-06-06 06:46:28', '2024-06-06 06:46:28'),
 	(2, '00001850', '0010000987', 'DANISA EKA ABADI', 'PT', 'Jl. Sultan Iskandar Muda No.181', 'Kebayoran Lama', 'KOTA ADM. JAKARTA SELATAN', 'DKI JAKARTA', '12240', 'INDONESIA', 'BOC (Board of Commisioner) &ndash; Komisaris', '', 'Dinda Gianina', 'Warga Negara Indonesia', 'Anggota Komisaris', 'info.danisaeka@gmail.com', '', 'www.danisa.co.id', 'info.danisaeka@gmail.com', 'Head Office', '2024-06-06 06:46:28', '2024-06-06 06:46:28'),
-	(3, '00001850', '0010000987', 'DANISA EKA ABADI', 'PT', 'Jl. Sultan Iskandar Muda No.181', 'Kebayoran Lama', 'KOTA ADM. JAKARTA SELATAN', 'DKI JAKARTA', '12240', 'INDONESIA', 'BOC (Board of Commisioner) &ndash; Komisaris', '', 'Eka Dina Alfiana', 'Warga Negara Indonesia', 'Komisaris Utama', 'info.danisaeka@gmail.com', '089503717220', 'www.danisa.co.id', 'info.danisaeka@gmail.com', 'Head Office', '2024-06-06 06:46:28', '2024-06-06 06:46:28');
+	(3, '00001850', '0010000987', 'DANISA EKA ABADI', 'PT', 'Jl. Sultan Iskandar Muda No.181', 'Kebayoran Lama', 'KOTA ADM. JAKARTA SELATAN', 'DKI JAKARTA', '12240', 'INDONESIA', 'BOC (Board of Commisioner) &ndash; Komisaris', '', 'Eka Dina Alfiana', 'Warga Negara Indonesia', 'Komisaris Utama', 'info.danisaeka@gmail.com', '089503717220', 'www.danisa.co.id', 'info.danisaeka@gmail.com', 'Head Office', '2024-06-06 06:46:28', '2024-06-06 06:46:28'),
+	(4, '00000122', '0010000002', 'MANGGALA EKA SAKTI', 'PT', 'Graha Yapetri Lt. IV, Jl. Sunan Kalijaga No. 65B Melawai - Jakarta Selatan, Jakarta', 'Kebayoran Baru', 'KOTA ADM. JAKARTA SELATAN', 'DKI JAKARTA', '12160', 'INDONESIA', 'BOC (Board of Commisioner) &ndash; Komisaris', '', 'HERMAN SIMANDJUNTAK', 'Warga Negara Indonesia', 'KOMISARIS', '', '', '', 'manggalaekas@gmail.com', 'Head Office', '2024-06-11 01:03:22', '2024-06-11 01:03:22'),
+	(5, '00000122', '0010000002', 'MANGGALA EKA SAKTI', 'PT', 'Graha Yapetri Lt. IV, Jl. Sunan Kalijaga No. 65B Melawai - Jakarta Selatan, Jakarta', 'Kebayoran Baru', 'KOTA ADM. JAKARTA SELATAN', 'DKI JAKARTA', '12160', 'INDONESIA', 'BOD (Board of Director) &ndash; Direksi', '1', 'ROY P. JONACH SIMANJUNTAK', 'Warga Negara Indonesia', 'DIREKTUR', '', '', '', 'manggalaekas@gmail.com', 'Head Office', '2024-06-11 01:03:22', '2024-06-11 01:03:22'),
+	(6, '00000122', '0010000002', 'MANGGALA EKA SAKTI', 'PT', 'Graha Yapetri Lt. IV, Jl. Sunan Kalijaga No. 65B Melawai - Jakarta Selatan, Jakarta', 'Kebayoran Baru', 'KOTA ADM. JAKARTA SELATAN', 'DKI JAKARTA', '12160', 'INDONESIA', 'BOC (Board of Commisioner) &ndash; Komisaris', '', 'RADEN HERRY RUSMADI', 'Warga Negara Indonesia', 'KOMISARIS UTAMA', '', '', '', 'manggalaekas@gmail.com', 'Head Office', '2024-06-11 01:03:22', '2024-06-11 01:03:22'),
+	(7, '00000303', '0010000184', 'MANROLAND INDONESIA', 'PT', 'MANAGEMENT BUILDING LT. 2, JL. BUNCIT RAYA KAV. 100 RT 001\r\nRW.007,PEJATEN BARAT,PASAR MINGGU,JAKART', 'Pasar Minggu', 'KOTA ADM. JAKARTA SELATAN', 'DKI JAKARTA', '12510', 'INDONESIA', 'BOD (Board of Director) &ndash; Direksi', '1', 'Guntur Widjanarko', 'Warga Negara Indonesia', 'Presiden Direktur', 'guntur.widjanarko@manrolandsheetfed.com', '+622179199818', 'www.manrolandsheetfed.com', 'Eugeny.Welcker@manrolandsheetfed.com', 'Head Office', '2024-06-11 01:49:23', '2024-06-11 01:49:23'),
+	(8, '00000120', '0010000024', 'KERTAS PADALARANG ', 'PT', 'Jalan Cihaliwung No.181 Padalarang', 'Padalarang', 'KAB. BANDUNG BARAT', 'JAWA BARAT', '40553', 'INDONESIA', 'BOD (Board of Director) &ndash; Direksi', '1', 'Yazi Deswan', 'Warga Negara Indonesia', 'Direktur Utama', 'ya.deswan@gmail.com', '08118113335', 'www.kertas-padalarang.co.id', 'office@kertas-padalarang.co.id', 'Head Office', '2024-06-11 02:08:18', '2024-06-11 02:08:18');
 
 -- Dumping structure for table app_kontraks.vendor_texts
 CREATE TABLE IF NOT EXISTS `vendor_texts` (
@@ -4623,11 +4688,14 @@ CREATE TABLE IF NOT EXISTS `vendor_texts` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `vendor_texts_registration_no_index` (`registration_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table app_kontraks.vendor_texts: ~0 rows (approximately)
+-- Dumping data for table app_kontraks.vendor_texts: ~4 rows (approximately)
 INSERT INTO `vendor_texts` (`id`, `registration_no`, `akta`, `npwp`, `pihakname`, `created_at`, `updated_at`) VALUES
-	(1, '00001850', '<p align="justify">yang dalam hal ini dalam jabatannya selaku Direktur dari dan oleh karena itu bertindak untuk dan atas nama PT. Danisa Eka Abadi, yang didirikan berdasarkan Akta Notaris Nomor : 04 tanggal 01 Juli 2020 yang dibuat oleh Notaris Aisyah Ratu Juliana Siregar, S.H., M.Kn. Notaris di Kota Sukabumi dan telah diubah untuk terakhir kalinya dengan Akta Notaris Nomor : 062 tanggal 04 Agustus 2023 yang dibuat oleh Notaris Dwi Suswanti, S.H., M.Kn. Notaris di Kota Cilegon yang dibuat berdasarkan Hukum Negara Republik Indonesia, yang berkedudukan hukum di Jalan Sultan Iskandar Muda No. 181 Kota Administrasi Jakarta Selatan, dengan Nomor Pokok Wajib Pajak (NPWP) Nomor: 95.258.793.9-013.000 yang untuk selanjutnya dalam perbuatan hukum ini disebut sebagai :</p><p align="center"><b>-------------------------------------------- PIHAK KEDUA -------------------------------------------</b><br></p>', '95.258.793.9-013.000', 'Cecep Hidayat', '2024-06-06 06:40:58', '2024-06-06 06:40:58');
+	(1, '00001850', '<p align="justify">yang dalam hal ini dalam jabatannya selaku Direktur dari dan oleh karena itu bertindak untuk dan atas nama PT. Danisa Eka Abadi, yang didirikan berdasarkan Akta Notaris Nomor : 04 tanggal 01 Juli 2020 yang dibuat oleh Notaris Aisyah Ratu Juliana Siregar, S.H., M.Kn. Notaris di Kota Sukabumi dan telah diubah untuk terakhir kalinya dengan Akta Notaris Nomor : 062 tanggal 04 Agustus 2023 yang dibuat oleh Notaris Dwi Suswanti, S.H., M.Kn. Notaris di Kota Cilegon yang dibuat berdasarkan Hukum Negara Republik Indonesia, yang berkedudukan hukum di Jalan Sultan Iskandar Muda No. 181 Kota Administrasi Jakarta Selatan, dengan Nomor Pokok Wajib Pajak (NPWP) Nomor: 95.258.793.9-013.000 yang untuk selanjutnya dalam perbuatan hukum ini disebut sebagai :</p><p align="center"><b>-------------------------------------------- PIHAK KEDUA -------------------------------------------</b><br></p>', '95.258.793.9-013.000', 'Cecep Hidayat', '2024-06-06 06:40:58', '2024-06-06 06:40:58'),
+	(2, '00000120', '<p style="text-align: justify;">yang dalam hal ini jabatannya selaku Direktur Utama dari dan oleh karena itu bertindak untuk dan atas nama PT. KERTAS PADALARANG yang didirikan dengan Akta Notaris Nomor: 4 tanggal 1 April 1992 yang dibuat dihadapan Masri Husen S.H., Notaris di Bandung dan telah diubah untuk terakhir kalinya dengan Akta Notaris Nomor: 152 tanggal 09 Desember 2021 yang dibuat oleh Ekaputri MS Respati, Sarjana Hukum, M.H, M.Kn, Notaris di Bandung yang dibuat berdasarkan Hukum Negara RI, yang berkedudukan hukum di Jalan Cihaliwung No.181 Padalarang, Padalarang, KAB. BANDUNG BARAT, JAWA BARAT,&nbsp; dengan Nomor Pokok Wajib Pajak (NPWP) Nomor: 01.000.015.6-051.000 yang untuk selanjutnya dalam perbuatan hukum ini disebut sebagai :</p><p style="text-align: center; "><b>---------------------------------------- PIHAK KEDUA ------------------------------------</b></p>', '01.000.015.6-051.000', 'Yazi Deswan', '2024-06-07 02:31:19', '2024-06-07 02:31:19'),
+	(9, '00000122', '<p align="justify">yang dalam hal ini dalam jabatannya selaku Direktur dari dan oleh karena itu bertindak untuk dan atas nama PT. MANGGALA EKA SAKTI, yang didirikan berdasarkan Akta Notaris Nomor : 04 tanggal 01 Juli 2020 yang dibuat oleh Notaris Aisyah Ratu Juliana Siregar, S.H., M.Kn. Notaris di Kota Sukabumi dan telah diubah untuk terakhir kalinya dengan Akta Notaris Nomor : 062 tanggal 04 Agustus 2023 yang dibuat oleh Notaris Dwi Suswanti, S.H., M.Kn. Notaris di Kota Cilegon yang dibuat berdasarkan Hukum Negara Republik Indonesia, yang berkedudukan hukum di Graha Yapetri Lt. IV, Jl. Sunan Kalijaga No. 65B Melawai - Jakarta Selatan, Jakarta, Kebayoran Baru, KOTA ADM. JAKARTA SELATAN, DKI JAKARTA, dengan Nomor Pokok Wajib Pajak (NPWP) Nomor: 719016842064000 yang untuk selanjutnya dalam perbuatan hukum ini disebut sebagai :</p><p align="center"><b>-------------------------------------------- PIHAK KEDUA -------------------------------------------</b><br></p>', '719016842064000', 'ROY P. JONACH SIMANJUNTAK', '2024-06-11 01:45:12', '2024-06-11 01:45:12'),
+	(10, '00000303', '<p align="justify">yang dalam hal ini dalam jabatannya selaku Direktur dari dan oleh karena itu bertindak untuk dan atas nama PT. MANROLAND INDONESIA, yang didirikan berdasarkan Akta Notaris Nomor : 04 tanggal 01 Juli 2020 yang dibuat oleh Notaris Aisyah Ratu Juliana Siregar, S.H., M.Kn. Notaris di Kota Sukabumi dan telah diubah untuk terakhir kalinya dengan Akta Notaris Nomor : 062 tanggal 04 Agustus 2023 yang dibuat oleh Notaris Dwi Suswanti, S.H., M.Kn. Notaris di Kota Cilegon yang dibuat berdasarkan Hukum Negara Republik Indonesia, yang berkedudukan hukum di MANAGEMENT BUILDING LT. 2, JL. BUNCIT RAYA KAV. 100 RT 001 RW.007,PEJATEN BARAT,PASAR MINGGU,JAKART, Pasar Minggu, KOTA ADM. JAKARTA SELATAN, DKI JAKARTA, dengan Nomor Pokok Wajib Pajak (NPWP) Nomor: 03.007.507.1-056.000 yang untuk selanjutnya dalam perbuatan hukum ini disebut sebagai :</p><p align="center"><b>-------------------------------------------- PIHAK KEDUA -------------------------------------------</b><br></p>', '03.007.507.1-056.000', 'Guntur Widjanarko', '2024-06-11 01:47:05', '2024-06-11 01:47:05');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

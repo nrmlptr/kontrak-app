@@ -47,7 +47,14 @@
                                     
                                     <div class="form-group">
                                         <label for="akta">Akta Peruri</label>
-                                        <textarea type="text" class="form-control" name="akta" id="akta">{!! @$setting->peruri_akta !!}</textarea required>
+                                        <textarea type="text" class="form-control" name="akta" id="akta">
+                                            {!! @$setting->peruri_akta !!}
+                                            {{-- @if (isset($setting->peruri_akta) && $setting->peruri_akta)
+                                                {!! $setting->peruri_akta !!}
+                                            @else
+                                                <p align="justify">yang dalam hal ini jabatannya selaku Pelaksana Operasional Harian (POH) Kepala Divisi Pengadaan dan Fasilitas Umum sesuai Nota Dinas Direktorat SDM, Teknologi dan Informasi Nomor : 9/Dir. SDM & TI/II/2024 tanggal 01 Februari 2024 Tentang Penunjukan POH Kepala Divisi Pengadaan dan Fasilitas Umum, dari dan oleh karena itu bertindak untuk dan atas nama Perum Percetakan Uang RI yang didirikan untuk terakhir kalinya berdasarkan Peraturan Pemerintah RI Nomor : 6 Tahun 2019 tanggal 19 Februari 2019 tentang Perusahaan Umum (Perum) Percetakan Uang Republik Indonesia, yang berkedudukan hukum di Jalan Palatehan No. 4, Kebayoran Baru, Jakarta Selatan 12160, yang selanjutnya dalam perbuatan hukum ini disebut sebagai :</p><p align="center"><b>-------------------------------------------- PIHAK KESATU -------------------------------------------</b><br></p>
+                                            @endif --}}
+                                        </textarea required>
                                         @error('akta')
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror

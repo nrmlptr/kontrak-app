@@ -23,29 +23,21 @@
     <section class="content">
         <div class="container-fluid">
             <div class="form-group">
-                <label for="template">Contoh Template Kalimat</label>
+                {{-- <label for="template">Contoh Template Kalimat</label> --}}
                 <div class="card card-secondary">
                     <div class="card-header">
-                        <h3 class="card-title">Template Kalimat</h3>
+                        <h3 class="card-title">Contoh Template Kalimat <br><small>Harap perhatikan kalimat yang diberi highlight, sesuaikan dengan data vendor yang akan dibuatkan akta!</small></h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
                         </div>
                     </div>
                     <div class="card-body">
-                        <p id="templateText">
+                        <p id="templateText"  align="justify">
                             yang dalam hal ini jabatannya selaku Direktur Utama dari dan oleh karena itu bertindak untuk dan atas nama <span class="highlight">PT. Kertas Padalarang</span> yang didirikan dengan Akta Notaris <span class="highlight">Nomor: 4 tanggal 1 April 1992 yang dibuat dihadapan Masri Husen S.H., Notaris di Bandung</span> dan telah diubah untuk terakhir kalinya dengan <span class="highlight">Akta Notaris Nomor: 152 tanggal 09 Desember 2021 yang dibuat oleh Ekaputri MS Respati, Sarjana Hukum, M.H, M.Kn, Notaris di Bandung</span> yang dibuat berdasarkan Hukum Negara RI, yang berkedudukan hukum di <span class="highlight">Jl. Cihaliwung No. 181, Padalarang, Bandung, Jawa Barat</span>, dengan Nomor Pokok Wajib Pajak (NPWP) Nomor: <span class="highlight">01.000.015.6-051.000</span> yang untuk selanjutnya dalam perbuatan hukum ini disebut sebagai : <br>
-                            ---------------------------------------- PIHAK KEDUA ------------------------------------
+                            <p align="center"><b>---------------------------------------- PIHAK KEDUA ------------------------------------</b></p>
                         </p>
-                        <button type="button" class="btn btn-secondary mt-2" onclick="copyTemplate()">Copy Template</button>
+                        {{-- <button type="button" class="btn btn-secondary mt-2" onclick="copyTemplate()">Copy Template</button> --}}
                     </div>
-                    <hr>
-                    <div class="card-body">
-                        <div class="form-group col-12">
-                            <label for="alamat">Alamat Vendor</label>
-                            <textarea type="text" id="alamat" class="form-control" disabled></textarea>
-                        </div>
-                    </div>
-                    
                 </div>
             </div>
             <form action="{{ route('vendor.update',['registration_no' => $data->registration_no]) }}" method="POST">
@@ -65,6 +57,16 @@
                                         <label for="vendor_name">Nama Vendor</label>
                                         <input type="text" class="form-control" name="vendor_name" readonly value="{{ $data->vendor_name }}" id="vendor_name" required>
                                         @error('vendor_name')
+                                        <small style="color: red;">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="alamat">Alamat Vendor</label>
+                                        <textarea type="text" id="alamat" class="form-control" name="vendor_address" readonly>
+                                            {!! $data->alamat_vendor !!}
+                                        </textarea>
+                                       
+                                        @error('vendor_address')
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>
@@ -89,13 +91,21 @@
                                         @enderror
                                     </div>
                                      
-                                    <div class="form-group">
+                                   <div class="form-group">
                                         <label for="akta">Akta</label>
-                                        <textarea type="text" class="form-control" name="akta" id="akta">{!! @$data->vendortext->akta !!}</textarea required>
+                                        <textarea type="text" class="form-control" name="akta" id="akta">
+                                            @if (isset($data->vendortext) && $data->vendortext->akta)
+                                                {!! $data->vendortext->akta !!}
+                                            @else
+                                                <p align="justify">yang dalam hal ini dalam jabatannya selaku Direktur dari dan oleh karena itu bertindak untuk dan atas nama PT. Danisa Eka Abadi, yang didirikan berdasarkan Akta Notaris Nomor : 04 tanggal 01 Juli 2020 yang dibuat oleh Notaris Aisyah Ratu Juliana Siregar, S.H., M.Kn. Notaris di Kota Sukabumi dan telah diubah untuk terakhir kalinya dengan Akta Notaris Nomor : 062 tanggal 04 Agustus 2023 yang dibuat oleh Notaris Dwi Suswanti, S.H., M.Kn. Notaris di Kota Cilegon yang dibuat berdasarkan Hukum Negara Republik Indonesia, yang berkedudukan hukum di Jalan Sultan Iskandar Muda No. 181 Kota Administrasi Jakarta Selatan, dengan Nomor Pokok Wajib Pajak (NPWP) Nomor: 95.258.793.9-013.000 yang untuk selanjutnya dalam perbuatan hukum ini disebut sebagai :</p><p align="center"><b>-------------------------------------------- PIHAK KEDUA -------------------------------------------</b><br></p>
+                                            @endif
+                                        </textarea>
+
                                         @error('akta')
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>
+
                                    
                                 </div>
                                 <!-- /.card-body -->

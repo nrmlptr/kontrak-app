@@ -21,18 +21,18 @@
                 border-collapse: collapse;
                 width: auto;
             }
-            table tr td{
+            /* table tr td{
                 padding: 5px;
                 margin: 5px;
                 width: auto;
-            }
+            } */
             .text-center{
                 text-align: center;
             }
-            .table-header p {
+            /* .table-header p {
                 font-size: 14px;
                 margin: 0
-            }
+            } */
 
             td.akta-text > p, span{
                 font-size: 14px !important;
@@ -67,7 +67,7 @@
                         <td><br></td>
                         <tr>
                             <td style="vertical-align: top;text-align: left; font-size: 14px;"" colspan="2"><b>{{ $pihak1name }},</b></td>
-                            <td style="text-align: justify;" class="akta-text">
+                            <td style="text-align: justify; font-size: 14px;" class="akta-text">
                                 @if ($data->peruritext)
                                         {!! @$data->peruritext !!}
                                     @else
@@ -85,6 +85,9 @@
                                     @endif
                             </td>
                         </tr>
+                        <div><br></div>
+                        <div><br></div>
+                        {{-- <div><br></div> --}}
                         <tr>
                             <td colspan="3" style="text-align: justify; font-size: 14px;"">
                                 Para Pihak secara sendiri-sendiri disebut <b>"Pihak"</b> dan secara bersama-sama disebut juga <b>"Para Pihak"</b>

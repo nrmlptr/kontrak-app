@@ -2190,6 +2190,7 @@ class KontrakController extends Controller
         // saving pasalpdf
         $page1                  = $this->downloadpageone($data);
         $pathpage1              = storage_path('app/public/pdf/' . $page1);
+        // return $pathpage1;
         $pagepasal              = $this->downloadpasal($data);
         $pathpagepasal          = storage_path('app/public/pdf/' . $pagepasal);
         // return $pathpagepasal; //http://localhost:8000/storage/pdf/pasal_jenis2.pdf

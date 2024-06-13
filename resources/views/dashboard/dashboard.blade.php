@@ -198,7 +198,7 @@
         // Deskripsi status disimpan dalam objek terpisah
         var statusDescriptions = {
             'draft': 'Tahap Pembuatan Kontrak dan Lampiran.',
-            'reviewkasek' :      'Tahap Pemeriksaan Kasek.',
+            'reviewkasek':      'Tahap Pemeriksaan Kasek.',
             'revisikasek':      'Kasek Memberi Revisi Pada Kontrak.',
             'editedkasek':      'Staff/Admin yang membuat kontrak telah Perbarui Kontrak Sesuai Revisi Kasek.',
             'approvedkasek':    'Tahap Submit Kontrak oleh Kasek.',

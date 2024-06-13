@@ -218,21 +218,7 @@
 <script>
     
     $(document).ready(function() {
-        $('#peruri_text').summernote();
-        // $('#peruri_text').summernote({
-        //     // height: 300, // Set the height of the editor
-        //     toolbar: [
-        //         ['style', ['style']],
-        //         ['font', ['bold', 'underline', 'clear']],
-        //         ['fontsize', ['fontsize']],
-        //         ['fontname', ['fontname']],
-        //         ['color', ['color']],
-        //         ['para', ['ul', 'ol', 'paragraph']],
-        //         ['table', ['table']],
-        //         ['insert', ['link', 'picture', 'video']],
-        //         ['view', ['fullscreen', 'codeview', 'help']],
-        //     ],
-        // });
+        $('#peruri_text').summernote();       
     });
 
     $(document).ready(function(){
