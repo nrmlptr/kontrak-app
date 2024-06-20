@@ -14,7 +14,14 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+
+-- Dumping database structure for app_kontraks
+DROP DATABASE IF EXISTS `app_kontraks`;
+CREATE DATABASE IF NOT EXISTS `app_kontraks` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `app_kontraks`;
+
 -- Dumping structure for table app_kontraks.failed_jobs
+DROP TABLE IF EXISTS `failed_jobs`;
 CREATE TABLE IF NOT EXISTS `failed_jobs` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -30,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `failed_jobs` (
 -- Dumping data for table app_kontraks.failed_jobs: ~0 rows (approximately)
 
 -- Dumping structure for table app_kontraks.integrates
+DROP TABLE IF EXISTS `integrates`;
 CREATE TABLE IF NOT EXISTS `integrates` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `no_spph` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -3901,6 +3909,7 @@ INSERT INTO `integrates` (`id`, `no_spph`, `tgl_spph`, `no_sp3`, `tgl_sp3_approv
 	(3818, 'PBP/2022/00699', '2022-12-19', 'SP3/PBP/2022/00699', '2022-12-28', '2022-12-20 13:00:00', '2022-12-27 23:59:00', 'PENGADAAN SOLUTION, CAUSTIC SODA (NaOH, SPEC:33%)', '4100006105', '2023-01-02', '2023-03-31', '0010000027', '00000115', 'CV. SARANA ASA SENTOSA', 'ZSOP', 'PBP', 11, '111-000110', 'SOLUTION, CAUSTIC SODA (NaOH, SPEC:33%)', '0011012082', '2022-12-14', '1100', '1101', 10, 18000000, 'L', 11935, 2148300, 'Ruko Terraz Galuh Mas, Blok IXC no.39, Jl. Arteri Galuh Mas ', 'Telukjambe Timur', 'KAB. KARAWANG', 'JAWA BARAT', '41361', 'INDONESIA', '0267 8458949', 'https://cv-sas.id', 'sales.cv.sas@gmail.com', 'Head Office', '2024-06-04 01:05:28', '2024-06-04 01:05:28');
 
 -- Dumping structure for table app_kontraks.kontraks
+DROP TABLE IF EXISTS `kontraks`;
 CREATE TABLE IF NOT EXISTS `kontraks` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -3942,6 +3951,7 @@ INSERT INTO `kontraks` (`id`, `number`, `detail_number`, `nm_vendor`, `perihal`,
 	(4, '000', 'SP-000/VIII/2024', 'PT. KERTAS PADALARANG', 'PENGADAAN LEMBAR KERTAS SEMENTARA PEC. S TE 2022 DAN LEMBAR KERTAS SEMENTARA PEC. U TE 2022', '2023-01-13', '4100006127', '2023-01-13', 'Mba Intan', '41A20', 1, 2, 'reviewkasek', 141802500000, '<p align="justify">yang dalam hal ini jabatannya selaku Pelaksana Operasional Harian (POH) Kepala Divisi Pengadaan dan Fasilitas Umum sesuai Nota Dinas Direktorat SDM, Teknologi dan Informasi Nomor : 9/Dir. SDM & TI/II/2024 tanggal 01 Februari 2024 Tentang Penunjukan POH Kepala Divisi Pengadaan dan Fasilitas Umum, dari dan oleh karena itu bertindak untuk dan atas nama Perum Percetakan Uang RI yang didirikan untuk terakhir kalinya berdasarkan Peraturan Pemerintah RI Nomor : 6 Tahun 2019 tanggal 19 Februari 2019 tentang Perusahaan Umum (Perum) Percetakan Uang Republik Indonesia, yang berkedudukan hukum di Jalan Palatehan No. 4, Kebayoran Baru, Jakarta Selatan 12160, yang selanjutnya dalam perbuatan hukum ini disebut sebagai : TES123</p><p align="center"><b>-------------------------------------------- PIHAK KESATU -------------------------------------------</b><br></p>', '<p style="text-align: justify;">yang dalam hal ini jabatannya selaku Direktur Utama dari dan oleh karena itu bertindak untuk dan atas nama PT. KERTAS PADALARANG yang didirikan dengan Akta Notaris Nomor: 4 tanggal 1 April 1992 yang dibuat dihadapan Masri Husen S.H., Notaris di Bandung dan telah diubah untuk terakhir kalinya dengan Akta Notaris Nomor: 152 tanggal 09 Desember 2021 yang dibuat oleh Ekaputri MS Respati, Sarjana Hukum, M.H, M.Kn, Notaris di Bandung yang dibuat berdasarkan Hukum Negara RI, yang berkedudukan hukum di Jalan Cihaliwung No.181 Padalarang, Padalarang, KAB. BANDUNG BARAT, JAWA BARAT,&nbsp; dengan Nomor Pokok Wajib Pajak (NPWP) Nomor: 01.000.015.6-051.000 yang untuk selanjutnya dalam perbuatan hukum ini disebut sebagai :</p><p style="text-align: center; "><b>---------------------------------------- PIHAK KEDUA ------------------------------------</b></p>', NULL, NULL, NULL, NULL, '2024-06-11 02:08:11', '2024-06-11 02:10:07');
 
 -- Dumping structure for table app_kontraks.lampiran1s
+DROP TABLE IF EXISTS `lampiran1s`;
 CREATE TABLE IF NOT EXISTS `lampiran1s` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `kontraks_id` bigint unsigned DEFAULT NULL,
@@ -3960,6 +3970,7 @@ INSERT INTO `lampiran1s` (`id`, `kontraks_id`, `data_json`, `created_at`, `updat
 	(4, 4, '[{"nomor_urut":1,"perihal":"Surat Permintaan Penawaran Harga dari PIHAK PERTAMA","nomor_surat":"PBP\\/2022\\/00707","tanggal_surat":"2022-12-30"},{"nomor_urut":2,"perihal":"Surat Permintaan Penawaran Harga dari PIHAK KEDUA","nomor_surat":"TES1","tanggal_surat":"2024-02-06"},{"nomor_urut":3,"perihal":"Surat Permintaan Penurunan Harga dari PIHAK KESATU","nomor_surat":"CEK","tanggal_surat":"2024-03-06"},{"nomor_urut":4,"perihal":"Surat Penurunan Harga dari PIHAK KEDUA","nomor_surat":"PPP","tanggal_surat":"2024-04-06"},{"nomor_urut":5,"perihal":"Surat Pemberitahuan Pemenang Pengadaan","nomor_surat":"SP3\\/PBP\\/2022\\/00707","tanggal_surat":"2023-01-10"},{"nomor_urut":6,"perihal":"Surat Order Pembelian","nomor_surat":"PBP234100006127","tanggal_surat":"2023-01-13"},{"nomor_urut":7,"perihal":"Perjanjian","nomor_surat":"SP-000\\/VIII\\/2024","tanggal_surat":"2023-01-13"}]', '2024-06-11 02:08:49', '2024-06-11 02:08:49');
 
 -- Dumping structure for table app_kontraks.lampiran2s
+DROP TABLE IF EXISTS `lampiran2s`;
 CREATE TABLE IF NOT EXISTS `lampiran2s` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `kontraks_id` bigint unsigned DEFAULT NULL,
@@ -3980,6 +3991,7 @@ INSERT INTO `lampiran2s` (`id`, `kontraks_id`, `perihal`, `nomor_sop`, `tanggal_
 	(4, 4, 'PENGADAAN LEMBAR KERTAS SEMENTARA PEC. S TE 2022 DAN LEMBAR KERTAS SEMENTARA PEC. U TE 2022', 'PBP234100006127', '2023-01-13', '2024-06-11 02:08:53', '2024-06-11 02:08:53');
 
 -- Dumping structure for table app_kontraks.lampiran3s
+DROP TABLE IF EXISTS `lampiran3s`;
 CREATE TABLE IF NOT EXISTS `lampiran3s` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `kontraks_id` bigint unsigned NOT NULL DEFAULT '0',
@@ -4014,6 +4026,7 @@ INSERT INTO `lampiran3s` (`id`, `kontraks_id`, `jenis_spesifikasi`, `gambar`, `s
 	(13, 4, 2, NULL, '16 Juni 2024', 'public/uploads/spesifikasi_teknis/nonstandarlab/1718071775_peruri1.jpg', '11011983', '121-000474', 'LEMBAR KERTAS SEMENTARA PEC. U TE 2022', 'LBR', '2024-06-11 02:09:35', '2024-06-11 02:09:35');
 
 -- Dumping structure for table app_kontraks.lampiran4s
+DROP TABLE IF EXISTS `lampiran4s`;
 CREATE TABLE IF NOT EXISTS `lampiran4s` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `kontraks_id` bigint unsigned DEFAULT NULL,
@@ -4040,6 +4053,7 @@ INSERT INTO `lampiran4s` (`id`, `kontraks_id`, `nomor_sop`, `tanggal_sop`, `jadw
 	(5, 4, 'PBP234100006127', '2023-01-13', '20 Juni 2024', 'Gudang UTAS', 'LBR', '121-000474', 'LEMBAR KERTAS SEMENTARA PEC. U TE 2022', '11011983', '2024-06-11 02:09:46', '2024-06-11 02:09:46');
 
 -- Dumping structure for table app_kontraks.lampiran5s
+DROP TABLE IF EXISTS `lampiran5s`;
 CREATE TABLE IF NOT EXISTS `lampiran5s` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `kontraks_id` bigint unsigned DEFAULT NULL,
@@ -4068,6 +4082,7 @@ INSERT INTO `lampiran5s` (`id`, `kontraks_id`, `no_sppb`, `kode_barang`, `nama_b
 	(5, 4, '11011983', '121-000474', 'LEMBAR KERTAS SEMENTARA PEC. U TE 2022', 'LBR', 'Gudang UTAS', 1345, 50000000, 11, 74647500000, NULL, '2024-06-11 02:09:55', '2024-06-11 02:09:55');
 
 -- Dumping structure for table app_kontraks.lampiran6s
+DROP TABLE IF EXISTS `lampiran6s`;
 CREATE TABLE IF NOT EXISTS `lampiran6s` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `kontraks_id` bigint unsigned DEFAULT NULL,
@@ -4091,6 +4106,7 @@ INSERT INTO `lampiran6s` (`id`, `kontraks_id`, `nomor_sop`, `tanggal_sop`, `no_k
 	(5, 4, 'PBP234100006127', '2023-01-13', 'SP-000/VIII/2024', '2023-01-13', 1, '12', '2024-06-11 02:10:03', '2024-06-11 02:10:03');
 
 -- Dumping structure for table app_kontraks.lampiran7s
+DROP TABLE IF EXISTS `lampiran7s`;
 CREATE TABLE IF NOT EXISTS `lampiran7s` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `kontraks_id` bigint unsigned DEFAULT NULL,
@@ -4110,6 +4126,7 @@ INSERT INTO `lampiran7s` (`id`, `kontraks_id`, `alamat_vendor`, `alamat_peruri`,
 	(9, 4, 'PT<br>KERTAS PADALARANG <br>Jalan Cihaliwung No.181 Padalarang<br>Padalarang<br>KAB. BANDUNG BARAT<br>JAWA BARAT<br>40553<br>INDONESIA', 'PERUM PERCETAKAN UANG REPUBLIK INDONESIA\r\n                    <br>\r\n                    Jalan Palatehan No.4 Blok K-V\r\n                    <br>\r\n                    Kebayoran Baru\r\n                    <br>\r\n                    Jakarta Selatan 12160\r\n                    <br>\r\n                    Indonesia', '2024-06-11 02:10:07', '2024-06-11 02:10:07');
 
 -- Dumping structure for table app_kontraks.log_contracts
+DROP TABLE IF EXISTS `log_contracts`;
 CREATE TABLE IF NOT EXISTS `log_contracts` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `kontraks_id` bigint unsigned NOT NULL,
@@ -4157,6 +4174,7 @@ INSERT INTO `log_contracts` (`id`, `kontraks_id`, `status`, `user_id`, `created_
 	(30, 2, 'revisikasek', 17, '2024-06-11 03:57:34', '2024-06-11 03:57:34');
 
 -- Dumping structure for table app_kontraks.migrations
+DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE IF NOT EXISTS `migrations` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -4191,6 +4209,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(23, '2024_06_05_101001_create_role_permission_table', 18);
 
 -- Dumping structure for table app_kontraks.model_has_permissions
+DROP TABLE IF EXISTS `model_has_permissions`;
 CREATE TABLE IF NOT EXISTS `model_has_permissions` (
   `permission_id` bigint unsigned NOT NULL,
   `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -4203,6 +4222,7 @@ CREATE TABLE IF NOT EXISTS `model_has_permissions` (
 -- Dumping data for table app_kontraks.model_has_permissions: ~0 rows (approximately)
 
 -- Dumping structure for table app_kontraks.model_has_roles
+DROP TABLE IF EXISTS `model_has_roles`;
 CREATE TABLE IF NOT EXISTS `model_has_roles` (
   `role_id` bigint unsigned NOT NULL,
   `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -4215,6 +4235,7 @@ CREATE TABLE IF NOT EXISTS `model_has_roles` (
 -- Dumping data for table app_kontraks.model_has_roles: ~0 rows (approximately)
 
 -- Dumping structure for table app_kontraks.notifications
+DROP TABLE IF EXISTS `notifications`;
 CREATE TABLE IF NOT EXISTS `notifications` (
   `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -4258,6 +4279,7 @@ INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `
 	('f91becda-07ea-4864-8889-9eca17eaaa2c', 'App\\Notifications\\RevisiKontrakNotification', 'App\\Models\\User', 3, '{"kontraks_id":"1","user_id":4,"title":"Ada Revisi Kontrak!","messages":"Mba Citra Memberikan Revisi pada Kontrak","url":"http:\\/\\/127.0.0.1:8000\\/showRevisiNotif\\/1"}', '2024-06-06 08:10:34', '2024-06-06 08:05:40', '2024-06-06 08:10:34');
 
 -- Dumping structure for table app_kontraks.pasal-kontrak
+DROP TABLE IF EXISTS `pasal-kontrak`;
 CREATE TABLE IF NOT EXISTS `pasal-kontrak` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nama_pasal` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
@@ -4351,6 +4373,7 @@ INSERT INTO `pasal-kontrak` (`id`, `nama_pasal`, `keterangan_pasal`, `isi_pasal`
 	(85, 'PASAL 25', 'LAIN-LAIN', '<ol><li style="text-align: justify; ">Hal-hal yang belum diatur dan perubahan-perubahan dari Perjanjian ini, akan diselesaikan melalui kesepakatan atau perundingan kedua belah pihak dan yang akan dituangkan dalam suatu Addendum Perjanjian yang ditandatangani oleh kedua belah pihak serta merupakan bagian yang tidak dapat dipisahkan dari dan mempunyai kekuatan hukum yang sama dengan Perjanjian ini.</li><li style="text-align: justify; ">Segala ketentuan-ketentuan dan syarat-syarat dalam Perjanjian ini berlaku serta mengikat bagi pihak-pihak yang menandatangani, pengganti-penggantinya dan mereka yang memperoleh keuntungan dari padanya.</li><li style="text-align: justify; ">Lampiran Perjanjian merupakan bagian yang tidak terpisahkan dari dan mempunyai kekuatan hukum yang sama dengan Perjanjian ini.</li></ol>', 1, 1, 25, '2024-05-27 09:21:22', '2024-05-27 09:21:22');
 
 -- Dumping structure for table app_kontraks.password_reset_tokens
+DROP TABLE IF EXISTS `password_reset_tokens`;
 CREATE TABLE IF NOT EXISTS `password_reset_tokens` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -4361,6 +4384,7 @@ CREATE TABLE IF NOT EXISTS `password_reset_tokens` (
 -- Dumping data for table app_kontraks.password_reset_tokens: ~0 rows (approximately)
 
 -- Dumping structure for table app_kontraks.permissions
+DROP TABLE IF EXISTS `permissions`;
 CREATE TABLE IF NOT EXISTS `permissions` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -4396,6 +4420,7 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `detail`, `created_at`, `
 	(24, 'view-addRole', 'web', 'Halaman Tambah Data Role', '2024-06-06 06:11:27', '2024-06-06 06:11:27');
 
 -- Dumping structure for table app_kontraks.personal_access_tokens
+DROP TABLE IF EXISTS `personal_access_tokens`;
 CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -4415,6 +4440,7 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
 -- Dumping data for table app_kontraks.personal_access_tokens: ~0 rows (approximately)
 
 -- Dumping structure for table app_kontraks.revisi_kontraks
+DROP TABLE IF EXISTS `revisi_kontraks`;
 CREATE TABLE IF NOT EXISTS `revisi_kontraks` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `kontraks_id` bigint unsigned NOT NULL,
@@ -4438,6 +4464,7 @@ INSERT INTO `revisi_kontraks` (`id`, `kontraks_id`, `revisi`, `user_id`, `status
 	(6, 2, 'tes revisi', 17, 'N', '2024-06-11 03:57:34', '2024-06-11 03:57:34');
 
 -- Dumping structure for table app_kontraks.roles
+DROP TABLE IF EXISTS `roles`;
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -4459,6 +4486,7 @@ INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VAL
 	(16, 'cek', 'web', '2024-06-07 08:09:02', '2024-06-07 08:09:02');
 
 -- Dumping structure for table app_kontraks.role_has_permissions
+DROP TABLE IF EXISTS `role_has_permissions`;
 CREATE TABLE IF NOT EXISTS `role_has_permissions` (
   `permission_id` bigint unsigned NOT NULL,
   `role_id` bigint unsigned NOT NULL,
@@ -4471,6 +4499,7 @@ CREATE TABLE IF NOT EXISTS `role_has_permissions` (
 -- Dumping data for table app_kontraks.role_has_permissions: ~0 rows (approximately)
 
 -- Dumping structure for table app_kontraks.role_permission
+DROP TABLE IF EXISTS `role_permission`;
 CREATE TABLE IF NOT EXISTS `role_permission` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `role_id` bigint unsigned NOT NULL,
@@ -4527,6 +4556,7 @@ INSERT INTO `role_permission` (`id`, `role_id`, `permission_id`, `created_at`, `
 	(45, 16, 3, NULL, NULL);
 
 -- Dumping structure for table app_kontraks.role_user
+DROP TABLE IF EXISTS `role_user`;
 CREATE TABLE IF NOT EXISTS `role_user` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `role_id` bigint unsigned NOT NULL,
@@ -4568,6 +4598,7 @@ INSERT INTO `role_user` (`id`, `role_id`, `user_id`, `created_at`, `updated_at`)
 	(32, 7, 32, '2024-06-07 08:37:20', NULL);
 
 -- Dumping structure for table app_kontraks.settings
+DROP TABLE IF EXISTS `settings`;
 CREATE TABLE IF NOT EXISTS `settings` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `peruri_akta` text COLLATE utf8mb4_unicode_ci,
@@ -4582,6 +4613,7 @@ INSERT INTO `settings` (`id`, `peruri_akta`, `peruri_pihakname`, `created_at`, `
 	(1, '<p align="justify">yang dalam hal ini jabatannya selaku Pelaksana Operasional Harian (POH) Kepala Divisi Pengadaan dan Fasilitas Umum sesuai Nota Dinas Direktorat SDM, Teknologi dan Informasi Nomor : 9/Dir. SDM &amp; TI/II/2024 tanggal 01 Februari 2024 Tentang Penunjukan POH Kepala Divisi Pengadaan dan Fasilitas Umum, dari dan oleh karena itu bertindak untuk dan atas nama Perum Percetakan Uang RI yang didirikan untuk terakhir kalinya berdasarkan Peraturan Pemerintah RI Nomor : 6 Tahun 2019 tanggal 19 Februari 2019 tentang Perusahaan Umum (Perum) Percetakan Uang Republik Indonesia, yang berkedudukan hukum di Jalan Palatehan No. 4, Kebayoran Baru, Jakarta Selatan 12160, yang selanjutnya dalam perbuatan hukum ini disebut sebagai : TES123</p><p align="center"><b>-------------------------------------------- PIHAK KESATU -------------------------------------------</b><br></p>', 'Rezi Syahputra', NULL, '2024-06-11 02:07:10');
 
 -- Dumping structure for table app_kontraks.spesifikasi_teknis
+DROP TABLE IF EXISTS `spesifikasi_teknis`;
 CREATE TABLE IF NOT EXISTS `spesifikasi_teknis` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -4592,6 +4624,7 @@ CREATE TABLE IF NOT EXISTS `spesifikasi_teknis` (
 -- Dumping data for table app_kontraks.spesifikasi_teknis: ~0 rows (approximately)
 
 -- Dumping structure for table app_kontraks.users
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -4638,6 +4671,7 @@ INSERT INTO `users` (`id`, `name`, `username`, `email`, `unit_kerja`, `email_ver
 	(32, 'Anisa', 'annisa_jasa', 'annisa2@gmail.com', '41A20', NULL, '$2y$12$BbWxBuVSli5.brG0qIonJ.K8pVcIBzksMKPXhUyoJtPHgHS2lnvAG', NULL, NULL, '2024-06-07 08:37:20', '2024-06-07 08:37:20');
 
 -- Dumping structure for table app_kontraks.vendors
+DROP TABLE IF EXISTS `vendors`;
 CREATE TABLE IF NOT EXISTS `vendors` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `registration_no` varchar(225) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -4678,6 +4712,7 @@ INSERT INTO `vendors` (`id`, `registration_no`, `sap_code`, `vendor_name`, `comp
 	(8, '00000120', '0010000024', 'KERTAS PADALARANG ', 'PT', 'Jalan Cihaliwung No.181 Padalarang', 'Padalarang', 'KAB. BANDUNG BARAT', 'JAWA BARAT', '40553', 'INDONESIA', 'BOD (Board of Director) &ndash; Direksi', '1', 'Yazi Deswan', 'Warga Negara Indonesia', 'Direktur Utama', 'ya.deswan@gmail.com', '08118113335', 'www.kertas-padalarang.co.id', 'office@kertas-padalarang.co.id', 'Head Office', '2024-06-11 02:08:18', '2024-06-11 02:08:18');
 
 -- Dumping structure for table app_kontraks.vendor_texts
+DROP TABLE IF EXISTS `vendor_texts`;
 CREATE TABLE IF NOT EXISTS `vendor_texts` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `registration_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,

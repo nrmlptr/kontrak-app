@@ -3727,4 +3727,8 @@ class KontrakController extends Controller
         // dd($data);
         return view('dashboard.viewKontrakProses', compact('data'));
     }
+
+    public function tesCoplit(){
+        
+    }
 }
