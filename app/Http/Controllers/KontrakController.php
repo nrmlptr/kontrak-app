@@ -3728,7 +3728,7 @@ class KontrakController extends Controller
         return view('dashboard.viewKontrakProses', compact('data'));
     }
 
-    public function tesCoplit(){
-        
+    public function tesCoplit()
+    {
     }
 }
