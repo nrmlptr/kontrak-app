@@ -2217,11 +2217,21 @@ class KontrakController extends Controller
         $mergepdf->addPDF($pathpagenextcontent, 'all');
 
 
-        $mergefileName = "kontrak_" . $kontrak->id . ".pdf";
-        $mergepdf->merge();
-        $mergepdf->save(public_path($mergefileName));
+        // $mergefileName = "kontrak_" . $kontrak->id . ".pdf";
+        // $mergepdf->merge();
+        // $mergepdf->save(public_path($mergefileName));
 
-        return response()->download(public_path($mergefileName));
+        // return response()->download(public_path($mergefileName));
+
+
+        $mergefileName = "kontrak_" . $kontrak->id . ".pdf";
+        $mergeFilePath = 'result/' . $mergefileName;
+
+        $mergepdf->merge();
+        $mergepdf->save(public_path($mergeFilePath));
+
+        return response()->download(public_path($mergeFilePath));
+
         // return $pdf->stream("kontrak_" . $kontrak->detail_number . "pdf");
     }
 
