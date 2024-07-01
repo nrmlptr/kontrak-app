@@ -51,7 +51,7 @@
                                         @foreach ($RVkontrak->historyRevisi as $h)
                                             <li><b>Note Revisi : </b> {{ $h->revisi }} <br>
                                                 <b>Oleh   : </b> <span class="badge badge-info">{{ $h->user->name }}</span> <br> 
-                                                <b>Posisi : </b> <span class="badge badge-info">{{ $h->user->permission }}</span><br>
+                                                <b>Posisi : </b> <span class="badge badge-warning">{{ $h->user->roles->first()->name }}</span><br>
                                                 <b>Waktu : </b> {{ tanggal_indonesia($h->created_at,'Y') }}
                                                 <hr>
                                             </li>

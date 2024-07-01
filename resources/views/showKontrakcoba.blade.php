@@ -1100,7 +1100,7 @@
                     $('#loading-spinner').hide();
                     // console.log(result.message)
                     if (result.redirect) {
-                        window.location.href = result.redirect; // Mengarahkan ulang halaman ke halaman monitoring
+                        window.location.href = result.redirect; 
                     }
                 }
             });

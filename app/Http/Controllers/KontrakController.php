@@ -2230,9 +2230,9 @@ class KontrakController extends Controller
         $mergepdf->merge();
         $mergepdf->save(public_path($mergeFilePath));
 
-        return response()->download(public_path($mergeFilePath));
+        // return response()->download(public_path($mergeFilePath));
 
-        // return $pdf->stream("kontrak_" . $kontrak->detail_number . "pdf");
+        return $mergepdf->stream(public_path($mergeFilePath));
     }
 
     // METHOD CETAK PAGE AKTA =========== ======================================================================================

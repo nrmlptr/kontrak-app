@@ -45,7 +45,7 @@
                                     <td>Posisi</td>
                                     <td></td>
                                     <td>:</td>
-                                    <td colspan="2"><b>{{ $revisi->user->permission }}</b></td>
+                                    <td colspan="2"><b>{{ $revisi->user->roles->first()->name }}</b></td>
                                 </tr>
                                 <tr>
                                     <td>Detail</td>
