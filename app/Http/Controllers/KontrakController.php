@@ -15,7 +15,7 @@ use App\Models\Lampiran5;
 use App\Models\Lampiran6;
 use App\Models\Lampiran7;
 use App\Models\PasalKontrak;
-use App\Models\revisiKontrak;
+use App\Models\RevisiKontrak;
 use App\Models\Setting;
 use App\Models\Vendor;
 use App\Models\VendorText;
@@ -1103,7 +1103,7 @@ class KontrakController extends Controller
 
         if (isset($nextstatus) && $nextstatus == 'edited') {
             // ambil row revisi terakhir
-            $revisi = revisiKontrak::with('user')
+            $revisi = RevisiKontrak::with('user')
                 ->latest()->take(1)
                 ->where('kontraks_id', $kontraks_id)->first();
             // VERSI LAMA ==============================================================================================
@@ -1940,7 +1940,7 @@ class KontrakController extends Controller
     {
 
         // Ambil data revisi berdasarkan kontraks_id
-        $revisi = revisiKontrak::with('user')
+        $revisi = RevisiKontrak::with('user')
             ->latest()->take(1)
             ->where('kontraks_id', $id)->first();
 
@@ -2660,7 +2660,7 @@ class KontrakController extends Controller
             DB::beginTransaction();
 
             // Buat entri revisiKontrak
-            $revisi = revisiKontrak::create($data);
+            $revisi = RevisiKontrak::create($data);
 
             // KONDISI UNTUK KASIH NOTIF DATABASE KETIKA REVISI DIBERIKAN OLEH KASEK,KADEPT,KADIV KEPADA STAFF
             if ($kontrak) {
@@ -2761,7 +2761,7 @@ class KontrakController extends Controller
     public function showRevisi($id)
     {
         // Ambil data revisi berdasarkan kontraks_id
-        $revisi = revisiKontrak::with('user')
+        $revisi = RevisiKontrak::with('user')
             ->latest()->take(1)
             ->where('kontraks_id', $id)->first();
 
@@ -2774,7 +2774,7 @@ class KontrakController extends Controller
     public function showNotifRevisi($id)
     {
         // Ambil data revisi berdasarkan kontraks_id
-        $revisi = revisiKontrak::with('user')
+        $revisi = RevisiKontrak::with('user')
             ->latest()->take(1)
             ->where('kontraks_id', $id)->first();
 
@@ -2787,7 +2787,7 @@ class KontrakController extends Controller
     public function updateLampiran(Request $request, $id)
     {
         // cek dul ada ga revisi, kalo ga ada tolak
-        $cek = revisiKontrak::with('user')
+        $cek = RevisiKontrak::with('user')
             ->latest()->take(1)
             ->where('kontraks_id', $id)->exists();
         if ($cek) {
