@@ -48,7 +48,7 @@
     <div class="content">
         <!-- Logo Peruri di sebelah kiri -->
         <div class="logo">
-            <img src="{{ asset('lte/dist/img/logoperuri2.png') }}" alt="Peruri Logo">
+            <img src="{{ asset('lte/dist/img/logoperurinew.png') }}" alt="Peruri Logo">
         </div>
 
         <!-- Teks "Data Kontrak - Department Pengadaan" -->
