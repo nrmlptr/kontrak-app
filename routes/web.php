@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\URL;
 Route::get('/', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/loadLogin', [LoginController::class, 'loadLogin'])->name('loadLogin');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/syncData', [KontrakController::class, 'syncron']);
 
 Route::middleware('auth')->group(
     function () {
@@ -39,7 +40,7 @@ Route::middleware('auth')->group(
         // tampil dashboard
         Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
         Route::resource('integrate', App\Http\Controllers\KontrakController::class);
-        Route::get('/syncData', [KontrakController::class, 'syncron']);
+
         Route::get('/dataSOP',  [KontrakController::class, 'getdataSOP']);
         Route::get(
             '/dataBarang',
