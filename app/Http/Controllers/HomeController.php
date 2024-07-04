@@ -17,11 +17,13 @@ class HomeController extends Controller
     {
 
         $dataKontrak = Kontrak::get();
+        // =====================================================================================================================
         $dataSOP     = Integrate::groupBy('purchasing_document_number')->get();
-
+        // =====================================================================================================================
         // ambil nilai data kontrak yang statusnya sudah approvedkadiv
         $dataKontrakAKDV = Kontrak::where('status', 'approvedkadiv')->get();
 
+        // =====================================================================================================================
         // ambil nilai data kontrak yang statusnya selain approvedkadiv
         $dataKontrakProses = Kontrak::whereNotIn('status', ['approvedkadiv'])->get();
 
@@ -32,17 +34,41 @@ class HomeController extends Controller
         // kecualikan approvekadiv
         $dataStatus = $dataStatus->forget('approvedkadiv');
 
+        // Buat array untuk mapping status ke nama yang ingin ditampilkan di chart
+        $statusMapping = [
+            'draft'             => 'Draft',
+            'reviewkasek'       => 'Sedang Diperiksa Kasek',
+            'revisikasek'       => 'Direvisi oleh Kasek',
+            'approvedkasek'     => 'Disetujui Kasek',
+            'reviewkadept'      => 'Sedang Diperiksa Kadept',
+            'revisikadept'      => 'Direvisi oleh Kadept',
+            'approvedkadept'    => 'Disetujui Kadept',
+            'reviewkadiv'       => 'Sedang Diperiksa Kadiv',
+            'revisikadiv'       => 'Direvisi oleh Kadiv',
+            // 'approvedkadiv'     => 'Disetujui Kadiv (NET)',
+            'editedkasek'       => 'Sedang Diperiksa Ulang Kasek',
+            'editedkadept'      => 'Sedang Diperiksa Ulang Kasek',
+            'editedkadiv'       => 'Sedang Diperiksa Ulang Kasek',
+        ];
 
+        $dataStatus = $dataStatus->mapWithKeys(function ($count, $status) use ($statusMapping) {
+            $statusName = $statusMapping[$status] ?? $status; // Gunakan nama yang diinginkan atau status asli jika tidak ditemukan dalam mapping
+            return [$statusName => $count];
+        });
+
+        // =====================================================================================================================
         // data kontrak per status jaminan
         $KontrakPerStatusJaminan = $dataKontrak->groupBy('status_jaminan')->map(function ($group) {
             return $group->count();
         });
 
+        // =====================================================================================================================
         // data kontrak per jenis kontrak
         $KontrakperJenisKontrak = $dataKontrak->groupBy('jenis_kontrak')->map(function ($groupJK) {
             return $groupJK->count();
         });
 
+        // =====================================================================================================================
         // Mengelompokkan data kontrak berdasarkan nama vendor dan menghitung jumlah kontrak untuk setiap vendor
         $KontrakPerVendor = $dataKontrak->groupBy('nm_vendor')->map(function ($group) {
             return $group->count();
@@ -50,6 +76,8 @@ class HomeController extends Controller
 
         // Mengambil 10 vendor dengan jumlah kontrak tertinggi
         $topVendors = $KontrakPerVendor->sortDesc()->take(10);
+
+        // =====================================================================================================================
 
         // dd(auth()->user()->getRoleNames());
         return view('dashboard.dashboard', compact('dataKontrak', 'dataSOP', 'dataKontrakAKDV', 'dataKontrakProses', 'dataStatus', 'KontrakPerStatusJaminan', 'KontrakperJenisKontrak', 'topVendors'));
