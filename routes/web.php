@@ -40,7 +40,6 @@ Route::middleware('auth')->group(
         // tampil dashboard
         Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
         Route::resource('integrate', App\Http\Controllers\KontrakController::class);
-
         Route::get('/dataSOP',  [KontrakController::class, 'getdataSOP']);
         Route::get(
             '/dataBarang',

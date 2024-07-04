@@ -45,14 +45,13 @@ class HomeController extends Controller
             'approvedkadept'    => 'Disetujui Kadept',
             'reviewkadiv'       => 'Sedang Diperiksa Kadiv',
             'revisikadiv'       => 'Direvisi oleh Kadiv',
-            // 'approvedkadiv'     => 'Disetujui Kadiv (NET)',
             'editedkasek'       => 'Sedang Diperiksa Ulang Kasek',
             'editedkadept'      => 'Sedang Diperiksa Ulang Kasek',
             'editedkadiv'       => 'Sedang Diperiksa Ulang Kasek',
         ];
 
         $dataStatus = $dataStatus->mapWithKeys(function ($count, $status) use ($statusMapping) {
-            $statusName = $statusMapping[$status] ?? $status; // Gunakan nama yang diinginkan atau status asli jika tidak ditemukan dalam mapping
+            $statusName = $statusMapping[$status] ?? $status; // Gunakan nama inisialisasi atau status asli jika tidak ditemukan
             return [$statusName => $count];
         });
 

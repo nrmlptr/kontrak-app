@@ -195,22 +195,6 @@
 
     // GRAFIK STATUS KONTRAK =================================================================================================
     $(document).ready(function() {
-        // Deskripsi status disimpan dalam objek terpisah
-        var statusDescriptions = {
-            'draft': 'Tahap Pembuatan Kontrak dan Lampiran.',
-            'reviewkasek':      'Tahap Pemeriksaan Kasek.',
-            'revisikasek':      'Kasek Memberi Revisi Pada Kontrak.',
-            'editedkasek':      'Staff/Admin yang membuat kontrak telah Perbarui Kontrak Sesuai Revisi Kasek.',
-            'approvedkasek':    'Tahap Submit Kontrak oleh Kasek.',
-            'reviewkadept':     'Tahap Pemeriksaan Kadept.',
-            'revisikadept':     'Kadept Memberi Revisi Pada Kontrak.',
-            'editedkadept':     'Staff/Admin yang membuat kontrak telah Perbarui Kontrak Sesuai Revisi Kadept.',
-            'approvedkadept':   'Tahap Submit Kontrak oleh Kadept.',
-            'reviewkadiv':      'Tahap Pemeriksaan Kadiv.',
-            'revisikadiv':      'Kadiv Memberi Revisi Pada Kontrak.',
-            'editedkadiv':     'Staff/Admin yang membuat kontrak telah Perbarui Kontrak Sesuai Revisi Kadiv.',
-        };
-
         Highcharts.chart('grafikStatus', {
             chart: {
                 type: 'pie'
@@ -237,23 +221,6 @@
                     showInLegend: true
                 }
             },
-            // legend: {
-            //     enabled: true,
-            //     layout: 'vertical',
-            //     align: 'right',
-            //     verticalAlign: 'middle',
-            //     itemStyle: {
-            //         fontSize: '1.1em',
-            //         fontWeight: 'bold',
-            //         color: '#333333'
-            //     },
-            //     itemMarginTop: 10,
-            //     itemMarginBottom: 10,
-            //     labelFormatter: function() {
-            //         // Menggunakan this.name untuk mendapatkan deskripsi dari objek statusDescriptions
-            //         return this.name + ': ' + (statusDescriptions[this.name] || 'Deskripsi tidak tersedia');
-            //     }
-            // },
             series: [{
                 name: 'Jumlah',
                 colorByPoint: true,
