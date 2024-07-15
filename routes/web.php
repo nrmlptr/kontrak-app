@@ -11,6 +11,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Http;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,7 @@ Route::middleware('auth')->group(
         // tampil dashboard
         Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
         Route::resource('integrate', App\Http\Controllers\KontrakController::class);
+        // Route::get('/syncData', [KontrakController::class, 'syncron']);
         Route::get('/dataSOP',  [KontrakController::class, 'getdataSOP']);
         Route::get(
             '/dataBarang',

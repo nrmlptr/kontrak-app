@@ -19,7 +19,7 @@ class SyncDataSOP extends Command
      *
      * @var string
      */
-    protected $description = 'Sinkronisasi data SOP Terbaru dari SCM';
+    // protected $description = 'Sinkronisasi data SOP Terbaru dari SCM';
 
     public function __construct()
     {
@@ -31,10 +31,10 @@ class SyncDataSOP extends Command
      */
     public function handle()
     {
-        //KODE
-        $kontrakController = new KontrakController();
-        $kontrakController->syncron();
+        // //KODE
+        // $kontrakController = new KontrakController();
+        // $kontrakController->syncron();
 
-        $this->info('Data SOP Berhasil di Sinkronisasi!');
+        // $this->info('Data SOP Berhasil di Sinkronisasi!');
     }
 }

@@ -25,15 +25,16 @@ use App\Notifications\SetujuiKontrakNotification;
 use App\Notifications\inputKontrakNotification;
 use App\Notifications\NetkontrakNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use GuzzleHttp\Client;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 use Illuminate\Support\Facades\Storage;
 use Webklex\PDFMerger\Facades\PDFMergerFacade as PDFMerger;
+use Illuminate\Support\Facades\Log;
 
 
 class KontrakController extends Controller
@@ -44,88 +45,175 @@ class KontrakController extends Controller
     }
 
     // METHOD SINCRON DATA DENGAN API ========================================================================================
+    // public function syncron()
+    // {
+    //     $url         = 'https://scm.peruri.co.id/Api/getsiapda';
+    //     $bearerToken = 'ciTeTrDRKcOyHLOi0OQ5TtjBzlKJSE9dHh4j7MGpKW68bTrIZRJmFC1L27cB060Ev';
+    //     $client = new Client([
+    //         'headers' => [
+    //             'Authorization' => 'Bearer ' . $bearerToken,
+    //             'Accept'        => 'application/json',
+    //         ],
+    //         'verify' => false,
+    //     ]);
+
+    //     try {
+    //         Log::info("Sending request to API", ['url' => $url, 'bearerToken' => $bearerToken]);
+    //         $response = $client->get($url);
+    //         $responseBody = $response->getBody()->getContents();
+    //         Log::info("Raw response from API", ['responseBody' => $responseBody]);
+    //         // dd($responseBody);
+    //         $resultBody = mb_convert_encoding($responseBody, 'UTF-8', 'UTF-8');
+    //         // dd($resultBody);
+
+    //         // Lanjutkan dengan json_decode
+    //         $responseData = json_decode($resultBody, true);
+    //         dd($responseData);
+
+    //         // if (json_last_error() !== JSON_ERROR_NONE) {
+    //         //     dd('Error decoding JSON:', json_last_error_msg());
+    //         // }
+
+    //         // dd($responseData);
+
+    //         // buat array kosong untuk nanti tampung datanya
+    //         $inputData  = array();
+    //         Integrate::truncate();
+
+    //         foreach ($responseData as $col) {
+    //             // dd($col);
+    //             // Konversi tanggal menjadi format MySQL
+    //             $tglSPPHSQL = date('Y-m-d H:i:s', strtotime($col['tgl_spph']));
+    //             $tanggalWaktuMySQL = date('Y-m-d H:i:s', strtotime($col['tgl_sp3_approve']));
+    //             $inputData = [
+    //                 'no_spph'                            => $col['no_spph'],
+    //                 'tgl_spph'                           => $tglSPPHSQL,
+    //                 'no_sp3'                             => $col['no_sp3'],
+    //                 'tgl_sp3_approve'                    => $tanggalWaktuMySQL,
+    //                 'schedule_from_time'                 => $col['schedule_from_time'],
+    //                 'schedule_thru_time'                 => $col['schedule_thru_time'],
+    //                 'tender_name'                        => $col['tender_name'],
+    //                 'purchasing_document_number'         => $col['purchasing_document_number'],
+    //                 'document_date'                      => $col['document_date'],
+    //                 'po_delivery_date'                   => $col['po_delivery_date'],
+    //                 'vendors_account_number'             => $col['vendors_account_number'],
+    //                 'registration_no'                    => $col['registration_no'],
+    //                 'vendor_name'                        => $col['vendor_name'],
+    //                 'purchasing_document_type'           => $col['purchasing_document_type'],
+    //                 'purchasing_group'                   => $col['purchasing_group'],
+    //                 'material_group'                     => $col['material_group'],
+    //                 'material_number'                    => $col['material_number'],
+    //                 'material_name'                      => $col['material_name'],
+    //                 'purchase_requisition_number'        => $col['purchase_requisition_number'],
+    //                 'requisition_date'                   => $col['requisition_date'],
+    //                 'plant'                              => $col['plant'],
+    //                 'storage_location'                   => $col['storage_location'],
+    //                 'item_number_of_purchasing_document' => $col['item_number_of_purchasing_document'],
+    //                 'purchase_order_quantity'            => (int) str_replace(['.', ','], '', $col['purchase_order_quantity']),
+    //                 'purchase_order_unit_of_measure'     => $col['purchase_order_unit_of_measure'],
+    //                 'net_price'                          => (int) str_replace(['.', ','], '', $col['net_price']),
+    //                 'condition_value'                    => $col['condition_value'],
+    //                 'alamat'                             => $col['alamat'],
+    //                 'kecamatan'                          => $col['sub_district'],
+    //                 'kota'                               => $col['kota'],
+    //                 'provinsi'                           => $col['provinsi'],
+    //                 'kode_pos'                           => $col['kode_pos'],
+    //                 'negara'                             => $col['negara'],
+    //                 'no_hp'                              => $col['phone_number'],
+    //                 'website'                            => $col['website'],
+    //                 'email_perusahaan'                   => $col['company_email'],
+    //                 'kategori_lokasi'                    => $col['location_category']
+    //             ];
+
+    //             // dd($inputData);
+    //             Integrate::create($inputData);
+    //         }
+
+    //         // Berhasil menambahkan data
+    //         return response()->json(['success' => true, 'message' => 'Data successfully synced.']);
+    //     } catch (\Exception $e) {
+    //         // Gagal mengakses API
+    //         Log::error("Error syncing data: " . $e->getMessage(), ['exception' => $e]);
+    //         return response()->json([
+    //             'success' => false, 'message' => $e->getMessage()
+    //         ]);
+    //     }
+    // }
+
     public function syncron()
     {
-        $url         = 'https://scm.peruri.co.id/Api/getsiapda';
-        $bearerToken = 'ciTeTrDRKcOyHLOi0OQ5TtjBzlKJSE9dHh4j7MGpKW68bTrIZRJmFC1L27cB060Ev';
-        $client = new Client([
-            'headers' => [
+        $apiUrl         = 'https://scm.peruri.co.id/Api/getsiapda';
+        $bearerToken    = 'ciTeTrDRKcOyHLOi0OQ5TtjBzlKJSE9dHh4j7MGpKW68bTrIZRJmFC1L27cB060Ev';
+
+        $responseBody = Http::withOptions(['verify' => false])
+            ->withHeaders([
                 'Authorization' => 'Bearer ' . $bearerToken,
                 'Accept'        => 'application/json',
-            ],
-            'verify' => false, // Untuk bypass SSL verification jika diperlukan
-        ]);
-        // $client     = new Client();
-        // $request    = $client->request('GET', $url, ['verify' => false]);
-        // $collection = collect(json_decode($request->getBody()));
-        // dd($collection->count());
-        // dd($request->getBody());
+            ])
+            ->get($apiUrl);
+
+
+
         try {
-            $response = $client->get($url);
-            $data = json_decode($response->getBody(), true);
+            $data = json_decode($responseBody->body());
+            // dd($data);
 
-            // buat array kosong untuk nanti tampung datanya
-            $inputData  = array();
-            Integrate::truncate();
+            foreach ($data as $item) {
+                // dd($item);
+                $tglSPPHSQL         = date('Y-m-d H:i:s', strtotime($item->tgl_spph));
+                $tanggalWaktuMySQL  = date('Y-m-d H:i:s', strtotime($item->tgl_sp3_approve));
 
-            foreach ($data as $col) {
-                // dd($col);
-                // Konversi tanggal menjadi format MySQL
-                $tglSPPHSQL = date('Y-m-d H:i:s', strtotime($col['tgl_spph']));
-                $tanggalWaktuMySQL = date('Y-m-d H:i:s', strtotime($col['tgl_sp3_approve']));
-
-
-                $inputData = [
-                    'no_spph'                            => $col['no_spph'],
-                    'tgl_spph'                           => $tglSPPHSQL,
-                    'no_sp3'                             => $col['no_sp3'],
-                    'tgl_sp3_approve'                    => $tanggalWaktuMySQL,
-                    'schedule_from_time'                 => $col['schedule_from_time'],
-                    'schedule_thru_time'                 => $col['schedule_thru_time'],
-                    'tender_name'                        => $col['tender_name'],
-                    'purchasing_document_number'         => $col['purchasing_document_number'],
-                    'document_date'                      => $col['document_date'],
-                    'po_delivery_date'                   => $col['po_delivery_date'],
-                    'vendors_account_number'             => $col['vendors_account_number'],
-                    'registration_no'                    => $col['registration_no'],
-                    'vendor_name'                        => $col['vendor_name'],
-                    'purchasing_document_type'           => $col['purchasing_document_type'],
-                    'purchasing_group'                   => $col['purchasing_group'],
-                    'material_group'                     => $col['material_group'],
-                    'material_number'                    => $col['material_number'],
-                    'material_name'                      => $col['material_name'],
-                    'purchase_requisition_number'        => $col['purchase_requisition_number'],
-                    'requisition_date'                   => $col['requisition_date'],
-                    'plant'                              => $col['plant'],
-                    'storage_location'                   => $col['storage_location'],
-                    'item_number_of_purchasing_document' => $col['item_number_of_purchasing_document'],
-                    'purchase_order_quantity'            => (int) str_replace(['.', ','], '', $col['purchase_order_quantity']),
-                    'purchase_order_unit_of_measure'     => $col['purchase_order_unit_of_measure'],
-                    'net_price'                          => (int) str_replace(['.', ','], '', $col['net_price']),
-                    'condition_value'                    => $col['condition_value'],
-                    'alamat'                             => $col['alamat'],
-                    'kecamatan'                          => $col['sub_district'],
-                    'kota'                               => $col['kota'],
-                    'provinsi'                           => $col['provinsi'],
-                    'kode_pos'                           => $col['kode_pos'],
-                    'negara'                             => $col['negara'],
-                    'no_hp'                              => $col['phone_number'],
-                    'website'                            => $col['website'],
-                    'email_perusahaan'                   => $col['company_email'],
-                    'kategori_lokasi'                    => $col['location_category']
+                $penampung = [
+                    "no_spph"                               => $item->no_spph,
+                    "tgl_spph"                              => $tglSPPHSQL,
+                    "no_sp3"                                => $item->no_sp3,
+                    "tgl_sp3_approve"                       => $tanggalWaktuMySQL,
+                    "schedule_from_time"                    => $item->schedule_from_time,
+                    "schedule_thru_time"                    => $item->schedule_thru_time,
+                    "tender_name"                           => $item->tender_name,
+                    "purchasing_document_number"            => $item->purchasing_document_number,
+                    "document_date"                         => $item->document_date,
+                    "po_delivery_date"                      => $item->po_delivery_date,
+                    "vendors_account_number"                => $item->vendors_account_number,
+                    "registration_no"                       => $item->registration_no,
+                    "vendor_name"                           => $item->vendor_name,
+                    "purchasing_document_type"              => $item->purchasing_document_type,
+                    "purchasing_group"                      => $item->purchasing_group,
+                    "material_group"                        => $item->material_group,
+                    "material_number"                       => $item->material_number,
+                    "material_name"                         => $item->material_name,
+                    "purchase_requisition_number"           => $item->purchase_requisition_number,
+                    "requisition_date"                      => $item->requisition_date,
+                    "plant"                                 => $item->plant,
+                    "storage_location"                      => $item->storage_location,
+                    "item_number_of_purchasing_document"    => $item->item_number_of_purchasing_document,
+                    "purchase_order_quantity"               => $item->purchase_order_quantity,
+                    "purchase_order_unit_of_measure"        => $item->purchase_order_unit_of_measure,
+                    "net_price"                             => $item->net_price,
+                    "condition_value"                       => $item->condition_value,
+                    "alamat"                                => $item->alamat,
+                    "kode_pos"                              => $item->kode_pos,
+                    "kota"                                  => $item->kota,
+                    "provinsi"                              => $item->provinsi,
+                    "kecamatan"                             => $item->sub_district,
+                    "negara"                                => $item->negara,
+                    "no_hp"                                 => $item->phone_number,
+                    "website"                               => $item->website,
+                    "email_perusahaan"                      => $item->company_email,
+                    "kategori_lokasi"                       => $item->location_category
                 ];
-
-                // dd($inputData);
-                Integrate::create($inputData);
+                Integrate::updateOrCreate([
+                    'purchasing_document_number'            => $item->purchasing_document_number,
+                    'item_number_of_purchasing_document'    => $item->item_number_of_purchasing_document
+                ], $penampung);
             }
 
-            // Berhasil menambahkan data
+
+            // return $penampung;
             return response()->json(['success' => true, 'message' => 'Data successfully synced.']);
         } catch (\Exception $e) {
             // Gagal mengakses API
-            return response()->json([
-                'success' => false, 'message' => $e->getMessage()
-            ]);
+            return response()->json(['success' => false, 'message' => 'Failed Syncronize Data!']);
         }
     }
 

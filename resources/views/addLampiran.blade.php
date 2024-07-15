@@ -224,8 +224,6 @@
 
                         // Panggil fungsi hitungTotalHarga setelah formulir selesai dimuat
                         hitungTotalHarga();
-
-
                         $.get(`/dataVendor/${response[0].registration_no}`, function(data) {
                             // Setelah mendapatkan data, set nilai textarea
                             // $('textarea[name="alamat_vendor"]').val(data.alamat);
@@ -246,7 +244,7 @@
             //     // Callback ini akan dipanggil ketika inisialisasi Summernote selesai
             //     // Di sini, Anda dapat menetapkan nilai ke textarea setelah inisialisasi Summernote selesai
             // });
-        });
+        }); 
 
 
         // fungsi buat konfigurasi lock unlock item readonly
