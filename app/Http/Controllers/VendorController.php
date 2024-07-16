@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Integrate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-
+use PhpParser\Node\Stmt\TryCatch;
 
 class VendorController extends Controller
 {
@@ -102,23 +102,35 @@ class VendorController extends Controller
     {
         $response = Http::timeout(60)
             ->withOptions(['verify' => false])
+            ->withHeaders([
+                'Accept'        => 'application/json',
+            ])
             ->get("https://scm.peruri.co.id/Api/getSIapdaNPWP/$no_vendor");
 
-        if ($response->successful()) {
-            $dataNpwp = $response->json();
-            // dd($dataNpwp);
+        try {
+            $responseBody = $response->body();
+
+            // Pisahkan respons JSON jika terdapat dua array JSON yang digabungkan
+            $responseBodyParts = explode('][', trim($responseBody, '[]'));
+
+            // dd($responseBodyParts);
+
+            $dataNpwp = [];
+            foreach ($responseBodyParts as $part) {
+                $decodedPart = json_decode("[$part]", true);
+                if (json_last_error() !== JSON_ERROR_NONE) {
+                    return response()->json(['message' => 'Error parsing JSON data: ' . json_last_error_msg()], 500);
+                }
+                $dataNpwp = array_merge($dataNpwp, $decodedPart);
+            }
 
             // Inisialisasi variabel untuk menyimpan nomor NPWP
             $npwpnya = null;
 
             // Iterasi melalui setiap baris data
             foreach ($dataNpwp as $row) {
-                // Periksa jika tax_document_type nya adalah "Nomor Pokok Wajib Pajak / Tax Identification Number"
-                if ($row['tax_document_type'] === 'Nomor Pokok Wajib Pajak / Tax Identification Number') {
-                    // dd($row);
-                    // Simpan nomor NPWP
-                    $npwpnya = $row['tax_document_number'];
-                    // Keluar dari loop karena sudah ditemukan data yang sesuai
+                if (isset($row['tax_document_type']) && $row['tax_document_type'] === 'Nomor Pokok Wajib Pajak / Tax Identification Number') {
+                    $npwpnya = $row['tax_document_number'] ?? null;
                     break;
                 }
             }
@@ -126,14 +138,12 @@ class VendorController extends Controller
             // dd($npwpnya);
 
             // Periksa apakah nomor NPWP ditemukan
-            if ($npwpnya !== '') {
-                // Kembalikan nomor NPWP dalam response JSON
+            if ($npwpnya !== null) {
                 return response()->json(['tax_document_number' => $npwpnya]);
             } else {
-                // Jika tidak ada nomor NPWP yang ditemukan, kembalikan response kosong
                 return response()->json(['message' => 'Nomor NPWP tidak ditemukan.'], 404);
             }
-        } else {
+        } catch (\Exception $e) {
             // Jika request tidak berhasil, kembalikan response error
             return response()->json(['message' => 'Gagal mengambil data NPWP.'], $response->status());
         }
@@ -145,26 +155,44 @@ class VendorController extends Controller
     {
         $response = Http::timeout(60)
             ->withOptions(['verify' => false])
+            ->withHeaders([
+                'Accept'        => 'application/json',
+            ])
             ->get("https://scm.peruri.co.id/Api/getsiapdainfo/$no_vendor");
 
-        if ($response->successful()) {
-            $dataNama = $response->json();
-            // dd($dataNama);
+        try {
+            $responseBody = $response->body();
+
+            // pisahkan response JSON karena terdapat 2 array json yang digabung
+            $PecahResponse = explode('][', trim($responseBody, '[]'));
+
+            // dd($PecahResponse);
+
+            $dataPejabat = [];
+            foreach ($PecahResponse as $data) {
+                $decodeData = json_decode("[$data]", true);
+
+                if (json_last_error() !== JSON_ERROR_NONE) {
+                    return response()->json(['message' => 'Error parsing JSON data: ' . json_last_error_msg()], 500);
+                }
+
+                $dataPejabat = array_merge($dataPejabat, $decodeData);
+            }
+
+            // dd($dataPejabat);
 
             // Inisialisasi variabel untuk menyimpan nama pejabat vendor
             $namaPejabat = null;
 
             // Iterasi melalui setiap baris data
-            foreach ($dataNama as $row) {
+            foreach ($dataPejabat as $row) {
                 // Periksa jika board_type nya adalah "BOD (Board of Director) – Direksi"
-                if ($row['board_type'] === 'BOD (Board of Director) – Direksi') {
-                    // dd($row);
-                    // Simpan nama pejabatnya
-                    $namaPejabat = $row['full_name'];
-                    // Keluar dari loop karena sudah ditemukan data yang sesuai
+                if (isset($row['board_type']) && $row['board_type'] === 'BOD (Board of Director) – Direksi') {
+                    $namaPejabat = $row['full_name'] ?? null;
                     break;
                 }
             }
+            // dd($namaPejabat);
 
             // Periksa apakah nama pejabatnya ditemukan
             if ($namaPejabat !== '') {
@@ -174,7 +202,7 @@ class VendorController extends Controller
                 // Jika tidak ada nama pejabat yang ditemukan, kembalikan response kosong
                 return response()->json(['message' => 'Nama Pejabat tidak ditemukan.'], 404);
             }
-        } else {
+        } catch (\Exception $e) {
             // Jika request tidak berhasil, kembalikan response error
             return response()->json(['message' => 'Gagal mengambil data Pejabat Vendor.'], $response->status());
         }
@@ -186,37 +214,60 @@ class VendorController extends Controller
     {
         $response = Http::timeout(60)
             ->withOptions(['verify' => false])
+            ->withHeaders([
+                'Accept'    => 'application/json',
+            ])
             ->get("https://scm.peruri.co.id/Api/getsiapdainfo/$no_vendor");
 
-        if ($response->successful()) {
-            $data = $response->json();
 
-            // Inisialisasi variabel untuk menyimpan alamat lengkap
-            $alamatLengkap = null;
+        try {
+            $responseBody = $response->body();
+            // dd($responseBody);
+
+            // pisahkan response json karena terdapat 2 array json yang digabung
+            $PisahResponse = explode('][', trim($responseBody, '[]'));
+
+            // dd($PisahResponse);
+
+            $dataAlamat = [];
+            foreach ($PisahResponse as $da) {
+                $decodeDA = json_decode("[$da]", true);
+
+                // dd($decodeDA);
+                if (json_last_error() !== JSON_ERROR_NONE) {
+                    return response()->json(['message' => 'Error parsing JSON data: ' . json_last_error_msg()], 500);
+                }
+
+                $dataAlamat = array_merge($dataAlamat, $decodeDA);
+            }
+
+            // dd($dataAlamat);
+
+            // Inisialisasi variabel untuk menyimpan nama pejabat vendor
+            $AlamatVendor = null;
 
             // Iterasi melalui setiap baris data
-            foreach ($data as $row) {
+            foreach ($dataAlamat as $row) {
                 // Gabungkan data alamat menjadi satu string
-                $alamatLengkap = $row['alamat'] . ', ' . $row['sub_district'] . ', ' . $row['kota'] . ', ' . $row['provinsi'];
+                $AlamatVendor = $row['alamat'] . ', ' . $row['sub_district'] . ', ' . $row['kota'] . ', ' . $row['provinsi'];
                 // Keluar dari loop karena sudah ditemukan data yang sesuai
                 break;
             }
 
-            // dd($alamatLengkap);
+            // dd($AlamatVendor);
+
             // Periksa apakah alamat lengkapnya ditemukan
-            if ($alamatLengkap !== null) {
+            if ($AlamatVendor !== null) {
                 // Kembalikan alamat lengkapnya dalam response JSON
-                return response()->json(['alamat' => $alamatLengkap]);
+                return response()->json(['alamat' => $AlamatVendor]);
             } else {
                 // Jika tidak ada alamat yang ditemukan, kembalikan response kosong
                 return response()->json(['message' => 'Alamat tidak ditemukan.'], 404);
             }
-        } else {
+        } catch (\Exception $e) {
             // Jika request tidak berhasil, kembalikan response error
             return response()->json(['message' => 'Gagal mengambil data Alamat Vendor.'], $response->status());
         }
     }
-
-
     // end class
 }

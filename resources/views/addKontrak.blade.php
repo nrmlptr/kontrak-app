@@ -56,14 +56,14 @@
                                     @csrf
                                     <div class="row justify-content-center">
                                         <div class="col-md-2" style="text-align: center;">
-                                            <select class="form-control" name="jenis_kontrak" id="" onchange="">
+                                            <select class="form-control" name="jenis_kontrak" required>
                                                 <option value="" disabled selected hidden>Jenis Kontrak</option>
                                                 <option value="lumpsum">Lumpsum</option>
                                                 <option value="harga_satuan">Harga Satuan</option>
                                             </select>
                                         </div>
                                         <div class="col-md-2" style="text-align: center;">
-                                            <select class="form-control" name="status_jaminan" id="" onchange="">
+                                            <select class="form-control" name="status_jaminan" required>
                                                 <option value="" disabled selected hidden>Status Jaminan</option>
                                                 <option value="jaminan">Jaminan</option>
                                                 <option value="tanpa_jaminan">Tanpa Jaminan</option>
@@ -72,9 +72,6 @@
                                     </div>
                                     <div class="row justify-content-center mt-2">
                                         <div class="col-md-6 col-sm-6 col-xs-6" style="text-align: center;">
-                                            <!-- <select class="select2 select2bs4 browser-default list_sop" name="list_sop" id="list_sop" style="width: 50%">
-                                                <option value="" disabled selected hidden>Search NO SOP</option>
-                                            </select> -->
                                             <select class="form-control select2" name="purchasing_document_number" id="purchasing_document_number">
                                                 <option value="">Pilih No SOP</option>
                                             </select>
@@ -85,62 +82,50 @@
                                     <div class="row justify-content-center">
                                         <div class="col-xs-2 col-sm-2 col-md-2">
                                             <div class="form-group">
-                                                <label for="noSOP_manual">Nomor SOP</label>
-                                                <input type="number" placeholder="Masukkan No SOP" name="nomor_sop" class="form-control" id="nomor_sop">
+                                                <label for="nomor_sop">Nomor SOP</label>
+                                                <input type="number" placeholder="Masukkan No SOP" name="nomor_sop" class="form-control" id="nomor_sop" required>
                                                 <!-- TEMPAT BUAT NARO ERROR -->
-                                                @if($errors->has('nomor_sop'))
-                                                <span class="text-danger">{{ $errors->first('nomor_sop') }}</span>
-                                                @endif
+                                                <small style="color: red;" class="error-message" id="error_nomor_sop"></small>
                                             </div>
                                         </div>
                                         <div class="col-xs-2 col-sm-2 col-md-2">
                                             <div class="form-group">
                                                 <label for="tanggal_sop">Tanggal SOP</label>
-                                                <input type="date" name="tanggal_sop" class="form-control" id="tanggal_sop">
+                                                <input type="date" name="tanggal_sop" class="form-control" id="tanggal_sop" required>
                                                 <!-- tempat error -->
-                                                @if($errors->has('tanggal_sop'))
-                                                <span class="text-danger">{{ $errors->first('tanggal_sop') }}</span>
-                                                @endif
+                                               <small style="color: red;" class="error-message" id="error_tanggal_sop"></small>
                                             </div>
                                         </div>
                                         <div class="col-xs-6 col-sm-6 col-md-6">
                                             <div class="form-group">
                                                 <label for="perihal">Perihal</label>
-                                                <input type="text" placeholder="Masukan Perihal" name="perihal" class="form-control" id="perihal">
+                                                <input type="text" placeholder="Masukan Perihal" name="perihal" class="form-control" id="perihal" required>
                                                 <!-- tempat naro error -->
-                                                @if($errors->has('perihal'))
-                                                <span class="text-danger">{{ $errors->first('perihal') }}</span>
-                                                @endif
+                                                <small style="color: red;" class="error-message" id="error_perihal"></small>
                                             </div>
                                         </div>
                                         <div class="col-xs-2 col-sm-2 col-md-2">
                                             <div class="form-group">
                                                 <label for="date_kontrak">Tanggal Kontrak</label>
-                                                <input type="date" name="date_kontrak" class="form-control" id="date_kontrak">
+                                                <input type="date" name="date_kontrak" class="form-control" id="date_kontrak" required>
                                                 <!-- tempat error -->
-                                                @if($errors->has('date_kontrak'))
-                                                <span class="text-danger">{{ $errors->first('date_kontrak') }}</span>
-                                                @endif
+                                               <small style="color: red;" class="error-message" id="error_date_kontrak"></small>
                                             </div>
                                         </div>
                                         <div class="col-xs-6 col-sm-8 col-md-6">
                                             <div class="form-group">
-                                                <label for="namavendor">Nama Vendor</label>
+                                                <label for="nm_vendor">Nama Vendor</label>
                                                 <input type="text" placeholder="Nama Vendor" name="nm_vendor" class="form-control" id="nm_vendor" readonly>
                                                 <!-- TEMPAT BUAT NARO ERROR -->
-                                                @if($errors->has('nm_vendor'))
-                                                <span class="text-danger">{{ $errors->first('nm_vendor') }}</span>
-                                                @endif
+                                                <small style="color: red;" class="error-message" id="error_nm_vendor"></small>
                                             </div>
                                         </div>
                                         <div class="col-xs-2 col-sm-2 col-md-2">
                                             <div class="form-group">
                                                 <label for="noSP">Nomor SP</label>
-                                                <input type="number" placeholder="Masukkan No SP" name="number" class="form-control" id="number">
+                                                <input type="number" placeholder="Masukkan No SP" name="number" class="form-control" id="number" required>
                                                 <!-- TEMPAT BUAT NARO ERROR -->
-                                                @if($errors->has('number'))
-                                                <span class="text-danger">{{ $errors->first('number') }}</span>
-                                                @endif
+                                               <small style="color: red;" class="error-message" id="error_number"></small>                                               
                                             </div>
                                         </div>
                                         <div class="col-xs-2 col-sm-2 col-md-2">
@@ -148,9 +133,7 @@
                                                 <label for="pembuat">Nama Pembuat Kontrak</label>
                                                 <input type="text" name="pembuat" class="form-control" id="pembuat" value="{{ Auth::user()->name }}" disabled>
                                                 <!-- tempat naro error -->
-                                                @if($errors->has('pembuat'))
-                                                <span class="text-danger">{{ $errors->first('pembuat') }}</span>
-                                                @endif
+                                               <small style="color: red;" class="error-message" id="error_pembuat"></small>
                                             </div>
                                         </div>
                                         <div class="col-xs-2 col-sm-2 col-md-2">
@@ -158,9 +141,7 @@
                                                 <label for="unit_kerja">Unit Kerja</label>
                                                 <input type="text" name="unit_kerja" class="form-control" id="unit_kerja" value="{{ Auth::user()->unit_kerja }}" disabled>
                                                 <!-- tempat naro error -->
-                                                @if($errors->has('unit_kerja'))
-                                                <span class="text-danger">{{ $errors->first('unit_kerja') }}</span>
-                                                @endif
+                                                <small style="color: red;" class="error-message" id="error_unit_kerja"></small>
                                             </div>
                                         </div>
                                         {{-- kolom input akta --}}
@@ -169,9 +150,7 @@
                                                 <label for="peruri_text">Akta Peruri</label>
                                                 <textarea name="peruri_text" class="form-control" id="peruri_text" cols="30" rows="10">{!! $setting->peruri_akta !!}</textarea>
                                                 <!-- tempat naro error -->
-                                                @if($errors->has('peruri_text'))
-                                                <span class="text-danger">{{ $errors->first('peruri_text') }}</span>
-                                                @endif
+                                                <small style="color: red;" class="error-message" id="error_peruri_text"></small>
                                             </div>
                                         </div>
 
@@ -180,9 +159,7 @@
                                                 <label for="akta">Akta Vendor</label>
                                                 <textarea class="form-control summernote" rows="5" style="resize: vertical; width: 100%;" name="akta" id="akta"></textarea>
                                                 <!-- tempat naro error -->
-                                                @if($errors->has('akta'))
-                                                <span class="text-danger">{{ $errors->first('akta') }}</span>
-                                                @endif
+                                               <small style="color: red;" class="error-message" id="error_akta"></small>
                                             </div>
                                         </div>
                                     </div>
@@ -224,29 +201,38 @@
     $(document).ready(function(){
         $('#loading-spinner').hide();
     });
-
-    // $(document).ready(function() {
-    //     $('#akta').summernote();
-    // });
-
     
     function submitKontrak() {
-
         var formKontrak = $('#inputKontrak');
+        var formData = formKontrak.serialize();
         // console.log(formKontrak);
 
         $.ajax({
             method: 'POST',
             url: 'loadKontrak',
-            data: formKontrak.serialize(),
+            data: formData,
             beforeSend: function(){
                 $('#loading-spinner').show();
+                // Clear previous error messages
+                $('.error-message').text('');
             },
             success: function(result) {
                 $('#loading-spinner').hide();
                 // console.log(result.message)
                 if (result.redirect) {
-                    window.location.href = result.redirect; // Mengarahkan ulang halaman ke halaman monitoring
+                    window.location.href = result.redirect; // Mengarahkan ke halaman monitoring
+                }
+            },
+            error: function(xhr) {
+                $('#loading-spinner').hide();
+                if (xhr.status === 422) {
+                    var errors = xhr.responseJSON.errors;
+                    // Display error messages
+                    for (var key in errors) {
+                        if (errors.hasOwnProperty(key)) {
+                            $('#error_' + key).text(errors[key][0]);
+                        }
+                    }
                 }
             }
         });

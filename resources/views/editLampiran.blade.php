@@ -46,9 +46,11 @@
             <!-- general form elements -->
             <div class="card card-primary w-100">
                 <div class="card-header">
-                    <h3 class="card-title">Edit Data Lampiran</h3>
+                    <h3 class="card-title mr-3">Edit Data Lampiran</h3>
+                    <button type="button" class="btn btn-default toastsDefaultDefault mr-3">
+                        Tampilkan Revisi
+                    </button>
                 </div>
-                <br>
                 <!-- /.card-header -->
                 <div class="card-body">
                     <div class="row col-12">
@@ -194,38 +196,89 @@
     <script src="{{ asset('assets/summernote-0.8.18-dist/summernote.min.js') }}"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> --}}
     <script type="text/javascript">
-            $(document).ready(function() {
-        var nomor_sop = "{{ $data->nomor_sop }}";
+        $(document).ready(function() {
+                $('.summernote').summernote();
 
-        $.ajax({
-            type: 'GET',
-            url: "{{route('dataBarang')}}",
-            data: {
-                _token: $("input[name='_token']").val(),
-                po: nomor_sop
-            },
-            success: function(response) {
-                console.log(response);
-                if (response[0].id) {
-                    // isiNilaiForm4(response);
-                    // isiNilaiForm5(response);
-                    // $.get(`/dataVendor/${response[0].registration_no}`,function(data){
-                    //     $('textarea[name="alamat_vendor"]').val(data.alamat)
-                    //  });
-                } else {
-                    console.log("Kontrak tidak ditemukan");
-                }
-            },
-            error: function(xhr, status, error) {
-                console.log("error");
-            }
+                var nomor_sop = "{{ $data->nomor_sop }}";
+
+                $.ajax({
+                    type: 'GET',
+                    url: "{{route('dataBarang')}}",
+                    data: {
+                        _token: $("input[name='_token']").val(),
+                        po: nomor_sop
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        if (response[0].id) {
+                            // isiNilaiForm4(response);
+                            // isiNilaiForm5(response);
+                            // $.get(`/dataVendor/${response[0].registration_no}`,function(data){
+                            //     $('textarea[name="alamat_vendor"]').val(data.alamat)
+                            //  });
+                        } else {
+                            console.log("Kontrak tidak ditemukan");
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("error");
+                    }
+            });    
         });
+    </script>
 
-
-   
-            $('.summernote').summernote();
-          
-    });
-
+    {{-- SCRIPT TOAST INFO REVISI --}}
+    <script type="text/javascript">
+        $('.toastsDefaultDefault').click(function() {
+            $(document).Toasts('create', {
+                title: 'Info Revisi',
+                body: `<div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Pesan Revisi</h3>
+                            </div>
+                            <div class="card-body">
+                                <table style="width: auto;">
+                                    <tr>
+                                        <td>Pemberi Revisi</td>
+                                        <td></td>
+                                        <td>:</td>
+                                        <td colspan="2"><b>{{ $revisi->user->name }}</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Posisi</td>
+                                        <td></td>
+                                        <td>:</td>
+                                        <td colspan="2"><b>{{ $revisi->user->roles->first()->name }}</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Detail</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <hr color="black;">
+                                            <div class="callout callout-info">
+                                                <h6>No Kontrak : </h6>
+                                                <h6><b>{{ $revisi->kontrak->detail_number }}</b></h6>
+                                                <h6>Perihal : </h6>
+                                                <h6><b>{{ $revisi->kontrak->perihal }}</b></h6>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Isi Revisi </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <hr color="black;">
+                                            <div class="callout callout-info">
+                                                <h5><b>{{ $revisi->revisi }}</b></h5>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>`
+            })
+        });
     </script>
 @endpush

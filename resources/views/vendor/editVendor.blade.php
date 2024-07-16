@@ -156,9 +156,12 @@
             $.get(`/dataNpwp/{{ $data->registration_no }}`, function(data) {
                 // Pastikan bahwa respons yang diterima dapat diuraikan dengan benar sebagai JSON
                 try {
-                    // Setelah mendapatkan data, set nilai input
-                    $('#npwp').val(data.tax_document_number);
-                    console.log(data);
+                    if (data.tax_document_number) {
+                        $('#npwp').val(data.tax_document_number);
+                        console.log(data);
+                    } else {
+                        console.error("Nomor NPWP tidak ditemukan.");
+                    }
                 } catch (error) {
                     console.error("Error parsing JSON data: ", error);
                 }
@@ -169,9 +172,12 @@
             $.get(`/dataPejabatVendor/{{ $data->registration_no }}`, function(data) {
                 // Pastikan bahwa respons yang diterima dapat diuraikan dengan benar sebagai JSON
                 try {
-                    // Setelah mendapatkan data, set nilai input
-                    $('#pihakname').val(data.full_name);
-                    console.log(data);
+                    if (data.full_name) {
+                        $('#pihakname').val(data.full_name);
+                        console.log(data);
+                    } else {
+                        console.error("Nama Pejabat tidak ditemukan.");
+                    }
                 } catch (error) {
                     console.error("Error parsing JSON data: ", error);
                 }
@@ -182,9 +188,12 @@
             $.get(`/dataAlamatVendor/{{ $data->registration_no }}`, function(data) {
                 // Pastikan bahwa respons yang diterima dapat diuraikan dengan benar sebagai JSON
                 try {
-                    // Setelah mendapatkan data, set nilai input
-                    $('#alamat').val(data.alamat);
-                    console.log(data);
+                    if (data.alamat) {
+                        $('#alamat').val(data.alamat);
+                        console.log(data);
+                    } else {
+                        console.error("Alamat Vendor tidak ditemukan.");
+                    }
                 } catch (error) {
                     console.error("Error parsing JSON data: ", error);
                 }

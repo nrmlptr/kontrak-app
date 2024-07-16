@@ -109,7 +109,7 @@
                                     <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control"  value="{{ $l['nomor_surat'] }}" @if(! in_array($k, $keynum)) readonly @endif >
                                 </div>
                                 <div class="form-group col-6">
-                                    <input type="date" name="tanggal_surat[]" class="form-control"  value="{{ $l['tanggal_surat'] }}">
+                                    <input type="date" name="tanggal_surat[]" class="form-control"  value="{{ $l['tanggal_surat'] }}" @if(! in_array($k, $keynum)) readonly @endif>
                                 </div>
                             </div>
                         </li>

@@ -51,7 +51,7 @@
                 </div>
                 <div class="row mt-2 ml-2">
                     <div class="col-12">
-                        <select style="width:auto;" class="form-control" id="lockfitur" onChange="opsi(this)">
+                        <select style="width:auto;" class="form-control" id="lockfitur" onChange="opsi()">
                             <option>Action</option>
                             <option value="on">Unlock</option>
                             <option value="off">Lock</option>
@@ -205,7 +205,17 @@
     <script src="{{ asset('assets/summernote-0.8.18-dist/summernote.min.js') }}"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> --}}
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function() {             
+            $('.summernote').summernote();
+
+            // Set inputs to readonly on page load
+            setReadonly(true);
+
+            $('#lockfitur').change(function() {
+                let isReadonly = $(this).val() === 'off';
+                setReadonly(isReadonly);
+            });
+
             var nomor_sop = "{{ $data->nomor_sop }}";
 
             $.ajax({
@@ -216,7 +226,7 @@
                     po: nomor_sop
                 },
                 success: function(response) {
-                    console.log(response);
+                    // console.log(response);
                     if (response[0].id) {
                         isiNilaiForm3(response);
                         isiNilaiForm4(response);
@@ -237,81 +247,98 @@
                     console.log("error");
                 }
             });
-            
-            $('.summernote').summernote();
-            // Inisialisasi Summernote dan menambahkan event handler summernote.init
-            // $('.summernote').summernote().on('summernote.init', function() {
-            //     // Callback ini akan dipanggil ketika inisialisasi Summernote selesai
-            //     // Di sini, Anda dapat menetapkan nilai ke textarea setelah inisialisasi Summernote selesai
-            // });
         }); 
 
 
         // fungsi buat konfigurasi lock unlock item readonly
-        function opsi(value) {
-            var st = $("#lockfitur").val();
-            if (st == "on") {
-                document.getElementById("nosurat-header1").readOnly     = false;
-                document.getElementById("nosurat-header2").readOnly     = false;
-                document.getElementById("nosurat-header3").readOnly     = false;
-                document.getElementById("nosurat-header4").readOnly     = false;
-                document.getElementById("notgl-header1").readOnly       = false;
-                document.getElementById("notgl-header2").readOnly       = false;
-                document.getElementById("notgl-header3").readOnly       = false;
-                document.getElementById("notgl-header4").readOnly       = false;
-                document.getElementById("nosoplampiran2").readOnly      = false;
-                document.getElementById("tglsoplampiran2").readOnly     = false;
-                document.getElementById("nosoplampiran4").readOnly      = false;
-                document.getElementById("tglsoplampiran4").readOnly     = false;
-                document.getElementById("plantlampiran4").readOnly      = false;
-                document.getElementById("nosppblampiran4").readOnly     = false;
-                document.getElementById("kodebaranglampiran4").readOnly = false;
-                document.getElementById("nmbaranglampiran4").readOnly   = false;
-                document.getElementById("satuanlampiran4").readOnly     = false;
-                document.getElementById("nosppblampiran5").readOnly     = false;
-                document.getElementById("kodebaranglampiran5").readOnly = false;
-                document.getElementById("nmbaranglampiran5").readOnly   = false;
-                document.getElementById("satuanlampiran5").readOnly     = false;
-                document.getElementById("plantlampiran5").readOnly      = false;
-                document.getElementById("hargaawallampiran5").readOnly  = false;
-                document.getElementById("jumlahlampiran5").readOnly     = false;
-                document.getElementById("nosoplampiran6").readOnly      = false;
-                document.getElementById("tglsoplampiran6").readOnly     = false;
-                document.getElementById("nosplampiran6").readOnly       = false;
-                document.getElementById("tglsplampiran6").readOnly      = false;  
-            } else{
-                document.getElementById("nosurat-header1").readOnly     = true;
-                document.getElementById("nosurat-header2").readOnly     = true;
-                document.getElementById("nosurat-header3").readOnly     = true;
-                document.getElementById("nosurat-header4").readOnly     = true;
-                document.getElementById("notgl-header1").readOnly       = true;
-                document.getElementById("notgl-header2").readOnly       = true;
-                document.getElementById("notgl-header3").readOnly       = true;
-                document.getElementById("notgl-header4").readOnly       = true;
-                document.getElementById("nosoplampiran2").readOnly      = true;
-                document.getElementById("tglsoplampiran2").readOnly     = true;
-                document.getElementById("nosoplampiran4").readOnly      = true;
-                document.getElementById("tglsoplampiran4").readOnly     = true;
-                document.getElementById("plantlampiran4").readOnly      = true;
-                document.getElementById("nosppblampiran4").readOnly     = true;
-                document.getElementById("kodebaranglampiran4").readOnly = true;
-                document.getElementById("nmbaranglampiran4").readOnly   = true;
-                document.getElementById("satuanlampiran4").readOnly     = true;
-                 document.getElementById("nosppblampiran5").readOnly    = true;
-                document.getElementById("kodebaranglampiran5").readOnly = true;
-                document.getElementById("nmbaranglampiran5").readOnly   = true;
-                document.getElementById("satuanlampiran5").readOnly     = true;
-                document.getElementById("plantlampiran5").readOnly      = true;
-                document.getElementById("hargaawallampiran5").readOnly  = true;
-                document.getElementById("jumlahlampiran5").readOnly     = true;
-                 document.getElementById("nosoplampiran6").readOnly     = true;
-                document.getElementById("tglsoplampiran6").readOnly     = true;
-                document.getElementById("nosplampiran6").readOnly       = true;
-                document.getElementById("tglsplampiran6").readOnly      = true;
-            }
-            // console.log(st);
+        // function opsi(value) {
+        //     var st = $("#lockfitur").val();
+        //     if (st == "on") {
+        //         document.getElementById("nosurat-header1").readOnly     = false;
+        //         document.getElementById("nosurat-header2").readOnly     = false;
+        //         document.getElementById("nosurat-header3").readOnly     = false;
+        //         document.getElementById("nosurat-header4").readOnly     = false;
+        //         document.getElementById("notgl-header1").readOnly       = false;
+        //         document.getElementById("notgl-header2").readOnly       = false;
+        //         document.getElementById("notgl-header3").readOnly       = false;
+        //         document.getElementById("notgl-header4").readOnly       = false;
+        //         document.getElementById("nosoplampiran2").readOnly      = false;
+        //         document.getElementById("tglsoplampiran2").readOnly     = false;
+        //         document.getElementById("nosoplampiran4").readOnly      = false;
+        //         document.getElementById("tglsoplampiran4").readOnly     = false;
+        //         document.getElementById("plantlampiran4").readOnly      = false;
+        //         document.getElementById("nosppblampiran4").readOnly     = false;
+        //         document.getElementById("kodebaranglampiran4").readOnly = false;
+        //         document.getElementById("nmbaranglampiran4").readOnly   = false;
+        //         document.getElementById("satuanlampiran4").readOnly     = false;
+        //         document.getElementById("nosppblampiran5").readOnly     = false;
+        //         document.getElementById("kodebaranglampiran5").readOnly = false;
+        //         document.getElementById("nmbaranglampiran5").readOnly   = false;
+        //         document.getElementById("satuanlampiran5").readOnly     = false;
+        //         document.getElementById("plantlampiran5").readOnly      = false;
+        //         document.getElementById("hargaawallampiran5").readOnly  = false;
+        //         document.getElementById("jumlahlampiran5").readOnly     = false;
+        //         document.getElementById("nosoplampiran6").readOnly      = false;
+        //         document.getElementById("tglsoplampiran6").readOnly     = false;
+        //         document.getElementById("nosplampiran6").readOnly       = false;
+        //         document.getElementById("tglsplampiran6").readOnly      = false;  
+        //     } else{
+        //         document.getElementById("nosurat-header1").readOnly     = true;
+        //         document.getElementById("nosurat-header2").readOnly     = true;
+        //         document.getElementById("nosurat-header3").readOnly     = true;
+        //         document.getElementById("nosurat-header4").readOnly     = true;
+        //         document.getElementById("notgl-header1").readOnly       = true;
+        //         document.getElementById("notgl-header2").readOnly       = true;
+        //         document.getElementById("notgl-header3").readOnly       = true;
+        //         document.getElementById("notgl-header4").readOnly       = true;
+        //         document.getElementById("nosoplampiran2").readOnly      = true;
+        //         document.getElementById("tglsoplampiran2").readOnly     = true;
+        //         document.getElementById("nosoplampiran4").readOnly      = true;
+        //         document.getElementById("tglsoplampiran4").readOnly     = true;
+        //         document.getElementById("plantlampiran4").readOnly      = true;
+        //         document.getElementById("nosppblampiran4").readOnly     = true;
+        //         document.getElementById("kodebaranglampiran4").readOnly = true;
+        //         document.getElementById("nmbaranglampiran4").readOnly   = true;
+        //         document.getElementById("satuanlampiran4").readOnly     = true;
+        //          document.getElementById("nosppblampiran5").readOnly    = true;
+        //         document.getElementById("kodebaranglampiran5").readOnly = true;
+        //         document.getElementById("nmbaranglampiran5").readOnly   = true;
+        //         document.getElementById("satuanlampiran5").readOnly     = true;
+        //         document.getElementById("plantlampiran5").readOnly      = true;
+        //         document.getElementById("hargaawallampiran5").readOnly  = true;
+        //         document.getElementById("jumlahlampiran5").readOnly     = true;
+        //         document.getElementById("nosoplampiran6").readOnly     = true;
+        //         document.getElementById("tglsoplampiran6").readOnly     = true;
+        //         document.getElementById("nosplampiran6").readOnly       = true;
+        //         document.getElementById("tglsplampiran6").readOnly      = true;
+        //     }
+        //     // console.log(st);
+        // }
+
+        function setReadonly(isReadonly) {
+            let elements = [
+                "#nosurat-header1", "#nosurat-header2", "#nosurat-header3", "#nosurat-header4",
+                "#notgl-header1", "#notgl-header2", "#notgl-header3", "#notgl-header4",
+                "#nosoplampiran2", "#tglsoplampiran2", "#nosoplampiran4", "#tglsoplampiran4",
+                "#plantlampiran4", "#nosppblampiran4", "#kodebaranglampiran4", "#nmbaranglampiran4",
+                "#satuanlampiran4", "#nosppblampiran5", "#kodebaranglampiran5", "#nmbaranglampiran5",
+                "#satuanlampiran5", "#plantlampiran5", "#hargaawallampiran5", "#jumlahlampiran5",
+                "#nosoplampiran6", "#tglsoplampiran6", "#nosplampiran6", "#tglsplampiran6"
+            ];
+            elements.forEach(function(element) {
+                $(element).prop('readOnly', isReadonly);
+            });
         }
-        
+
+        // Fungsi untuk mengubah properti readOnly berdasarkan pilihan dropdown
+        function opsi() {
+            var st = $("#lockfitur").val();
+            if (st === "on") {
+                setReadonly(false);
+            } else {
+                setReadonly(true);
+            }
+        }
     </script>
 
 

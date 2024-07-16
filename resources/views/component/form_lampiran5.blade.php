@@ -8,9 +8,16 @@
                 <label for="ppn">PPN %</label>
                 <input type="text" name="ppn" class="form-control" id="ppn" value="11" required>
             </div>
+            <div class="form-group col-2">
+                <label for="jenis_kontrak">Jenis Kontrak</label>
+                <input type="text" name="jenis_kontrak" class="form-control" id="jenis_kontrak" 
+                value="{{ $jenisKontrak }}" 
+                disabled>
+            </div>
             <div class="form-group col-4">
                 <label for="waktu_khs">Jangka Waktu (Harga Satuan)</label>
                 <input type="text" name="waktu_khs" class="form-control" id="waktu_khs" required>
+                <b><small style="color: #ff0000">Untuk Jenis Kontrak Harga Satuan, Harap mengisi Jangka Waktu!</small></b>
             </div>
         </div>
         <hr>

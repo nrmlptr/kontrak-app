@@ -35,6 +35,7 @@ use PDF;
 use Illuminate\Support\Facades\Storage;
 use Webklex\PDFMerger\Facades\PDFMergerFacade as PDFMerger;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 
 class KontrakController extends Controller
@@ -145,7 +146,8 @@ class KontrakController extends Controller
         $apiUrl         = 'https://scm.peruri.co.id/Api/getsiapda';
         $bearerToken    = 'ciTeTrDRKcOyHLOi0OQ5TtjBzlKJSE9dHh4j7MGpKW68bTrIZRJmFC1L27cB060Ev';
 
-        $responseBody = Http::withOptions(['verify' => false])
+        $responseBody = Http::timeout(600)
+            ->withOptions(['verify' => false])
             ->withHeaders([
                 'Authorization' => 'Bearer ' . $bearerToken,
                 'Accept'        => 'application/json',
@@ -246,45 +248,85 @@ class KontrakController extends Controller
     public function vendor_data($no_vendor)
     {
         $cek = Vendor::where('registration_no', $no_vendor);
+        // dd($cek);
         if ($cek->doesntExist()) {
-            $dataVendor = json_decode(Http::timeout(60)
+            // $dataVendor = json_decode(Http::timeout(60)
+            //     ->withOptions(['verify' => false])
+            //     ->get("https://scm.peruri.co.id/Api/getsiapdainfo/$no_vendor"), true);
+
+            $response = Http::timeout(60)
                 ->withOptions(['verify' => false])
-                ->get("https://scm.peruri.co.id/Api/getsiapdainfo/$no_vendor"), true);
+                ->withHeaders([
+                    'Accept'        => 'application/json',
+                ])
+                ->get("https://scm.peruri.co.id/Api/getsiapdainfo/$no_vendor");
 
-            // return $dataVendor;
+            $responseBody = $response->body();
+
+            // Pisahkan data JSON yang tergabung
+            $responseParts = explode('][', $responseBody);
             $dataSave = [];
-            foreach ($dataVendor as $v) {
-                $dataSave[] = [
-                    'registration_no'       => $v['registration_no'],
-                    'sap_code'              => $v['sap_code'],
-                    'vendor_name'           => $v['vendor_name'],
-                    'company_type'          => $v['company_type'],
-                    'alamat'                => $v['alamat'],
-                    'sub_district'          => $v['sub_district'],
-                    'kota'                  => $v['kota'],
-                    'provinsi'              => $v['provinsi'],
-                    'kode_pos'              => $v['kode_pos'],
-                    'negara'                => $v['negara'],
-                    'board_type'            => showEncodeChar($v['board_type']),
-                    'primary_data'          => $v['primary_data'],
-                    'full_name'             => $v['full_name'],
-                    'citizenship'           => $v['citizenship'],
-                    'position'              => $v['position'],
-                    'email'                 => $v['email'],
-                    'phone_number'          => $v['phone_number'],
-                    'website'               => $v['website'],
-                    'company_email'         => $v['company_email'],
-                    'location_category'     => $v['location_category'],
-                    'created_at'            => now(),
-                    'updated_at'            => now(),
-                ];
-            }
+            foreach ($responseParts as $part) {
+                // Hapus karakter "[" dan "]" pada setiap bagian JSON
+                $part = trim($part, '[]');
 
-            $save = Vendor::insert($dataSave);
-            $alamatnya = $dataVendor[0]['company_type'] . '<br>' . $dataVendor[0]['vendor_name'] . '<br>' . $dataVendor[0]['alamat'] . '<br>' . $dataVendor[0]['sub_district'] . '<br>' . $dataVendor[0]['kota'] . '<br>' . $dataVendor[0]['provinsi'] . '<br>' . $dataVendor[0]['kode_pos'] . '<br>' .  $dataVendor[0]['negara'];
+                // Dekode setiap bagian JSON
+                $decodedPart = json_decode("[$part]", true);
+
+                if ($decodedPart) {
+                    foreach ($decodedPart as $v) {
+                        $dataSave[] = [
+                            'registration_no'       => $v['registration_no'],
+                            'sap_code'              => $v['sap_code'],
+                            'vendor_name'           => $v['vendor_name'],
+                            'company_type'          => $v['company_type'],
+                            'alamat'                => $v['alamat'],
+                            'sub_district'          => $v['sub_district'],
+                            'kota'                  => $v['kota'],
+                            'provinsi'              => $v['provinsi'],
+                            'kode_pos'              => $v['kode_pos'],
+                            'negara'                => $v['negara'],
+                            'board_type'            => showEncodeChar($v['board_type']),
+                            'primary_data'          => $v['primary_data'],
+                            'full_name'             => $v['full_name'],
+                            'citizenship'           => $v['citizenship'],
+                            'position'              => $v['position'],
+                            'email'                 => $v['email'],
+                            'phone_number'          => $v['phone_number'],
+                            'website'               => $v['website'],
+                            'company_email'         => $v['company_email'],
+                            'location_category'     => $v['location_category'],
+                            'created_at'            => now(),
+                            'updated_at'            => now(),
+                        ];
+                    }
+                }
+            }
+            // Simpan data ke database jika ada
+            if (!empty($dataSave)) {
+                Vendor::insert($dataSave);
+            }
+            $alamatnya = isset($dataSave[0]['company_type']) ?
+            $dataSave[0]['company_type'] . '<br>' .
+            $dataSave[0]['vendor_name'] . '<br>' .
+            $dataSave[0]['alamat'] . '<br>' .
+            $dataSave[0]['sub_district'] . '<br>' .
+            $dataSave[0]['kota'] . '<br>' .
+            $dataSave[0]['provinsi'] . '<br>' .
+            $dataSave[0]['kode_pos'] . '<br>' .
+            $dataSave[0]['negara'] :
+            '';
+
         } else {
             $row = $cek->first();
-            $alamatnya = $row->company_type . '<br>' . $row->vendor_name . '<br>' . $row->alamat . '<br>' . $row->sub_district . '<br>' . $row->kota . '<br>' . $row->provinsi . '<br>' . $row->kode_pos . '<br>' . $row->negara;
+            $alamatnya = $row->company_type . '<br>' .
+                $row->vendor_name . '<br>' .
+                $row->alamat . '<br>' .
+                $row->sub_district . '<br>' .
+                $row->kota . '<br>' .
+                $row->provinsi . '<br>' .
+                $row->kode_pos . '<br>' .
+                $row->negara;
         }
         return response()->json(['alamat' => $alamatnya]);
         // return $data;
@@ -755,28 +797,43 @@ class KontrakController extends Controller
     public function storeKontrak(Request $request)
     {
         // dd($request->all());
-        extract($request->all());
+        // extract($request->all());
         // Validasi data
-        $validated = $request->validate([
-            'number'         => 'required',
-            'perihal'        => 'required',
-            'date_kontrak'   => 'required',
-            'nomor_sop'      => 'required',
-            'tanggal_sop'    => 'required',
+        $messages = [
+            'jenis_kontrak.required'  => 'Jenis Kontrak belum dipilih.',
+            'status_jaminan.required' => 'Status Jaminan belum dipilih.',
+            'nomor_sop.required'      => 'Nomor SOP tidak boleh kosong.',
+            'tanggal_sop.required'    => 'Tanggal SOP tidak boleh kosong.',
+            'perihal.required'        => 'Perihal tidak boleh kosong.',
+            'date_kontrak.required'   => 'Tanggal SP tidak boleh kosong.',
+            'nm_vendor.required'      => 'Nama Vendor tidak boleh kosong.',
+            'number.required'         => 'Nomor SP tidak boleh kosong.',
+            // 'pembuat.required'        => 'Nama Pembuat tidak boleh kosong.',
+            // 'unit_kerja.required'     => 'Unit Kerja tidak boleh kosong.',
+            'peruri_text.required'    => 'Akta Peruri tidak boleh kosong',
+            'akta.required'           => 'Akta Vendor belum dibuat.',
+        ];
+
+        $validator2 = Validator::make($request->all(), [
             'jenis_kontrak'  => 'required',
             'status_jaminan' => 'required',
+            'nomor_sop'      => 'required',
+            'tanggal_sop'    => 'required',
+            'perihal'        => 'required',
+            'date_kontrak'   => 'required',
             'nm_vendor'      => 'required',
+            'number'         => 'required',
+            // 'pembuat'        => 'required',
+            // 'unit_kerja'     => 'required',
+            'peruri_text'    => 'required',
+            'akta'           => 'required',
+        ], $messages);
 
-        ], [
-            'number.required'           => 'Wajib di isi',
-            'perihal.required'          => 'Wajib di isi',
-            'date_kontrak.required'     => 'Wajib di isi',
-            'nomor_sop.required'        => 'Wajib di isi',
-            'tanggal_sop.required'      => 'Wajib di isi',
-            'jenis_kontrak.required'    => 'Wajib di isi',
-            'status_jaminan.required'   => 'Wajib di isi',
-            'nm_vendor.required'        => 'Wajib di isi'
-        ]);
+        if ($validator2->fails()) {
+            return response()->json([
+                'errors' => $validator2->errors()
+            ], 422);
+        }
 
         // Mengonversi nilai jenis kontrak menjadi angka
         $jenisKontrakValue = ($request->jenis_kontrak == 'lumpsum') ? 1 : 2;
@@ -787,25 +844,32 @@ class KontrakController extends Controller
         // Mendapatkan tahun saat ini menggunakan Carbon
         $tahunSekarang = Carbon::now()->year;
 
-        // Menggunakan tahun tersebut dalam pembuatan string
-        $detailNumber                   = 'SP-' . $request->number . '/VIII/' . $tahunSekarang;
-        $status                         = 'draft';
-        $validated['detail_number']     = $detailNumber;
-        $validated['pembuat']           = Auth::user()->name;
-        $validated['jenis_kontrak']     = $jenisKontrakValue;
-        $validated['status_jaminan']    = $statusJaminanValue;
-        $validated['status']            = $status;
-        $validated['peruritext']        = $peruri_text;
-        $validated['vendortext']        = $akta;
-        $validated['unit_kerja']        = Auth::user()->unit_kerja;
+        $status              = 'draft';
+        $detailNumber        = 'SP-' . $request->number . '/VIII/' . $tahunSekarang;
 
-        // dd($validated);
-        $save = Kontrak::create($validated);
+        $kontrak = Kontrak::create([
+            'jenis_kontrak'  => $jenisKontrakValue,
+            'status_jaminan' => $statusJaminanValue,
+            'detail_number'  => $detailNumber,
+            'nomor_sop'      => $request->nomor_sop,
+            'tanggal_sop'    => $request->tanggal_sop,
+            'perihal'        => $request->perihal,
+            'date_kontrak'   => $request->date_kontrak,
+            'nm_vendor'      => $request->nm_vendor,
+            'number'         => $request->number,
+            'pembuat'        => Auth::user()->name,
+            'unit_kerja'     => Auth::user()->unit_kerja,
+            'peruritext'     => $request->peruri_text,
+            'vendortext'     => $request->akta,
+            'status'         => $status,
+        ]);
+
+        // dd($kontrak);
 
         flash()->addFlash('success', 'Kontrak Berhasil Dibuat!');
 
         // insert log Kontrak
-        $save->logs()->create([
+        $kontrak->logs()->create([
             'status' => $status,
             'user_id' => auth()->id(),
         ]);
@@ -847,6 +911,10 @@ class KontrakController extends Controller
 
         // dd($data);
 
+        // get jenis kontrak untuk lampiran 5
+        $jenisKontrak = $data->jenis_kontrak === 1 ? 'Lumpsum' : 'Harga Satuan';
+        // dd($jenisKontrak);
+
         // Ilangin dua nol depan nomor pr
         $noSPPB = ltrim($data->purchase_requisition_number, '0');
         // dd($noSPPB);
@@ -859,7 +927,8 @@ class KontrakController extends Controller
         return view('addLampiran', [
             'data'          => $data,
             'valueNomorSop' => $valueNomorSop,
-            'no_sppb'       => $noSPPB
+            'no_sppb'       => $noSPPB,
+            'jenisKontrak' => $jenisKontrak,
         ]);
     }
 
@@ -2880,8 +2949,12 @@ class KontrakController extends Controller
             ->where('kontraks_id', $id)->exists();
         if ($cek) {
             $data = Kontrak::with(['lampiran1', 'lampiran2', 'lampiran3', 'lampiran4', 'lampiran5', 'lampiran6', 'lampiran7'])->find($id);
+            $revisi = RevisiKontrak::with(['user', 'kontrak'])->latest()->where('kontraks_id', $id)->first();
 
-            return view('editLampiran')->with('data', $data);
+            return view('editLampiran')->with([
+                'data' => $data,
+                'revisi' => $revisi
+            ]);
         }
         return "belum ada revisi dari pihak manapun..";
     }
