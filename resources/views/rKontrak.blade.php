@@ -191,7 +191,9 @@
                                             {{ $d->detail_number }}
                                             <br>
                                             @if($d->status == 'draft')
-                                                <span class="badge badge-warning">draft</span>
+                                                <span class="badge badge-warning">Draft</span>
+                                            @elseif($d->status == 'konsep')
+                                                <span class="badge badge-warning">Konsep</span>
                                             @elseif($d->status == 'reviewkasek')
                                                 <span class="badge badge-info">Review Kasek</span>
                                             @elseif($d->status == 'revisikasek')

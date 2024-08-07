@@ -50,7 +50,7 @@
                     <div class="col-sm-6"></div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('indexKontrak') }}">Back</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('indexKontrak') }}">Home</a></li>
                             <li class="breadcrumb-item active">Preview Konsep Kontrak</li>
                         </ol>
                     </div><!-- /.col -->
@@ -65,8 +65,19 @@
                 <!-- Main row -->
                 <div class="row">
                     <div class="col-12">
-                        <a href="{{ route('kirimKonsepKontrak',$data->id) }}" id="kirim-konsep" class="btn btn-sm btn-success mr-1 mb-3"><i class="fas fa-paper-plane"></i> Kirim Data</a>
-                        <a href="{{ route('editKonsep', $data->id) }}" class="btn btn-sm btn-primary mr-1 mb-3"><i class="fas fa-edit"></i> Edit Data</a>
+                        <a href="{{ route('kirimKonsepKontrak',$data->id) }}" id="kirim-konsep" class="btn btn-sm btn-success mr-1 mb-3">
+                            <i class="fas fa-paper-plane"></i>
+                             Kirim Data
+                        </a>
+                        <a href="{{ route('editKonsep', $data->id) }}" class="btn btn-sm btn-warning mr-1 mb-3"><i class="fas fa-edit"></i>
+                             Edit Data
+                        </a>
+                        <a href="{{ route('cetakKontrak',$data->id) }}" target="_blank"  class="btn btn-sm btn-primary mr-1 mb-3">
+                            <i class="nav-icon fas fa-print"></i></i> Cetak Kontrak
+                        </a>
+                        <a href="{{ route('indexKontrak') }}" target="_blank"  style="float: right;" class="btn btn-sm btn-danger mr-1 mb-3">
+                           <i class="fas fa-backward"></i> Back
+                        </a>
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Detail Kontrak</h3>

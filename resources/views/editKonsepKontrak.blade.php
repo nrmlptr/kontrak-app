@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('indexKontrak') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('previewKontrak', ['id' => $data->id]) }}">Back</a></li>
                         <li class="breadcrumb-item active">Edit Konsep Kontrak</li>
                     </ol>
                 </div><!-- /.col -->
@@ -50,7 +50,10 @@
             <!-- general form elements -->
             <div class="card card-primary w-100">
                 <div class="card-header">
-                    <h3 class="card-title mr-3">Edit Data</h3>
+                    <h3 class="card-title mr-3">Edit Lampiran - Konsep Kontrak</h3>
+                    <a href="{{ route('previewKontrak', ['id' => $data->id]) }}" target="_blank"  style="float: right;" class="btn btn-sm btn-danger mr-1 mb-3">
+                        <i class="fas fa-backward"></i> Back
+                    </a>
                 </div>
                 <div class="row mt-2 ml-2">
                     <div class="col-12">
@@ -61,7 +64,6 @@
                         </select>
                     </div>
                 </div>
-                <br>
                 <!-- /.card-header -->
                 <div class="card-body">
                     <div class="row col-12">

@@ -175,6 +175,7 @@
                                                 @endphp
                                                 {{-- buat kondisi untuk admin dan writer karena ada tombol addLampiran jadi disitu dicek dlu apakah kontrak tersebut pembuatnya sama dengan name user yang lagi login? kalau iya, baru bisa addLampiran atau hapus, kalau engga berarti forbidden --}}
                                                 @if($d->pembuat == $cekPembuat || Auth::user()->hasRole('admin'))
+                                                    {{-- TOMBOL HAPUS KONTRAK --}}
                                                     <td><a data-toggle="modal" data-target="#modal-hapus-kontrak{{$d->id }}" class="btn btn-sm btn-danger" title="Hapus Kontrak"><i class="fas fa-trash-alt"></i></a><br>
                                                     {{-- Check if Lampiran7 exists for this kontraks_id --}}
                                                     @php
@@ -183,10 +184,15 @@
                                                     @endphp
                                                     {{-- If Lampiran7 untuk kontrak tersebut benar tidak ada, show the button --}}
                                                     @if($cekLampiran7)
-
+                                                        {{-- TOMBOL ADD LAMPIRAN --}}
                                                         <a href="{{ route('createLampiran', ['id' => $d->id]) }}" class="btn btn-sm btn-warning mt-2" title="Input Lampiran"><i class="fas fa-pen"></i></a>
                                                     @else
                                                        <span class="badge badge-info">Lampiran sudah dibuat</span>
+                                                    @endif
+
+
+                                                    @if($d->status == 'konsep')
+                                                        <a href="{{ route('previewKontrak', ['id' => $d->id]) }}" class="btn btn-sm btn-primary mt-2" title="Lihat Konsep"><i class="fas fa-book-reader"></i></a>
                                                     @endif
                                                     </td>
                                                 @else
@@ -199,7 +205,9 @@
                                                 {{ $d->detail_number }}
                                                 <br>
                                                 @if($d->status == 'draft')
-                                                    <span class="badge badge-warning">draft</span>
+                                                    <span class="badge badge-warning">Draft</span>
+                                                @elseif($d->status == 'konsep')
+                                                    <span class="badge badge-warning">Konsep</span>
                                                 @elseif($d->status == 'reviewkasek')
                                                     <span class="badge badge-info">Review Kasek</span>
                                                 @elseif($d->status == 'revisikasek')

@@ -50,7 +50,7 @@
                     <div class="col-sm-6"></div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('rKontrak') }}">Back</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('rKontrak') }}">Home</a></li>
                             <li class="breadcrumb-item active">Detail Kontrak</li>
                         </ol>
                     </div><!-- /.col -->
@@ -75,7 +75,9 @@
 
 
                         <a href="{{ route('cetakKontrak',$data->id) }}" target="_blank"  class="btn btn-sm btn-secondary mr-1 mb-3"><i class="nav-icon fas fa-print"></i></i> Cetak Kontrak</a>
-
+                        <a href="{{ route('rKontrak') }}" target="_blank"  style="float: right;" class="btn btn-sm btn-danger mr-1 mb-3">
+                           <i class="fas fa-backward"></i> Back
+                        </a>
                         {{-- @if(Auth::user()->permission=='kasek' || Auth::user()->permission=='kadept' || Auth::user()->permission=='kadiv') --}}
 
 
