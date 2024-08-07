@@ -160,6 +160,7 @@ return [
          * Package Service Providers...
          */
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        // Intervention\Image\ImageServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -171,6 +172,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Webklex\PDFMerger\Providers\PDFMergerServiceProvider::class,
+
 
     ])->toArray(),
 
@@ -190,6 +192,9 @@ return [
         'PDF'       => Barryvdh\DomPDF\Facade::class,
         'Excel'     => Maatwebsite\Excel\Facades\Excel::class,
         'PDFMerger' => Webklex\PDFMerger\Facades\PDFMergerFacade::class,
+        // 'Image'     => Intervention\Image\Facades\Image::class,
+
+
     ])->toArray(),
 
 ];

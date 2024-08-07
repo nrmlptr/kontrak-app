@@ -43,7 +43,7 @@
                                             <label for="">Nama Vendor</label>
                                             <input type="text" name="nm_vendor" id="filter-nama-vendor" class="form-control filter">
                                         </div>
-                                        <div class="col-md-2 mb-3">
+                                        {{-- <div class="col-md-2 mb-3">
                                             <label for="">Status</label>
                                             <select name="status" id="filter-status" class="form-control filter">
                                                 <option value="">Pilih Status</option>
@@ -60,6 +60,19 @@
                                                 <option value="revisikadiv">Revisi By Kadiv</option>
                                                 <option value="editedkadiv">Diperiksa Ulang Kasek</option>
                                             </select>
+                                        </div> --}}
+                                        <div class="col-md-2 mb-3">
+                                            <label for="">Status</label>
+                                            <select name="status" id="filter-status" class="form-control filter">
+                                                <option value="">Pilih Status</option>
+                                                <option value="draft">Draft</option>
+                                                <option value="konsep">Konsep</option>
+                                                <option value="review">Review</option>
+                                                <option value="revisi">Revisi</option>
+                                                <option value="edited">Review Ulang Kasek</option>
+                                                <option value="approved">Approved</option>
+                                                <!-- tambahkan opsi lainnya jika perlu -->
+                                            </select>
                                         </div>
                                         <div class="col-md-2 mb-3">
                                             <label for="">Unit Kerja</label>
@@ -68,7 +81,7 @@
                                                 <option value="41A10">Investasi</option>
                                                 <option value="41A20">Jasa Barum</option>
                                                 <option value="41A30">Lokal</option>
-                                                <option value="41A40">Import</option> 
+                                                <option value="41A40">Import</option>
                                             </select>
                                         </div>
                                         <div class="col-md-2 mb-3">
@@ -114,15 +127,15 @@
                             </div>
                             <table id="kontrakOPdatatable" class="table table-bordered table-striped">
                                 <thead align="center">
-                                    <tr>                                        
+                                    <tr>
                                         {{-- @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin') --}}
                                         @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('writer'))
                                             <th style="width: 10%">U/D</th>
                                             <th>Aksi</th>
                                         @endif
                                         <th>No</th>
-                                        <th style="width: 10%">Nomor SP</th>
-                                        <th>Tanggal SP</th>
+                                        <th style="width: 10%">Nomor Kontrak</th>
+                                        <th>Tanggal Kontrak</th>
                                         <th>Nomor SOP</th>
                                         <th>Tanggal SOP</th>
                                         <th>Nama Vendor</th>
@@ -133,18 +146,18 @@
                                         <th>Status Jaminan</th>
                                         {{-- <th>Status</th> --}}
                                         <th>Total Harga (Incl PPN)</th>
-                                        
+
                                     </tr>
                                 </thead>
                                 <tbody align="center">
                                     @foreach($data as $d)
                                         <tr>
-                                            
+
                                             {{-- @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin') --}}
                                             @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('writer'))
                                                 @if($d->status == 'approvedkadiv')
                                                     <td class="d-none d-sm-table-cell">
-                                                        <span class="badge badge-warning mb-2"> Status Doc : 
+                                                        <span class="badge badge-warning mb-2"> Status Doc :
                                                             @if($d->statusdoc !== null)
                                                                 {{ $d->statusdoc }}
                                                             @else
@@ -154,7 +167,7 @@
                                                         @if($d->statusdoc !== 'NET')
                                                             <a data-toggle="modal" data-target="#modal-upload-doc{{ $d->id }}" class="btn btn-success sm" title="Upload Document Kontrak"><i class="fas fa-file-upload"></i></a>
                                                         @endif
-                                                        
+
                                                         <a href="{{ route('downloadKontrak', ['id' => $d->id]) }}" class="btn btn-primary sm" title="Download Document Kontrak"><i class="fas fa-download"></i></a>
                                                     </td>
                                                 @else
@@ -173,10 +186,10 @@
                                                     @endphp
                                                     {{-- If Lampiran7 untuk kontrak tersebut benar tidak ada, show the button --}}
                                                     @if($cekLampiran7)
-                                                        
+
                                                             <a href="{{ route('createLampiran', ['id' => $d->id]) }}" class="btn btn-sm btn-warning mt-2" title="Input Lampiran"><i class="fas fa-pen"></i></a>
 
-                                                        
+
                                                     @else
                                                         <span class="badge badge-info">Lampiran sudah dibuat</span>
                                                     @endif
@@ -278,7 +291,7 @@
                                                 @endif
                                             </td> --}}
                                             <th>{{ @formatRupiah($d->total_keseluruhan) }}</th>
-                                            
+
                                         </tr>
                                         {{-- modal hapus dokumen kontrak --}}
                                         <div class="modal fade" id="modal-hapus-kontrak{{ $d->id }}">
@@ -341,7 +354,7 @@
                                                             </div>
                                                         </form>
                                                     </div>
-                                                    
+
                                                 </div>
                                             </div>
                                         </div>
@@ -367,7 +380,7 @@
     <script type="text/javascript">
 
         $(document).ready(function() {
-            
+
             var loggedInUserRole;
 
             $.ajax({
@@ -395,13 +408,13 @@
                 "pageLength": 5,
                 "lengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'semua']],
                 "searching": true,
-                "ordering": true,
+                "ordering": false,
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
                 "processing":true,
-                
-                    
+
+
                 dom: 'Bflrtip',
                 buttons: [
                     {
@@ -422,6 +435,46 @@
                         }
                     },
                 ]
+            });
+        });
+
+
+        document.getElementById('filter-status').addEventListener('change', function() {
+            let selectedStatus = this.value;
+
+            // Ambil semua baris data (sesuaikan dengan struktur HTML Anda)
+            let rows = document.querySelectorAll('.data-row');
+
+            rows.forEach(row => {
+                let status = row.getAttribute('data-status');
+
+                // Pemetaan status spesifik ke status umum
+                let statusMap = {
+                    'draft': 'draft',
+                    'konsep': 'konsep',
+                    'reviewkasek': 'review',
+                    'revisikasek': 'revisi',
+                    'editedkasek': 'edited',
+                    'approvedkasek': 'approved',
+                    'reviewkadept': 'review',
+                    'revisikadept': 'revisi',
+                    'editedkadept': 'edited',
+                    'approvedkadept': 'approved',
+                    'reviewkadiv': 'review',
+                    'revisikadiv': 'revisi',
+                    'editedkadiv': 'edited',
+                    'approvedkadiv': 'approved',
+                    // tambahkan pemetaan lainnya jika perlu
+                };
+
+                let generalStatus = statusMap[status] || status;
+
+                // Tampilkan atau sembunyikan baris berdasarkan filter
+                if (selectedStatus === '' || generalStatus === selectedStatus) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
             });
         });
     </script>

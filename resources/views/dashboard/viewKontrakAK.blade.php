@@ -53,7 +53,7 @@
                                                 <option value="41A10">Investasi</option>
                                                 <option value="41A20">Jasa Barum</option>
                                                 <option value="41A30">Lokal</option>
-                                                <option value="41A40">Import</option> 
+                                                <option value="41A40">Import</option>
                                             </select>
                                         </div>
                                         <div class="col-md-2 mb-3">
@@ -102,8 +102,8 @@
                                             <th style="width: 8%;">Action</th>
                                         @endif
                                         <th>No</th>
-                                        <th>Nomor SP</th>
-                                        <th>Tanggal SP</th>
+                                        <th>Nomor Kontrak</th>
+                                        <th>Tanggal Kontrak</th>
                                         <th>Nomor SOP</th>
                                         <th>Tanggal SOP</th>
                                         <th>Nama Vendor</th>
@@ -131,7 +131,7 @@
                                                     </span><br>
                                                     {{-- @if($d->statusdoc !== 'NET') --}}
                                                         <a data-toggle="modal" data-target="#modal-upload-doc{{ $d->id }}" class="btn btn-success sm" title="Upload Document Kontrak"><i class="fas fa-file-upload"></i></a>
-                                                    {{-- @endif --}}                                                  
+                                                    {{-- @endif --}}
                                                     <a href="{{ route('downloadKontrak', ['id' => $d->id]) }}" class="btn btn-primary sm" title="Download Document Kontrak"><i class="fas fa-download"></i></a>
                                                 </td>
                                             @endif
@@ -233,7 +233,7 @@
                                                             </div>
                                                         </form>
                                                     </div>
-                                                    
+
                                                 </div>
                                             </div>
                                         </div>
@@ -285,7 +285,7 @@
                 "pageLength": 5,
                 "lengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'semua']],
                 "searching": true,
-                "ordering": true,
+                "ordering": false,
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
@@ -310,6 +310,47 @@
                         }
                     }
                 ]
+            });
+        });
+
+
+
+        document.getElementById('filter-status').addEventListener('change', function() {
+            let selectedStatus = this.value;
+
+            // Ambil semua baris data (sesuaikan dengan struktur HTML Anda)
+            let rows = document.querySelectorAll('.data-row');
+
+            rows.forEach(row => {
+                let status = row.getAttribute('data-status');
+
+                // Pemetaan status spesifik ke status umum
+                let statusMap = {
+                    'draft': 'draft',
+                    'konsep': 'konsep',
+                    'reviewkasek': 'review',
+                    'revisikasek': 'revisi',
+                    'editedkasek': 'edited',
+                    'approvedkasek': 'approved',
+                    'reviewkadept': 'review',
+                    'revisikadept': 'revisi',
+                    'editedkadept': 'edited',
+                    'approvedkadept': 'approved',
+                    'reviewkadiv': 'review',
+                    'revisikadiv': 'revisi',
+                    'editedkadiv': 'edited',
+                    'approvedkadiv': 'approved',
+                    // tambahkan pemetaan lainnya jika perlu
+                };
+
+                let generalStatus = statusMap[status] || status;
+
+                // Tampilkan atau sembunyikan baris berdasarkan filter
+                if (selectedStatus === '' || generalStatus === selectedStatus) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
             });
         });
     </script>

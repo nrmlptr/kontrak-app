@@ -9,15 +9,15 @@
             @foreach ($lampiran4 as $l)
                 <div class="form-group col-2">
                     <label for="nomor_sop">Nomor SOP</label>
-                    <input type="text" name="nomor_sop[]" placeholder="Nomor SOP" class="form-control" value="{{ $l->nomor_sop }}" readonly required>
+                    <input type="text" name="nomor_sop[]" placeholder="Nomor SOP" class="form-control" id="nosoplampiran4" value="{{ $l->nomor_sop }}" readonly required>
                 </div>
                 <div class=" form-group col-2">
                     <label for="tanggal_sop">Tanggal SOP</label>
-                    <input type="date" name="tanggal_sop[]" class="form-control" value="{{ $l->tanggal_sop }}" readonly required>
+                    <input type="date" name="tanggal_sop[]" class="form-control" id="tglsoplampiran4" value="{{ $l->tanggal_sop }}" readonly required>
                 </div>
                 <div class=" form-group col-2">
                     <label for="lokasi">Lokasi Gudang</label>
-                    <input type="text" name="plant[]" class="form-control" value="{{ $l->lokasi }}" required readonly>
+                    <input type="text" name="plant[]" class="form-control" id="plantlampiran4" value="{{ $l->lokasi }}" required readonly>
                     {{-- <select name="lokasi[]" id="lokasi" class="form-control" required>
                         <option value="{{ $l->lokasi }}" selected>@if($l->lokasi == 'GAT')
                             Gudang Tengah
@@ -38,27 +38,27 @@
                         <option value="UTAS">Gudang Utas</option>
                     </select> --}}
                 </div>
-            
+
                 <div class=" form-group col-1">
                     <label for="no_sppb">No.SPPB</label>
-                    <input type="text" name="no_sppb[]" class="form-control" value="{{ $l->no_sppb }}"  required >
+                    <input type="text" name="no_sppb[]" class="form-control" id="nosppblampiran4" value="{{ $l->no_sppb }}"  required >
                 </div>
                 <div class=" form-group col-2">
                     <label for="kode_barang">Kode Barang</label>
-                    <input type="text" name="kode_barang[]" class="form-control" value="{{ $l->kode_barang }}" required readonly>
+                    <input type="text" name="kode_barang[]" class="form-control" id="kodebaranglampiran4" value="{{ $l->kode_barang }}" required readonly>
                 </div>
                 <div class=" form-group col-4">
                     <label for="nama_barang">Nama Barang</label>
-                    <input type="text" name="nama_barang[]" class="form-control" value="{{ $l->nama_barang }}" required readonly>
+                    <input type="text" name="nama_barang[]" class="form-control" id="nmbaranglampiran4" value="{{ $l->nama_barang }}" required readonly>
                 </div>
                 <div class=" form-group col-1">
                     <label for="satuan">Satuan</label>
-                    <input type="text" name="satuan[]" class="form-control" value="{{ $l->satuan }}" required readonly>
+                    <input type="text" name="satuan[]" class="form-control" id="satuanlampiran4" value="{{ $l->satuan }}" required readonly>
                 </div>
                 <div class="form-group col-12">
                     <label for="inputText">Jadwal Penyerahan Barang</label>
                     <textarea class="form-control" rows="3" placeholder="Enter ..." name="jadwal_penyerahan_barang[]">{!! $l->jadwal_penyerahan_barang !!}</textarea>
-                </div>      
+                </div>
             @endforeach
         </div>
         <div class=" card-footer">
@@ -68,7 +68,7 @@
 </div>
 
 @push('scripts')
-    
+
     <script type="text/javascript">
 
         function submitLampiran4() {
@@ -82,9 +82,6 @@
                     $(".collapse").removeClass('show');
                     $('#collapseLampiran5').addClass('show');
                     console.log(result.message);
-                    // if (result.redirect) {
-                    //     window.location.href = result.redirect; // Mengarahkan ulang halaman ke halaman monitoring
-                    // }
                 }
             });
         }

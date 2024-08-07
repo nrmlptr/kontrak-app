@@ -16,6 +16,10 @@
         font-family: 'Segoe UI';
 
     }
+
+    .note-editor.note-frame.panel.panel-default.fullscreen {
+        background-color: #fff;
+    }
 </style>
 
 <div class="content-wrapper">
@@ -122,10 +126,10 @@
                                         </div>
                                         <div class="col-xs-2 col-sm-2 col-md-2">
                                             <div class="form-group">
-                                                <label for="noSP">Nomor SP</label>
+                                                <label for="noSP">Nomor Kontrak</label>
                                                 <input type="number" placeholder="Masukkan No SP" name="number" class="form-control" id="number" required>
                                                 <!-- TEMPAT BUAT NARO ERROR -->
-                                               <small style="color: red;" class="error-message" id="error_number"></small>                                               
+                                               <small style="color: red;" class="error-message" id="error_number"></small>
                                             </div>
                                         </div>
                                         <div class="col-xs-2 col-sm-2 col-md-2">
@@ -165,7 +169,7 @@
                                     </div>
                                     <div class="card-footer">
                                         <button type="button" class="btn btn-secondary" onclick="submit_data()">
-                                        <span id="loading-spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>    
+                                        <span id="loading-spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                         Submit</button>
                                     </div>
                                 </form>
@@ -193,15 +197,16 @@
 <script src="{{ asset('assets/summernote-0.8.18-dist/summernote.min.js') }}"></script>
 {{-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> --}}
 <script>
-    
+
     $(document).ready(function() {
-        $('#peruri_text').summernote();       
+        $('#peruri_text').summernote();
     });
+
 
     $(document).ready(function(){
         $('#loading-spinner').hide();
     });
-    
+
     function submitKontrak() {
         var formKontrak = $('#inputKontrak');
         var formData = formKontrak.serialize();
@@ -262,7 +267,7 @@
                                 tender_name: item.tender_name,
                                 vendor_name: item.vendor_name,
                                 akta: item.akta
-                                
+
                             }
                         })
                     };
@@ -280,7 +285,7 @@
             $('#date_kontrak').val(data.document_date);
             $('#nm_vendor').val(data.vendor_name);
             $('textarea[name="akta"]').summernote('code',data.akta);
-            
+
 
         });
 

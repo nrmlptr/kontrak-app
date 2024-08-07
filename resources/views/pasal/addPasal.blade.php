@@ -4,6 +4,10 @@
     .note-editable ul {
         list-style-type: lower-alpha; /* Change ordered list to a, b, c, d */
     }
+
+    .note-editor.note-frame.panel.panel-default.fullscreen {
+        background-color: #fff;
+    }
 </style>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -116,10 +120,10 @@
 @push('scripts')
 <script src="{{ asset('assets/summernote-0.8.18-dist/summernote.min.js') }}"></script>
 {{-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> --}}
-    <script>   
+    <script>
         // $(document).ready(function() {
         //     $('#isi_pasal').summernote();
-            
+
         // });
     </script>
     <script>

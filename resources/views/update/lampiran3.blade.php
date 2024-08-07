@@ -31,29 +31,33 @@
                         <label for="gambar">Upload Spesifikasi (Image Only)</label>
                         <input type="file" name="gambar[]" id="gambar[]" multiple class="form-control" >
                     </div>
-                </div> 
+                </div>
                 <div id="validationErrors" style="color: red;"></div>
             </div>
         </div>
-        
+
         <div class="row d-none" id="loadnonstandar">
             @if (@$lampiran3[0]->jenis_spesifikasi=='2')
                 @foreach (@$lampiran3 as $l)
+                    <div class="form-group">
+                        <label for="gambarnon">Upload Gambar (Optional)</label>
+                        <input type="file" name="gambarnon[]" id="gambarnon[]" multiple class="form-control" >
+                    </div>
                     <div class="form-group col-2">
                         <label for="inputNOSPPB">No.SPPB</label>
-                        <input type="text" name="no_sppb[]" value="{{ $l->no_sppb }}" class="form-control" readonly>
+                        <input type="text" name="no_sppb[]" value="{{ $l->no_sppb }}" class="form-control" id="nosppblampiran3" readonly>
                     </div>
                     <div class="form-group col-2">
                         <label for="inputKodeBarang">Kode Barang</label>
-                        <input type="text" name="kode_barang[]" class="form-control" value="{{ $l->kode_barang }}" readonly>
+                        <input type="text" name="kode_barang[]" class="form-control" id="kodebaranglampiran3" value="{{ $l->kode_barang }}" readonly>
                     </div>
                     <div class="form-group col-6">
                         <label for="jenisBarang">Nama Barang</label>
-                        <input type="text" name="nama_barang[]" class="form-control" value="{{ $l->jenis_barang }}" readonly>
+                        <input type="text" name="nama_barang[]" class="form-control" id="nmbrglampiran3" value="{{ $l->jenis_barang }}" readonly>
                     </div>
                     <div class="form-group col-2">
-                        <label for="jenisBarang">Nama Barang</label>
-                        <input type="text" name="satuan[]" class="form-control" value="{{ $l->satuan }}" readonly>
+                        <label for="satuanBarang">Satuan</label>
+                        <input type="text" name="satuan[]" class="form-control" id="satuanbrglampiran3" value="{{ $l->satuan }}" readonly>
                     </div>
                     <div class="form-group col-12">
                         <label for="inputText">Keterangan Non Spesifikasi Lab</label>
@@ -70,7 +74,7 @@
 </div>
 
 @push('scripts')
-    
+
     <script type="text/javascript">
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -80,7 +84,7 @@
 
             // Ambil elemen form gambar dan form teks
             var formGambar = document.getElementById('formGambar');
-            
+
 
             // Tambahkan event listener untuk setiap perubahan pada radio button
             standarLabRadio.addEventListener('change', function() {
@@ -117,7 +121,7 @@
             e.preventDefault();
             $('input[type="radio"][name="jspek"]').prop('disabled',false)
             let formData = new FormData(this);
-            
+
             $.ajax({
                 url: "{{ route('submitLampiran3') }}",
                 type: 'POST',
@@ -135,7 +139,7 @@
                 }
             });
         });
-    
+
     </script>
-    
+
 @endpush

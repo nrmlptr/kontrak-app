@@ -1,6 +1,10 @@
 @extends('layout.main')
 @section('content')
-
+<style>
+    .note-editor.note-frame.panel.panel-default.fullscreen {
+        background-color: #fff;
+    }
+</style>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -35,7 +39,7 @@
                             </div>
                             <!-- /.card-header -->
                                 <div class="card-body">
-                                    
+
                                     <div class="form-group">
                                         <label for="pihakname">Nama Pihak</label>
                                         <input type="text" class="form-control" name="pihakname" value="{{ @$setting->peruri_pihakname }}"
@@ -44,7 +48,7 @@
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         <label for="akta">Akta Peruri</label>
                                         <textarea type="text" class="form-control" name="akta" id="akta">
@@ -59,7 +63,7 @@
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>
-                                   
+
                                 </div>
                                 <!-- /.card-body -->
 
@@ -85,7 +89,7 @@
     <script src="{{ asset('assets/summernote-0.8.18-dist/summernote.min.js') }}"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> --}}
     <script>
-        
+
         $(document).ready(function() {
             $('#akta').summernote();
         });

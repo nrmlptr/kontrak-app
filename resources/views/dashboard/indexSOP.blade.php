@@ -116,7 +116,7 @@
 @endsection
 
 @push('scripts')
-    
+
     <script type="text/javascript">
         $(document).ready(function() {
             $('#soptabel').DataTable({
@@ -125,12 +125,12 @@
                 "pageLength": 5,
                 "lengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'semua']],
                 "searching": true,
-                "ordering": true,
+                "ordering": false,
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
 
-                
+
                 dom: 'Bflrtip',
                 buttons: [
                     {

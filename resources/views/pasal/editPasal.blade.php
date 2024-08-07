@@ -4,6 +4,10 @@
     .note-editable ul {
         list-style-type: lower-alpha; /* Change ordered list to a, b, c, d */
     }
+
+    .note-editor.note-frame.panel.panel-default.fullscreen {
+        background-color: #fff;
+    }
 </style>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -63,7 +67,7 @@
                                     <div class="form-group">
                                         <label for="status_jaminan">Status Jaminan</label>
                                         <select name="status_jaminan" id="status_jaminan" class="form-control">
-                                            
+
                                             <option value="1">Jaminan</option>
                                             <option value="2" @if ($data->status_jaminan=='2')
                                                 selected
@@ -76,7 +80,7 @@
                                     <div class="form-group">
                                         <label for="jenis_kontrak">Jenis Kontrak</label>
                                         <select name="jenis_kontrak" id="jenis_kontrak" class="form-control">
-                                            
+
                                             <option value="1">Lumpsum</option>
                                             <option value="2" @if ($data->jenis_kontrak=='2')
                                                 selected
@@ -93,8 +97,8 @@
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>
-                                    
-                                   
+
+
                                 </div>
                                 <!-- /.card-body -->
 
@@ -121,10 +125,10 @@
     <script src="{{ asset('assets/summernote-0.8.18-dist/summernote.min.js') }}"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> --}}
     <script type="text/javascript">
-        
+
         // $(document).ready(function() {
         //     $('#isi_pasal').summernote();
-            
+
         // });
 
         $(document).ready(function() {

@@ -10,7 +10,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
                     </div><!-- /.col -->
@@ -29,7 +29,7 @@
                         <div class="small-box bg-info">
                             <div class="inner">
                                 <h3>{{ $dataKontrak->count() }}</h3>
-                                <p><b>Jumlah Kontrak</b></p>
+                                <p><b>Total Kontrak</b></p>
                             </div>
                             <div class="icon">
                                 <i class="nav-icon fas fa-copy"></i>
@@ -87,18 +87,18 @@
 
                 <!-- Main row -->
                 <div class="row">
-                    
+
                     <!-- kotak buat grafik proses kontrak -->
                     <div class="col-md-12 col-sm-12">
-                        <div class="x_panel"> 
+                        <div class="x_panel">
                             <div class="x_title">
                                 <figure class="highcharts-figure">
                                     <div id="grafikStatus"></div>
                                 </figure>
                             </div>
                         </div>
-                    </div>  
- 
+                    </div>
+
                 </div>
                 <div class="row">
                     <!-- kotak untuk grafik kontrak per status jaminan -->
@@ -112,7 +112,7 @@
                                 </figure>
                             </div>
                         </div>
-                    </div>   
+                    </div>
                     <!-- kotak buat grafik kontrak per jenis kontrak -->
                     <div class="col-md-6 col-sm-6">
                         <div class="x_panel">
@@ -122,8 +122,8 @@
                                 </figure>
                             </div>
                         </div>
-                    </div>  
-                     
+                    </div>
+
                 </div>
 
                 <div class="row">
@@ -138,7 +138,7 @@
                                 </figure>
                             </div>
                         </div>
-                    </div>  
+                    </div>
 
                     <!-- kotak buat grafik kontrak per jenis kontrak -->
                     {{-- <div class="col-md-6 col-sm-6">
@@ -194,16 +194,21 @@
 <script type="text/javascript">
 
     // GRAFIK STATUS KONTRAK =================================================================================================
+    @php
+        $totalKontrakP = $dataStatus->sum();
+        // $totalKontrakProses = $dataKontrakProses->sum();
+        // dd($totalKontrakP);
+    @endphp
     $(document).ready(function() {
         Highcharts.chart('grafikStatus', {
             chart: {
                 type: 'pie'
             },
             title: {
-              text: 'PROSES PEMBUATAN KONTRAK'
+              text: 'PROSES PEMBUATAN KONTRAK (Total : {{ $totalKontrakP }} Kontrak)'
             },
             tooltip: {
-                pointFormat: '{series.name}: <b>{point.y}</b>'
+                pointFormat: '{series.name}: <b>{point.y}</b> ({point.percentage:.1f}%)'
             },
             plotOptions: {
                 pie: {
@@ -211,14 +216,38 @@
                     cursor: 'pointer',
                     dataLabels: {
                         enabled: true,
-                        format: '<b>{point.name}</b>: {point.y}',
+                        format: '<b>{point.name}</b>: {point.y} ({point.percentage:.1f}%)',
                         style: {
                             fontSize: '1.2em',
                             textOutline: 'none',
                             opacity: 0.7
                         }
                     },
-                    showInLegend: true
+                    showInLegend: true,
+                    point: {
+                        events: {
+                            click: function() {
+                                var statusMapping = {
+                                    'Draft': 'draft',
+                                    'Konsep': 'konsep',
+                                    'Sedang Diperiksa Kasek': 'reviewkasek',
+                                    'Direvisi oleh Kasek': 'revisikasek',
+                                    'Disetujui Kasek': 'approvedkasek',
+                                    'Sedang Diperiksa Kadept': 'reviewkadept',
+                                    'Direvisi oleh Kadept': 'revisikadept',
+                                    'Disetujui Kadept': 'approvedkadept',
+                                    'Sedang Diperiksa Kadiv': 'reviewkadiv',
+                                    'Direvisi oleh Kadiv': 'revisikadiv',
+                                    'Sedang Diperiksa Ulang Kasek': 'editedkasek',
+                                    'Sedang Diperiksa Ulang Kadept': 'editedkadept',
+                                    'Sedang Diperiksa Ulang Kadiv': 'editedkadiv'
+                                };
+                                var status = statusMapping[this.name];
+                                // console.log('Status clicked:', status); // Debugging line
+                                window.location.href = '/contracts/status/' + status;
+                            }
+                        }
+                    }
                 }
             },
             series: [{
@@ -239,8 +268,9 @@
     // GRAFIK KONTRAK BY STATUS JAMINAN ======================================================================================
     @php
         // Membuat array untuk kategori dan data
-        $categories = [];
-        $dataKontrak = [];
+        $categories     = [];
+        $dataKontrak    = [];
+        $totalKontrak   = $KontrakPerStatusJaminan->sum(); // Total semua kontrak
 
         // Iterasi melalui grup dan menambahkan data ke dalam array
         foreach ($KontrakPerStatusJaminan as $statusJaminan => $jumlah) {
@@ -254,11 +284,11 @@
 
         // Menyiapkan data untuk dikirim ke view
         $dataGrafik = [
-            'categories' => $categories,
-            'dataKontrak' => $dataKontrak
+            'categories'        => $categories,
+            'dataKontrak'       => $dataKontrak,
+            'totalKontrak'      => $totalKontrak
         ];
     @endphp
-
 
     $(document).ready(function() {
         Highcharts.chart('kontrakperstatusJaminan', {
@@ -266,10 +296,10 @@
                 type: 'pie'
             },
             title: {
-                text: 'KONTRAK BERDASARKAN STATUS JAMINAN'
+                text: 'KONTRAK BERDASARKAN STATUS JAMINAN <br> (Total : {{ $totalKontrak }} Kontrak)'
             },
             tooltip: {
-                pointFormat: '{series.name}: <b>{point.y}</b>'
+                pointFormat: '{series.name}: <b>{point.y}</b> ({point.percentage:.1f}%)'
             },
             plotOptions: {
                 pie: {
@@ -277,11 +307,24 @@
                     cursor: 'pointer',
                     dataLabels: {
                         enabled: true,
-                        format: '<b>{point.name}</b>: {point.y}',
+                        format: '<b>{point.name}</b>: {point.y} ({point.percentage:.1f}%)',
                         style: {
                             fontSize: '1.2em',
                             textOutline: 'none',
                             opacity: 0.7
+                        }
+                    },
+                    showInLegend: true,
+                    point:{
+                        events:{
+                            click: function(){
+                                var statusMapping = {
+                                    'Jaminan': 'jaminan',
+                                    'Tanpa Jaminan': 'tanpa_jaminan'
+                                };
+                                var statusJaminan = statusMapping[this.name];
+                                window.location.href = '/contracts/status_jaminan/' + statusJaminan;
+                            }
                         }
                     }
                 }
@@ -293,7 +336,8 @@
                     @foreach($dataGrafik['categories'] as $index => $category)
                         {
                             name: '{{ $category }}',
-                            y: {{ $dataGrafik['dataKontrak'][$index] }}
+                            y: {{ $dataGrafik['dataKontrak'][$index] }},
+                            percentage: ({{ $dataGrafik['dataKontrak'][$index] }} / {{ $dataGrafik['totalKontrak'] }} * 100).toFixed(1)
                         },
                     @endforeach
                 ]
@@ -304,8 +348,9 @@
     // GRAFIK KONTRAK BY JENIS KONTRAK =======================================================================================
     @php
         // Membuat array untuk kategori dan data
-        $categories = [];
-        $dataKontrak = [];
+        $categories     = [];
+        $dataKontrak    = [];
+        $totalKontrak   = $KontrakperJenisKontrak->sum(); // Total semua kontrak
 
         // Iterasi melalui grup dan menambahkan data ke dalam array
         foreach ($KontrakperJenisKontrak as $Jeniskontrak => $jumlah) {
@@ -319,8 +364,9 @@
 
         // Menyiapkan data untuk dikirim ke view
         $dataGrafik = [
-            'categories' => $categories,
-            'dataKontrak' => $dataKontrak
+            'categories'    => $categories,
+            'dataKontrak'   => $dataKontrak,
+            'totalKontrak'  => $totalKontrak
         ];
     @endphp
 
@@ -330,10 +376,10 @@
                 type: 'pie'
             },
             title: {
-                text: 'KONTRAK BERDASARKAN JENIS KONTRAK'
+                text: 'KONTRAK BERDASARKAN JENIS KONTRAK <br> (Total : {{ $totalKontrak }} Kontrak)'
             },
             tooltip: {
-                pointFormat: '{series.name}: <b>{point.y}</b>'
+                pointFormat: '{series.name}: <b>{point.y}</b> ({point.percentage:.1f}%)'
             },
             plotOptions: {
                 pie: {
@@ -341,13 +387,32 @@
                     cursor: 'pointer',
                     dataLabels: {
                         enabled: true,
+                        // format: '<b>{point.name}</b>: {point.y} ({point.percentage:.1f}%)',
                         format: '<b>{point.name}</b>: {point.y}',
                         style: {
                             fontSize: '1.2em',
                             textOutline: 'none',
                             opacity: 0.7
+                        },
+                    },
+                    showInLegend: true,
+                    point:{
+                        events:{
+                            click: function(){
+                                var statusMapping = {
+                                    'Lumpsum': 'lumpsum',
+                                    'Harga Satuan': 'harga_satuan'
+                                };
+                                var jenisKontrak = statusMapping[this.name];
+                                window.location.href = '/contracts/jenis_kontrak/' + jenisKontrak;
+                            }
                         }
                     }
+                }
+            },
+            legend: {
+                labelFormatter: function() {
+                    return this.name + ': ' + Highcharts.numberFormat(this.percentage, 1) + '%';
                 }
             },
             series: [{
@@ -373,14 +438,14 @@
 
         // Iterasi melalui grup dan menambahkan data ke dalam array
         foreach ($topVendors as $vendor => $jumlah) {
-            $categories[] = $vendor;
-            $dataKontrak[] = $jumlah;
+            $categories[]   = $vendor;
+            $dataKontrak[]  = $jumlah;
         }
 
         // Menyiapkan data untuk dikirim ke view
         $dataGrafik = [
-            'categories' => $categories,
-            'dataKontrak' => $dataKontrak
+            'categories'    => $categories,
+            'dataKontrak'   => $dataKontrak
         ];
     @endphp
 
@@ -423,17 +488,25 @@
                             fontSize: '14px' // Ukuran teks
                         }
                     },
+                    events: {
+                        click: function(event) {
+                            // Map vendor names to a URL route
+                            var vendor = event.point.category; // Get the vendor name from the category
+                            // console.log(vendor);
+                            window.location.href = '/contracts/vendor/' + encodeURIComponent(vendor);
+                        }
+                    }
                     // colorByPoint: true, //aktifkan warna berdasarkan point
                     // colors: ['#7cb5ec'], // Warna yang sama untuk semua point
                 }
             },
             series: [{
-                name: 'Jumlah Kontrak',
+                name: 'Nama Vendor',
                 data: {!! json_encode($dataGrafik['dataKontrak']) !!}
             }]
         });
     });
-    
+
 
 </script>
 

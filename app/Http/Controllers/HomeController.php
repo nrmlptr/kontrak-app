@@ -10,6 +10,7 @@ use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -31,12 +32,17 @@ class HomeController extends Controller
         $dataStatus = $dataKontrak->groupBy('status')->map(function ($group) {
             return $group->count();
         });
+
+        // dd($dataStatus);
         // kecualikan approvekadiv
         $dataStatus = $dataStatus->forget('approvedkadiv');
+
+        // dd($dataStatus);
 
         // Buat array untuk mapping status ke nama yang ingin ditampilkan di chart
         $statusMapping = [
             'draft'             => 'Draft',
+            'konsep'            => 'Konsep',
             'reviewkasek'       => 'Sedang Diperiksa Kasek',
             'revisikasek'       => 'Direvisi oleh Kasek',
             'approvedkasek'     => 'Disetujui Kasek',
@@ -50,10 +56,14 @@ class HomeController extends Controller
             'editedkadiv'       => 'Sedang Diperiksa Ulang Kasek',
         ];
 
+
+
         $dataStatus = $dataStatus->mapWithKeys(function ($count, $status) use ($statusMapping) {
             $statusName = $statusMapping[$status] ?? $status; // Gunakan nama inisialisasi atau status asli jika tidak ditemukan
             return [$statusName => $count];
         });
+
+        // dd($dataStatus);
 
         // =====================================================================================================================
         // data kontrak per status jaminan
@@ -83,14 +93,89 @@ class HomeController extends Controller
     }
 
 
-    // FUNGSI VIEW ALL DATA USER ===============================================================================================
+    // FUNGSI DETAIL GRAFIK PROSES PEMBUATAN KONTRAK ==========================================================================================================
+    public function viewByStatus($status)
+    {
+        $statusMapping = [
+            'draft'             => 'draft',
+            'konsep'            => 'konsep',
+            'reviewkasek'       => 'reviewkasek',
+            'revisikasek'       => 'revisikasek',
+            'approvedkasek'     => 'approvedkasek',
+            'reviewkadept'      => 'reviewkadept',
+            'revisikadept'      => 'revisikadept',
+            'approvedkadept'    => 'approvedkadept',
+            'reviewkadiv'       => 'reviewkadiv',
+            'revisikadiv'       => 'revisikadiv',
+            'editedkasek'       => 'editedkasek',
+            'editedkadept'      => 'editedkadept',
+            'editedkadiv'       => 'editedkadiv',
+        ];
+
+        if (!array_key_exists($status, $statusMapping)) {
+            abort(404, 'Status not found');
+        }
+
+        $statusInDB = $statusMapping[$status];
+        // dd($statusInDB);
+        $contracts  = Kontrak::where('status', $statusInDB)->get();
+
+        return view('dashboard.viewByStatus', compact('contracts', 'statusInDB'));
+    }
+
+    // FUNGSI DETAIL GRAFIK KONTRAK PER STATUS JAMINAN ==========================================================================================================
+    public function viewByStatusJaminan($statusJaminan)
+    {
+        $statusMapping = [
+            'jaminan'       => 1,
+            'tanpa_jaminan' => 2
+        ];
+
+        if (!array_key_exists($statusJaminan, $statusMapping)) {
+            abort(404, 'Status not found');
+        }
+
+        $statusJaminanInDB  = $statusMapping[$statusJaminan];
+        $contracts          = Kontrak::where('status_jaminan', $statusJaminanInDB)->get();
+
+        return view('dashboard.viewByStatusJaminan', compact('contracts', 'statusJaminanInDB'));
+    }
+
+    // FUNGSI DETAIL GRAFIK KONTRAK PER JENIS KONTRAK ==========================================================================================================
+    public function viewByJenisKontrak($jenisKontrak)
+    {
+        $statusMapping = [
+            'lumpsum'       => 1,
+            'harga_satuan'  => 2
+        ];
+
+        if (!array_key_exists($jenisKontrak, $statusMapping)) {
+            abort(404, 'Status not found');
+        }
+
+        $jenisKontrakInDB   = $statusMapping[$jenisKontrak];
+        $contracts          = Kontrak::where('jenis_kontrak', $jenisKontrakInDB)->get();
+
+        return view('dashboard.viewByJenisKontrak', compact('contracts', 'jenisKontrakInDB'));
+    }
+
+    // FUNGSI DETAIL GRAFIK KONTRAK PER VENDOR ====================================================================================================================
+    public function viewByVendor($vendor)
+    {
+        $vendor     = urldecode($vendor); // Decode the URL-encoded vendor name
+        // Log::info('Vendor name after decoding: ' . $vendor);
+        $contracts  = Kontrak::where('nm_vendor', $vendor)->get();
+        return view('dashboard.viewByVendor', compact('contracts', 'vendor'));
+    }
+
+    // FUNGSI VIEW ALL DATA USER ==================================================================================================================================
     public function index()
     {
         $data = User::get();
         return view('users.index', compact('data'));
     }
 
-    // FUNGSI VIEW ADD DATA USER ===============================================================================================
+    // FUNGSI VIEW ADD DATA USER ==================================================================================================================================
     public function addUser()
     {
         $roles = Role::All();
@@ -98,7 +183,7 @@ class HomeController extends Controller
         return view('users.addUser', compact('roles'));
     }
 
-    // FUNGSI SAVE INPUTAN DATA USER ===========================================================================================
+    // FUNGSI SAVE INPUTAN DATA USER ==============================================================================================================================
     public function loadUser(Request $request)
     {
         // dd($request->all());
@@ -151,7 +236,7 @@ class HomeController extends Controller
         return redirect()->route('index');
     }
 
-    // FUNGSI VIEW EDIT DATA USER ===============================================================================================
+    // FUNGSI VIEW EDIT DATA USER ============================================================================================================================
     public function editUser(Request $request, $id)
     {
         $data   = User::find($id);
@@ -162,7 +247,7 @@ class HomeController extends Controller
         return view('users.editUser', compact('data', 'roles'));
     }
 
-    // FUNGSI SIMPAN EDITAN DATA USER ===========================================================================================
+    // FUNGSI SIMPAN EDITAN DATA USER ==========================================================================================================================
     public function updateUser(Request $request, $id)
     {
         // dd($request->all()); //cek datanya berhasil kekirim gak?
@@ -201,14 +286,14 @@ class HomeController extends Controller
         // sinkronisasi roles di tabel role_user
         $user->roles()->sync($request->roles);
 
-        // NOTIFIKASI 
+        // NOTIFIKASI
         flash()->addFlash('success', 'Berhasil Perbarui Data User!');
 
         return redirect()->route('index');
     }
 
 
-    // FUNGSI DELETE DATA USER ===============================================================================================
+    // FUNGSI DELETE DATA USER ================================================================================================================================
     public function deleteUser(Request $request, $id)
     {
         $data = User::find($id);
@@ -223,7 +308,7 @@ class HomeController extends Controller
         return redirect()->route('index');
     }
 
-    // FUNGSI VIEW ALL DATA PASAL ==========================================-==================================================
+    // FUNGSI VIEW ALL DATA PASAL ==========================================-===================================================================================
     public function vPasal(Request $request)
     {
         // Inisialisasi query dasar untuk PasalKontrak
@@ -249,13 +334,13 @@ class HomeController extends Controller
         return view('pasal.dPasal', compact('dataPasal'));
     }
 
-    // FUNGSI VIEW ADD DATA PASAL =============================================================================================
+    // FUNGSI VIEW ADD DATA PASAL =============================================================================================================================
     public function addPasal()
     {
         return view('pasal.addPasal');
     }
 
-    // FUNGSI SAVE INPUTAN DATA PASAL =========================================================================================
+    // FUNGSI SAVE INPUTAN DATA PASAL ==========================================================================================================================
     public function loadPasal(Request $request)
     {
         // dd($request->all());
@@ -297,17 +382,17 @@ class HomeController extends Controller
         return redirect()->route('vPasal');
     }
 
-    // FUNGSI VIEW EDIT DATA PASAL =============================================================================================
+    // FUNGSI VIEW EDIT DATA PASAL ============================================================================================================================
     public function editPasal(Request $request, $id)
     {
         $data = PasalKontrak::find($id);
 
-        // dd($data);    
+        // dd($data);
 
         return view('pasal.editPasal', compact('data'));
     }
 
-    // FUNGSI SAVE EDITAN DATA PASAL ==========================================-==================================================
+    // FUNGSI SAVE EDITAN DATA PASAL ==========================================-=================================================================================
     public function updatePasal(Request $request, $id)
     {
         // dd($request->all());
@@ -334,13 +419,13 @@ class HomeController extends Controller
 
         PasalKontrak::whereId($id)->update($data);
 
-        // NOTIFIKASI 
+        // NOTIFIKASI
         flash()->addFlash('success', 'Berhasil Perbarui Data Pasal!');
 
         return redirect()->route('vPasal');
     }
 
-    // FUNGSI DELETE DATA PASAL =============================================================================================
+    // FUNGSI DELETE DATA PASAL ================================================================================================================================
     public function deletePasal(Request $request, $id)
     {
         $data = PasalKontrak::find($id);

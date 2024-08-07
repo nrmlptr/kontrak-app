@@ -38,7 +38,7 @@
 
         $.ajax({
             method: "POST",
-            url: "{{ route('submitLampiran7') }}",
+            url: "{{ route('submitUpdateKonsep') }}",
             data: form.serialize(),
             beforeSend: function(){
                 $('#loading-spinner').show();

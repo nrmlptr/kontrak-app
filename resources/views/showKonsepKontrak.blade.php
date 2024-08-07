@@ -50,8 +50,8 @@
                     <div class="col-sm-6"></div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('rKontrak') }}">Back</a></li>
-                            <li class="breadcrumb-item active">Detail Kontrak</li>
+                            <li class="breadcrumb-item"><a href="{{ route('indexKontrak') }}">Back</a></li>
+                            <li class="breadcrumb-item active">Preview Konsep Kontrak</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -65,44 +65,8 @@
                 <!-- Main row -->
                 <div class="row">
                     <div class="col-12">
-                        {{-- @if(Auth::user()->permission=='kasek' || Auth::user()->permission=='kadept' || Auth::user()->permission=='kadiv') --}}
-                        @if(Auth::user()->hasRole('kasek') || Auth::user()->hasRole('kadept') || Auth::user()->hasRole('kadiv'))
-                            @if($data->status !== 'approvedkadiv')
-                                {{-- <a href="{{ route('createRevisi', ['id' => $data->id]) }}" class="btn btn-sm btn-warning mr-1 mb-3"><i class="fas fa-pen"></i> Revisi Kontrak</a> --}}
-                                <a href="{{ route('setujuiKontrak',$data->id) }}" id="setujuiKontrak" class="btn btn-sm btn-success mr-1 mb-3"><i class="fas fa-thumbs-up"></i> Submit Kontrak</a>
-                            @endif
-                        @endif
-
-
-                        <a href="{{ route('cetakKontrak',$data->id) }}" target="_blank"  class="btn btn-sm btn-secondary mr-1 mb-3"><i class="nav-icon fas fa-print"></i></i> Cetak Kontrak</a>
-
-                        {{-- @if(Auth::user()->permission=='kasek' || Auth::user()->permission=='kadept' || Auth::user()->permission=='kadiv') --}}
-
-
-                        @if(Auth::user()->hasRole('kasek') || Auth::user()->hasRole('kadept') || Auth::user()->hasRole('kadiv'))
-                            @if($data->status !== 'approvedkadiv')
-                                <div class="" style="position:fixed; z-index: 1; right: 5em; top: 10em; width: 25%;">
-                                    <form id="inputRevisi">
-                                        @csrf
-                                        <input type="hidden" name="kontraks_id" value="{{ $data->id }}">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label for="revisi">Revisi Kontrak</label>
-                                                    <textarea name="revisi" id="revisi" cols="30" rows="10" class="form-control"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer">
-                                            <button class="btn btn-primary" type="button" onclick="submitRevisi()">
-                                                <span id="loading-spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                                Submit
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            @endif
-                        @endif
+                        <a href="{{ route('kirimKonsepKontrak',$data->id) }}" id="kirim-konsep" class="btn btn-sm btn-success mr-1 mb-3"><i class="fas fa-paper-plane"></i> Kirim Data</a>
+                        <a href="{{ route('editKonsep', $data->id) }}" class="btn btn-sm btn-primary mr-1 mb-3"><i class="fas fa-edit"></i> Edit Data</a>
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Detail Kontrak</h3>
@@ -480,7 +444,11 @@
 
                                                 </tbody>
                                             </table>
+
+
+
                                         @else
+
                                             {{-- TEMPAT UNTUK STANDARLAB --}}
                                             @foreach ($lampiran3 as $l)
                                                 <table border="1">
@@ -498,10 +466,10 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                                {{-- <img src="{{ Storage::url('uploads/spesifikasi_teknis/' . $l->gambar) }}" alt="{{ $l->gambar }}" style="margin-top:20px;margin-bottom:20px;"> --}}
                                                 <img src="{{ Storage::url($l->gambar) }}" alt="{{ Storage::url($l->gambar) }}" style="margin-top:20px;margin-bottom:20px; max-width: auto%; max-height: auto;">
                                                 {{-- @if ($l->file_type == 'pdf')
                                                     <embed src="{{ Storage::url($l->gambar) }}" type="application/pdf" width="100%" height="500px" />
-
                                                 @else
                                                     <img src="{{ Storage::url($l->gambar) }}" alt="{{ Storage::url($l->gambar) }}" style="margin-top:20px;margin-bottom:20px; max-width: auto%; max-height: auto;">
                                                 @endif --}}
@@ -1062,12 +1030,12 @@
     <script type="text/javascript">
         // import Swal from 'sweetalert2';
 
-        $(document).on('click', '#setujuiKontrak', function(e) {
+        $(document).on('click', '#kirim-konsep', function(e) {
             e.preventDefault();
             let href = $(this).attr('href');
             console.log(href);
             Swal.fire({
-                title: "Apakah Anda yakin akan submit draft Kontrak Pengadaan?",
+                title: "Kirim Data Kontrak?",
                 // text: "Anda tidak akan dapat mengembalikan ini!",
                 icon: "warning",
                 showCancelButton: true,
@@ -1080,7 +1048,10 @@
                     $.ajax({
                         method: "POST",
                         url: href,
-                        data: {},
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        // data: {},
                         success: function(result) {
                             console.log(result.message);
                             if (result.redirect) {
@@ -1097,28 +1068,5 @@
             $('#loading-spinner').hide();
         });
 
-
-        // submit data
-        function submitRevisi() {
-            var formRevisi = $('#inputRevisi');
-            // console.log(formRevisi);
-
-            $.ajax({
-                method: 'POST',
-                url: "{{ route('submitRevisi') }}",
-                data: formRevisi.serialize(),
-                beforeSend: function(){
-                    $('#loading-spinner').show();
-                },
-                success: function(result) {
-                    $('#loading-spinner').hide();
-                    // console.log(result.message)
-                    if (result.redirect) {
-                        window.location.href = result.redirect;
-                    }
-                }
-            });
-
-        }
     </script>
 @endpush

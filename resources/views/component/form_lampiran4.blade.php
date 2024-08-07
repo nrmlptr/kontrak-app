@@ -35,9 +35,9 @@
                 <div class=" form-group col-2">
                     <label for="lokasi">Gudang</label>
                     <input type="text" name="plant[]" class="form-control"  value="${row.plant}" required readonly>
-                    
+
                 </div>
-            
+
                 <div class=" form-group col-1">
                     <label for="no_sppb">Nomor SPPB</label>
                     <input type="text" name="no_sppb[]" class="form-control"  value="${row.purchase_requisition_number}" required readonly>
@@ -62,7 +62,7 @@
 
                 $('#loadinputlampiran4').append(fields);
             }
-            
+
         }
 
         $(document).ready(function() {
@@ -196,5 +196,5 @@
         }
     </script>
 
-    
+
 @endpush

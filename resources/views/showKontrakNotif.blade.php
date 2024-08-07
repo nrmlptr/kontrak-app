@@ -5,7 +5,7 @@
             size: A4;
             margin: 1cm;
         }
-        
+
         @media print {
             @page {
                 margin: 0.3in 1in 0.3in 1in !important
@@ -78,7 +78,7 @@
 
                         <a href="{{ route('cetakKontrak',$data->id) }}" target="_blank"  class="btn btn-sm btn-secondary mr-1 mb-3"><i class="nav-icon fas fa-print"></i></i> Cetak Kontrak</a>
 
-                        
+
                         {{-- @if(Auth::user()->permission=='kasek' || Auth::user()->permission=='kadept' || Auth::user()->permission=='kadiv') --}}
                         @if(Auth::user()->hasRole('kasek') || Auth::user()->hasRole('kadept') || Auth::user()->hasRole('kadiv'))
 
@@ -154,7 +154,7 @@
                                                         @else
                                                             {!! @$pihak2data->akta !!}
                                                         @endif
-                                                        
+
                                                     </td>
                                                 </tr>
                                                 <td><br></td>
@@ -191,13 +191,13 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                 
+
                                     {{-- disini butuh page break ke halaman selanjutnya --}}
                                     <div class="page-break"></div>
-                                
+
                                    {{-- KONTEN TENTANG PASAL --}}
                                     <div class="content">
-                                        
+
                                         {{-- <div style="height: 100px; text-align: left;">
                                             <div style="padding-right: 10px;float: right;">
                                                 <p style="text-align: center; margin-bottom: -15px !important;">Lembar ke - 2 -</p>
@@ -218,8 +218,8 @@
                                             </div>
                                         </div>
                                         <div style="clear: both;"></div> --}}
-                                    
-                                        
+
+
                                         <!-- Isi Pasal -->
                                         @foreach ($data->pasal as $p)
                                             <div class="boxpasal" style="text-align: justify; page-break-inside: avoid;">
@@ -247,8 +247,8 @@
                                                 </h4>
                                                 {!! $p->isi_pasal !!}
                                             </div>
-                                            <div style="margin-bottom: 40px;"></div>            
-                                    
+                                            <div style="margin-bottom: 40px;"></div>
+
                                             {{-- table ttd diakhir loop --}}
                                             @if ($loop->last)
                                                 <p style="text-align: justify;">Demikian Perjanjian ini dibuat dalam 2 (dua) rangkap ASLI masing-masing sama bunyi dan bermeterai cukup serta mempunyai kekuatan hukum yang sama setelah ditandatangani dan dibubuhi cap perusahaan kedua belah pihak.</p>
@@ -275,7 +275,7 @@
                                                         </td>
                                                     </tr>
                                                 </table>
-                                            @endif 
+                                            @endif
                                         @endforeach
                                         {{-- end loop pasal --}}
                                     </div>
@@ -311,7 +311,7 @@
                                         </p>
                                         <ol>
                                             @foreach ($dtlampiran1 as $l)
-                                            
+
                                                 <li>
                                                     {{ $l['perihal'] }}
                                                     <br>
@@ -414,7 +414,7 @@
                                                 </td>
                                             </tr>
                                         </table>
-                                        
+
                                     </div>
                                     {{-- end lampiran 2 --}}
 
@@ -430,7 +430,7 @@
                                         @if ($lampiran3[0]->jenis_spesifikasi=='2')
 
                                             {{-- TEMPAT TAMPILIN NONSATANDARLAB --}}
-                                            <table border="1">  
+                                            <table border="1">
                                                 <tbody>
                                                         <tr>
                                                             <td><b>LAMPIRAN III : SPESIFIKASI TEKNIS  </b></td>
@@ -448,7 +448,7 @@
                                             <div><br></div>
                                             <div style="text-align: center;"><b>SPESIFIKASI TEKNIS</b></div>
                                             {{-- <div><br></div> --}}
-                                            @foreach ($lampiran3 as $l) 
+                                            @foreach ($lampiran3 as $l)
                                                 <div style="text-align: center;"><b>{{ $l->jenis_barang }}</b></div>
                                                 <div class="mt-4"></div>
                                             @endforeach
@@ -479,7 +479,7 @@
                                                             <td style="padding: 8px; border: 1px solid #ddd;">{!! nl2br(e($l->spesifikasi_teknis)) !!}</td>
                                                         </tr>
                                                     @endforeach
-                                                    
+
                                                 </tbody>
                                             </table>
 
@@ -517,8 +517,8 @@
 
 
                                         @endif
-                                        
-                                        
+
+
                                         <table style="width: 100%;
                                                 border-collapse: collapse;
                                                 margin-top: 20px;">
@@ -603,16 +603,16 @@
                                                     <li style="text-align: justify;">
                                                         PIHAK KEDUA sanggup dan berjanji untuk melaksanakan penyerahan barang sebagaimana
                                                         dimaksud Pasal 5 Perjanjian ini sesuai jadwal yang tercantum dalam Surat Order Pembelian (SOP)
-                                                        Nomor : {{ @$lampiran4[0]->nomor_sop }} tanggal {{ tanggal_indonesia(@$lampiran4[0]->tanggal_sop) }} yang diterbitkan oleh PIHAK KESATU yaitu {{ @$lampiran4[0]->jadwal_penyerahan_barang }}. 
-                                                        
+                                                        Nomor : {{ @$lampiran4[0]->nomor_sop }} tanggal {{ tanggal_indonesia(@$lampiran4[0]->tanggal_sop) }} yang diterbitkan oleh PIHAK KESATU yaitu {{ @$lampiran4[0]->jadwal_penyerahan_barang }}.
+
                                                     </li>
                                                 @endif
-                                            
+
                                                 <li style="text-align: justify;">
-                                                    Penyerahan barang dilakukan langsung ke  
+                                                    Penyerahan barang dilakukan langsung ke
                                                     {{ $lampiran4[0]->lokasi }}
                                                     {{-- @if(@$lampiran4[0]->lokasi == 'UGM')
-                                                        Gudang Ugam              
+                                                        Gudang Ugam
                                                     @elseif(@$lampiran4[0]->lokasi == 'UTAS')
                                                         Gudang Utas
                                                     @elseif(@$lampiran4[0]->lokasi == 'UMUM')
@@ -631,7 +631,7 @@
                                         @else
                                             <ol>
                                                 <li style="text-align: justify;">
-                                                  PIHAK KEDUA sanggup dan berjanji untuk melaksanakan penyerahan barang sebagaimana dimaksud Pasal 5 Perjanjian ini sesuai jadwal yang tercantum dalam setiap Surat Order Pembelian (SOP) yang diterbitkan oleh PIHAK KESATU.  
+                                                  PIHAK KEDUA sanggup dan berjanji untuk melaksanakan penyerahan barang sebagaimana dimaksud Pasal 5 Perjanjian ini sesuai jadwal yang tercantum dalam setiap Surat Order Pembelian (SOP) yang diterbitkan oleh PIHAK KESATU.
                                                 </li>
                                                 <li style="text-align: justify;">
                                                     Penyerahan barang dilakukan langsung ke gudang PIHAK KESATU di Karawang.
@@ -641,7 +641,7 @@
                                                 </li>
                                             </ol>
                                         @endif
-                                        
+
                                         <table style="width: 100%;
                                                 border-collapse: collapse;
                                                 margin-top: 20px;">
@@ -661,12 +661,12 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                        </table>   
+                                        </table>
                                     </div>
                                     {{-- end lampiran 4 --}}
 
 
-                                
+
                                     {{-- disini butuh page break ke halaman selanjutnya --}}
                                     <div class="page-break"></div>
                                     {{-- lampiran 5 --}}
@@ -696,7 +696,7 @@
                                             <ol>
                                                 @if ($lampiran5->count()>1)
                                                     <li>
-                                                        Harga satuan barang :                               
+                                                        Harga satuan barang :
                                                         <div><br></div>
                                                         <table style="border-collapse: collapse; width: 100%; border: 1px solid #ddd; text-align: center;">
                                                             <thead style="background-color: #f2f2f2;">
@@ -735,12 +735,12 @@
                                                         Harga satuan barang {{ formatRupiah(@$lampiran5[0]->harga_awal) }} per lembar dengan total harga keseluruhan sebesar {{ @formatRupiah($data->total_keseluruhan) }} ({{ terbilang($data->total_keseluruhan) }} Rupiah) sudah termasuk Pajak Pertambahan Nilai (PPN).
                                                     </li>
                                                 @endif
-                                            
+
                                                 <li style="text-align: justify;">
                                                     Harga barang dimaksud butir (1) Lampiran V ini adalah franko
                                                     {{ $lampiran5[0]->lokasi }}
                                                     {{-- @if(@$lampiran5[0]->lokasi == 'UGM')
-                                                        Gudang Ugam                                                    
+                                                        Gudang Ugam
                                                     @elseif(@$lampiran5[0]->lokasi == 'UTAS')
                                                         Gudang Utas
                                                     @elseif(@$lampiran5[0]->lokasi == 'UMUM')
@@ -753,14 +753,14 @@
                                                     PIHAK KESATU Karawang.
                                                 </li>
                                                 <li style="text-align: justify;">
-                                                    Harga dimaksud pada butir (1) Lampiran V ini terdiri dari komponen-komponen harga satuan yang merupakan harga tetap dan tidak berubah oleh sebab apapun sampai dengan selesainya pelaksanaan jual beli dimaksud Pasal 12 Perjanjian ini.                        
+                                                    Harga dimaksud pada butir (1) Lampiran V ini terdiri dari komponen-komponen harga satuan yang merupakan harga tetap dan tidak berubah oleh sebab apapun sampai dengan selesainya pelaksanaan jual beli dimaksud Pasal 12 Perjanjian ini.
                                                 </li>
                                             </ol>
                                         @else
                                             <ol>
                                                 @if ($lampiran5->count()>1)
                                                     <li>
-                                                        Harga satuan barang :                               
+                                                        Harga satuan barang :
                                                         <div><br></div>
                                                         <table style="border-collapse: collapse; width: 100%; border: 1px solid #ddd; text-align: center;">
                                                             <thead style="background-color: #f2f2f2;">
@@ -791,22 +791,22 @@
                                                                 @endforeach
                                                             </tbody>
                                                         </table>
-                                                        
+
                                                     </li>
                                                 @else
                                                     <li style="text-align: justify;">
                                                         Harga satuan barang {{ formatRupiah(@$lampiran5[0]->harga_awal) }} per lembar dengan total harga keseluruhan sebesar {{ @formatRupiah($data->total_keseluruhan) }} ({{ terbilang($data->total_keseluruhan) }} Rupiah) sudah termasuk Pajak Pertambahan Nilai (PPN).
                                                     </li>
                                                 @endif
-                                            
+
                                                 <li style="text-align: justify;">
                                                     Harga-harga Produk tersebut sebagaimana dimaksud pada Pasal 8 Perjanjian ini merupakan harga tetap dan berlaku sampai dengan tanggal {{ $lampiran5[0]->waktu_khs }}.
                                                 </li>
                                             </ol>
                                         @endif
-                                        
-                                        
-                                        
+
+
+
                                         <table style="width: 100%;
                                                 border-collapse: collapse;
                                                 margin-top: 20px;">
@@ -827,7 +827,7 @@
                                                 </td>
                                             </tr>
                                         </table>
-                                        
+
                                     </div>
                                     {{-- end lampiran 5 --}}
 
@@ -859,9 +859,15 @@
                                         <div><br></div>
                                         @if($data->jenis_kontrak == '1')
                                             <ol>
-                                                <li style="text-align: justify;">
-                                                    Pembayaran dari PIHAK KESATU kepada PIHAK KEDUA dilakukan setelah barang diserahkan seluruhnya oleh PIHAK KEDUA kepada PIHAK KESATU yang dinyatakan dengan dibuatkannya Surat Penerimaan Barang (SPB) oleh PIHAK KESATU, yang mana Surat Penerimaan Barang (SPB) tersebut kemudian akan melengkapi perangkat (dokumen) penagihan seperti dimaksud butir (3) Lampiran VI ini .
-                                                </li>
+                                                @if (@$lampiran6->jenis_pembayaran=='1')
+                                                    <li style="text-align: justify;">
+                                                        Pembayaran dari PIHAK KESATU kepada PIHAK KEDUA dilakukan setelah barang diserahkan seluruhnya oleh PIHAK KEDUA kepada PIHAK KESATU yang dinyatakan dengan dibuatkannya Surat Penerimaan Barang (SPB) oleh PIHAK KESATU, yang mana Surat Penerimaan Barang (SPB) tersebut kemudian akan melengkapi perangkat (dokumen) penagihan seperti dimaksud butir (4) Lampiran VI ini.
+                                                    </li>
+                                                @else
+                                                    <li style="text-align: justify;">
+                                                        Pembayaran dari PIHAK KESATU kepada PIHAK KEDUA dilakukan secara bertahap sesuai barang yang telah diserahkan PIHAK KEDUA kepada PIHAK KESATU yang dinyatakan dengan dibuatkannya Surat Penerimaan Barang (SPB) oleh PIHAK KESATU, yang mana Surat Penerimaan Barang (SPB) tersebut kemudian akan melengkapi perangkat (dokumen) penagihan seperti dimaksud butir (3) Lampiran VI ini.
+                                                    </li>
+                                                @endif
                                                 <li style="text-align: justify;">
                                                     Apabila ada denda terhadap PIHAK KEDUA di dalam melaksanakan jual beli dimaksud Pasal 15 Perjanjian ini, maka denda tersebut oleh PIHAK KESATU dapat langsung dibebankan pada saat pembayaran oleh PIHAK KESATU kepada PIHAK KEDUA dilakukan.
                                                 </li>
@@ -870,13 +876,13 @@
                                                     {{-- lansung --}}
                                                     Pelaksanaan pembayaran oleh PIHAK KESATU kepada PIHAK KEDUA dilakukan {{ $lampiran6->lama_pembayaran }} ({{ terbilang($lampiran6->lama_pembayaran) }})
                                                     hari kerja setelah perangkat penagihan dinyatakan lengkap diterima oleh PIHAK KESATU yang
-                                                    terdiri antara lain : 
+                                                    terdiri antara lain :
                                                     @else
                                                     {{-- bertahap --}}
                                                     Pelaksanaan pembayaran oleh PIHAK KESATU kepada PIHAK KEDUA di tiap tahapan
                                                     pengirimannya dilakukan {{ @$lampiran6->lama_pembayaran }} ({{ terbilang(@$lampiran6->lama_pembayaran) }}) hari kerja setelah perangkat penagihan dinyatakan lengkap
                                                     diterima oleh PIHAK KESATU yang terdiri antara lain :
-                                                    @endif  
+                                                    @endif
                                                     <ol>
                                                         <li style="text-align: justify;">Kuitansi yang bermeterai cukup.</li>
                                                         <li style="text-align: justify;">Faktur Pajak.</li>
@@ -896,9 +902,15 @@
                                             </ol>
                                         @else
                                             <ol>
-                                                <li style="text-align: justify;">
-                                                    Pembayaran dari PIHAK KESATU kepada PIHAK KEDUA dilakukan setelah barang diserahkan seluruhnya oleh PIHAK KEDUA kepada PIHAK KESATU yang dinyatakan dengan dibuatkannya Surat Penerimaan Barang (SPB) oleh PIHAK KESATU, yang mana Surat Penerimaan Barang (SPB) tersebut kemudian akan melengkapi perangkat (dokumen) penagihan seperti dimaksud butir (4) Lampiran VI ini .
-                                                </li>
+                                                @if (@$lampiran6->jenis_pembayaran=='1')
+                                                    <li style="text-align: justify;">
+                                                        Pembayaran dari PIHAK KESATU kepada PIHAK KEDUA dilakukan setelah barang diserahkan seluruhnya oleh PIHAK KEDUA kepada PIHAK KESATU yang dinyatakan dengan dibuatkannya Surat Penerimaan Barang (SPB) oleh PIHAK KESATU, yang mana Surat Penerimaan Barang (SPB) tersebut kemudian akan melengkapi perangkat (dokumen) penagihan seperti dimaksud butir (4) Lampiran VI ini.
+                                                    </li>
+                                                @else
+                                                    <li style="text-align: justify;">
+                                                        Pembayaran dari PIHAK KESATU kepada PIHAK KEDUA dilakukan secara bertahap sesuai barang yang telah diserahkan PIHAK KEDUA kepada PIHAK KESATU yang dinyatakan dengan dibuatkannya Surat Penerimaan Barang (SPB) oleh PIHAK KESATU, yang mana Surat Penerimaan Barang (SPB) tersebut kemudian akan melengkapi perangkat (dokumen) penagihan seperti dimaksud butir (3) Lampiran VI ini.
+                                                    </li>
+                                                @endif
                                                 @if (@$lampiran6->jenis_pembayaran=='2')
                                                     {{-- bertahap --}}
                                                     <li>
@@ -913,13 +925,13 @@
                                                     {{-- lansung --}}
                                                     Pelaksanaan pembayaran oleh PIHAK KESATU kepada PIHAK KEDUA dilakukan {{ $lampiran6->lama_pembayaran }} ({{ terbilang($lampiran6->lama_pembayaran) }})
                                                     hari kerja setelah perangkat penagihan dinyatakan lengkap diterima oleh PIHAK KESATU yang
-                                                    terdiri antara lain : 
+                                                    terdiri antara lain :
                                                     @else
                                                     {{-- bertahap --}}
                                                     Pelaksanaan pembayaran oleh PIHAK KESATU kepada PIHAK KEDUA di tiap tahapan
                                                     pengirimannya dilakukan {{ @$lampiran6->lama_pembayaran }} ({{ terbilang(@$lampiran6->lama_pembayaran) }}) hari kerja setelah perangkat penagihan dinyatakan lengkap
                                                     diterima oleh PIHAK KESATU yang terdiri antara lain :
-                                                    @endif  
+                                                    @endif
                                                     <ol>
                                                         <li style="text-align: justify;">Kuitansi yang bermeterai cukup.</li>
                                                         <li style="text-align: justify;">Faktur Pajak.</li>
@@ -938,7 +950,7 @@
                                                 <p style="text-align: justify; ">Pembayaran ini merupakan bagian yang tidak terpisahkan dari Perjanjian ini.</p>
                                             </ol>
                                         @endif
-                                        
+
                                         <div><br></div>
                                         <div><br></div>
                                         <table style="width: 100%;
@@ -961,7 +973,7 @@
                                                 </td>
                                             </tr>
                                         </table>
-                                        
+
                                     </div>
                                     {{-- end lampiran 6 --}}
 
@@ -1001,7 +1013,7 @@
                                                         {!! $lampiran7->alamat_peruri !!}
                                                     </td>
                                                 </tr>
-                                                
+
                                                 <tr>
                                                     <td style="text-align: justify;">
                                                         <br><br>
@@ -1012,7 +1024,7 @@
                                                 </tr>
                                             </table>
                                         </div>
-                                        
+
                                         <table style="width: 100%;
                                                 border-collapse: collapse;
                                                 margin-top: 20px;">
@@ -1033,7 +1045,7 @@
                                                 </td>
                                             </tr>
                                         </table>
-                                        
+
                                     </div>
                                     {{-- end lampiran 7 --}}
                                 </div>
@@ -1096,7 +1108,7 @@
         function submitRevisi() {
             var formRevisi = $('#inputRevisi');
             // console.log(formRevisi);
-            
+
             $.ajax({
                 method: 'POST',
                 url: "{{ route('submitRevisi') }}",

@@ -25,8 +25,8 @@
             <div id="formGambar">
                 <div class="form-group">
                     <div class="mb-3">
-                        <label for="gambar">Upload Spesifikasi (Image/PDF)</label>
-                        <input type="file" name="files[]" id="files[]" multiple class="form-control" accept="image/jpeg,image/png,image/jpg,application/pdf">
+                        <label for="gambar">Upload Spesifikasi (Image Only)</label>
+                        <input type="file" name="gambar[]" id="gambar[]" multiple class="form-control" >
                     </div>
                 </div>
 
@@ -128,7 +128,7 @@
                 contentType: false,
                 processData: false,
                 success: function(result) {
-
+    
                     $(".collapse").removeClass('show');
                     $('#collapseLampiran4').addClass('show');
                     console.log(result.message);

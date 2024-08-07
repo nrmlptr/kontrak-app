@@ -59,9 +59,10 @@
             <div><br></div>
             <div style="text-align: center; font-size: 15px;"><b>SPESIFIKASI TEKNIS</b></div>
             <div><br></div>
-            <div style="display: flex; justify-content: center; align-items: center;">
-                <img src="{{ storage_path('app/'.$l->gambar) }}" style="display: flex; justify-content: center; align-items: center; margin-left: 110px; max-width: 75%; height: 75%; max-height: 75vh; max-width: 75vw;">
+            <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+                <img src="{{ storage_path("app/".$l->gambar) }}" style="margin: 0 auto; max-width: 100%; height: auto;">
             </div>
+        
             @if (!$loop->last)
                 <div class="page-break"></div>
             @endif
@@ -72,19 +73,19 @@
     <div><br></div>
     <div><br></div>
 
-    <table style="width: 100%; border-collapse: collapse; margin-top: 40px;">
+    <table style="width: 100%; border-collapse: collapse; margin-top: 50px;">
         <tr>
             <th style="width: 50%; text-align: center; font-size: 14px;">PIHAK KEDUA,</th>
             <th style="width: 50%; text-align: center; font-size: 14px;">PIHAK KESATU,</th>
         </tr>
         <tr>
             <td style="vertical-align: top;">
-                <div style="padding-top: 80px; text-align: center; font-size: 14px;">
+                <div style="padding-top: 150px; text-align: center; font-size: 14px;">
                     <div style=""><b>{{ $pihak2name }}</b></div>
                 </div>
             </td>
             <td style="vertical-align: top;">
-                <div style="padding-top: 80px; text-align: center; font-size: 14px;">
+                <div style="padding-top: 150px; text-align: center; font-size: 14px;">
                     <div style=""><b>{{ $pihak1name }}</b></div>
                 </div>
             </td>

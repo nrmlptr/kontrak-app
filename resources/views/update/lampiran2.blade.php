@@ -8,11 +8,11 @@
             <input type="hidden" name="kontraks_id" value="{{ $data->id }}">
             <div class="form-group col-6">
                 <label for="nomor_sop">Nomor SOP</label>
-                <input type="text" name="nomor_sop" placeholder="Nomor SOP" class="form-control" value="{{ $lampiran2->nomor_sop }}" readonly required>
+                <input type="text" name="nomor_sop" placeholder="Nomor SOP" class="form-control" value="{{ $lampiran2->nomor_sop }}" id="nosoplampiran2" readonly required>
             </div>
             <div class=" form-group col-6">
                 <label for="tanggal_sop">Tanggal SOP</label>
-                <input type="date" name="tanggal_sop" class="form-control" value="{{ $lampiran2->tanggal_sop }}" readonly required>
+                <input type="date" name="tanggal_sop" class="form-control" value="{{ $lampiran2->tanggal_sop }}" id="tglsoplampiran2" readonly required>
             </div>
             <div class="form-group col-12">
                 <label for="perihal">Ruang Lingkup</label>
@@ -40,7 +40,7 @@
                     $(".collapse").removeClass('show');
                     $('#collapseLampiran3').addClass('show');
                     console.log(result.message);
-                    
+
                 }
             });
         }

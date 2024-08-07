@@ -65,14 +65,14 @@
                                         <textarea type="text" id="alamat" class="form-control" name="vendor_address" readonly>
                                             {!! $data->alamat_vendor !!}
                                         </textarea>
-                                       
+
                                         @error('vendor_address')
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="pihakname">Nama Pihak</label>
-                                        <input type="text" class="form-control" name="pihakname" 
+                                        <input type="text" class="form-control" name="pihakname"
                                             @if (@$data->vendortext->pihakname)
                                                 value="{{ @$data->vendortext->pihakname }}"
                                             @else
@@ -90,7 +90,7 @@
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>
-                                     
+
                                    <div class="form-group">
                                         <label for="akta">Akta</label>
                                         <textarea type="text" class="form-control" name="akta" id="akta">
@@ -106,7 +106,7 @@
                                         @enderror
                                     </div>
 
-                                   
+
                                 </div>
                                 <!-- /.card-body -->
 
@@ -129,6 +129,10 @@
         .highlight {
             background-color: yellow;
             font-weight: bold;
+        }
+
+        .note-editor.note-frame.panel.panel-default.fullscreen {
+            background-color: #fff;
         }
     </style>
 </div>

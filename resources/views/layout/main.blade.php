@@ -17,30 +17,30 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('lte/plugins/fontawesome-free/css/all.min.css') }}">
-    
+
     <!-- Ionicons -->
     {{-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> --}}
     {{-- <link rel="stylesheet" href="{{ asset('assets/ionicons.min.css') }}"> --}}
-    
+
     <!-- select2 -->
     {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
     <link rel="stylesheet" href="{{ asset('assets/select2.min.css') }}">
 
     <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet" href="{{ asset('lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
-    
+
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ asset('lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-    
+
     <!-- JQVMap -->
     <link rel="stylesheet" href="{{ asset('lte/plugins/jqvmap/jqvmap.min.css') }}">
-    
+
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('lte/dist/css/adminlte.min.css') }}">
-    
+
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="{{ asset('lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
-    
+
     <!-- Daterange picker -->
     <link rel="stylesheet" href="{{ asset('lte/plugins/daterangepicker/daterangepicker.css') }}">
 
@@ -121,7 +121,7 @@
                         <a href="{{ url($notification->data['url']. '?id='.$notification->id) }}" class="dropdown-item">
                             <i class="fas fa-envelope mr-2"></i> {{ $notification->data['title'] }}
                             <span class="float-right text-muted text-sm">{{ $notification->created_at->diffForHumans() }}</span>
-                            <p class="mb-0">{{ ucwords($notification->data['messages']) }}</p> 
+                            <p class="mb-0">{{ ucwords($notification->data['messages']) }}</p>
                         </a>
                         @endforeach
                         {{-- <div class="dropdown-divider"></div>
@@ -133,7 +133,7 @@
                         <i class="fas fa-expand-arrows-alt"></i>
                     </a>
                 </li>
-               
+
             </ul>
         </nav>
         <!-- /.navbar -->
@@ -200,13 +200,6 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-                                {{-- MENU MONITORING KONTRAK --}}
-                                <li class="nav-item">
-                                    <a href="{{ route('indexKontrak') }}" class="nav-link">
-                                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                                        <p>Monitoring Kontrak</p>
-                                    </a>
-                                </li>
 
                                 {{-- @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin') --}}
                                 {{-- @if(in_array('view-addKontrak', $permissions)) --}}
@@ -218,6 +211,17 @@
                                         </a>
                                     </li>
                                 @endif
+
+
+                                {{-- MENU MONITORING KONTRAK --}}
+                                <li class="nav-item">
+                                    <a href="{{ route('indexKontrak') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                                        <p>Monitoring Kontrak</p>
+                                    </a>
+                                </li>
+
+
 
                                 {{-- MENU REVIEW KONTRAK --}}
                                 <li class="nav-item">
@@ -287,7 +291,7 @@
                                 </ul>
                             </li>
                         @endif
-                            
+
                         {{-- MENU CONTROL PASAL  --}}
                         {{-- @if(Auth::user()->permission=='admin' || Auth::user()->permission=='writer') --}}
                         @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('writer'))
@@ -297,7 +301,7 @@
                                     <i class=" fas fa-book"></i>
                                     <p>Pasal</p>
                                 </a>
-                            </li> 
+                            </li>
                         @endif
 
                         {{-- MENU CONTROL USER --}}
@@ -349,7 +353,7 @@
                 </nav>
                 <!-- /.sidebar-menu -->
             </div>
-            
+
             <div class="text-center" style="position: absolute; bottom: 30px; display:block; width: 100%;">
                 <div class="text-light" id="waktu" style="font-size: 10px;"></div>
             </div>
@@ -377,53 +381,53 @@
 
     <!-- jQuery -->
     <script src="{{ asset('lte/plugins/jquery/jquery.min.js') }}"></script>
-    
+
     <!-- jQuery UI 1.11.4 -->
     <script src="{{ asset('lte/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-    
+
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
         $.widget.bridge('uibutton', $.ui.button)
     </script>
-    
+
     <!-- Bootstrap 4 -->
     <script src="{{ asset('lte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    
+
     <!-- ChartJS -->
     <script src="{{ asset('lte/plugins/chart.js/Chart.min.js') }}"></script>
-    
+
     <!-- Sparkline -->
     <script src="{{ asset('lte/plugins/sparklines/sparkline.js') }}"></script>
-    
+
     <!-- JQVMap -->
     <script src="{{ asset('lte/plugins/jqvmap/jquery.vmap.min.js') }}"></script>
     <script src="{{ asset('lte/plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>
-    
+
     <!-- jQuery Knob Chart -->
     <script src="{{ asset('lte/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
-    
+
     <!-- daterangepicker -->
     <script src="{{ asset('lte/plugins/moment/moment.min.js') }}"></script>
     <script src="{{ asset('lte/plugins/daterangepicker/daterangepicker.js') }}"></script>
-    
+
     <!-- Tempusdominus Bootstrap 4 -->
     <script src="{{ asset('lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
-    
+
     <!-- Summernote -->
     <script src="{{ asset('lte/plugins/summernote/summernote-bs4.min.js') }}"></script>
-    
+
     <!-- overlayScrollbars -->
     <script src="{{ asset('lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-    
+
     <!-- AdminLTE App -->
     <script src="{{ asset('lte/dist/js/adminlte.js') }}"></script>
-    
+
     <!-- AdminLTE for demo purposes -->
     <!-- <script src="{{ asset('lte/dist/js/demo.js') }}"></script> -->
-    
+
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <!-- <script src="{{ asset('lte/dist/js/pages/dashboard.js') }}"></script> -->
-    
+
     <!-- DataTables  & Plugins -->
     <script src="{{ asset('lte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -440,14 +444,14 @@
     <script src="{{ asset('lte/plugins/jszip/jszip.min.js') }}"></script>
     <script src="{{ asset('lte/plugins/pdfmake/pdfmake.min.js') }}"></script>
     <script src="{{ asset('lte/plugins/pdfmake/vfs_fonts.js') }}"></script>
-    
+
     <!-- select2 JS -->
     <script src="{{ asset('assets/select2.min.js') }}"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
-    
+
     {{-- flasher --}}
     <script src="{{ asset('assets/flasher.min.js') }}"></script>
-    
+
     {{-- sweetalert2 --}}
    <script src="{{ asset('assets/sweetalert2.all.min.js') }}"></script>
 
@@ -468,7 +472,7 @@
                 "pageLength": 5,
                 "lengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'semua']],
                 "searching": true,
-                "ordering": true,
+                "ordering": false,
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
@@ -500,7 +504,7 @@
                 "responsive": true,
                 "processing":true,
             });
-            
+
 
             $('#filter_type').change(function() {
                 if ($(this).val() === 'month') {
@@ -544,15 +548,15 @@
         function winpopup(url, windowname) {
             let screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
             let screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-            
+
             let popupWidth = 900;
             let popupHeight = 640;
-            
+
             let leftPosition = (screenWidth - popupWidth) / 2;
             let topPosition = (screenHeight - popupHeight) / 2;
-            
+
             let features = 'width=' + popupWidth + ',height=' + popupHeight + ',toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=' + leftPosition + ',top=' + topPosition;
-            
+
             window.open(url, windowname, features);
             return false;
         }
@@ -648,10 +652,10 @@
             var t = setTimeout(function(){
                 currentTime();
             }, 1000);
-            
+
         }
         currentTime();
-        
+
     </script>
     @stack('scripts')
 </body>

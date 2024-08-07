@@ -33,7 +33,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('indexKontrak') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Add Lampiran</li>
+                        <li class="breadcrumb-item active">Edit Konsep Kontrak</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -44,14 +44,13 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-
             <!-- <div class="row justify-content-center"> -->
             <!-- left column -->
             <!-- <div class="col-lg-12 d-flex align-items-strech"> -->
             <!-- general form elements -->
             <div class="card card-primary w-100">
                 <div class="card-header">
-                    <h3 class="card-title">Input Data Lampiran</h3>
+                    <h3 class="card-title mr-3">Edit Data</h3>
                 </div>
                 <div class="row mt-2 ml-2">
                     <div class="col-12">
@@ -79,7 +78,7 @@
                                 <!-- ISI KONTEN LAMPIRAN 1 -->
                                 <div id="collapseLampiran1" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                                     <div class="card-body">
-                                        @include('component/form_lampiran1')
+                                        @include('update/lampiran1')
                                     </div>
                                 </div>
                             </div>
@@ -96,7 +95,7 @@
                                 <!-- ISI KONTEN LAMPIRAN 2 -->
                                 <div id="collapseLampiran2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                                     <div class="card-body">
-                                        @include('component/form_lampiran2')
+                                   @include('update/lampiran2')
                                     </div>
                                 </div>
                             </div>
@@ -113,7 +112,7 @@
                                 <!-- ISI KONTEN LAMPIRAN 3 -->
                                 <div id="collapseLampiran3" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                                     <div class="card-body">
-                                        @include('component/form_lampiran3')
+                                      @include('update/lampiran3')
                                     </div>
                                 </div>
                             </div>
@@ -130,7 +129,7 @@
                                 <!-- ISI KONTEN LAMPIRAN 4 -->
                                 <div id="collapseLampiran4" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
                                     <div class="card-body">
-                                        @include('component/form_lampiran4')
+                                         @include('update/lampiran4')
                                     </div>
                                 </div>
                             </div>
@@ -147,7 +146,7 @@
                                 <!-- ISI KONTEN LAMPIRAN 5 -->
                                 <div id="collapseLampiran5" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
                                     <div class="card-body">
-                                        @include('component/form_lampiran5')
+                                      @include('update/lampiran5')
                                     </div>
                                 </div>
                             </div>
@@ -164,7 +163,7 @@
                                 <!-- ISI KONTEN LAMPIRAN 6 -->
                                 <div id="collapseLampiran6" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
                                     <div class="card-body">
-                                        @include('component/form_lampiran6')
+                                   @include('update/lampiran6')
                                     </div>
                                 </div>
                             </div>
@@ -181,7 +180,7 @@
                                 <!-- ISI KONTEN LAMPIRAN 7 -->
                                 <div id="collapseLampiran7" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
                                     <div class="card-body">
-                                        @include('component/form_lampiran7')
+                                    @include('update/lampiran7konsep')
                                     </div>
                                 </div>
                             </div>
@@ -203,9 +202,8 @@
     <!-- /.content -->
 </div>
 @endsection
+
 @push('scripts')
-    <!-- jQuery -->
-    {{-- <script src="{{ asset('lte/plugins/jquery/jquery.min.js') }}"></script> --}}
     <script src="{{ asset('assets/summernote-0.8.18-dist/summernote.min.js') }}"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> --}}
     <script type="text/javascript">
@@ -224,26 +222,19 @@
 
             $.ajax({
                 type: 'GET',
-                url: "{{ route('dataBarang') }}",
+                url: "{{route('dataBarang')}}",
                 data: {
                     _token: $("input[name='_token']").val(),
-                    po: nomor_sop,
-                    id: {{ $data->id }}
+                    po: nomor_sop
                 },
                 success: function(response) {
-                    // console.log(response);
+                    console.log(response);
                     if (response[0].id) {
-                        isiNilaiForm3(response);
-                        isiNilaiForm4(response);
-                        isiNilaiForm5(response);
-
-                        // Panggil fungsi hitungTotalHarga setelah formulir selesai dimuat
-                        hitungTotalHarga();
-                        $.get(`/dataVendor/${response[0].registration_no}`, function(data) {
-                            // Setelah mendapatkan data, set nilai textarea
-                            // $('textarea[name="alamat_vendor"]').val(data.alamat);
-                            $('textarea[name="alamat_vendor"]').summernote('code',data.alamat);
-                        });
+                        // isiNilaiForm4(response);
+                        // isiNilaiForm5(response);
+                        // $.get(`/dataVendor/${response[0].registration_no}`,function(data){
+                        //     $('textarea[name="alamat_vendor"]').val(data.alamat)
+                        //  });
                     } else {
                         console.log("Kontrak tidak ditemukan");
                     }
@@ -254,77 +245,11 @@
             });
         });
 
-
-        // fungsi buat konfigurasi lock unlock item readonly
-        // function opsi(value) {
-        //     var st = $("#lockfitur").val();
-        //     if (st == "on") {
-        //         document.getElementById("nosurat-header1").readOnly     = false;
-        //         document.getElementById("nosurat-header2").readOnly     = false;
-        //         document.getElementById("nosurat-header3").readOnly     = false;
-        //         document.getElementById("nosurat-header4").readOnly     = false;
-        //         document.getElementById("notgl-header1").readOnly       = false;
-        //         document.getElementById("notgl-header2").readOnly       = false;
-        //         document.getElementById("notgl-header3").readOnly       = false;
-        //         document.getElementById("notgl-header4").readOnly       = false;
-        //         document.getElementById("nosoplampiran2").readOnly      = false;
-        //         document.getElementById("tglsoplampiran2").readOnly     = false;
-        //         document.getElementById("nosoplampiran4").readOnly      = false;
-        //         document.getElementById("tglsoplampiran4").readOnly     = false;
-        //         document.getElementById("plantlampiran4").readOnly      = false;
-        //         document.getElementById("nosppblampiran4").readOnly     = false;
-        //         document.getElementById("kodebaranglampiran4").readOnly = false;
-        //         document.getElementById("nmbaranglampiran4").readOnly   = false;
-        //         document.getElementById("satuanlampiran4").readOnly     = false;
-        //         document.getElementById("nosppblampiran5").readOnly     = false;
-        //         document.getElementById("kodebaranglampiran5").readOnly = false;
-        //         document.getElementById("nmbaranglampiran5").readOnly   = false;
-        //         document.getElementById("satuanlampiran5").readOnly     = false;
-        //         document.getElementById("plantlampiran5").readOnly      = false;
-        //         document.getElementById("hargaawallampiran5").readOnly  = false;
-        //         document.getElementById("jumlahlampiran5").readOnly     = false;
-        //         document.getElementById("nosoplampiran6").readOnly      = false;
-        //         document.getElementById("tglsoplampiran6").readOnly     = false;
-        //         document.getElementById("nosplampiran6").readOnly       = false;
-        //         document.getElementById("tglsplampiran6").readOnly      = false;
-        //     } else{
-        //         document.getElementById("nosurat-header1").readOnly     = true;
-        //         document.getElementById("nosurat-header2").readOnly     = true;
-        //         document.getElementById("nosurat-header3").readOnly     = true;
-        //         document.getElementById("nosurat-header4").readOnly     = true;
-        //         document.getElementById("notgl-header1").readOnly       = true;
-        //         document.getElementById("notgl-header2").readOnly       = true;
-        //         document.getElementById("notgl-header3").readOnly       = true;
-        //         document.getElementById("notgl-header4").readOnly       = true;
-        //         document.getElementById("nosoplampiran2").readOnly      = true;
-        //         document.getElementById("tglsoplampiran2").readOnly     = true;
-        //         document.getElementById("nosoplampiran4").readOnly      = true;
-        //         document.getElementById("tglsoplampiran4").readOnly     = true;
-        //         document.getElementById("plantlampiran4").readOnly      = true;
-        //         document.getElementById("nosppblampiran4").readOnly     = true;
-        //         document.getElementById("kodebaranglampiran4").readOnly = true;
-        //         document.getElementById("nmbaranglampiran4").readOnly   = true;
-        //         document.getElementById("satuanlampiran4").readOnly     = true;
-        //          document.getElementById("nosppblampiran5").readOnly    = true;
-        //         document.getElementById("kodebaranglampiran5").readOnly = true;
-        //         document.getElementById("nmbaranglampiran5").readOnly   = true;
-        //         document.getElementById("satuanlampiran5").readOnly     = true;
-        //         document.getElementById("plantlampiran5").readOnly      = true;
-        //         document.getElementById("hargaawallampiran5").readOnly  = true;
-        //         document.getElementById("jumlahlampiran5").readOnly     = true;
-        //         document.getElementById("nosoplampiran6").readOnly     = true;
-        //         document.getElementById("tglsoplampiran6").readOnly     = true;
-        //         document.getElementById("nosplampiran6").readOnly       = true;
-        //         document.getElementById("tglsplampiran6").readOnly      = true;
-        //     }
-        //     // console.log(st);
-        // }
-
         function setReadonly(isReadonly) {
             let elements = [
                 "#nosurat-header1", "#nosurat-header2", "#nosurat-header3", "#nosurat-header4",
                 "#notgl-header1", "#notgl-header2", "#notgl-header3", "#notgl-header4",
-                "#nosoplampiran2", "#tglsoplampiran2", "#nosppblampiran3", "#kodebaranglampiran3", "#nmbrglampiran3", "#satuanbrglampiran3",  "#nosoplampiran4", "#tglsoplampiran4",
+                "#nosoplampiran2", "#tglsoplampiran2", "#nosppblampiran3", "#kodebaranglampiran3", "#nmbrglampiran3", "#satuanbrglampiran3", "#nosoplampiran4", "#tglsoplampiran4",
                 "#plantlampiran4", "#nosppblampiran4", "#kodebaranglampiran4", "#nmbaranglampiran4",
                 "#satuanlampiran4", "#nosppblampiran5", "#kodebaranglampiran5", "#nmbaranglampiran5",
                 "#satuanlampiran5", "#plantlampiran5", "#hargaawallampiran5", "#jumlahlampiran5",
@@ -358,6 +283,4 @@
             }
         }
     </script>
-
-
 @endpush

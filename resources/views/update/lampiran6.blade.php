@@ -24,19 +24,19 @@
         <div class="row">
             <div class="form-group col-2" id="formLangsung">
                 <label for="nomor_sop">Nomor SOP</label>
-                <input type="text" name="nomor_sop" class="form-control" value="{{ @$lampiran6->nomor_sop }}" readonly>
+                <input type="text" name="nomor_sop" class="form-control" id="nosoplampiran6" value="{{ @$lampiran6->nomor_sop }}" readonly>
             </div>
             <div class="form-group col-2" id="formLangsung2">
                 <label for="tanggal_sop">Tanggal SOP</label>
-                <input type="date" name="tanggal_sop" class="form-control" value="{{ @$lampiran6->tanggal_sop }}" readonly>
+                <input type="date" name="tanggal_sop" class="form-control" id="tglsoplampiran6" value="{{ @$lampiran6->tanggal_sop }}" readonly>
             </div>
             <div class="form-group col-2" id="formLangsung3">
                 <label for="no_kontrak">No Kontrak</label>
-                <input type="text" name="no_kontrak" class="form-control" value="{{ @$lampiran6->no_kontrak }}" readonly>
+                <input type="text" name="no_kontrak" class="form-control" id="nosplampiran6" value="{{ @$lampiran6->no_kontrak }}" readonly>
             </div>
             <div class="form-group col-2" id="formLangsung4">
                 <label for="date_kontrak">Tanggal Kontrak</label>
-                <input type="date" name="date_kontrak" class="form-control" value="{{ @$lampiran6->date_kontrak }}" readonly>
+                <input type="date" name="date_kontrak" class="form-control" id="tglsplampiran6" value="{{ @$lampiran6->date_kontrak }}" readonly>
             </div>
             <div class="form-group col-3" id="formLangsung5">
                 <label for="lama_pembayaran">Waktu Pembayaran (Hari)</label>
@@ -44,13 +44,13 @@
             </div>
         </div>
 
-        
+
         <div class=" card-footer">
             <button type="button" class="btn btn-block btn-secondary btn-lg" onclick="submitLampiran6()">Submit</button>
         </div>
     </form>
 </div>
-@push('scripts') 
+@push('scripts')
     <script type="text/javascript">
 
         // SUBMIT DATA

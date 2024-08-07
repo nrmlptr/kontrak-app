@@ -16,6 +16,10 @@
         font-family: 'Segoe UI';
 
     }
+
+    .note-editor.note-frame.panel.panel-default.fullscreen {
+        background-color: #fff;
+    }
 </style>
 
 <div class="content-wrapper">
@@ -223,7 +227,7 @@
                     error: function(xhr, status, error) {
                         console.log("error");
                     }
-            });    
+            });
         });
     </script>
 

@@ -106,14 +106,14 @@
                                     <input type="text" name="perihal[]" value="{{ $l['perihal'] }}" placeholder="Nama Header" class="form-control" >
                                 </div>
                                 <div class="form-group col-6">
-                                    <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control"  value="{{ $l['nomor_surat'] }}" @if(! in_array($k, $keynum)) readonly @endif >
+                                    <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control"  value="{{ $l['nomor_surat'] }}" @if(! in_array($k, $keynum))  @endif >
                                 </div>
                                 <div class="form-group col-6">
-                                    <input type="date" name="tanggal_surat[]" class="form-control"  value="{{ $l['tanggal_surat'] }}" @if(! in_array($k, $keynum)) readonly @endif>
+                                    <input type="date" name="tanggal_surat[]" class="form-control"  value="{{ $l['tanggal_surat'] }}" @if(! in_array($k, $keynum))  @endif>
                                 </div>
                             </div>
                         </li>
-                    @endforeach 
+                    @endforeach
                 </ul>
             </div>
         </div>
@@ -202,6 +202,6 @@
         function submit_Lampiran1() {
             submitLampiran1()
         }
-        
+
     </script>
 @endpush

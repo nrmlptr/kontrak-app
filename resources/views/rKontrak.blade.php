@@ -42,7 +42,7 @@
                                             <label for="">Nama Vendor</label>
                                             <input type="text" name="nm_vendor" id="filter-nama-vendor" class="form-control filter">
                                         </div>
-                                        <div class="col-md-2 mb-3">
+                                        {{-- <div class="col-md-2 mb-3">
                                             <label for="">Status</label>
                                             <select name="status" id="filter-status" class="form-control filter">
                                                 <option value="">Pilih Status</option>
@@ -60,6 +60,19 @@
                                                 <option value="editedkadiv">Diperiksa Ulang Kasek</option>
                                                 <option value="approvedkadiv">Disetujui Kadiv (NET)</option>
                                             </select>
+                                        </div> --}}
+                                        <div class="col-md-2 mb-3">
+                                            <label for="">Status</label>
+                                            <select name="status" id="filter-status" class="form-control filter">
+                                                <option value="">Pilih Status</option>
+                                                <option value="draft">Draft</option>
+                                                <option value="konsep">Konsep</option>
+                                                <option value="review">Review</option>
+                                                <option value="revisi">Revisi</option>
+                                                <option value="edited">Review Ulang Kasek</option>
+                                                <option value="approved">Approved</option>
+                                                <!-- tambahkan opsi lainnya jika perlu -->
+                                            </select>
                                         </div>
                                         <div class="col-md-2 mb-3">
                                             <label for="">Unit Kerja</label>
@@ -68,7 +81,7 @@
                                                 <option value="41A10">Investasi</option>
                                                 <option value="41A20">Jasa Barum</option>
                                                 <option value="41A30">Lokal</option>
-                                                <option value="41A40">Import</option> 
+                                                <option value="41A40">Import</option>
                                             </select>
                                         </div>
                                         <div class="col-md-2 mb-3">
@@ -118,8 +131,8 @@
                                     <tr>
                                         <th>Aksi</th>
                                         <th>No</th>
-                                        <th style="width: 10%">Nomor SP</th>
-                                        <th>Tanggal SP</th>
+                                        <th style="width: 10%">Nomor Kontrak</th>
+                                        <th>Tanggal Kontrak</th>
                                         <th>Nomor SOP</th>
                                         <th>Tanggal SOP</th>
                                         <th>Nama Vendor</th>
@@ -127,7 +140,7 @@
                                         <th>Pembuat</th>
                                         <th>Unit Kerja</th>
                                         <th>Jenis Kontrak</th>
-                                        <th>Status Jaminan</th>                                        
+                                        <th>Status Jaminan</th>
                                     </tr>
                                 </thead>
                                 <tbody align="center">
@@ -150,26 +163,26 @@
                                                     $rkontrakexist=$d->revisiKontraks->pluck('user_id')->toArray();
                                                 @endphp
 
-                                                {{-- buat kondisi untuk admin dan writer karena ada tombol showRevisi jadi disitu dicek dlu apakah kontrak tersebut pembuatnya sama dengan name user yang lagi login? kalau iya, baru bisa showLampiran buat edit, kalau engga berarti forbidden --}} 
+                                                {{-- buat kondisi untuk admin dan writer karena ada tombol showRevisi jadi disitu dicek dlu apakah kontrak tersebut pembuatnya sama dengan name user yang lagi login? kalau iya, baru bisa showLampiran buat edit, kalau engga berarti forbidden --}}
                                                 @if($d->pembuat == $cekPembuat || Auth::user()->hasRole('admin'))
                                                     {{-- JIKA DATA REVISI UNTUK KONTRAK TERSEBUT ADA --}}
                                                     @if(!empty($rkontrakexist))
                                                         {{-- cek lagi, jika statusnya belum disetujui kadiv, maka tampilkan tombol show revisi untuk nantinya edit data lampiran --}}
                                                         @if($d->status !== 'approvedkadiv')
-                                                            
+
                                                             <a href="{{ route('viewRevisi', ['id' => $d->id]) }}" class="btn btn-sm btn-secondary" title="Show Revisi"><i class="fas fa-eye"></i><br></a>
                                                             {{-- <a href="{{ route('editLampiran', ['id' => $d->id]) }}" class="btn btn-sm btn-warning"><i class="fas fa-pen"></i> Edit Lampiran</a> --}}
-                                                            
+
                                                         @else
                                                             <span class="badge badge-success">Kontrak selesai dibuat</span>
-                                                        @endif    
+                                                        @endif
                                                     @else
                                                         <span class="badge badge-info">Tidak Ada Revisi</span>
                                                     @endif
                                                 @else
                                                     <span class="badge badge-dark">Forbidden</span>
                                                 @endif
-                                                
+
                                             @endif
                                         </td>
 
@@ -268,6 +281,46 @@
             let href=$(this).attr('href')
             // console.log(href)
             winpopup(href,'historyRkontrak')
+        });
+
+
+        document.getElementById('filter-status').addEventListener('change', function() {
+            let selectedStatus = this.value;
+
+            // Ambil semua baris data (sesuaikan dengan struktur HTML Anda)
+            let rows = document.querySelectorAll('.data-row');
+
+            rows.forEach(row => {
+                let status = row.getAttribute('data-status');
+
+                // Pemetaan status spesifik ke status umum
+                let statusMap = {
+                    'draft': 'draft',
+                    'konsep': 'konsep',
+                    'reviewkasek': 'review',
+                    'revisikasek': 'revisi',
+                    'editedkasek': 'edited',
+                    'approvedkasek': 'approved',
+                    'reviewkadept': 'review',
+                    'revisikadept': 'revisi',
+                    'editedkadept': 'edited',
+                    'approvedkadept': 'approved',
+                    'reviewkadiv': 'review',
+                    'revisikadiv': 'revisi',
+                    'editedkadiv': 'edited',
+                    'approvedkadiv': 'approved',
+                    // tambahkan pemetaan lainnya jika perlu
+                };
+
+                let generalStatus = statusMap[status] || status;
+
+                // Tampilkan atau sembunyikan baris berdasarkan filter
+                if (selectedStatus === '' || generalStatus === selectedStatus) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
         });
     </script>
 @endpush
