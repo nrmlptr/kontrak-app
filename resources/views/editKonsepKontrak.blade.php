@@ -231,15 +231,15 @@
                 },
                 success: function(response) {
                     console.log(response);
-                    if (response[0].id) {
-                        // isiNilaiForm4(response);
-                        // isiNilaiForm5(response);
-                        // $.get(`/dataVendor/${response[0].registration_no}`,function(data){
-                        //     $('textarea[name="alamat_vendor"]').val(data.alamat)
-                        //  });
-                    } else {
-                        console.log("Kontrak tidak ditemukan");
-                    }
+                    // if (response[0].id) {
+                    //     // isiNilaiForm4(response);
+                    //     // isiNilaiForm5(response);
+                    //     // $.get(`/dataVendor/${response[0].registration_no}`,function(data){
+                    //     //     $('textarea[name="alamat_vendor"]').val(data.alamat)
+                    //     //  });
+                    // } else {
+                    //     console.log("Kontrak tidak ditemukan");
+                    // }
                 },
                 error: function(xhr, status, error) {
                     console.log("error");

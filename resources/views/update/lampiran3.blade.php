@@ -29,7 +29,7 @@
                 <div class="form-group">
                     <div class="mb-3">
                         <label for="gambar">Upload Spesifikasi (Image Only)</label>
-                        <input type="file" name="gambar[]" id="gambar[]" multiple class="form-control" >
+                        <input type="file" name="files[]" id="files[]" multiple class="form-control" accept="image/jpeg,image/png,image/jpg,application/pdf" >
                     </div>
                 </div>
                 <div id="validationErrors" style="color: red;"></div>

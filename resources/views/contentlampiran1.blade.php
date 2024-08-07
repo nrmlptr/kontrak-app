@@ -20,13 +20,13 @@
         #header {
             position: fixed;
             box-sizing: border-box;
-            padding: 10px; 
+            padding: 10px;
             top: 0;
             left: 0;
             width: 100%;
             background-color: white;
-            z-index: 1; 
-            margin-bottom: 50px; 
+            z-index: 1;
+            margin-bottom: 50px;
         }
 
         table{
@@ -45,7 +45,7 @@
             font-size: 12px;
             margin: 0
         }
-        
+
        .total-pages::after {
             content: "{{ $totalPages }}"
         }
@@ -76,12 +76,12 @@
             <tr>
                 <td style="font-size: 14px;"><b>Tanggal : {{ tanggal_indonesia($data->date_kontrak) }}</b></td>
             </tr>
-            
+
         </tbody>
     </table>
     <div><br></div>
     <div style="text-align: center;"><b>DOKUMEN-DOKUMEN PENGADAAN</b></div>
- 
+
 </div>
 
 @php
@@ -111,12 +111,12 @@
         </tr>
         <tr>
             <td style="vertical-align: top;">
-                <div style="padding-top: 150px; text-align: center; font-size: 14px;">
+                <div style="padding-top: 65px; text-align: center; font-size: 14px;">
                     <div style=""><b>{{ $pihak2name }}</b></div>
                 </div>
             </td>
             <td style="vertical-align: top;">
-                <div style="padding-top: 150px; text-align: center; font-size: 14px;">
+                <div style="padding-top: 65px; text-align: center; font-size: 14px;">
                     <div style=""><b>{{ $pihak1name }}</b></div>
                 </div>
             </td>

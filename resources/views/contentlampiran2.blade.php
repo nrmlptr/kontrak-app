@@ -25,7 +25,7 @@
             left: 0;
             width: 100%;
             background-color: white;
-            z-index: 1; 
+            z-index: 1;
             /* margin-bottom: 50px;  */
         }
         table{
@@ -46,7 +46,7 @@
         }
 
         .total-pages::after {
-            content: counter(page); 
+            content: counter(page);
         }
 
     </style>
@@ -110,19 +110,19 @@
     <div><br></div>
     <table style="width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;">
+            margin-top: 35px;">
         <tr>
             <th style="width: 50%;text-align: center; font-size: 14px;">PIHAK KEDUA,</th>
             <th style="width: 50%;text-align: center; font-size: 14px;">PIHAK KESATU,</th>
         </tr>
         <tr>
             <td style="vertical-align: top;">
-                <div style="padding-top: 150px; text-align: center; font-size: 14px;">
+                <div style="padding-top: 65px; text-align: center; font-size: 14px;">
                     <div style=""><b>{{ $pihak2name }}</b></div>
                 </div>
             </td>
             <td style="vertical-align: top;">
-                <div style="padding-top: 150px; text-align: center; font-size: 14px;">
+                <div style="padding-top: 65px; text-align: center; font-size: 14px;">
                     <div style=""><b>{{ $pihak1name }}</b></div>
                 </div>
             </td>

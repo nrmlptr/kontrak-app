@@ -62,7 +62,7 @@
             <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
                 <img src="{{ storage_path("app/".$l->gambar) }}" style="margin: 0 auto; max-width: 100%; height: auto;">
             </div>
-        
+
             @if (!$loop->last)
                 <div class="page-break"></div>
             @endif

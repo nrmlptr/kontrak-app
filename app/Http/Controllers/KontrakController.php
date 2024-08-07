@@ -1091,17 +1091,40 @@ class KontrakController extends Controller
                     if ($extension === 'pdf') {
                         // Simpan PDF dan konversi jadi gambar
                         // Tentukan folder tujuan untuk gambar
-                        $outputDir = storage_path('app/public/uploads/spesifikasi_teknis/');
+                        // $outputDir = storage_path('app/public/uploads/spesifikasi_teknis/');
 
                         // Mengonversi semua halaman dalam PDF ke gambar
-                        $gsCommand = "gs -sDEVICE=pngalpha -o \"$outputDir/page-%03d.png\" -sDEVICE=pngalpha -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -r150x150 \"$pdfPath\"";
+                        // $gsCommand = "gs -sDEVICE=pngalpha -o \"$outputDir/page-%03d.png\" -sDEVICE=pngalpha -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -r150x150 \"$pdfPath\"";
+                        // exec($gsCommand, $output, $returnVar);
+
+                        // if ($returnVar == 0) {
+                        //     // Mengambil semua file yang dihasilkan
+                        //     $files = glob($outputDir . 'page-*.png');
+                        //     foreach ($files as $filePath) {
+                        //         $relativePath = 'public/uploads/spesifikasi_teknis/' . basename($filePath);
+                        //         $gambarPaths[] = $relativePath;
+                        //     }
+                        // } else {
+                        //     return response()->json(['message' => 'Konversi PDF ke gambar gagal'], 500);
+                        // }
+
+                        // Membuat folder tujuan untuk setiap upload berdasarkan timestamp
+                        $uploadTimestamp = time();
+                        $outputDir = storage_path("app/public/uploads/spesifikasi_teknis/{$uploadTimestamp}/");
+                        if (!file_exists($outputDir)) {
+                            mkdir($outputDir, 0777, true);
+                        }
+
+                        // Mengonversi semua halaman dalam PDF ke gambar
+                        $gsCommand = "gs -sDEVICE=pngalpha -o \"{$outputDir}page-%03d.png\" -sDEVICE=pngalpha -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -r150x150 \"{$pdfPath}\"";
                         exec($gsCommand, $output, $returnVar);
+
 
                         if ($returnVar == 0) {
                             // Mengambil semua file yang dihasilkan
                             $files = glob($outputDir . 'page-*.png');
                             foreach ($files as $filePath) {
-                                $relativePath = 'public/uploads/spesifikasi_teknis/' . basename($filePath);
+                                $relativePath = 'public/uploads/spesifikasi_teknis/' . $uploadTimestamp . '/' . basename($filePath);
                                 $gambarPaths[] = $relativePath;
                             }
                         } else {
