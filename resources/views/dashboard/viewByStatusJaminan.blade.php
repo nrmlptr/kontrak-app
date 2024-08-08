@@ -69,7 +69,7 @@
                                                         @if($d->unit_kerja == '41A10')
                                                             Investasi
                                                         @elseif($d->unit_kerja == '41A20')
-                                                            Jasa Baru
+                                                            Jasa Barum
                                                         @elseif($d->unit_kerja == '41A30')
                                                             Lokal
                                                         @else

@@ -186,12 +186,15 @@
                                                     @endphp
                                                     {{-- If Lampiran7 untuk kontrak tersebut benar tidak ada, show the button --}}
                                                     @if($cekLampiran7)
-
-                                                            <a href="{{ route('createLampiran', ['id' => $d->id]) }}" class="btn btn-sm btn-warning mt-2" title="Input Lampiran"><i class="fas fa-pen"></i></a>
-
-
+                                                        <a href="{{ route('createLampiran', ['id' => $d->id]) }}" class="btn btn-sm btn-warning mt-2" title="Input Lampiran"><i class="fas fa-pen"></i></a>
                                                     @else
                                                         <span class="badge badge-info">Lampiran sudah dibuat</span>
+                                                    @endif
+
+
+                                                    {{-- tombol preview konsep --}}
+                                                    @if($d->status == 'konsep')
+                                                        <a href="{{ route('previewKontrak', ['id' => $d->id]) }}" class="btn btn-sm btn-primary mt-2" title="Lihat Konsep"><i class="fas fa-book-reader"></i></a>
                                                     @endif
                                                     </td>
                                                 @else

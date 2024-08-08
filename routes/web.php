@@ -39,6 +39,10 @@ Route::get('/php', function () {
     echo phpinfo();
 });
 
+// Route::group(['middleware' => ['web', 'https']], function () {
+//     Route::get('/export', [KontrakController::class, 'export'])->name('contracts.export');
+// });
+
 Route::get('/pdf-to-images', [PDFConvertController::class, 'index'])->name('pdf-to-images');
 
 Route::middleware('auth')->group(
