@@ -1108,23 +1108,49 @@ class KontrakController extends Controller
                         //     return response()->json(['message' => 'Konversi PDF ke gambar gagal'], 500);
                         // }
 
+                        // VERSI 2 ==================================================================================================================================
+
                         // Membuat folder tujuan untuk setiap upload berdasarkan timestamp
-                        $uploadTimestamp = time();
-                        $outputDir = storage_path("app/public/uploads/spesifikasi_teknis/{$uploadTimestamp}/");
-                        if (!file_exists($outputDir)) {
-                            mkdir($outputDir, 0777, true);
-                        }
+                        // $uploadTimestamp = time();
+                        // $outputDir = storage_path("app/public/uploads/spesifikasi_teknis/{$uploadTimestamp}/");
+                        // if (!file_exists($outputDir)) {
+                        //     mkdir($outputDir, 0777, true);
+                        // }
 
                         // Mengonversi semua halaman dalam PDF ke gambar
-                        $gsCommand = "gs -sDEVICE=pngalpha -o \"{$outputDir}page-%03d.png\" -sDEVICE=pngalpha -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -r150x150 \"{$pdfPath}\"";
-                        exec($gsCommand, $output, $returnVar);
+                        // $gsCommand = "gs -sDEVICE=pngalpha -o \"{$outputDir}page-%03d.png\" -sDEVICE=pngalpha -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -r150x150 \"{$pdfPath}\"";
+                        // exec($gsCommand, $output, $returnVar);
 
+
+                        // if ($returnVar == 0) {
+                        // Mengambil semua file yang dihasilkan
+                        //     $files = glob($outputDir . 'page-*.png');
+                        //     foreach ($files as $filePath) {
+                        //         $relativePath = 'public/uploads/spesifikasi_teknis/' . $uploadTimestamp . '/' . basename($filePath);
+                        //         $gambarPaths[] = $relativePath;
+                        //     }
+                        // } else {
+                        //     return response()->json(['message' => 'Konversi PDF ke gambar gagal'], 500);
+                        // }
+
+
+                        // VERSI 3 ==================================================================================================================================
+                        // Membuat nama file yang unik dengan menyertakan kontraks_id dan halaman
+                        $kontraksID = $kontraksId;
+                        $baseFilename = pathinfo($filename, PATHINFO_FILENAME);
+                        $outputDir = storage_path("app/public/uploads/spesifikasi_teknis/");
+
+
+                        // Mengonversi semua halaman dalam PDF ke gambar
+                        $gsCommand = "gs -sDEVICE=pngalpha -o \"{$outputDir}{$kontraksID}_{$baseFilename}_page-%03d.png\" -sDEVICE=pngalpha -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -r150x150 \"{$pdfPath}\"";
+                        exec($gsCommand, $output, $returnVar);
 
                         if ($returnVar == 0) {
                             // Mengambil semua file yang dihasilkan
-                            $files = glob($outputDir . 'page-*.png');
+                            $files = glob("{$outputDir}{$kontraksID}_{$baseFilename}_page-*.png");
+                            // dd($files);
                             foreach ($files as $filePath) {
-                                $relativePath = 'public/uploads/spesifikasi_teknis/' . $uploadTimestamp . '/' . basename($filePath);
+                                $relativePath = 'public/uploads/spesifikasi_teknis/' . basename($filePath);
                                 $gambarPaths[] = $relativePath;
                             }
                         } else {
@@ -4300,7 +4326,5 @@ class KontrakController extends Controller
         return view('dashboard.viewKontrakProses', compact('data'));
     }
 
-    public function tesCoplit()
-    {
-    }
+    public function tesCoplit() {}
 }

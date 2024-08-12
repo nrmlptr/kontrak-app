@@ -75,7 +75,7 @@
 
 
                         <a href="{{ route('cetakKontrak',$data->id) }}" target="_blank"  class="btn btn-sm btn-secondary mr-1 mb-3"><i class="nav-icon fas fa-print"></i></i> Cetak Kontrak</a>
-                        <a href="{{ route('rKontrak') }}" target="_blank"  style="float: right;" class="btn btn-sm btn-danger mr-1 mb-3">
+                        <a href="{{ route('rKontrak') }}" style="float: right;" class="btn btn-sm btn-danger mr-1 mb-3">
                            <i class="fas fa-backward"></i> Back
                         </a>
                         {{-- @if(Auth::user()->permission=='kasek' || Auth::user()->permission=='kadept' || Auth::user()->permission=='kadiv') --}}
