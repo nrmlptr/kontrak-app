@@ -4,7 +4,7 @@
     <style type="text/css">
         body {
             counter-reset: page;
-            padding-top: 130px;
+            padding-top: 180px;
             margin: 0;
             position: relative;
         }

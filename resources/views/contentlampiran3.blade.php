@@ -104,7 +104,7 @@
         @foreach($lampiran3 as $l)
             @if($l->gambarnon !== null)
                 <div style="display: grid; place-items: center;">
-                    <img src="{{ storage_path('app/'.$l->gambarnon) }}" style="display: block; margin: 20px auto; max-width: 100%; height: auto;">
+                    <img src="{{ storage_path('app/'.$l->gambarnon) }}" style="display: block; margin: 40px auto; max-width: 100%; height: auto;">
                 </div>
             @endif
         @endforeach
@@ -136,25 +136,26 @@
     <div><br></div>
     <div><br></div>
 
-    <table style="width: 100%; border-collapse: collapse; margin-top: 35px;">
+    <table style="width: 100%; border-collapse: collapse; margin-top: 50px; position: relative; bottom: 0; left: 0;">
         <tr>
             <th style="width: 50%; text-align: center; font-size: 14px;">PIHAK KEDUA,</th>
             <th style="width: 50%; text-align: center; font-size: 14px;">PIHAK KESATU,</th>
         </tr>
         <tr>
             <td style="vertical-align: top;">
-                <div style="padding-top: 65px; text-align: center; font-size: 14px;">
+                <div style="padding-top: 100px; text-align: center; font-size: 14px;">
                     <div style=""><b>{{ $pihak2name }}</b></div>
                 </div>
             </td>
             <td style="vertical-align: top;">
-                <div style="padding-top: 65px; text-align: center; font-size: 14px;">
+                <div style="padding-top: 100px; text-align: center; font-size: 14px;">
                     <div style=""><b>{{ $pihak1name }}</b></div>
                 </div>
             </td>
         </tr>
     </table>
 </div>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

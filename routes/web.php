@@ -59,10 +59,6 @@ Route::middleware('auth')->group(
         )->name('dataBarang');
         Route::get('/dataVendor/{no_vendor}', [KontrakController::class, 'vendor_data'])->name('Vendordata');
 
-
-
-
-
         // ====================================================DASHBOARD ========================================================================================
         // VIEW detail grafik KONTRAK BY STATUS
         Route::get('/contracts/status/{status}', [HomeController::class, 'viewByStatus'])->name('viewByStatus');

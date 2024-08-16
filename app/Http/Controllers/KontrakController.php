@@ -1156,7 +1156,10 @@ class KontrakController extends Controller
                         } else {
                             return response()->json(['message' => 'Konversi PDF ke gambar gagal'], 500);
                         }
+
+                        
                     } else {
+                        // VERSI 1 ========================================================================================================
                         // // Simpan gambar jika bukan pdf
                         // Lampiran3::create([
                         //     'kontraks_id'         => $kontraksId,
@@ -1165,6 +1168,7 @@ class KontrakController extends Controller
                         // ]);
 
 
+                        // VERSI 2 ========================================================================================================
                         // Jika bukan PDF, langsung simpan gambar
                         $relativePath = 'public/uploads/spesifikasi_teknis/' . $filename;
                         $gambarPaths[] = $relativePath;
