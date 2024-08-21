@@ -107,6 +107,8 @@ Route::middleware('auth')->group(
 
         Route::post('/updateKonsep', [KontrakController::class, 'storeupdateKonsep'])->name('submitUpdateKonsep');
 
+        Route::put('/updateKontrak/{id}', [KontrakController::class, 'updateKontrak'])->name('submitUpdateKontrak');
+
         // ===================================================================================================================================================
 
         // KIRIM KONSEP KONTRAK KE KASEK

@@ -1156,8 +1156,6 @@ class KontrakController extends Controller
                         } else {
                             return response()->json(['message' => 'Konversi PDF ke gambar gagal'], 500);
                         }
-
-                        
                     } else {
                         // VERSI 1 ========================================================================================================
                         // // Simpan gambar jika bukan pdf
@@ -1782,16 +1780,124 @@ class KontrakController extends Controller
         $data = Kontrak::with(['lampiran1', 'lampiran2', 'lampiran3', 'lampiran4', 'lampiran5', 'lampiran6', 'lampiran7'])->find($id);
         // get jenis kontrak untuk lampiran 5
         $jenisKontrak = $data->jenis_kontrak === 1 ? 'Lumpsum' : 'Harga Satuan';
+        $setting    = Setting::find(1);
 
         return view('editKonsepKontrak')->with([
             'data' => $data,
             'jenisKontrak' => $jenisKontrak,
+            'setting' => $setting,
         ]);
 
         return "kontrak tidak ada!!!";
     }
 
     // METHOD SIMPAN PEMBARUAN DATA KONSEP =======================================================================================================================
+    public function updateKontrak(Request $request, $id)
+    {
+
+        // dd($request->all());
+        $kontrak = Kontrak::find($id);
+
+        // Validasi data
+        $messages = [
+            'jenis_kontrak.required'  => 'Jenis Kontrak belum dipilih.',
+            'status_jaminan.required' => 'Status Jaminan belum dipilih.',
+            'nomor_sop.required'      => 'Nomor SOP tidak boleh kosong.',
+            'tanggal_sop.required'    => 'Tanggal SOP tidak boleh kosong.',
+            'perihal.required'        => 'Perihal tidak boleh kosong.',
+            'date_kontrak.required'   => 'Tanggal SP tidak boleh kosong.',
+            'nm_vendor.required'      => 'Nama Vendor tidak boleh kosong.',
+            'number.required'         => 'Nomor SP tidak boleh kosong.',
+            'pembuat.required'        => 'Nama Pembuat tidak boleh kosong.',
+            'unit_kerja.required'     => 'Unit Kerja tidak boleh kosong.',
+            'peruri_text.required'    => 'Akta Peruri tidak boleh kosong',
+            'akta.required'           => 'Akta Vendor belum dibuat.',
+        ];
+
+        $validator2 = Validator::make($request->all(), [
+            'jenis_kontrak'  => 'required',
+            'status_jaminan' => 'required',
+            'nomor_sop'      => 'required',
+            'tanggal_sop'    => 'required',
+            'perihal'        => 'required',
+            'date_kontrak'   => 'required',
+            'nm_vendor'      => 'required',
+            'number'         => 'required',
+            'pembuat'        => 'required',
+            'unit_kerja'     => 'required',
+            'peruri_text'    => 'required',
+            'akta'           => 'required',
+        ], $messages);
+
+        if ($validator2->fails()) {
+            return response()->json([
+                'errors' => $validator2->errors()
+            ], 422);
+        }
+
+        // Mengonversi nilai jenis kontrak menjadi angka
+        $jenisKontrakValue = ($request->jenis_kontrak == 'lumpsum') ? 1 : 2;
+
+        // Mengonversi nilai status jaminan menjadi angka
+        $statusJaminanValue = ($request->status_jaminan == 'jaminan') ? 1 : 2;
+
+        // Mendapatkan bulan dan tahun dari tanggal_sop
+        $tanggalSOP = Carbon::parse($request->tanggal_sop);
+        $bulanRomawi = $this->convertToRoman($tanggalSOP->month);
+        $tahunSOP = $tanggalSOP->year;
+
+
+        $status              = 'konsep';
+        $detailNumber        = 'SP-' . $request->number . '/' . $bulanRomawi . '/' . $tahunSOP;
+        // dd($detailNumber);
+        // $kontrak = Kontrak::find($id)->update([
+        //     'jenis_kontrak'  => $jenisKontrakValue,
+        //     'status_jaminan' => $statusJaminanValue,
+        //     'detail_number'  => $detailNumber,
+        //     'nomor_sop'      => $request->nomor_sop,
+        //     'tanggal_sop'    => $request->tanggal_sop,
+        //     'perihal'        => $request->perihal,
+        //     'date_kontrak'   => $request->date_kontrak,
+        //     'nm_vendor'      => $request->nm_vendor,
+        //     'number'         => $request->number,
+        //     'pembuat'        => $request->pembuat,
+        //     'unit_kerja'     => $request->unit_kerja,
+        //     'peruritext'     => $request->peruri_text,
+        //     'vendortext'     => $request->akta,
+        //     'status'         => $status,
+        // ]);
+
+        $kontrak->update([
+            'jenis_kontrak'  => $jenisKontrakValue,
+            'status_jaminan' => $statusJaminanValue,
+            'detail_number'  => $detailNumber,
+            'nomor_sop'      => $request->nomor_sop,
+            'tanggal_sop'    => $request->tanggal_sop,
+            'perihal'        => $request->perihal,
+            'date_kontrak'   => $request->date_kontrak,
+            'nm_vendor'      => $request->nm_vendor,
+            'number'         => $request->number,
+            'pembuat'        => $request->pembuat,
+            'unit_kerja'     => $request->unit_kerja,
+            'peruritext'     => $request->peruri_text,
+            'vendortext'     => $request->akta,
+            'status'         => $status,
+        ]);
+
+
+        // dd($kontrak);
+
+        flash()->addFlash('success', 'Kontrak Berhasil Diperbaharui!');
+
+
+        return response()->json([
+            'message' => 'Konsep Berhasil diPerbaiki!',
+            'redirect' => route('previewKontrak', ['id' => $kontrak->id]),
+            'status' => 'success'
+        ]);
+    }
+
+    
     public function storeupdateKonsep(Request $request)
     {
         extract($request->all());

@@ -79,7 +79,6 @@
                                             <select class="form-control select2" name="purchasing_document_number" id="purchasing_document_number">
                                                 <option value="">Pilih No SOP</option>
                                             </select>
-
                                         </div>
                                     </div>
                                     <br>

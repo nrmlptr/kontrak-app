@@ -50,7 +50,7 @@
             <!-- general form elements -->
             <div class="card card-primary w-100">
                 <div class="card-header">
-                    <h3 class="card-title mr-3">Edit Lampiran - Konsep Kontrak</h3>
+                    <h3 class="card-title mr-3">Edit Data - Konsep Kontrak</h3>
                     <a href="{{ route('previewKontrak', ['id' => $data->id]) }}" target="_blank"  style="float: right;" class="btn btn-sm btn-danger mr-1 mb-3">
                         <i class="fas fa-backward"></i> Back
                     </a>
@@ -64,6 +64,170 @@
                         </select>
                     </div>
                 </div>
+
+                {{-- BAGIAN KONTRAK --}}
+                    <div class="col-lg-12 d-flex align-items-strech">
+                        <div class="card-body">
+                            <div class="row justify-content-center">
+                                <div class="accordion">
+                                    <div class="card" id="kontrak">
+                                        <!-- HEADER -->
+                                        <div class="card-header" id="headingKontrak">
+                                            <h5 class="mb-0">
+                                                <a href="" class="btn btn-primary text-white" data-toggle="collapse" data-target="#collapseKontrak">Edit Kontrak</a>
+                                                <span class="label-collapse">Perbaiki Data Kontrak</span>
+                                            </h5>
+                                        </div>
+                                        <!-- ISI KONTEN KONTRAK -->
+                                        <div id="collapseKontrak" class="collapse" aria-labelledby="headingKontrak" data-parent="#accordion">
+                                            <div class="card-body">
+                                                <form id="formEditKontrak" action="{{ route('submitUpdateKontrak', ['id' => $data->id]) }}" method="POST">
+                                                    @csrf
+                                                    {{-- <input type="hidden" value="{{ $data->id }}" name="id"> --}}
+                                                    @method('PUT')
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-md-2" style="text-align: center;">
+                                                            <select class="form-control" name="jenis_kontrak" required>
+                                                                <option value="{{ $data->jenis_kontrak }}" selected>
+                                                                    @if($data->jenis_kontrak == 1)
+                                                                        Lumpsum
+                                                                    @else
+                                                                        Harga Satuan
+                                                                    @endif
+                                                                </option>
+                                                                <option value="" disabled>-- Jenis Kontrak -- </option>
+                                                                <option value="lumpsum">Lumpsum</option>
+                                                                <option value="harga_satuan">Harga Satuan</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-2" style="text-align: center;">
+                                                            <select class="form-control" name="status_jaminan" required>
+                                                                <option value="{{ $data->status_jaminan }}" selected>
+                                                                    @if($data->status_jaminan == 1)
+                                                                        Jaminan
+                                                                    @else
+                                                                        Tanpa Jaminan
+                                                                    @endif
+                                                                </option>
+                                                                <option value="" disabled> -- Status Jaminan -- </option>
+                                                                <option value="jaminan">Jaminan</option>
+                                                                <option value="tanpa_jaminan">Tanpa Jaminan</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    {{-- <div class="row justify-content-center mt-2">
+                                                        <div class="col-md-6 col-sm-6 col-xs-6" style="text-align: center;">
+                                                            <select class="form-control select2" name="purchasing_document_number" id="purchasing_document_number">
+                                                                <option value="">Pilih No SOP</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <br> --}}
+                                                    <br>
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                                            <div class="form-group">
+                                                                <label for="nomor_sop">Nomor SOP</label>
+                                                                <input type="number" placeholder="Masukkan No SOP" name="nomor_sop" class="form-control" id="nomor_sop" value="{{ $data->nomor_sop }}" required>
+                                                                <!-- TEMPAT BUAT NARO ERROR -->
+                                                                <small style="color: red;" class="error-message" id="error_nomor_sop"></small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                                            <div class="form-group">
+                                                                <label for="tanggal_sop">Tanggal SOP</label>
+                                                                <input type="date" name="tanggal_sop" class="form-control" id="tanggal_sop" value="{{ $data->tanggal_sop }}" required>
+                                                                <!-- tempat error -->
+                                                            <small style="color: red;" class="error-message" id="error_tanggal_sop"></small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-6 col-sm-6 col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="perihal">Perihal</label>
+                                                                <input type="text" placeholder="Masukan Perihal" name="perihal" class="form-control" id="perihal" value="{{ $data->perihal }}" required>
+                                                                <!-- tempat naro error -->
+                                                                <small style="color: red;" class="error-message" id="error_perihal"></small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                                            <div class="form-group">
+                                                                <label for="date_kontrak">Tanggal Kontrak</label>
+                                                                <input type="date" name="date_kontrak" class="form-control" id="date_kontrak" value="{{ $data->date_kontrak }}" required>
+                                                                <!-- tempat error -->
+                                                            <small style="color: red;" class="error-message" id="error_date_kontrak"></small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-6 col-sm-8 col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="nm_vendor">Nama Vendor</label>
+                                                                <input type="text" placeholder="Nama Vendor" name="nm_vendor" class="form-control" id="nm_vendor" value="{{ $data->nm_vendor }}" readonly required>
+                                                                <!-- TEMPAT BUAT NARO ERROR -->
+                                                                <small style="color: red;" class="error-message" id="error_nm_vendor"></small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                                            <div class="form-group">
+                                                                <label for="noSP">Nomor Kontrak</label>
+                                                                <input type="number" placeholder="Masukkan No SP" name="number" class="form-control" id="number" value="{{ $data->number }}" required>
+                                                                <!-- TEMPAT BUAT NARO ERROR -->
+                                                            <small style="color: red;" class="error-message" id="error_number"></small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                                            <div class="form-group">
+                                                                <label for="pembuat">Nama Pembuat Kontrak</label>
+                                                                <input type="text" name="pembuat" class="form-control" id="pembuat" value="{{ $data->pembuat }}" readonly required>
+                                                                <!-- tempat naro error -->
+                                                            <small style="color: red;" class="error-message" id="error_pembuat"></small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-2 col-sm-2 col-md-2">
+                                                            <div class="form-group">
+                                                                <label for="unit_kerja">Unit Kerja</label>
+                                                                <input type="text" name="unit_kerja" class="form-control" id="unit_kerja" value="{{ $data->unit_kerja }}" readonly required>
+                                                                <!-- tempat naro error -->
+                                                                <small style="color: red;" class="error-message" id="error_unit_kerja"></small>
+                                                            </div>
+                                                        </div>
+                                                        {{-- kolom input akta --}}
+                                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                                            <div class="form-group">
+                                                                <label for="peruri_text">Akta Peruri</label>
+                                                                <textarea name="peruri_text" class="form-control" id="peruri_text" cols="30" rows="10">{!! $data->peruritext !!}</textarea>
+                                                                <!-- tempat naro error -->
+                                                                <small style="color: red;" class="error-message" id="error_peruri_text"></small>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                                            <div class="form-group">
+                                                                <label for="akta">Akta Vendor</label>
+                                                                <textarea class="form-control summernote" rows="5" style="resize: vertical; width: 100%;" name="akta" id="akta">
+                                                                    {!! $data->vendortext !!}
+                                                                </textarea>
+                                                                <!-- tempat naro error -->
+                                                            <small style="color: red;" class="error-message" id="error_akta"></small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <button type="submit" class="btn btn-secondary" >
+                                                        <span id="loading-spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                        Submit</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <br>
+                <hr>
+                {{-- BAGIAN LAMPIRAN --}}
                 <!-- /.card-header -->
                 <div class="card-body">
                     <div class="row col-12">
@@ -210,6 +374,11 @@
     {{-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> --}}
     <script type="text/javascript">
         $(document).ready(function() {
+            $('#peruri_text').summernote();
+        });
+
+
+        $(document).ready(function() {
             $('.summernote').summernote();
 
             // Set inputs to readonly on page load
@@ -255,7 +424,7 @@
                 "#plantlampiran4", "#nosppblampiran4", "#kodebaranglampiran4", "#nmbaranglampiran4",
                 "#satuanlampiran4", "#nosppblampiran5", "#kodebaranglampiran5", "#nmbaranglampiran5",
                 "#satuanlampiran5", "#plantlampiran5", "#hargaawallampiran5", "#jumlahlampiran5",
-                "#nosoplampiran6", "#tglsoplampiran6", "#nosplampiran6", "#tglsplampiran6", "#bulan-khs", "#tahun"
+                "#nosoplampiran6", "#tglsoplampiran6", "#nosplampiran6", "#tglsplampiran6", "#bulan-khs", "#tahun", "#nm_vendor", "#pembuat", "#unit_kerja"
             ];
 
             let elementBulanKHS = ["#bulan-khs"];
@@ -284,5 +453,40 @@
                 setReadonly(true);
             }
         }
+
+
+        // BAGIAN SUBMIT KALAU YANG DI EDIT DATA KONTRAK NYA ======================================================================================================================================================
+        $(document).ready(function(){
+            $('#loading-spinner').hide();
+        });
+
+        $('#formEditKontrak').on('submit', function(e) {
+            e.preventDefault(); // Mencegah form dari submit normal
+
+            var formData = $(this).serialize(); // Serialize form data
+
+            $.ajax({
+                method: "POST",
+                url: "{{ route('submitUpdateKontrak', ['id' => $data->id]) }}",
+                data: formData,
+                beforeSend: function(){
+                    $('#loading-spinner').show();
+                },
+                success: function(result) {
+                    $('#loading-spinner').hide();
+                    console.log(result.message);
+                    if (result.redirect) {
+                        window.location.href = result.redirect; // Mengarahkan ke halaman preview lagi
+                    } else {
+                        alert('Gagal memperbarui kontrak');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    $('#loading-spinner').hide();
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan dalam memperbarui data. Silakan coba lagi.');
+                }
+            });
+        });
     </script>
 @endpush
