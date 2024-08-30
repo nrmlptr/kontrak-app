@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="{{ asset('lte/dist/css/adminlte.min.css') }}">
 </head>
 
-<body class="hold-transition login-page bg-image" style="background-image: url('{{ asset('lte/dist/img/bgspoken.png') }}'); background-repeat: no-repeat; background-size: 100% auto;">
+<body class="hold-transition login-page bg-image" style="background-image: url('{{ asset('lte/dist/img/bgspoken.png') }}'); background-repeat: no-repeat; background-size: cover; background-position: center;">
     <div class="login-box">
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
