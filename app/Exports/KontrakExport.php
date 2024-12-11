@@ -46,15 +46,15 @@ class KontrakExport implements FromCollection, WithHeadings
             }
 
             // manipulasi nilai jenis kontrak
-            $jeniKontrak = ($contract->jenis_kontrak == 1) ? 'Lumpsum' : 'Harga Biasa';
+            $jeniKontrak = ($contract->jenis_kontrak == 1) ? 'Lumpsum' : 'Harga Satuan';
 
 
             // manipulasi nilai status jaminan
             $statusJaminan = ($contract->status_jaminan == 1) ? 'Jaminan' : 'Tanpa Jaminan';
 
             return [
-                'Nomor SP'                     => $contract->detail_number,
-                'Tanggal SP'                   => date('d-m-Y', strtotime($contract->date_kontrak)),
+                'Nomor Kontrak'                => $contract->detail_number,
+                'Tanggal Kontrak'              => date('d-m-Y', strtotime($contract->date_kontrak)),
                 'Nomor SOP'                    => $contract->nomor_sop,
                 'Tanggal SOP'                  => date('d-m-Y', strtotime($contract->tanggal_sop)),
                 'Nama Vendor'                  => $contract->nm_vendor,
@@ -73,8 +73,8 @@ class KontrakExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
-            'Nomor SP',
-            'Tanggal SP',
+            'Nomor Kontrak',
+            'Tanggal Kontrak',
             'Nomor SOP',
             'Tanggal SOP',
             'Nama Vendor',

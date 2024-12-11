@@ -1,3 +1,6 @@
+@php
+    use Illuminate\Support\Str;
+@endphp
 <div class="row">
     <form id="inputLampiran2">
         @csrf
@@ -14,11 +17,12 @@
             <div class="form-group col-12">
                 <label for="perihal">Ruang Lingkup</label>
                 <input type="text" name="perihal" placeholder="Perihal" class="form-control" value="{{ $data->perihal }}" required>
+                {{-- <input type="text" name="perihal" placeholder="Perihal" class="form-control" value="{{ Str::startsWith($data->perihal, 'PENGADAAN') ? 'JUAL BELI' . substr($data->perihal, 9) : $data->perihal }}" required> --}}
             </div>
 
         </div>
         <div class=" card-footer">
-            <button type="button" class="btn btn-block btn-secondary btn-lg" onclick="submitLampiran2()">Submit</button>
+            <button type="button" class="btn btn-block btn-secondary btn-lg" onclick="submitLampiran2()">Input</button>
         </div>
     </form>
 </div>
@@ -26,14 +30,6 @@
 @push('scripts')
     <script type="text/javascript">
         function submitLampiran2() {
-            // var form = $('#inputLampiran2');
-            // var perihal = form.find('input[name="perihal"]').val();
-            // var nomorSOP = form.find('input[name="nomor_sop"]').val();
-            // var tanggalSOP = form.find('input[name="tanggal_sop"]').val();
-
-            // console.log("Perihal:", perihal);
-            // console.log("Nomor SOP:", nomorSOP);
-            // console.log("Tanggal SOP:", tanggalSOP);
 
             var form = $('#inputLampiran2');
 
@@ -45,15 +41,8 @@
                     $(".collapse").removeClass('show');
                     $('#collapseLampiran3').addClass('show');
                     console.log(result.message);
-                    // if (result.redirect) {
-                    //     window.location.href = result.redirect; // Mengarahkan ulang halaman ke halaman monitoring
-                    // }
                 }
             });
         }
-
-        // function submit_Lampiran2() {
-        //     submitLampiran2();
-        // }
     </script>
 @endpush

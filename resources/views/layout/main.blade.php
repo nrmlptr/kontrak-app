@@ -141,7 +141,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
+            <a href="{{ route('dashboard') }}" class="brand-link">
                 <img src="{{ asset('lte/dist/img/logoide3.png') }}" alt="Kontrak Logo" class="brand-image" style="opacity: .8">
                 {{-- <hr> --}}
                 <span class="brand-text font-weight-light">SAKTI</span>
@@ -189,18 +189,19 @@
                             </a>
                         </li>
                         {{-- MENU INPUT KONTRAK DAN LAMPIRAN --}}
+
                         <li class="nav-header">MENU KONTRAK MANAGEMENT</li>
+                        {{-- KONTRAK BARANG --}}
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                {{-- <i class="fas fa-copy"></i> --}}
-                                <i class="fas fa-file-contract"></i>
+                                {{-- <i class="fas fa-file-contract"></i> --}}
+                                <i class="fas fa-boxes"></i>
                                 <p>
-                                    <span style="margin-left: 5px;">KONTRAK</span>
+                                    <span style="margin-left: 5px;">KONTRAK BARANG</span>
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
-
                                 {{-- @if(Auth::user()->permission=='writer' || Auth::user()->permission=='admin') --}}
                                 {{-- @if(in_array('view-addKontrak', $permissions)) --}}
                                 @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('writer'))
@@ -211,8 +212,6 @@
                                         </a>
                                     </li>
                                 @endif
-
-
                                 {{-- MENU MONITORING KONTRAK --}}
                                 <li class="nav-item">
                                     <a href="{{ route('indexKontrak') }}" class="nav-link">
@@ -220,23 +219,22 @@
                                         <p>Monitoring Kontrak</p>
                                     </a>
                                 </li>
-
-
-
                                 {{-- MENU REVIEW KONTRAK --}}
                                 <li class="nav-item">
                                     <a href="{{ route('rKontrak') }}" class="nav-link">
                                         <i class="nav-icon fas fa-book"></i>
                                         <p>Review Kontrak
-                                            <span class="badge badge-danger right">{{ auth()->user()->unreadNotifications->count() }}</span>
+                                            <span class="badge badge-danger right"></span>
                                         </p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
+                        {{-- KONTRAK JASA --}}
+
+
 
                         {{-- MENU EXPORT DATA --}}
-
                         <li class="nav-header">MENU EXPORT</li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">

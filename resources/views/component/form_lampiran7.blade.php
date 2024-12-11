@@ -16,17 +16,17 @@
                     Jakarta Selatan 12160
                     <br>
                     Indonesia
-                </textarea>   
+                </textarea>
             </div>
             <div class="form-group col-12">
                 <label>Alamat Vendor</label>
                 <textarea class="form-control summernote" rows="5" style="resize: vertical; width: 100%;" name="alamat_vendor" id="alamat_vendor"></textarea>
-               
+
             </div>
             <!-- <div class="card-footer"> -->
             <button type="button" class="btn btn-block btn-secondary btn-lg" onclick="submitLampiran7()">
                 <span id="loading-spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                Submit
+                Submit Lampiran
             </button>
             <!-- </div> -->
         </div>
@@ -34,7 +34,7 @@
 </div>
 
 @push('scripts')
-    
+
     <script type="text/javascript">
         $(document).ready(function(){
             $('#loading-spinner').hide();
@@ -62,7 +62,7 @@
                         $('#infostatus').text(``);
                         $('#infostatus').removeClass('d-none').text(result.message);
                     }
-                    
+
                 }
             });
         }

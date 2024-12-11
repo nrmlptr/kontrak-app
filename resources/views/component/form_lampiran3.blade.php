@@ -25,8 +25,9 @@
             <div id="formGambar">
                 <div class="form-group">
                     <div class="mb-3">
-                        <label for="gambar">Upload Spesifikasi (Image/PDF)</label>
+                        <label for="gambar">Upload Spesifikasi (PNG/JPG/PDF)</label>
                         <input type="file" name="files[]" id="files[]" multiple class="form-control" accept="image/jpeg,image/png,image/jpg,application/pdf">
+                        <small style="color: red";>(*) Maks File 15 Mb</small>
                     </div>
                 </div>
 
@@ -36,7 +37,7 @@
 
         <div class="row d-none" id="loadnonstandar"></div>
         <div class=" card-footer">
-            <button type="submit" class="btn btn-block btn-secondary btn-lg" >Submit</button>
+            <button type="submit" class="btn btn-block btn-secondary btn-lg" >Input</button>
         </div>
     </form>
 </div>
@@ -45,6 +46,15 @@
 @push('scripts')
 
     <script type="text/javascript">
+        // buat ilangin escape
+        function escapeHtml(unsafe) {
+            return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+        }
         // Memanggil fungsi untuk mengisi nilai input form dengan data barang
         function isiNilaiForm3(dataBarang) {
             if (dataBarang) {
@@ -62,9 +72,13 @@
                         <label for="inputKodeBarang">Kode Barang</label>
                         <input type="text" name="kode_barang[]" class="form-control" id="kodebaranglampiran3" value="${row.material_number}" readonly>
                     </div>
-                    <div class="form-group col-5">
+                    <div class="form-group col-4">
                         <label for="jenisBarang">Nama Barang</label>
-                        <input type="text" name="nama_barang[]" class="form-control" id="nmbrglampiran3" value="${row.material_name}" readonly>
+                        <input type="text" name="nama_barang[]" class="form-control" id="nmbrglampiran3" value="${escapeHtml(row.material_name)}" readonly>
+                    </div>
+                    <div class="form-group col-1">
+                        <label for="jenisBarang">Jumlah</label>
+                        <input type="text" name="qty[]" class="form-control" id="jmlbrglampiran3" value="${row.purchase_order_quantity}" readonly>
                     </div>
                     <div class="form-group col-1">
                         <label for="jenisBarang">Satuan</label>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Improvementtes;
 use App\Models\Integrate;
 use App\Models\Kontrak;
 use App\Models\PasalKontrak;
@@ -11,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -19,7 +22,10 @@ class HomeController extends Controller
 
         $dataKontrak = Kontrak::get();
         // =====================================================================================================================
-        $dataSOP     = Integrate::groupBy('purchasing_document_number')->get();
+        // $dataSOP     = Integrate::groupBy('purchasing_document_number')->get();
+        $dataSOP = Integrate::select('purchasing_document_number', 'document_date', 'tender_name', 'vendor_name')
+        ->distinct()
+        ->get();
         // =====================================================================================================================
         // ambil nilai data kontrak yang statusnya sudah approvedkadiv
         $dataKontrakAKDV = Kontrak::where('status', 'approvedkadiv')->get();
@@ -86,10 +92,74 @@ class HomeController extends Controller
         // Mengambil 10 vendor dengan jumlah kontrak tertinggi
         $topVendors = $KontrakPerVendor->sortDesc()->take(10);
 
-        // =====================================================================================================================
+
+
+        $dataImprovement = Improvementtes::get();
+        $dataPengadaan = DB::table('improvementtes')->get(); // Ganti 'nama_tabel' dengan nama tabel Anda
+        // dd($dataPengadaan); // Lihat data yang diambil
+
+        $results = [];
+
+        // foreach ($dataPengadaan as $item) {
+        //     $results[] = [
+        //         'tgl_rilis3' => $item->tgl_rilis3,
+        //         'tgl_sop' => $item->tgl_sop,
+        //     ];
+        // }
+
+        // dd($results); // Tampilkan semua hasil setelah loop selesai
+
+        // Siapkan struktur data untuk menampung hasil perhitungan
+        $dataPie = [
+            'penunjukkan_langsung' => ['sesuai' => 0, 'tidak_sesuai' => 0],
+            'tender_terbatas' => ['sesuai' => 0, 'tidak_sesuai' => 0]
+        ];
+
+        // Hitung kesesuaian berdasarkan SLA
+        foreach ($dataPengadaan as $item) {
+            $tglRilis = Carbon::parse($item->tgl_rilis3);
+            $tglSOP = Carbon::parse($item->tgl_sop);
+            $selisihHari = $tglSOP->diffInDays($tglRilis); // Hitung selisih hari
+
+            // Simpan hasil dalam array untuk ditampilkan nanti
+            $results[] = [
+                'nomor_pr' => $item->nomor_pr, // Tambahkan nomor_pr jika ada
+                'Jenis_metode' => $item->Jenis_metode,
+                'tgl_rilis3' => $item->tgl_rilis3,
+                'tgl_sop' => $item->tgl_sop,
+                'nomor_sop' => $item->nomor_sop,
+                'selisih_hari' => $selisihHari,
+                'keterangan' => ''
+            ];
+
+            // dd($results);
+
+            // Tentukan keterangan dan update dataPie
+            if ($item->Jenis_metode == 'Penunjukkan Langsung') {
+                if ($selisihHari <= 30) {
+                    $dataPie['penunjukkan_langsung']['sesuai']++;
+                    $results[count($results) - 1]['keterangan'] = 'Sesuai';
+                } else {
+                    $dataPie['penunjukkan_langsung']['tidak_sesuai']++;
+                    $results[count($results) - 1]['keterangan'] = 'Tidak Sesuai';
+                }
+            } elseif ($item->Jenis_metode == 'Tender Terbatas') {
+                if ($selisihHari <= 50) {
+                    $dataPie['tender_terbatas']['sesuai']++;
+                    $results[count($results) - 1]['keterangan'] = 'Sesuai';
+                } else {
+                    $dataPie['tender_terbatas']['tidak_sesuai']++;
+                    $results[count($results) - 1]['keterangan'] = 'Tidak Sesuai';
+                }
+            }
+        }
+
+        // Debugging untuk memastikan hasil perhitungan
+        // dd($dataPie, $results); // Tampilkan hasil akhir
+        // ================================================================================================================================================
 
         // dd(auth()->user()->getRoleNames());
-        return view('dashboard.dashboard', compact('dataKontrak', 'dataSOP', 'dataKontrakAKDV', 'dataKontrakProses', 'dataStatus', 'KontrakPerStatusJaminan', 'KontrakperJenisKontrak', 'topVendors'));
+        return view('dashboard.dashboard', compact('dataKontrak', 'results', 'dataPie', 'dataSOP', 'dataKontrakAKDV', 'dataKontrakProses', 'dataStatus', 'KontrakPerStatusJaminan', 'KontrakperJenisKontrak', 'topVendors'));
     }
 
 

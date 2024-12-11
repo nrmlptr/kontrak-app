@@ -83,13 +83,13 @@
                         <a href="#" type="button" style="color: red;" class="btn-deleterow"><i class="fa fa-trash"></i></a>
                         <div class="row">
                             <div class="form-group col-12">
-                                <input type="text" name="perihal[]" placeholder="Nama Header" class="form-control" value="Surat Permintaan Penawaran Harga dari PIHAK KEDUA">
+                                <input type="text" name="perihal[]" placeholder="Nama Header" class="form-control" value="Surat Penawaran Harga dari PIHAK KEDUA">
                             </div>
                             <div class="form-group col-6">
                                 <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control">
                             </div>
                             <div class="form-group col-6">
-                                <input type="date" name="tanggal_surat[]" class="form-control">
+                                <input type="date" name="tanggal_surat[]" class="form-control" required>
                             </div>
                         </div>
                     </li>
@@ -107,7 +107,7 @@
                                 <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control">
                             </div>
                             <div class="form-group col-6">
-                                <input type="date" name="tanggal_surat[]" class="form-control">
+                                <input type="date" name="tanggal_surat[]" class="form-control" required>
                             </div>
                         </div>
                     </li>
@@ -124,7 +124,7 @@
                                 <input type="text" name="nomor_surat[]" placeholder="Nomor Surat" class="form-control">
                             </div>
                             <div class="form-group col-6">
-                                <input type="date" name="tanggal_surat[]" class="form-control">
+                                <input type="date" name="tanggal_surat[]" class="form-control" required>
                             </div>
                         </div>
                     </li>
@@ -183,7 +183,7 @@
             </div>
         </div>
         <div class="card-footer">
-            <button type="button" class="btn btn-block btn-secondary btn-lg" onclick="submit_Lampiran1()">Submit</button>
+            <button type="button" class="btn btn-block btn-secondary btn-lg" onclick="submit_Lampiran1()">Input</button>
         </div>
     </form>
 </div>
@@ -247,6 +247,32 @@
         function submitLampiran1() {
 
             var form2 = $('#inputlampiran1').serializeArray();
+            var hasEmptyDate = false;
+
+            // Cek apakah ada tanggal yang kosong
+            $('input[name="tanggal_surat[]"]').each(function() {
+                if ($(this).val() === '') {
+                    hasEmptyDate = true;
+                    $(this).addClass('is-invalid'); // Tambahkan class invalid untuk menunjukkan error
+                } else {
+                    $(this).removeClass('is-invalid'); // Hapus class invalid jika sudah terisi
+                }
+            });
+
+            if (hasEmptyDate) {
+                // alert('Tanggal surat tidak boleh kosong!');
+                // return;
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Tanggal Surat Tidak Boleh Kosong!',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+
+
             // console.log(form2);
             $.ajax({
                 method: 'POST',
@@ -257,9 +283,6 @@
                     $(".collapse").removeClass('show');
                     $('#collapseLampiran2').addClass('show');
                     console.log(result.message);
-                    // if (result.redirect) {
-                    //     window.location.href = result.redirect; // Mengarahkan ulang halaman ke halaman monitoring
-                    // }
                 }
             });
         }

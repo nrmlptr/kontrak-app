@@ -21,7 +21,7 @@
 
         </div>
         <div class=" card-footer">
-            <button type="button" class="btn btn-block btn-secondary btn-lg" onclick="submitLampiran2()">Submit</button>
+            <button type="button" class="btn btn-block btn-secondary btn-lg" onclick="submitLampiran2()">Input</button>
         </div>
     </form>
 </div>

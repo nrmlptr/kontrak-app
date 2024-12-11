@@ -48,7 +48,14 @@
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
                                     </div>
-
+                                    <div class="form-group">
+                                        <label for="posisi">Jabatan</label>
+                                        <input type="text" class="form-control" name="posisi" value="{{ @$setting->peruri_posisi }}"
+                                        id="posisi" required>
+                                        @error('posisi')
+                                        <small style="color: red;">{{ $message }}</small>
+                                        @enderror
+                                    </div>
                                     <div class="form-group">
                                         <label for="akta">Akta Peruri</label>
                                         <textarea type="text" class="form-control" name="akta" id="akta">

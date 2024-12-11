@@ -57,8 +57,8 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Nomor SP</th>
-                    <th>Tanggal SP</th>
+                    <th>Nomor Kontrak</th>
+                    <th>Tanggal Kontrak</th>
                     <th>Nomor SOP</th>
                     <th>Tanggal SOP</th>
                     <th>Nama Vendor</th>
@@ -110,6 +110,8 @@
                         <td>
                             @if($d->status == 'draft')
                                 <span class="badge badge-warning">draft</span>
+                            @elseif($d->status == 'konsep')
+                                <span class="badge badge-info">Konsep</span>
                             @elseif($d->status == 'reviewkasek')
                                 <span class="badge badge-info">Review Kasek</span>
                             @elseif($d->status == 'revisikasek')
@@ -146,7 +148,7 @@
     {{-- <footer class="main-footer">
        <strong>&copy;{{ date('Y')}} Dept.Pengadaan - PERURI. All rights reserved.</strong>
     </footer>    --}}
-  
+
     <script type="text/javascript">
         window.print();
     </script>

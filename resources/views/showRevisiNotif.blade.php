@@ -26,7 +26,8 @@
             <div class="row">
                 <div class="col-12">
                     @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('writer'))
-                        <a href="{{ route('editLampiran', ['id' => $revisi->kontraks_id]) }}" class="btn btn-primary mb-3">Edit Lampiran</a>
+                        <a href="{{ route('editKontrakReview', ['id' => $revisi->kontraks_id]) }}" class="btn btn-primary mb-3">Perbaiki Kontrak</a>
+                        {{-- <a href="{{ route('editLampiran', ['id' => $revisi->kontraks_id]) }}" class="btn btn-primary mb-3">Edit Lampiran</a> --}}
                     @endif
                     <div class="card">
                         <div class="card-header">

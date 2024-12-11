@@ -116,6 +116,9 @@
                                                         @else
                                                             {!! @$pihak1data->peruri_akta !!}
                                                         @endif
+                                                        <div style="text-align: center">
+                                                            <b>------------------------------- PIHAK KESATU ----------------------------</b>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                                 <td><br></td>
@@ -127,35 +130,35 @@
                                                         @else
                                                             {!! @$pihak2data->akta !!}
                                                         @endif
+                                                        <div style="text-align: center">
+                                                            <b>------------------------------- PIHAK KEDUA ----------------------------</b>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <td><br></td>
+                                                <tr>
+                                                    <td colspan="3" style="text-align: justify;">
+                                                        PIHAK KESATU dan PIHAK KEDUA secara sendiri-sendiri disebut <b>"Pihak"</b> dan secara bersama-sama disebut juga <b>"Para Pihak".</b>
+                                                    </td>
+                                                </tr>
+                                                <td><br></td>
+                                                <tr>
+                                                    <td colspan="3" style="text-align: justify;">
+                                                        <b>Para Pihak Menerangkan:</b>
+                                                    </td>
+                                                </tr>
 
-                                                    </td>
-                                                </tr>
-                                                <td><br></td>
-                                                <tr>
-                                                    <td colspan="3" style="text-align: justify;">
-                                                        Para Pihak secara sendiri-sendiri disebut <b>"Pihak"</b> dan secara bersama-sama disebut juga <b>"Para Pihak"</b>
-                                                    </td>
-                                                </tr>
-                                                <td><br></td>
-                                                <tr>
-                                                    <td colspan="3" style="text-align: justify;">
-                                                        <b>Para Pihak Menerangkan</b>
-                                                    </td>
-                                                </tr>
-                                                @php
-                                                    $lampiran2=$data->lampiran2;
-                                                @endphp
                                                 <tr>
                                                     <td style="vertical-align: top">a. </td>
-                                                    <td colspan="2" style="text-align: justify;">Bahwa PIHAK KESATU bermaksud melaksanakan {{ $lampiran2->perihal }} sebagaimana diatur dalam Perjanjian ini.</td>
+                                                    <td colspan="2" style="text-align: justify;">Bahwa PIHAK KESATU bermaksud mengadakan Barang <i>(sebagaimana didefinisikan di bawah)</i> sebagaimana diatur dalam Perjanjian ini.</td>
                                                 </tr>
                                                 <tr>
                                                     <td style="vertical-align: top">b. </td>
-                                                    <td colspan="2" style="text-align: justify;">Bahwa PIHAK KEDUA telah ditunjuk untuk melaksanakan {{ $lampiran2->perihal }} sebagaimana dimaksud dalam Perjanjian ini.</td>
+                                                    <td colspan="2" style="text-align: justify;">Bahwa PIHAK KEDUA telah ditunjuk untuk menyediakan dan memasok Barang sebagaimana dimaksud dalam Perjanjian ini.</td>
                                                 </tr>
                                                 <tr>
                                                     <td style="vertical-align: top">c. </td>
-                                                    <td colspan="2" style="text-align: justify;">Dokumen-dokumen pengadaan terkait pelaksanaan pengadaan ini sesuai dengan Lampiran I Perjanjian ini dan merupakan bagian yang tidak terpisahkan dari Perjanjian ini.</td>
+                                                    <td colspan="2" style="text-align: justify;">Dokumen-dokumen terkait pelaksanaan pengadaan Barang adalah sebagaimana dilampirkan pada Lampiran I Perjanjian ini dan merupakan bagian yang tidak terpisahkan dari Perjanjian ini.</td>
                                                 </tr>
                                                 <td><br></td>
                                                 <tr>
@@ -167,54 +170,19 @@
 
                                     {{-- disini butuh page break ke halaman selanjutnya --}}
                                     <div class="page-break"></div>
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
+
 
                                    {{-- KONTEN TENTANG PASAL --}}
                                     <div class="content">
 
-                                        {{-- <div style="height: 100px; text-align: left;">
-                                            <div style="padding-right: 10px;float: right;">
-                                                <p style="text-align: center; margin-bottom: -15px !important;">Lembar ke - 2 -</p>
-                                                <p style="text-align: left;">
-                                                    <table>
-                                                        <tr>
-                                                            <td>Nomor</td>
-                                                            <td>:</td>
-                                                            <td>{{ $data->detail_number }}</td>
-                                                        </tr>
-                                                        <tr style="border-bottom: 1px solid black;">
-                                                            <td>Tanggal</td>
-                                                            <td>:</td>
-                                                            <td>{{ tanggal_indonesia($data->date_kontrak) }}</td>
-                                                        </tr>
-                                                    </table>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div style="clear: both;"></div> --}}
-
-
                                         <!-- Isi Pasal -->
                                         @foreach ($data->pasal as $p)
                                             <div class="boxpasal" style="text-align: justify; page-break-inside: avoid;">
-                                                {{-- <div style="height: 100px; text-align: left;">
-                                                    <div style="padding-right: 10px; float: right;">
-                                                        <p style="text-align: center; margin-bottom: -15px !important;">Lembar ke - {{ $loop->iteration }} -</p>
-                                                        <p style="text-align: left;">
-                                                            <table>
-                                                                <tr>
-                                                                    <td>Nomor</td>
-                                                                    <td>:</td>
-                                                                    <td>{{ $data->detail_number }}</td>
-                                                                </tr>
-                                                                <tr style="border-bottom: 1px solid black;">
-                                                                    <td>Tanggal</td>
-                                                                    <td>:</td>
-                                                                    <td>{{ tanggal_indonesia($data->date_kontrak) }}</td>
-                                                                </tr>
-                                                            </table>
-                                                        </p>
-                                                    </div>
-                                                </div> --}}
                                                 <h4 style="text-align: center">{{ $p->nama_pasal }}
                                                     <br>{{ $p->keterangan_pasal }}
                                                 </h4>
@@ -230,20 +198,27 @@
                                                 <div><br></div>
                                                 <table style="width: 100%;
                                                         border-collapse: collapse;
-                                                        margin-top: 20px;">
+                                                        margin-top: 35px;">
                                                     <tr>
-                                                        <th style="width: 50%;text-align: center; ">PIHAK KEDUA,</th>
-                                                        <th style="width: 50%;text-align: center; ">PIHAK KESATU,</th>
+                                                        <th style="width: 50%;text-align: center; font-size: 14px;">PIHAK KEDUA,</th>
+                                                        <th style="width: 50%;text-align: center; font-size: 14px;">PIHAK KESATU,</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="width: 50%;text-align: center; font-size: 14px;">{{$data->integrates[0]->vendor_name}}</th>
+                                                        <th style="width: 50%;text-align: center; font-size: 14px;"><b>PERUM PERCETAKAN UANG RI</b></th>
                                                     </tr>
                                                     <tr>
                                                         <td style="vertical-align: top;">
-                                                            <div style="padding-top: 50px; text-align: center;">
-                                                                <div style=""><b>{{ $pihak2name }}</b></div>
+                                                            <div style="padding-top: 130px; text-align: center; font-size: 14px;">
+                                                                <div style=""><b><u>{{ $pihak2name }}</u></b></div>
+                                                                <div style="margin-top: 5px"><b>{{ $pihak2jabatan }}</b></div>
                                                             </div>
                                                         </td>
                                                         <td style="vertical-align: top;">
-                                                            <div style="padding-top: 50px; text-align: center;">
-                                                                <div style=""><b>{{ $pihak1name }}</b></div>
+                                                            <div style="padding-top: 130px; text-align: center; font-size: 14px;">
+                                                                <div style=""><b><u>{{ $pihak1name }}</u></b></div>
+                                                                <div style="margin-top: 5px"><b>{!! str_replace('Fasilitas Umum', '<br>Fasilitas Umum', $pihak1jabatan) !!}</b></div>
+                                                                {{-- <div style="margin-top: 5px"><b>{{ $pihak1jabatan }}</b></div> --}}
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -256,6 +231,12 @@
 
                                     {{-- disini butuh page break ke halaman selanjutnya --}}
                                     <div class="page-break"></div>
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
+
 
 
                                     {{-- lampiran 1 --}}
@@ -283,34 +264,48 @@
                                         <p>
                                             Dalam melaksanakan jual beli barang, PIHAK KEDUA harus mengikuti syarat-syarat pelaksanaan umum yang mengikat sebagai berikut :
                                         </p>
+
                                         <ol>
                                             @foreach ($dtlampiran1 as $l)
-
                                                 <li>
                                                     {{ $l['perihal'] }}
                                                     <br>
-                                                    Nomor : {{ $l['nomor_surat'] }}
-                                                    <br>
-                                                    Tanggal : {{ tanggal_indonesia($l['tanggal_surat']) }}
+                                                    <table style="width: 100%;">
+                                                        <tr>
+                                                            <td style="width: 5%;">Nomor</td>
+                                                            <td style="width: 95%;">: {{ $l['nomor_surat'] }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 5%;">Tanggal</td>
+                                                            <td style="width: 95%;">: {{ tanggal_indonesia($l['tanggal_surat']) }}</td>
+                                                        </tr>
+                                                    </table>
                                                 </li>
                                             @endforeach
                                         </ol>
                                         <table style="width: 100%;
                                                 border-collapse: collapse;
-                                                margin-top: 20px;">
+                                                margin-top: 35px;">
                                             <tr>
-                                                <th style="width: 50%;text-align: center;">PIHAK KEDUA,</th>
-                                                <th style="width: 50%;text-align: center;">PIHAK KESATU,</th>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;">PIHAK KEDUA,</th>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;">PIHAK KESATU,</th>
+                                            </tr>
+                                            <tr>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;">{{$data->integrates[0]->vendor_name}}</th>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;"><b>PERUM PERCETAKAN UANG RI</b></th>
                                             </tr>
                                             <tr>
                                                 <td style="vertical-align: top;">
-                                                    <div style="padding-top: 50px; text-align: center;">
-                                                        <div style=""><b>{{ $pihak2name }}</b></div>
+                                                    <div style="padding-top: 130px; text-align: center; font-size: 14px;">
+                                                        <div style=""><b><u>{{ $pihak2name }}</u></b></div>
+                                                        <div style="margin-top: 5px"><b>{{ $pihak2jabatan }}</b></div>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: top;">
-                                                    <div style="padding-top: 50px; text-align: center;">
-                                                        <div style=""><b>{{ $pihak1name }}</b></div>
+                                                    <div style="padding-top: 130px; text-align: center; font-size: 14px;">
+                                                        <div style=""><b><u>{{ $pihak1name }}</u></b></div>
+                                                        <div style="margin-top: 5px"><b>{!! str_replace('Fasilitas Umum', '<br>Fasilitas Umum', $pihak1jabatan) !!}</b></div>
+                                                        {{-- <div style="margin-top: 5px"><b>{{ $pihak1jabatan }}</b></div> --}}
                                                     </div>
                                                 </td>
                                             </tr>
@@ -321,6 +316,12 @@
 
                                     {{-- disini butuh page break ke halaman selanjutnya --}}
                                     <div class="page-break"></div>
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
+
 
 
                                     {{-- lampiran 2 --}}
@@ -348,7 +349,7 @@
                                         @if ($data->jenis_kontrak == '1')
                                             <ol>
                                                 <li style="text-align: justify;">
-                                                    PIHAK KEDUA dengan ini berjanji dan mengikatkan diri untuk Jual {{  $lampiran2->perihal }}, yang kemudian dalam Perjanjian ini akan disebut dengan “barang” kepada PIHAK KESATU, demikian juga PIHAK KESATU dengan ini telah setuju dan mengikatkan diri untuk membeli barang tersebut dari PIHAK KEDUA, yang pelaksanaannya akan dituangkan di dalam Surat Order Pembelian (SOP) Nomor : {{  $lampiran2->nomor_sop }} tanggal {{ tanggal_indonesia($lampiran2->tanggal_sop) }}.
+                                                    PIHAK KEDUA dengan ini berjanji dan mengikatkan diri untuk {{  $lampiran2->perihal }}, yang kemudian dalam Perjanjian ini akan disebut dengan “barang” kepada PIHAK KESATU, demikian juga PIHAK KESATU dengan ini telah setuju dan mengikatkan diri untuk membeli barang tersebut dari PIHAK KEDUA, yang pelaksanaannya akan dituangkan di dalam Surat Order Pembelian (SOP) Nomor : {{  $lampiran2->nomor_sop }} tanggal {{ tanggal_indonesia($lampiran2->tanggal_sop) }}.
                                                 </li>
                                                 <li style="text-align: justify;">
                                                     Lingkup Perjanjian sebagaimana dimaksud Pasal 3 Perjanjian ini merupakan bagian yang tidak terpisahkan dari Perjanjian ini.
@@ -370,20 +371,27 @@
 
                                         <table style="width: 100%;
                                                 border-collapse: collapse;
-                                                margin-top: 20px;">
+                                                margin-top: 35px;">
                                             <tr>
-                                                <th style="width: 50%;text-align: center;">PIHAK KEDUA,</th>
-                                                <th style="width: 50%;text-align: center;">PIHAK KESATU,</th>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;">PIHAK KEDUA,</th>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;">PIHAK KESATU,</th>
+                                            </tr>
+                                            <tr>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;">{{$data->integrates[0]->vendor_name}}</th>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;"><b>PERUM PERCETAKAN UANG RI</b></th>
                                             </tr>
                                             <tr>
                                                 <td style="vertical-align: top;">
-                                                    <div style="padding-top: 50px; text-align: center;">
-                                                        <div style=""><b>{{ $pihak2name }}</b></div>
+                                                    <div style="padding-top: 130px; text-align: center; font-size: 14px;">
+                                                        <div style=""><b><u>{{ $pihak2name }}</u></b></div>
+                                                        <div style="margin-top: 5px"><b>{{ $pihak2jabatan }}</b></div>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: top;">
-                                                    <div style="padding-top: 50px; text-align: center;">
-                                                        <div style=""><b>{{ $pihak1name }}</b></div>
+                                                    <div style="padding-top: 130px; text-align: center; font-size: 14px;">
+                                                        <div style=""><b><u>{{ $pihak1name }}</u></b></div>
+                                                        <div style="margin-top: 5px"><b>{!! str_replace('Fasilitas Umum', '<br>Fasilitas Umum', $pihak1jabatan) !!}</b></div>
+                                                        {{-- <div style="margin-top: 5px"><b>{{ $pihak1jabatan }}</b></div> --}}
                                                     </div>
                                                 </td>
                                             </tr>
@@ -391,10 +399,16 @@
 
                                     </div>
                                     {{-- end lampiran 2 --}}
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
 
 
                                     {{-- disini butuh page break ke halaman selanjutnya --}}
                                     <div class="page-break"></div>
+
                                     {{-- lampiran 3 --}}
                                     @php
                                         $lampiran3=$data->lampiran3;
@@ -421,10 +435,11 @@
                                             <div><br></div>
                                             <div style="text-align: center;"><b>SPESIFIKASI TEKNIS</b></div>
                                             {{-- <div><br></div> --}}
-                                            @foreach ($lampiran3 as $l)
+                                            <div style="text-align: center;"><b>{{ $data->perihal }}</b></div>
+                                            {{-- @foreach ($lampiran3 as $l)
                                                 <div style="text-align: center;"><b>{{ $l->jenis_barang }}</b></div>
                                                 <div class="mt-4"></div>
-                                            @endforeach
+                                            @endforeach --}}
                                             @foreach($lampiran3 as $l)
                                                 @if($l->gambarnon !== null)
                                                     <div style="display: grid; place-items: center;">
@@ -432,27 +447,29 @@
                                                     </div>
                                                 @endif
                                             @endforeach
-                                            <table style="border-collapse: collapse; width: 100%; border: 1px solid #ddd; text-align: left;">
-                                                <thead style="background-color: #f2f2f2;">
+                                            <table style="border-collapse: collapse; width: 100%; border: 1px  solid #000000; margin-top:1cm;">
+                                                <thead style="background-color: #ffffff;">
                                                     <tr>
-                                                        <th style="padding: 8px; border: 1px solid #ddd;">No</th>
-                                                        <th style="padding: 8px; border: 1px solid #ddd;">No. SPPB</th>
-                                                        <th style="padding: 8px; border: 1px solid #ddd;">Kode Barang</th>
-                                                        <th style="padding: 8px; border: 1px solid #ddd;">Jenis Barang</th>
-                                                        <th style="padding: 8px; border: 1px solid #ddd;">Spesifikasi Teknis</th>
+                                                        <th style="padding: 8px;border: 1px solid #000000;">No</th>
+                                                        <th style="padding: 8px;border: 1px solid #000000;">No. SPPB</th>
+                                                        <th style="padding: 8px;border: 1px solid #000000;">Kode Barang</th>
+                                                        <th style="padding: 8px;border: 1px solid #000000;">Jenis Barang</th>
+                                                        <th style="padding: 8px;border: 1px solid #000000;">Jumlah Pesanan</th>
+                                                        <th style="padding: 8px;border: 1px solid #000000;">Spesifikasi Teknis</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @foreach($lampiran3 as $l)
                                                         <tr>
-                                                            <td style="padding: 8px; border: 1px solid #ddd;">{{ $loop->iteration }}</td>
-                                                            <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->no_sppb }}</td>
-                                                            <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->kode_barang }}</td>
-                                                            <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->jenis_barang }}</td>
-                                                            <td style="padding: 8px; border: 1px solid #ddd;">{!! nl2br(e($l->spesifikasi_teknis)) !!}</td>
+                                                            <td style="padding: 8px;border: 1px solid #000000;">{{ $loop->iteration }}</td>
+                                                            <td style="padding: 8px;border: 1px solid #000000;">{{ $l->no_sppb }}</td>
+                                                            <td style="padding: 8px;border: 1px solid #000000;">{{ $l->kode_barang }}</td>
+                                                            <td style="padding: 8px;border: 1px solid #000000;">{{ $l->jenis_barang }}</td>
+                                                            <td style="padding: 8px;border: 1px solid #000000;">{{ $l->qty}} {{ $l->satuan }}</td>
+                                                            {{-- <td style="padding: 8px;border: 1px solid #000000;">{{ $l->satuan }}</td> --}}
+                                                            <td style="padding: 8px;border: 1px solid #000000;">{!! nl2br(e($l->spesifikasi_teknis)) !!}</td>
                                                         </tr>
                                                     @endforeach
-
                                                 </tbody>
                                             </table>
 
@@ -477,39 +494,46 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                                {{-- <img src="{{ Storage::url('uploads/spesifikasi_teknis/' . $l->gambar) }}" alt="{{ $l->gambar }}" style="margin-top:20px;margin-bottom:20px;"> --}}
                                                 <img src="{{ Storage::url($l->gambar) }}" alt="{{ Storage::url($l->gambar) }}" style="margin-top:20px;margin-bottom:20px; max-width: auto%; max-height: auto;">
-                                                {{-- @if ($l->file_type == 'pdf')
-                                                    <embed src="{{ Storage::url($l->gambar) }}" type="application/pdf" width="100%" height="500px" />
-                                                @else
-                                                    <img src="{{ Storage::url($l->gambar) }}" alt="{{ Storage::url($l->gambar) }}" style="margin-top:20px;margin-bottom:20px; max-width: auto%; max-height: auto;">
-                                                @endif --}}
                                             @endforeach
 
                                         @endif
 
                                         <table style="width: 100%;
                                                 border-collapse: collapse;
-                                                margin-top: 20px;">
+                                                margin-top: 35px;">
                                             <tr>
-                                                <th style="width: 50%;text-align: center;">PIHAK KEDUA,</th>
-                                                <th style="width: 50%;text-align: center;">PIHAK KESATU,</th>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;">PIHAK KEDUA,</th>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;">PIHAK KESATU,</th>
+                                            </tr>
+                                            <tr>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;">{{$data->integrates[0]->vendor_name}}</th>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;"><b>PERUM PERCETAKAN UANG RI</b></th>
                                             </tr>
                                             <tr>
                                                 <td style="vertical-align: top;">
-                                                    <div style="padding-top: 50px; text-align: center;">
-                                                        <div style=""><b>{{ $pihak2name }}</b></div>
+                                                    <div style="padding-top: 130px; text-align: center; font-size: 14px;">
+                                                        <div style=""><b><u>{{ $pihak2name }}</u></b></div>
+                                                        <div style="margin-top: 5px"><b>{{ $pihak2jabatan }}</b></div>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: top;">
-                                                    <div style="padding-top: 50px; text-align: center;">
-                                                        <div style=""><b>{{ $pihak1name }}</b></div>
+                                                    <div style="padding-top: 130px; text-align: center; font-size: 14px;">
+                                                        <div style=""><b><u>{{ $pihak1name }}</u></b></div>
+                                                        <div style="margin-top: 5px"><b>{!! str_replace('Fasilitas Umum', '<br>Fasilitas Umum', $pihak1jabatan) !!}</b></div>
+                                                        {{-- <div style="margin-top: 5px"><b>{{ $pihak1jabatan }}</b></div> --}}
                                                     </div>
                                                 </td>
                                             </tr>
                                         </table>
                                     </div>
                                     {{-- end lampiran 3 --}}
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
+
 
 
                                     {{-- disini butuh page break ke halaman selanjutnya --}}
@@ -544,24 +568,24 @@
                                                         (SOP) Nomor : {{ $lampiran4[0]->nomor_sop }} tanggal {{ tanggal_indonesia($lampiran4[0]->tanggal_sop) }} yang diterbitkan oleh PIHAK
                                                         KESATU yaitu sebagai berikut :
                                                         <div><br></div>
-                                                        <table style="border-collapse: collapse; width: 100%; border: 1px solid #ddd; text-align: center;">
-                                                            <thead style="background-color: #f2f2f2;">
+                                                        <table style="border-collapse: collapse; width: 100%;border: 1px solid #000000; text-align: center;">
+                                                            <thead style="background-color: #ffffff;">
                                                                 <tr>
-                                                                    <th style="padding: 8px; border: 1px solid #ddd;">No</th>
-                                                                    <th style="padding: 8px; border: 1px solid #ddd;">No SPPB</th>
-                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Kode Barang</th>
-                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Nama Barang</th>
-                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Tanggal Penyerahan</th>
+                                                                    <th style="padding: 8px;border: 1px solid #000000;">No</th>
+                                                                    <th style="padding: 8px;border: 1px solid #000000;">No SPPB</th>
+                                                                    <th style="padding: 8px;border: 1px solid #000000;">Kode Barang</th>
+                                                                    <th style="padding: 8px;border: 1px solid #000000;">Nama Barang</th>
+                                                                    <th style="padding: 8px;border: 1px solid #000000;">Tanggal Penyerahan</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 @foreach ($lampiran4 as $l)
                                                                     <tr>
-                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $loop->iteration }}</td>
-                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->no_sppb }}</td>
-                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->kode_barang }}</td>
-                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->nama_barang }}</td>
-                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->jadwal_penyerahan_barang }}</td>
+                                                                        <td style="padding: 8px;border: 1px solid #000000;">{{ $loop->iteration }}</td>
+                                                                        <td style="padding: 8px;border: 1px solid #000000;">{{ $l->no_sppb }}</td>
+                                                                        <td style="padding: 8px;border: 1px solid #000000;">{{ $l->kode_barang }}</td>
+                                                                        <td style="padding: 8px;border: 1px solid #000000;">{{ $l->nama_barang }}</td>
+                                                                        <td style="padding: 8px;border: 1px solid #000000;">{{ $l->jadwal_penyerahan_barang }}</td>
                                                                     </tr>
                                                                 @endforeach
                                                             </tbody>
@@ -580,17 +604,6 @@
                                                 <li style="text-align: justify;">
                                                     Penyerahan barang dilakukan langsung ke
                                                     {{ $lampiran4[0]->lokasi }}
-                                                    {{-- @if(@$lampiran4[0]->lokasi == 'UGM')
-                                                        Gudang Ugam
-                                                    @elseif(@$lampiran4[0]->lokasi == 'UTAS')
-                                                        Gudang Utas
-                                                    @elseif(@$lampiran4[0]->lokasi == 'UMUM')
-                                                        Gudang umum
-                                                    @elseif(@$lampiran4[0]->lokasi == 'TGN')
-                                                        Gudang Tasganu
-                                                    @else
-                                                        Gudang Tengah
-                                                    @endif --}}
                                                     PIHAK KESATU di Karawang.
                                                 </li>
                                                 <li style="text-align: justify;">
@@ -614,26 +627,39 @@
 
                                         <table style="width: 100%;
                                                 border-collapse: collapse;
-                                                margin-top: 20px;">
+                                                margin-top: 35px;">
                                             <tr>
-                                                <th style="width: 50%;text-align: center;">PIHAK KEDUA,</th>
-                                                <th style="width: 50%;text-align: center;">PIHAK KESATU,</th>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;">PIHAK KEDUA,</th>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;">PIHAK KESATU,</th>
+                                            </tr>
+                                            <tr>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;">{{$data->integrates[0]->vendor_name}}</th>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;"><b>PERUM PERCETAKAN UANG RI</b></th>
                                             </tr>
                                             <tr>
                                                 <td style="vertical-align: top;">
-                                                    <div style="padding-top: 50px; text-align: center;">
-                                                        <div style=""><b>{{ $pihak2name }}</b></div>
+                                                    <div style="padding-top: 130px; text-align: center; font-size: 14px;">
+                                                        <div style=""><b><u>{{ $pihak2name }}</u></b></div>
+                                                        <div style="margin-top: 5px"><b>{{ $pihak2jabatan }}</b></div>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: top;">
-                                                    <div style="padding-top: 50px; text-align: center;">
-                                                        <div style=""><b>{{ $pihak1name }}</b></div>
+                                                    <div style="padding-top: 130px; text-align: center; font-size: 14px;">
+                                                        <div style=""><b><u>{{ $pihak1name }}</u></b></div>
+                                                        <div style="margin-top: 5px"><b>{!! str_replace('Fasilitas Umum', '<br>Fasilitas Umum', $pihak1jabatan) !!}</b></div>
+                                                        {{-- <div style="margin-top: 5px"><b>{{ $pihak1jabatan }}</b></div> --}}
                                                     </div>
                                                 </td>
                                             </tr>
                                         </table>
                                     </div>
                                     {{-- end lampiran 4 --}}
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
+
 
 
 
@@ -668,14 +694,15 @@
                                                     <li>
                                                         Harga satuan barang :
                                                         <div><br></div>
-                                                        <table style="border-collapse: collapse; width: 100%; border: 1px solid #ddd; text-align: center;">
-                                                            <thead style="background-color: #f2f2f2;">
+                                                        <table style="border-collapse: collapse; width: 100%;border: 1px solid #000000; text-align: center;">
+                                                            <thead style="background-color: #ffffff;">
                                                                 <tr>
-                                                                    <th style="padding: 8px; border: 1px solid #ddd;">No</th>
-                                                                    <th style="padding: 8px; border: 1px solid #ddd;">No SPPB</th>
-                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Kode Barang</th>
-                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Nama Barang</th>
-                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Harga Satuan / Liter (Excl. PPN)</th>
+                                                                    <th style="padding: 8px;border: 1px solid #000000;">No</th>
+                                                                    <th style="padding: 8px;border: 1px solid #000000;">No SPPB</th>
+                                                                    <th style="padding: 8px;border: 1px solid #000000;">Kode Barang</th>
+                                                                    <th style="padding: 8px;border: 1px solid #000000;">Nama Barang</th>
+                                                                    <th style="padding: 8px;border: 1px solid #000000;">Jumlah Pesanan</th>
+                                                                    <th style="padding: 8px;border: 1px solid #000000;">Harga Satuan</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -684,11 +711,13 @@
                                                                 @endphp
                                                                 @foreach ($lampiran5 as $l)
                                                                     <tr>
-                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $loop->iteration }}</td>
-                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->no_sppb }}</td>
-                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->kode_barang }}</td>
-                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->nama_barang }}</td>
-                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ formatRupiah($l->harga_awal) }}</td>
+                                                                        <td style="padding: 8px;border: 1px solid #000000;">{{ $loop->iteration }}</td>
+                                                                        <td style="padding: 8px;border: 1px solid #000000;">{{ $l->no_sppb }}</td>
+                                                                        <td style="padding: 8px;border: 1px solid #000000;">{{ $l->kode_barang }}</td>
+                                                                        <td style="padding: 8px;border: 1px solid #000000;">{{ $l->nama_barang }}</td>
+                                                                        <td style="padding: 8px;border: 1px solid #000000;">{{ $l->qty }} {{$l->satuan}}</td>
+                                                                        {{-- <td style="padding: 8px;border: 1px solid #000000;">{{$l->satuan}}</td> --}}
+                                                                        <td style="padding: 8px;border: 1px solid #000000;">{{ formatRupiah($l->harga_awal) }}</td>
                                                                     </tr>
                                                                     @php
                                                                         $totalHarga=$l->harga_awal*$l->qty;
@@ -732,14 +761,15 @@
                                                     <li>
                                                         Harga satuan barang :
                                                         <div><br></div>
-                                                        <table style="border-collapse: collapse; width: 100%; border: 1px solid #ddd; text-align: center;">
-                                                            <thead style="background-color: #f2f2f2;">
+                                                        <table style="border-collapse: collapse; width: 100%;border: 1px solid #000000; text-align: center;">
+                                                            <thead style="background-color: #ffffff;">
                                                                 <tr>
-                                                                    <th style="padding: 8px; border: 1px solid #ddd;">No</th>
-                                                                    <th style="padding: 8px; border: 1px solid #ddd;">No SPPB</th>
-                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Kode Barang</th>
-                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Nama Barang</th>
-                                                                    <th style="padding: 8px; border: 1px solid #ddd;">Harga Satuan / Liter (Excl. PPN)</th>
+                                                                    <th style="padding: 8px;border: 1px solid #000000;">No</th>
+                                                                    <th style="padding: 8px;border: 1px solid #000000;">No SPPB</th>
+                                                                    <th style="padding: 8px;border: 1px solid #000000;">Kode Barang</th>
+                                                                    <th style="padding: 8px;border: 1px solid #000000;">Nama Barang</th>
+                                                                    <th style="padding: 8px;border: 1px solid #000000;">Jumlah Pesanan</th>
+                                                                    <th style="padding: 8px;border: 1px solid #000000;">Harga Satuan</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -748,11 +778,13 @@
                                                                 @endphp
                                                                 @foreach ($lampiran5 as $l)
                                                                     <tr>
-                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $loop->iteration }}</td>
-                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->no_sppb }}</td>
-                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->kode_barang }}</td>
-                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->nama_barang }}</td>
-                                                                        <td style="padding: 8px; border: 1px solid #ddd;">{{ formatRupiah($l->harga_awal) }}</td>
+                                                                        <td style="padding: 8px;border: 1px solid #000000;">{{ $loop->iteration }}</td>
+                                                                        <td style="padding: 8px;border: 1px solid #000000;">{{ $l->no_sppb }}</td>
+                                                                        <td style="padding: 8px;border: 1px solid #000000;">{{ $l->kode_barang }}</td>
+                                                                        <td style="padding: 8px;border: 1px solid #000000;">{{ $l->nama_barang }}</td>
+                                                                        <td style="padding: 8px;border: 1px solid #000000;">{{ $l->qty }} {{$l->satuan}}</td>
+                                                                        {{-- <td style="padding: 8px;border: 1px solid #000000;">{{$l->satuan}}</td> --}}
+                                                                        <td style="padding: 8px;border: 1px solid #000000;">{{ formatRupiah($l->harga_awal) }}</td>
                                                                     </tr>
                                                                     @php
                                                                         $totalHarga=$l->harga_awal*$l->qty;
@@ -770,27 +802,34 @@
                                                 @endif
 
                                                 <li style="text-align: justify; font-size: 14px;">
-                                                    Harga-harga Produk tersebut sebagaimana dimaksud pada Pasal 8 Perjanjian ini merupakan harga tetap dan berlaku sampai dengan tanggal {{ $lampiran5[0]->waktu_khs }}.
+                                                    Harga-harga Produk tersebut sebagaimana dimaksud pada Pasal 8 Perjanjian ini merupakan harga tetap dan berlaku sampai dengan tanggal {{ $lampiran5[0]->waktu_khs }} {{ $lampiran5[0]->bulan }} {{ $lampiran5[0]->tahun }}.
                                                 </li>
                                             </ol>
                                         @endif
 
                                         <table style="width: 100%;
                                                 border-collapse: collapse;
-                                                margin-top: 20px;">
+                                                margin-top: 35px;">
                                             <tr>
-                                                <th style="width: 50%;text-align: center;">PIHAK KEDUA,</th>
-                                                <th style="width: 50%;text-align: center;">PIHAK KESATU,</th>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;">PIHAK KEDUA,</th>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;">PIHAK KESATU,</th>
+                                            </tr>
+                                            <tr>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;">{{$data->integrates[0]->vendor_name}}</th>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;"><b>PERUM PERCETAKAN UANG RI</b></th>
                                             </tr>
                                             <tr>
                                                 <td style="vertical-align: top;">
-                                                    <div style="padding-top: 50px; text-align: center;">
-                                                        <div style=""><b>{{ $pihak2name }}</b></div>
+                                                    <div style="padding-top: 130px; text-align: center; font-size: 14px;">
+                                                        <div style=""><b><u>{{ $pihak2name }}</u></b></div>
+                                                        <div style="margin-top: 5px"><b>{{ $pihak2jabatan }}</b></div>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: top;">
-                                                    <div style="padding-top: 50px; text-align: center;">
-                                                        <div style=""><b>{{ $pihak1name }}</b></div>
+                                                    <div style="padding-top: 130px; text-align: center; font-size: 14px;">
+                                                        <div style=""><b><u>{{ $pihak1name }}</u></b></div>
+                                                        <div style="margin-top: 5px"><b>{!! str_replace('Fasilitas Umum', '<br>Fasilitas Umum', $pihak1jabatan) !!}</b></div>
+                                                        {{-- <div style="margin-top: 5px"><b>{{ $pihak1jabatan }}</b></div> --}}
                                                     </div>
                                                 </td>
                                             </tr>
@@ -798,6 +837,11 @@
 
                                     </div>
                                     {{-- end lampiran 5 --}}
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
 
 
                                     {{-- disini butuh page break ke halaman selanjutnya --}}
@@ -924,20 +968,27 @@
                                         <div><br></div>
                                         <table style="width: 100%;
                                                 border-collapse: collapse;
-                                                margin-top: 20px;">
+                                                margin-top: 35px;">
                                             <tr>
-                                                <th style="width: 50%;text-align: center;">PIHAK KEDUA,</th>
-                                                <th style="width: 50%;text-align: center;">PIHAK KESATU,</th>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;">PIHAK KEDUA,</th>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;">PIHAK KESATU,</th>
+                                            </tr>
+                                            <tr>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;">{{$data->integrates[0]->vendor_name}}</th>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;"><b>PERUM PERCETAKAN UANG RI</b></th>
                                             </tr>
                                             <tr>
                                                 <td style="vertical-align: top;">
-                                                    <div style="padding-top: 50px; text-align: center;">
-                                                        <div style=""><b>{{ $pihak2name }}</b></div>
+                                                    <div style="padding-top: 130px; text-align: center; font-size: 14px;">
+                                                        <div style=""><b><u>{{ $pihak2name }}</u></b></div>
+                                                        <div style="margin-top: 5px"><b>{{ $pihak2jabatan }}</b></div>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: top;">
-                                                    <div style="padding-top: 50px; text-align: center;">
-                                                        <div style=""><b>{{ $pihak1name }}</b></div>
+                                                    <div style="padding-top: 130px; text-align: center; font-size: 14px;">
+                                                        <div style=""><b><u>{{ $pihak1name }}</u></b></div>
+                                                        <div style="margin-top: 5px"><b>{!! str_replace('Fasilitas Umum', '<br>Fasilitas Umum', $pihak1jabatan) !!}</b></div>
+                                                        {{-- <div style="margin-top: 5px"><b>{{ $pihak1jabatan }}</b></div> --}}
                                                     </div>
                                                 </td>
                                             </tr>
@@ -945,6 +996,12 @@
 
                                     </div>
                                     {{-- end lampiran 6 --}}
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
+                                    <div><br></div>
+
 
 
                                     {{-- disini butuh page break ke halaman selanjutnya --}}
@@ -996,20 +1053,27 @@
 
                                         <table style="width: 100%;
                                                 border-collapse: collapse;
-                                                margin-top: 20px;">
+                                                margin-top: 35px;">
                                             <tr>
-                                                <th style="width: 50%;text-align: center;">PIHAK KEDUA,</th>
-                                                <th style="width: 50%;text-align: center;">PIHAK KESATU,</th>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;">PIHAK KEDUA,</th>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;">PIHAK KESATU,</th>
+                                            </tr>
+                                            <tr>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;">{{$data->integrates[0]->vendor_name}}</th>
+                                                <th style="width: 50%;text-align: center; font-size: 14px;"><b>PERUM PERCETAKAN UANG RI</b></th>
                                             </tr>
                                             <tr>
                                                 <td style="vertical-align: top;">
-                                                    <div style="padding-top: 50px; text-align: center;">
-                                                        <div style=""><b>{{ $pihak2name }}</b></div>
+                                                    <div style="padding-top: 130px; text-align: center; font-size: 14px;">
+                                                        <div style=""><b><u>{{ $pihak2name }}</u></b></div>
+                                                        <div style="margin-top: 5px"><b>{{ $pihak2jabatan }}</b></div>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: top;">
-                                                    <div style="padding-top: 50px; text-align: center;">
-                                                        <div style=""><b>{{ $pihak1name }}</b></div>
+                                                    <div style="padding-top: 130px; text-align: center; font-size: 14px;">
+                                                        <div style=""><b><u>{{ $pihak1name }}</u></b></div>
+                                                        <div style="margin-top: 5px"><b>{!! str_replace('Fasilitas Umum', '<br>Fasilitas Umum', $pihak1jabatan) !!}</b></div>
+                                                        {{-- <div style="margin-top: 5px"><b>{{ $pihak1jabatan }}</b></div> --}}
                                                     </div>
                                                 </td>
                                             </tr>

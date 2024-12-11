@@ -16,11 +16,12 @@ class SettingController extends Controller
     // FUNGSI SAVE EDITAN AKTA PERURI ==================================================================================
     public function update(Request $request, Setting $setting)
     {
+        // dd($request->all());
         extract($request->all());
 
-        // hapus dulu vendortext
         $setting->update([
             'peruri_pihakname'  => $pihakname,
+            'peruri_posisi'     => $posisi,
             'peruri_akta'       => $akta,
         ]);
         return back();

@@ -16,8 +16,8 @@
             </div>
             <!-- <div class="card-footer"> -->
             <button type="button" class="btn btn-block btn-secondary btn-lg" onclick="submitLampiran7()">
-                <span id="loading-spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                Submit
+                {{-- <span id="loading-spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> --}}
+                Submit Update Lampiran
             </button>
             <!-- </div> -->
         </div>

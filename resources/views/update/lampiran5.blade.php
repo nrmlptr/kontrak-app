@@ -89,25 +89,6 @@
                     <div class="form-group col-2">
                         <label for="lokasi">Lokasi Gudang</label>
                         <input type="text" name="plant[]" class="form-control" value="{{ $l->lokasi }}" id="plantlampiran5" required readonly>
-                        {{-- <select name="lokasi[]" id="lokasi" class="form-control" required>
-                            <option value="{{ $l->lokasi }}" selected>@if($l->lokasi == 'GAT')
-                                Gudang Tengah
-                            @elseif($l->lokasi == 'UGM')
-                                Gudang Ugam
-                            @elseif($l->lokasi == 'TGN')
-                                Gudang Tasganu
-                            @elseif($l->lokasi == 'UMUM')
-                                Gudang Umum
-                            @else
-                                Gudang Utas
-                            @endif</option>
-                            <option value="">--Pilih Gudang--</option>
-                            <option value="GAT">Gudang Tengah</option>
-                            <option value="UGM">Gudang Ugam</option>
-                            <option value="TGN">Gudang Tasganu</option>
-                            <option value="UMUM">Gudang Umum</option>
-                            <option value="UTAS">Gudang Utas</option>
-                        </select> --}}
                     </div>
                     <div class="form-group col-2">
                         <label for="harga_awal">Harga Sebelum PPN</label>
@@ -119,11 +100,6 @@
                         <input type="text" name="jumlah[]" class="form-control"  value="{{ $l->qty }}" id="jumlahlampiran5" required readonly>
 
                     </div>
-                    {{-- <div class="form-group col-1">
-                        <label for="ppn">PPN %</label>
-                        <input type="text" name="ppn[]" class="form-control"  required>
-
-                    </div> --}}
                     <div class="form-group col-2">
                         <label for="harga_akhir">Total Harga + PPN</label>
                         <input type="text" name="harga_akhir[]" class="form-control" required readonly>
@@ -141,7 +117,7 @@
                 <input style=" border: 2px solid #ff0000;" type="text" name="total_keseluruhan" class="form-control" required readonly>
 
             </div>
-            <button type="button" class="btn btn-block btn-secondary btn-lg" onclick="submitLampiran5()">Submit</button>
+            <button type="button" class="btn btn-block btn-secondary btn-lg" onclick="submitLampiran5()">Input</button>
         </div>
     </form>
 </div>
@@ -164,7 +140,6 @@
                 var row = $(this).closest('.row');
                 var jumlah = parseInt(row.find('input[name="jumlah[]"]').val()) || 0;
                 var hargaAwal = parseInt(row.find('input[name="harga_awal[]"]').val()) || 0;
-                // var ppn = parseInt(row.find('input[name="ppn[]"]').val()) || 0;
 
                 // Perhitungan total harga akhir untuk barang saat ini
                 totalHarga = (jumlah * hargaAwal) + ((jumlah * hargaAwal) * (ppn / 100));
@@ -180,32 +155,11 @@
             $('input[name="total_keseluruhan"]').val(totalKeseluruhan.toFixed(2));
         }
 
-
-        // // Event listener untuk input[name="ppn[]"]
-        // $(document).on('input', 'input[name="ppn[]"]', function() {
-        //     // Panggil fungsi perhitungan setiap kali ada perubahan pada input PPN
-        //     calculateTotal();
-        // });
-
         // Event listener untuk input PPN di luar loop
         $(document).on('input', '#ppn', function() {
             // Panggil fungsi perhitungan setiap kali ada perubahan pada input PPN
             calculateTotal();
         });
-
-        // $(document).ready(function () {
-        //     // Ambil nilai PPN dari variabel PHP dan simpan dalam array JavaScript
-        //     var ppnValues = {!! json_encode($ppnArray) !!};
-
-        //     // Loop melalui semua input dengan nama ppn[] dan atur nilai PPN sesuai dengan nilai dari array ppnValues
-        //     $('input[name="ppn[]"]').each(function(index) {
-        //         // Atur nilai PPN pada setiap input berdasarkan nilai dari array ppnValues
-        //         $(this).val(ppnValues[index]).change();
-        //     });
-
-        //     // Panggil fungsi perhitungan setelah mengatur nilai PPN
-        //     calculateTotal();
-        // });
 
         // Event listener untuk input jumlah dan harga_awal
         $(document).on('input', 'input[name="jumlah[]"], input[name="harga_awal[]"]', function() {
@@ -232,9 +186,6 @@
                     $(".collapse").removeClass('show');
                     $('#collapseLampiran6').addClass('show');
                     console.log(result.message);
-                    // if (result.redirect) {
-                    //     window.location.href = result.redirect; // Mengarahkan ulang halaman ke halaman monitoring
-                    // }
                 }
             });
         }

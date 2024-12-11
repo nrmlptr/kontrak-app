@@ -45,7 +45,7 @@
                                 <form action="{{ route('vPasal') }}" method="GET">
                                 @csrf
                                     <div class="row">
-                                        <div class="col-md-6 mb-3">
+                                        <div class="col-md-3 mb-3">
                                             <label for="">Jenis Kontrak</label>
                                             <select name="jenis_kontrak" id="filter-jenis-kontrak" class="form-control filter">
                                                 <option value="">Pilih Jenis Kontrak</option>
@@ -53,7 +53,7 @@
                                                 <option value="2">Harga Satuan</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-6 mb-3">
+                                        <div class="col-md-3 mb-3">
                                             <label for="">Status Jaminan</label>
                                             <select name="status_jaminan" id="filter-status-jaminan" class="form-control filter">
                                                 <option value="">Pilih Status Jaminan</option>
@@ -61,7 +61,7 @@
                                                 <option value="2">Tanpa Jaminan</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-4 mt-3 input-group-append">
+                                        <div class="col-md-6 mt-3 input-group-append">
                                             <button type="submit" class="btn btn-primary" title="Search Data"><i class="fa fa-search"></i></button>
                                         </div>
                                     </div>

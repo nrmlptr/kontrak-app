@@ -1,5 +1,31 @@
 @extends('layout.main')
 @section('content')
+<style>
+
+    /* Tabel styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f4f4f4;
+        font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+</style>
+
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <div class="content-header">
@@ -34,7 +60,7 @@
                             <div class="icon">
                                 <i class="nav-icon fas fa-copy"></i>
                             </div>
-                            <a href="{{ route('indexKontrak') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{ route('KontrakList') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->
@@ -44,7 +70,7 @@
                             <div class="inner">
                                 <h3>{{ $dataSOP->count() }}</h3>
 
-                                <p><b>Jumlah SOP/PO/SPK</b></p>
+                                <p><b>Jumlah SOP/SPK/PO</b></p>
                             </div>
                             <div class="icon">
                                 <i class="nav-icon fas fa-chart-bar"></i>
@@ -139,30 +165,78 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- kotak buat grafik kontrak per jenis kontrak -->
-                    {{-- <div class="col-md-6 col-sm-6">
-                        <div class="x_panel">
-                            <div class="x_title">
-                                <figure class="highcharts-figure">
-                                    <div id=""></div>
-                                </figure>
-                            </div>
-                        </div>
-                    </div>   --}}
-                    <!-- kotak untuk grafik per nama vendor -->
-                    {{-- <div class="col-md-6 col-sm-6  ">
-                        <div class="x_panel">
-                            <div class="x_title">
-                                <figure class="highcharts-figure">
-                                    <div>
-                                    <div id=""></div>
-                                    </div>
-                                </figure>
-                            </div>
-                        </div>
-                    </div>    --}}
                 </div>
+
+                <div class="row">
+                    <!-- Grafik pie chart -->
+                    <div class="col-md-6 col-sm-6">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <figure class="highcharts-figure">
+                                        <div id="pie-chart-penunjukkan-langsung"></div>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabel Data Pengadaan -->
+                    <div class="col-md-6 col-sm-6">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <figure class="highcharts-figure">
+                                        <div id="pie-chart-tender-terbatas"></div>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="card">
+                          <div class="card-header">
+                            <h3 class="card-title">Data Proses Pengadaan</h3>
+                          </div>
+                          <!-- /.card-header -->
+                            <div class="card-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10px">No</th>
+                                            <th>Nomor PR</th>
+                                            <th>Jenis Metode</th>
+                                            <th>Tanggal Rilis</th>
+                                            <th>Tanggal SOP</th>
+                                            <th>Nomor SOP</th>
+                                            <th>Hasil</th>
+                                            <th>Keterangan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $no = 1;
+                                        @endphp
+                                        @foreach ($results as $result)
+
+                                        <tr>
+                                            <td>{{$no++}}</td>
+                                            <td>{{ $result['nomor_pr'] }}</td>
+                                            <td>{{ $result['Jenis_metode'] }}</td>
+                                            <td>{{ date('d-m-Y', strtotime($result['tgl_rilis3'])) }}</td>
+                                            <td>{{ date('d-m-Y', strtotime($result['tgl_sop'])) }}</td>
+                                            <td>{{ $result['nomor_sop']}}</td>
+                                            <td>{{ $result['selisih_hari'] }}</td>
+                                            <td>{{ $result['keterangan'] }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                          <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div> --}}
                 <!-- /.row (main row) -->
             </div><!-- /.container-fluid -->
         </section>
@@ -296,7 +370,7 @@
                 type: 'pie'
             },
             title: {
-                text: 'KONTRAK BERDASARKAN STATUS JAMINAN <br> (Total : {{ $totalKontrak }} Kontrak)'
+                text: 'BERDASARKAN STATUS JAMINAN <br> (Total : {{ $totalKontrak }} Kontrak)'
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.y}</b> ({point.percentage:.1f}%)'
@@ -376,7 +450,7 @@
                 type: 'pie'
             },
             title: {
-                text: 'KONTRAK BERDASARKAN JENIS KONTRAK <br> (Total : {{ $totalKontrak }} Kontrak)'
+                text: 'BERDASARKAN JENIS KONTRAK <br> (Total : {{ $totalKontrak }} Kontrak)'
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.y}</b> ({point.percentage:.1f}%)'
@@ -388,7 +462,7 @@
                     dataLabels: {
                         enabled: true,
                         // format: '<b>{point.name}</b>: {point.y} ({point.percentage:.1f}%)',
-                        format: '<b>{point.name}</b>: {point.y}',
+                        format: '<b>{point.name}</b>: {point.y} ({point.percentage:.1f}%)',
                         style: {
                             fontSize: '1.2em',
                             textOutline: 'none',
@@ -410,11 +484,11 @@
                     }
                 }
             },
-            legend: {
-                labelFormatter: function() {
-                    return this.name + ': ' + Highcharts.numberFormat(this.percentage, 1) + '%';
-                }
-            },
+            // legend: {
+            //     labelFormatter: function() {
+            //         return this.name + ': ' + Highcharts.numberFormat(this.percentage, 1) + '%';
+            //     }
+            // },
             series: [{
                 name: 'Jumlah',
                 colorByPoint: true,
@@ -456,7 +530,7 @@
                 type: 'column'
             },
             title: {
-                text: 'TOP 10 VENDOR DENGAN PEMBUATAN KONTRAK TERBANYAK'
+                text: 'TOP 10 VENDOR KONTRAK TERBANYAK'
             },
             xAxis: {
                 categories: {!! json_encode($dataGrafik['categories']) !!},
@@ -508,5 +582,99 @@
     });
 
 
+    // $(document).ready(function() {
+    //     Highcharts.chart('pie-chart-penunjukkan-langsung', {
+    //         chart: { type: 'pie' },
+    //         title: { text: 'Kesesuaian Proses Pengadaan (Penunjukkan Langsung)' },
+    //         series: [{
+    //             name: 'Kesesuaian',
+    //             colorByPoint: true,
+    //             data: [
+    //                 { name: 'Sesuai', y: {{ $dataPie['penunjukkan_langsung']['sesuai'] }} },
+    //                 { name: 'Tidak Sesuai', y: {{ $dataPie['penunjukkan_langsung']['tidak_sesuai'] }} }
+    //             ]
+    //         }]
+    //     });
+
+    //     Highcharts.chart('pie-chart-tender-terbatas', {
+    //         chart: { type: 'pie' },
+    //         title: { text: 'Kesesuaian Proses Pengadaan (Tender Terbatas)' },
+    //         series: [{
+    //             name: 'Kesesuaian',
+    //             colorByPoint: true,
+    //             data: [
+    //                 { name: 'Sesuai', y: {{ $dataPie['tender_terbatas']['sesuai'] }} },
+    //                 { name: 'Tidak Sesuai', y: {{ $dataPie['tender_terbatas']['tidak_sesuai'] }} }
+    //             ]
+    //         }]
+    //     });
+    // });
+    $(document).ready(function() {
+        // Hitung total untuk mendapatkan persentase
+        let totalPenunjukkanLangsung = {{ $dataPie['penunjukkan_langsung']['sesuai'] }} + {{ $dataPie['penunjukkan_langsung']['tidak_sesuai'] }};
+        let totalTenderTerbatas = {{ $dataPie['tender_terbatas']['sesuai'] }} + {{ $dataPie['tender_terbatas']['tidak_sesuai'] }};
+
+        Highcharts.chart('pie-chart-penunjukkan-langsung', {
+            chart: { type: 'pie' },
+            title: { text: 'Kesesuaian Proses Pengadaan (Penunjukkan Langsung)' },
+            series: [{
+                name: 'Kesesuaian',
+                colorByPoint: true,
+                data: [
+                    {
+                        name: 'Sesuai',
+                        y: {{ $dataPie['penunjukkan_langsung']['sesuai'] }},
+                        sliced: true, // Opsional, untuk memisahkan bagian
+                        selected: true // Opsional, untuk menandai bagian yang dipilih
+                    },
+                    {
+                        name: 'Tidak Sesuai',
+                        y: {{ $dataPie['penunjukkan_langsung']['tidak_sesuai'] }}
+                    }
+                ],
+                dataLabels: {
+                    enabled: true, // Aktifkan data labels
+                    format: '{point.name}: {point.y} ({point.percentage:.1f}%)', // Format yang diinginkan
+                    distance: 10 // Jarak label dari grafik
+                }
+            }],
+            tooltip: {
+                pointFormat: '<b>{point.name}: {point.y} ({point.percentage:.1f}%)</b>' // Format tooltip
+            }
+        });
+
+        Highcharts.chart('pie-chart-tender-terbatas', {
+            chart: { type: 'pie' },
+            title: { text: 'Kesesuaian Proses Pengadaan (Tender Terbatas)' },
+            series: [{
+                name: 'Kesesuaian',
+                colorByPoint: true,
+                data: [
+                    {
+                        name: 'Sesuai',
+                        y: {{ $dataPie['tender_terbatas']['sesuai'] }},
+                        sliced: true, // Opsional, untuk memisahkan bagian
+                        selected: true // Opsional, untuk menandai bagian yang dipilih
+                    },
+                    {
+                        name: 'Tidak Sesuai',
+                        y: {{ $dataPie['tender_terbatas']['tidak_sesuai'] }}
+                    }
+                ],
+                dataLabels: {
+                    enabled: true, // Aktifkan data labels
+                    format: '{point.name}: {point.y} ({point.percentage:.1f}%)', // Format yang diinginkan
+                    distance: 10 // Jarak label dari grafik
+                }
+            }],
+            tooltip: {
+                pointFormat: '<b>{point.name}: {point.y} ({point.percentage:.1f}%)</b>' // Format tooltip
+            }
+        });
+    });
+
 </script>
 
+<script>
+
+</script>

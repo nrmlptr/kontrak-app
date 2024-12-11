@@ -26,5 +26,11 @@ class Integrate extends Model
         return $this->hasMany(Integrate::class, 'purchasing_document_number', 'purchasing_document_number');
     }
 
-    
+
+    // public function vendor_1()
+    // {
+    //     return $this->hasOne(Vendor::class, 'registration_no', 'registration_no'); // Sesuaikan foreign key dan local key
+    // }
+
+
 }

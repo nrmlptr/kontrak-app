@@ -44,10 +44,6 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <!-- <div class="row justify-content-center"> -->
-            <!-- left column -->
-            <!-- <div class="col-lg-12 d-flex align-items-strech"> -->
-            <!-- general form elements -->
             <div class="card card-primary w-100">
                 <div class="card-header">
                     <h3 class="card-title mr-3">Edit Data - Konsep Kontrak</h3>
@@ -88,30 +84,16 @@
                                                     <div class="row justify-content-center">
                                                         <div class="col-md-2" style="text-align: center;">
                                                             <select class="form-control" name="jenis_kontrak" required>
-                                                                <option value="{{ $data->jenis_kontrak }}" selected>
-                                                                    @if($data->jenis_kontrak == 1)
-                                                                        Lumpsum
-                                                                    @else
-                                                                        Harga Satuan
-                                                                    @endif
-                                                                </option>
-                                                                <option value="" disabled>-- Jenis Kontrak -- </option>
-                                                                <option value="lumpsum">Lumpsum</option>
-                                                                <option value="harga_satuan">Harga Satuan</option>
+                                                                <option value="" disabled>-- Jenis Kontrak --</option>
+                                                                <option value="lumpsum" {{ $data->jenis_kontrak == 1 ? 'selected' : '' }}>Lumpsum</option>
+                                                                <option value="harga_satuan" {{ $data->jenis_kontrak == 2 ? 'selected' : '' }}>Harga Satuan</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-md-2" style="text-align: center;">
                                                             <select class="form-control" name="status_jaminan" required>
-                                                                <option value="{{ $data->status_jaminan }}" selected>
-                                                                    @if($data->status_jaminan == 1)
-                                                                        Jaminan
-                                                                    @else
-                                                                        Tanpa Jaminan
-                                                                    @endif
-                                                                </option>
-                                                                <option value="" disabled> -- Status Jaminan -- </option>
-                                                                <option value="jaminan">Jaminan</option>
-                                                                <option value="tanpa_jaminan">Tanpa Jaminan</option>
+                                                                <option value="" disabled>-- Status Jaminan --</option>
+                                                                <option value="jaminan" {{ $data->status_jaminan == 1 ? 'selected' : '' }}>Jaminan</option>
+                                                                <option value="tanpa_jaminan" {{ $data->status_jaminan == 2 ? 'selected' : '' }}>Tanpa Jaminan</option>
                                                             </select>
                                                         </div>
                                                     </div>

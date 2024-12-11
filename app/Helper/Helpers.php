@@ -61,6 +61,37 @@ function terbilang($angka)
         return 'Angka terlalu besar';
     }
 }
+
+
+function tahun_terbilang($angka)
+{
+    $angka = (float)$angka;
+    $bilangan = ['', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan', 'sepuluh', 'sebelas'];
+
+    if ($angka < 12) {
+        return $bilangan[(int)$angka];
+    } elseif ($angka < 20) {
+        return tahun_terbilang($angka - 10) . ' belas';
+    } elseif ($angka < 100) {
+        return tahun_terbilang($angka / 10) . ' puluh ' . tahun_terbilang($angka % 10);
+    } elseif ($angka < 200) {
+        return ' seratus ' . tahun_terbilang($angka - 100);
+    } elseif ($angka < 1000) {
+        return tahun_terbilang($angka / 100) . ' ratus ' . tahun_terbilang($angka % 100);
+    } elseif ($angka < 2000) {
+        return ' seribu ' . tahun_terbilang($angka - 1000);
+    } elseif ($angka < 1000000) {
+        return tahun_terbilang($angka / 1000) . ' ribu ' . tahun_terbilang($angka % 1000);
+    } elseif ($angka < 1000000000) {
+        return tahun_terbilang($angka / 1000000) . ' juta ' . tahun_terbilang($angka % 1000000);
+    } elseif ($angka < 1000000000000) {
+        return tahun_terbilang($angka / 1000000000) . ' miliar ' . tahun_terbilang($angka % 1000000000);
+    } elseif ($angka < 1000000000000000) {
+        return tahun_terbilang($angka / 1000000000000) . ' triliun ' . tahun_terbilang($angka % 1000000000000);
+    } else {
+        return 'Angka terlalu besar';
+    }
+}
 function showEncodeChar($str)
 {
     return mb_convert_encoding($str, 'HTML-ENTITIES', 'UTF-8');
@@ -87,3 +118,31 @@ function splitString($text, $chunkLength)
 
     return $chunks;
 }
+
+
+// FORMAT FUNGSI VENDOR NAMA AGAR TIDAK KAPITAL SEMUA TAPI AWALAN NYA TETEP KAPITAL SEMUA
+function formatVendorName($vendorName)
+{
+    // Daftar prefix yang harus tetap uppercase
+    $prefixes = ['PT', 'CV', 'UD', 'PD', 'KOPERASI'];
+
+    // Pecah nama vendor menjadi array kata
+    $words = explode(' ', $vendorName);
+
+    foreach ($words as $index => $word) {
+        // Jika kata termasuk dalam prefix, tetapkan uppercase tanpa perubahan
+        if (in_array(strtoupper($word), $prefixes)) {
+            $words[$index] = strtoupper($word);
+        } else {
+            // Jika bukan prefix, ubah ke Title Case
+            $words[$index] = ucfirst(strtolower($word));
+        }
+    }
+
+    // Gabungkan kembali menjadi string
+    return implode(' ', $words);
+
+    // dd($words);
+}
+
+

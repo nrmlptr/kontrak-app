@@ -10,7 +10,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Monitoring Kontrak</li>
+                        <li class="breadcrumb-item active">Data Kontrak</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -103,7 +103,7 @@
                                     </div>
                                     <div class="row align-items-center">
                                         <div class="col-12">
-                                            <label for="">Tanggal SP</label>
+                                            <label for="">Tanggal Kontrak</label>
                                             {{-- <hr> --}}
                                         </div>
                                         <div class="col-md-4">
@@ -130,9 +130,9 @@
                                 <thead align="center">
                                     <tr>
                                         @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('writer'))
-                                            <th style="width: 10%">U/D</th>
-                                            <th>Aksi</th>
+                                            <th style="width: 10%">Upload/Download</th>
                                         @endif
+                                        <th>Aksi</th>
                                         <th>No</th>
                                         <th style="width: 10%">Nomor Kontrak</th>
                                         <th>Tanggal Kontrak</th>
@@ -152,6 +152,8 @@
                                         <tr>
 
                                             @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('writer'))
+
+                                                {{-- kolom upload --}}
                                                 @if($d->status == 'approvedkadiv')
                                                     <td class="d-none d-sm-table-cell">
                                                         <span class="badge badge-warning mb-2"> Status Doc :
@@ -170,36 +172,33 @@
                                                 @else
                                                     <td><span class="badge badge-dark">Unfinished</span></td>
                                                 @endif
-                                                @php
-                                                    $cekPembuat = Auth::user()->name;
-                                                @endphp
-                                                {{-- buat kondisi untuk admin dan writer karena ada tombol addLampiran jadi disitu dicek dlu apakah kontrak tersebut pembuatnya sama dengan name user yang lagi login? kalau iya, baru bisa addLampiran atau hapus, kalau engga berarti forbidden --}}
-                                                @if($d->pembuat == $cekPembuat || Auth::user()->hasRole('admin'))
-                                                    {{-- TOMBOL HAPUS KONTRAK --}}
-                                                    <td><a data-toggle="modal" data-target="#modal-hapus-kontrak{{$d->id }}" class="btn btn-sm btn-danger" title="Hapus Kontrak"><i class="fas fa-trash-alt"></i></a><br>
-                                                    {{-- Check if Lampiran7 exists for this kontraks_id --}}
-                                                    @php
-                                                        $cekLampiran7 = \App\Models\Lampiran7::where('kontraks_id', $d->id)->doesntExist();
-                                                        // dd($cekLampiran7)
-                                                    @endphp
-                                                    {{-- If Lampiran7 untuk kontrak tersebut benar tidak ada, show the button --}}
-                                                    @if($cekLampiran7)
-                                                        {{-- TOMBOL ADD LAMPIRAN --}}
-                                                        <a href="{{ route('createLampiran', ['id' => $d->id]) }}" class="btn btn-sm btn-warning mt-2" title="Input Lampiran"><i class="fas fa-pen"></i></a>
+                                            @endif
+                                            <!-- Kolom Aksi -->
+                                            <td>
+                                                @if($d->pembuat == Auth::user()->name || Auth::user()->hasRole('admin'))
+                                                    {{-- Tombol hapu skontrak --}}
+                                                    <a data-toggle="modal" data-target="#modal-hapus-kontrak{{$d->id }}" class="btn btn-sm btn-danger" title="Hapus Kontrak"><i class="fas fa-trash-alt"></i></a><br>
+                                                    <!-- Tombol Add Lampiran (Jika belum ada lampiran 7) -->
+                                                    @if(\App\Models\Lampiran7::where('kontraks_id', $d->id)->doesntExist())
+                                                        <a href="{{ route('createLampiran', ['id' => $d->id]) }}" class="btn btn-sm btn-warning mt-2" title="Input Lampiran"><i class="fas fa-pen"></i></a><br>
                                                     @else
-                                                       <span class="badge badge-info">Lampiran sudah dibuat</span>
+                                                        <span class="badge badge-info">Lampiran sudah dibuat</span><br>
                                                     @endif
-
-
+                                                    <!-- Tombol Preview Kontrak -->
                                                     @if($d->status == 'konsep')
-                                                        <a href="{{ route('previewKontrak', ['id' => $d->id]) }}" class="btn btn-sm btn-primary mt-2" title="Lihat Konsep"><i class="fas fa-book-reader"></i></a>
+                                                        <a href="{{ route('previewKontrak', ['id' => $d->id]) }}" class="btn btn-sm btn-primary mt-2" title="Lihat Konsep"><i class="fas fa-book-reader"></i></a><br>
                                                     @endif
-                                                    </td>
-                                                @else
-                                                    <td><span class="badge badge-dark">Forbidden</span></td>
+                                                {{-- @else
+                                                    <span class="badge badge-dark">Forbidden</span> --}}
                                                 @endif
 
-                                            @endif
+                                                <!-- Tambahan Tombol History Kontrak dan History Revisi (untuk semua role) -->
+                                                <a href="{{ route('logKontrak', ['id' => $d->id]) }}" class="logkontrak btn btn-sm btn-info my-1" title="History Kontrak"><i class="fas fa-history"></i></a><br>
+                                                <a href="{{ route('historyRevisiK', ['id' => $d->id]) }}" class="historyRkontrak btn btn-sm btn-warning my-1" title="History Revisi"><i class="fas fa-list"></i></a><br>
+                                                @if($d->status !== 'draft')
+                                                    <a href="{{ route('cetakKontrak',$d->id) }}" target="_blank"  class="btn btn-sm btn-secondary my-1" title="Cetak Kontrak"><i class="nav-icon fas fa-print"></i></i></a>
+                                                @endif
+                                            </td>
                                             <td>{{ $loop->iteration }}</td>
                                             <td align="center">
                                                 {{ $d->detail_number }}

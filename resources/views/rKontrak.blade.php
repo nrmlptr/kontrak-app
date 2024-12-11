@@ -42,38 +42,6 @@
                                             <label for="">Nama Vendor</label>
                                             <input type="text" name="nm_vendor" id="filter-nama-vendor" class="form-control filter">
                                         </div>
-                                        {{-- <div class="col-md-2 mb-3">
-                                            <label for="">Status</label>
-                                            <select name="status" id="filter-status" class="form-control filter">
-                                                <option value="">Pilih Status</option>
-                                                <option value="draft">Draft</option>
-                                                <option value="reviewkasek">Review By Kasek</option>
-                                                <option value="revisikasek">Revisi By Kasek</option>
-                                                <option value="editedkasek">Diperiksa Ulang Kasek</option>
-                                                <option value="approvedkasek">Disetujui by Kasek</option>
-                                                <option value="reviewkadept">Review By Kadept</option>
-                                                <option value="revisikadept">Revisi By Kadept</option>
-                                                <option value="editedkadept">Diperiksa Ulang Kasek</option>
-                                                <option value="approvedkadept">Disetujui by Kadept</option>
-                                                <option value="reviewkadiv">Review By Kadiv</option>
-                                                <option value="revisikadiv">Revisi By Kadiv</option>
-                                                <option value="editedkadiv">Diperiksa Ulang Kasek</option>
-                                                <option value="approvedkadiv">Disetujui Kadiv (NET)</option>
-                                            </select>
-                                        </div> --}}
-                                        <div class="col-md-2 mb-3">
-                                            <label for="">Status</label>
-                                            <select name="status" id="filter-status" class="form-control filter">
-                                                <option value="">Pilih Status</option>
-                                                <option value="draft">Draft</option>
-                                                <option value="konsep">Konsep</option>
-                                                <option value="review">Review</option>
-                                                <option value="revisi">Revisi</option>
-                                                <option value="edited">Review Ulang Kasek</option>
-                                                <option value="approved">Approved</option>
-                                                <!-- tambahkan opsi lainnya jika perlu -->
-                                            </select>
-                                        </div>
                                         <div class="col-md-2 mb-3">
                                             <label for="">Unit Kerja</label>
                                             <select name="unit_kerja" id="filter-unit-kerja" class="form-control filter">
@@ -103,7 +71,7 @@
                                     </div>
                                     <div class="row align-items-center">
                                         <div class="col-12">
-                                            <label for="">Tanggal SP</label>
+                                            <label for="">Tanggal Kontrak</label>
                                             {{-- <hr> --}}
                                         </div>
                                         <div class="col-md-4">

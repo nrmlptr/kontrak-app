@@ -14,6 +14,7 @@
         }
 
         @page {
+            margin: 2cm;
             counter-increment: page; /* Menambah nomor halaman */
         }
 
@@ -23,20 +24,22 @@
             padding: 10px;
             top: 0;
             left: 0;
-            width: 100%;
+            width: calc(100% - 4cm);
             background-color: white;
             z-index: 1;
             margin-bottom: 50px;
+            font-family: sans-serif !important;
+            font-size: 10pt !important;
         }
 
         table {
             border-collapse: collapse;
-            width: auto;
+            width: 100%;
         }
         table tr td {
             padding: 5px;
             margin: 5px;
-            width: auto;
+            /* width: auto; */
         }
         .text-center {
             text-align: center;
@@ -53,6 +56,11 @@
         .page-break {
             page-break-before: always;
         }
+
+        #content *{
+            font-family: sans-serif !important;
+            font-size: 10pt !important;
+        }
     </style>
 </head>
 <body>
@@ -62,10 +70,10 @@
 @endphp
 <div id="header">
     @if ($lampiran3[0]->jenis_spesifikasi == '2')
-        <table class="table-header" style="border-collapse: collapse; width: 100%;" border="1">
+        <table class="table-header" style="border-collapse: collapse; width: 100%; solid #000000;" border="1">
             <tbody>
                 <tr>
-                    <td style="width: 20%; font-size: 14px;"><b>LAMPIRAN III</b></td>
+                    <td style="width: 17%; font-size: 14px;"><b>LAMPIRAN III</b></td>
                     <td style="width: 2%; font-size: 14px;"><b>:</b></td>
                     <td style="font-size: 14px;"><b>SPESIFIKASI TEKNIS</b></td>
                     <td style="font-size: 14px;"><b>Halaman: <span class="nomornya"></span> / <span class="total-pages" data-total-pages="0"></span></b></td>
@@ -73,7 +81,7 @@
                 <tr>
                     <td style="width: 13%; font-size: 14px;" rowspan="2"><b>PERIHAL</b></td>
                     <td rowspan="2" style="width: 2%; border: none; font-size: 14px;"><b> : </b></td>
-                    <td rowspan="2" style="width: 60%; font-size: 14px;"><b>{{ strtoupper($data->perihal) }}</b></td>
+                    <td rowspan="2" style="width: 50%; font-size: 14px;"><b>{{ strtoupper($data->perihal) }}</b></td>
                     <td style="width: 30%; font-size: 14px;"><b>Nomor : {{ $data->detail_number }}</b></td>
                 </tr>
                 <tr>
@@ -84,10 +92,11 @@
         <div><br></div>
         <div style="text-align: center;"><b>SPESIFIKASI TEKNIS</b></div>
         <div><br></div>
-        @foreach ($lampiran3 as $l)
+        <div style="text-align: center;"><b>{{ strtoupper($data->perihal) }}</b></div>
+        {{-- @foreach ($lampiran3 as $l)
             <div style="text-align: center;"><b>{{ $l->jenis_barang }}</b></div>
             <div class="mt-4"></div>
-        @endforeach
+        @endforeach --}}
     @endif
 </div>
 
@@ -97,10 +106,7 @@
 <div id="content">
     @if ($lampiran3[0]->jenis_spesifikasi == '2')
         <div><br></div>
-        @foreach ($lampiran3 as $l)
-            <div style="text-align: center;"><b>{{ $l->jenis_barang }}</b></div>
-            <div class="mt-4"></div>
-        @endforeach
+        <div style="text-align: center;"><b>{{ strtoupper($data->perihal) }}</b></div>
         @foreach($lampiran3 as $l)
             @if($l->gambarnon !== null)
                 <div style="display: grid; place-items: center;">
@@ -109,24 +115,27 @@
             @endif
         @endforeach
         <div><br></div>
-        <table style="border-collapse: collapse; width: 100%; border: 2px solid #ddd; text-align: left;">
-            <thead style="background-color: #f2f2f2;">
+        <table style=" border: 1px solid #000000; margin-top:1cm;">
+            <thead style="background-color: #ffffff;">
                 <tr>
-                    <th style="padding: 8px; border: 1px solid #ddd;">No</th>
-                    <th style="padding: 8px; border: 1px solid #ddd;">No. SPPB</th>
-                    <th style="padding: 8px; border: 1px solid #ddd;">Kode Barang</th>
-                    <th style="padding: 8px; border: 1px solid #ddd;">Jenis Barang</th>
-                    <th style="padding: 8px; border: 1px solid #ddd;">Spesifikasi Teknis</th>
+                    <th style="padding: 8px; border: 1px solid #000000;">No</th>
+                    <th style="padding: 8px; border: 1px solid  #000000;">No. SPPB</th>
+                    <th style="padding: 8px; border: 1px solid  #000000;">Kode Barang</th>
+                    <th style="padding: 8px; border: 1px solid  #000000;">Jenis Barang</th>
+                    <th style="padding: 8px; border: 1px solid #000000;">Jumlah Pesanan</th>
+                    <th style="padding: 8px; border: 1px solid #000000;">Spesifikasi Teknis</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($lampiran3 as $l)
                     <tr>
-                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $loop->iteration }}</td>
-                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->no_sppb }}</td>
-                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->kode_barang }}</td>
-                        <td style="padding: 8px; border: 1px solid #ddd;">{{ $l->jenis_barang }}</td>
-                        <td style="padding: 8px; border: 1px solid #ddd;">{!! nl2br(e($l->spesifikasi_teknis)) !!}</td>
+                        <td style="padding: 8px; border: 1px solid #000000;" align="center">{{ $loop->iteration }}</td>
+                        <td style="padding: 8px; border: 1px solid  #000000;" align="center">{{ $l->no_sppb }}</td>
+                        <td style="padding: 8px; border: 1px solid  #000000;" align="center">{{ $l->kode_barang }}</td>
+                        <td style="padding: 8px; border: 1px solid #000000;" align="center">{{ $l->jenis_barang }}</td>
+                        <td style="padding: 8px; border: 1px solid  #000000;" align="center">{{ $l->qty }} {{ $l->satuan }}</td>
+                        {{-- <td style="padding: 8px; border: 1px solid  #000000;" align="center">{{ $l->satuan }}</td> --}}
+                        <td style="padding: 8px; border: 1px solid  #000000;">{!! nl2br(e($l->spesifikasi_teknis)) !!}</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -136,20 +145,27 @@
     <div><br></div>
     <div><br></div>
 
-    <table style="width: 100%; border-collapse: collapse; margin-top: 50px; position: relative; bottom: 0; left: 0;">
+    <table style="width: 100%; border-collapse: collapse; margin-top: -10px; position: relative; bottom: 0; left: 0;">
         <tr>
             <th style="width: 50%; text-align: center; font-size: 14px;">PIHAK KEDUA,</th>
             <th style="width: 50%; text-align: center; font-size: 14px;">PIHAK KESATU,</th>
         </tr>
         <tr>
+            <th style="width: 50%;text-align: center; font-size: 14px;">{{ $data->integrates[0]->vendor_name }}</th>
+            <th style="width: 50%;text-align: center; font-size: 14px;"><b>PERUM PERCETAKAN UANG RI</b></th>
+        </tr>
+        <tr>
             <td style="vertical-align: top;">
-                <div style="padding-top: 100px; text-align: center; font-size: 14px;">
-                    <div style=""><b>{{ $pihak2name }}</b></div>
+                <div style="padding-top: 120px; text-align: center; font-size: 14px;">
+                    <div style=""><b><u>{{ $pihak2name }}</u></b></div>
+                    <div style="margin-top: 5px"><b>{{ $pihak2jabatan }}</b></div>
                 </div>
             </td>
             <td style="vertical-align: top;">
-                <div style="padding-top: 100px; text-align: center; font-size: 14px;">
-                    <div style=""><b>{{ $pihak1name }}</b></div>
+                <div style="padding-top: 120px; text-align: center; font-size: 14px;">
+                    <div style=""><b><u>{{ $pihak1name }}</u></b></div>
+                    <div style="margin-top: 5px"><b>{!! str_replace('Fasilitas Umum', '<br>Fasilitas Umum', $pihak1jabatan) !!}</b></div>
+                    {{-- <div style="margin-top: 5px"><b><u>{{ $pihak1jabatan }}</u></b></div> --}}
                 </div>
             </td>
         </tr>

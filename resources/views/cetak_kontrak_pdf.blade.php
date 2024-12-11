@@ -69,11 +69,11 @@
                     <tbody>
                         <tr>
                             <td style="width: 3%">&nbsp;</td>
-                            <td style="width: 22%">&nbsp;</td>
+                            <td style="width: 17%">&nbsp;</td>
                             <td style="width: 75%">&nbsp;</td>
                         </tr>
                         <tr>
-                            <td colspan="3"style="text-align: justify; font-size: 14px;"" >Perjanjian ini dibuat pada hari {{ $tanggal_tertulis }} di Kantor Perum Percetakan Uang Republik Indonesia, Jalan Palatehan No. 4, Kebayoran Baru, Jakarta Selatan 12160 Indonesia oleh dan antara Pihak-Pihak:</td>
+                            <td colspan="3"style="text-align: justify; font-size: 10px;"" >Perjanjian ini dibuat pada hari {{ $tanggal_tertulis }} di Kantor Perum Percetakan Uang Republik Indonesia, Jalan Palatehan No. 4, Kebayoran Baru, Jakarta Selatan 12160 Indonesia oleh dan antara Pihak-Pihak:</td>
                         </tr>
                         <td><br></td>
                         <tr>
@@ -93,7 +93,7 @@
                         </tr>
                         {{-- <td><br></td> --}}
                         <tr>
-                            <td colspan="3" style="text-align: justify; font-size: 14px;"">
+                            <td colspan="3" style="text-align: justify; font-size: 20px;"">
                                 Para Pihak secara sendiri-sendiri disebut <b>"Pihak"</b> dan secara bersama-sama disebut juga <b>"Para Pihak"</b>
                             </td>
                         </tr>
@@ -125,13 +125,13 @@
                     </tbody>
                 </table>
             </div>
-            
+
             {{-- disini butuh page break ke halaman selanjutnya --}}
             <div class="page-break"></div>
-        
+
             {{-- KONTEN TENTANG PASAL --}}
             {{-- <div class="content"> --}}
-                
+
                 {{-- <div style="height: 100px; text-align: left;">
                     <div style="padding-right: 10px;float: right;">
                         <p style="text-align: center; margin-bottom: -15px !important;">Lembar ke - 2 -</p>
@@ -152,8 +152,8 @@
                     </div>
                 </div>
                 <div style="clear: both;"></div> --}}
-              
-                
+
+
                 <!-- Isi Pasal -->
                 {{-- @foreach ($data->pasal as $p)
                     <div class="boxpasal" style="text-align: justify; font-size: 14px; page-break-inside: avoid;">
@@ -182,7 +182,7 @@
                         {!! $p->isi_pasal !!}
                     </div>
                     <div style="margin-bottom: 40px;"></div>             --}}
-            
+
                     {{-- table ttd diakhir loop --}}
                     {{-- @if ($loop->last)
                         <p style="text-align: justify; font-size: 14px;">Demikian Perjanjian ini dibuat dalam 2 (dua) rangkap ASLI masing-masing sama bunyi dan bermeterai cukup serta mempunyai kekuatan hukum yang sama setelah ditandatangani dan dibubuhi cap perusahaan kedua belah pihak.</p>
@@ -209,7 +209,7 @@
                                 </td>
                             </tr>
                         </table>
-                    @endif 
+                    @endif
                 @endforeach --}}
                 {{-- end loop pasal --}}
             {{-- </div> --}}
@@ -217,7 +217,7 @@
             {{-- PERCOBAAN KESEKIAN  --}}
 
             <div class="content">
-                @php 
+                @php
                     $maxPasalPerPage = 3; // Tentukan jumlah maksimum pasal per halaman
                     $pageNumber = 1; // Inisialisasi nomor halaman
                 @endphp
@@ -262,7 +262,7 @@
                                         <tr style="border-bottom: 1px solid black;">
                                             <td>Tanggal</td>
                                             <td>:</td>
-                                            <td>{{ tanggal_indonesia($data->date_kontrak) }}</td>
+                                            <td> {{ tanggal_indonesia($data->date_kontrak) }}</td>
                                         </tr>
                                     </table>
                                 </p>
@@ -279,9 +279,9 @@
                         </h4>
                         {!! $p->isi_pasal !!}
                     </div>
-                    <div style="margin-bottom: 40px;"></div>            
+                    <div style="margin-bottom: 40px;"></div>
 
-                   
+
 
                     {{-- table ttd diakhir loop --}}
                     @if ($loop->last)
@@ -309,7 +309,7 @@
                                 </td>
                             </tr>
                         </table>
-                    @endif 
+                    @endif
                 @endforeach
             </div>
 
@@ -341,7 +341,7 @@
                         <tr>
                             <td style="font-size: 14px;"><b>Tanggal : {{ tanggal_indonesia($data->date_kontrak) }}</b></td>
                         </tr>
-                        
+
                     </tbody>
                 </table>
                 <div><br></div>
@@ -352,7 +352,7 @@
                 </p>
                 <ol>
                     @foreach ($dtlampiran1 as $l)
-                        
+
                         <li style="font-size: 14px;">
                             {{ $l['perihal'] }}
                             <br>
@@ -387,7 +387,7 @@
             </div>
 
 
-            
+
             {{-- end lampiran 1 --}}
 
 
@@ -452,7 +452,7 @@
                         </td>
                     </tr>
                 </table>
-                
+
             </div>
             {{-- end lampiran 2 --}}
 
@@ -467,7 +467,7 @@
             @endphp
             <div class="content">
                 @if ($lampiran3[0]->jenis_spesifikasi=='2')
-        
+
                     {{-- <table style="border-collapse: collapse; width: 100%;" border="1">
                         <tbody>
                             <tr>
@@ -492,9 +492,9 @@
                     <div><br></div> --}}
 
 
-                   
+
                     {{-- TEMPAT TAMPILIN GAMBAR NONLAB JIKA ADA --}}
-                    @foreach ($lampiran3 as $l) 
+                    @foreach ($lampiran3 as $l)
                         <table style="border-collapse: collapse; width: 100%;" border="1">
                             <tbody>
                                 <tr>
@@ -529,7 +529,7 @@
                         @endif
                     @endforeach
                     {{-- TEMPAT MANGGIL NAMA BARANGNYA --}}
-                    @foreach ($lampiran3 as $l) 
+                    @foreach ($lampiran3 as $l)
                         <div style="text-align: center;"><b>{{ $l->jenis_barang }}</b></div>
                         {{-- <div><br></div> --}}
                     @endforeach
@@ -555,7 +555,7 @@
                                     <td style="padding: 8px; border: 1px solid #ddd;">{!! nl2br(e($l->spesifikasi_teknis)) !!}</td>
                                 </tr>
                             @endforeach
-                            
+
                         </tbody>
                     </table>
 
@@ -584,10 +584,10 @@
                         <div><br></div>
                         <div style="text-align: center; font-size: 15px;"><b>SPESIFIKASI TEKNIS</b></div>
                         <div><br></div>
-                        @foreach ($lampiran3 as $l) 
+                        @foreach ($lampiran3 as $l)
                             <div style="text-align: center;"><b>{{ $l->jenis_barang }}</b></div>
                         @endforeach
-                        @foreach ($lampiran3 as $l) 
+                        @foreach ($lampiran3 as $l)
                             @if($l->gambarnon !== null)
                                 <div style="display: grid; place-items: center;">
                                     <img src="{{ storage_path("app/".$l->gambarnon) }}" style="display: block; margin: 20px auto; max-width: 100%; max-height: auto;">
@@ -616,7 +616,7 @@
                                         <td style="padding: 8px; border: 1px solid #ddd;">{!! nl2br(e($l->spesifikasi_teknis)) !!}</td>
                                     </tr>
                                 @endforeach
-                                
+
                             </tbody>
                         </table>
                         @if (!$loop->last)
@@ -658,7 +658,7 @@
                     @endforeach
 
                 @endif
-                
+
                 <div><br></div>
                 <div><br></div>
                 <div><br></div>
@@ -760,15 +760,15 @@
                         <li style="text-align: justify; font-size: 14px;">
                             PIHAK KEDUA sanggup dan berjanji untuk melaksanakan penyerahan barang sebagaimana
                             dimaksud Pasal 5 Perjanjian ini sesuai jadwal yang tercantum dalam Surat Order Pembelian (SOP)
-                            Nomor : {{ @$lampiran4[0]->nomor_sop }} tanggal {{ tanggal_indonesia(@$lampiran4[0]->tanggal_sop) }} yang diterbitkan oleh PIHAK KESATU yaitu secara bertahap sampai dengan tanggal {{ @$lampiran4[0]->jadwal_penyerahan_barang }}. 
-                            
+                            Nomor : {{ @$lampiran4[0]->nomor_sop }} tanggal {{ tanggal_indonesia(@$lampiran4[0]->tanggal_sop) }} yang diterbitkan oleh PIHAK KESATU yaitu secara bertahap sampai dengan tanggal {{ @$lampiran4[0]->jadwal_penyerahan_barang }}.
+
                         </li>
                     @endif
-                    
+
                     <li style="text-align: justify; font-size: 14px;">
-                            Penyerahan barang dilakukan langsung ke  
+                            Penyerahan barang dilakukan langsung ke
                             @if(@$lampiran4[0]->lokasi == 'UGM')
-                                Gudang Ugam                                
+                                Gudang Ugam
                             @elseif(@$lampiran4[0]->lokasi == 'UTAS')
                                 Gudang Utas
                             @elseif(@$lampiran4[0]->lokasi == 'UMUM')
@@ -784,7 +784,7 @@
                             Terhadap setiap Barang yang diserahkan oleh PIHAK KEDUA dan telah dinyatakan baik sesuai dengan hasil pemeriksaan maka PIHAK KESATU akan menyatakan menerima dengan membuat Surat Penerimaan Barang (SPB).
                     </li>
                 </ol>
-                
+
                 <div><br></div>
                 <div><br></div>
                 <table style="width: 100%;
@@ -806,12 +806,12 @@
                             </div>
                         </td>
                     </tr>
-                </table>   
+                </table>
             </div>
             {{-- end lampiran 4 --}}
 
 
-        
+
             {{-- disini butuh page break ke halaman selanjutnya --}}
             <div class="page-break"></div>
 
@@ -822,13 +822,13 @@
             @endphp
             <div class="content">
                 <table style="border-collapse: collapse; width: 100%;" border="1">
-                    <tbody>    
+                    <tbody>
                         <tr>
                             <td style="width: 20%; font-size: 14px;"><b>LAMPIRAN V</b></td>
                             <td style="width: 2%; font-size: 14px;"><b>:</b></td>
                             <td style="font-size: 14px;"><b>HARGA BARANG</b></td>
                             <td style="font-size: 14px;"><b>Halaman : 1 / 1</b></td>
-                        </tr>  
+                        </tr>
                         <tr>
                             <td style="width: 13%; font-size: 14px;" rowspan="2"><b>PERIHAL</b></td>
                             <td rowspan="2" style="width: 2%; border: none; font-size: 14px;"><b> : </b></td>
@@ -884,11 +884,11 @@
                             Harga satuan barang {{ formatRupiah(@$lampiran5[0]->harga_awal) }} per lembar dengan total harga keseluruhan sebesar {{ @formatRupiah($data->total_keseluruhan) }} ({{ terbilang($data->total_keseluruhan) }} Rupiah) sudah termasuk Pajak Pertambahan Nilai (PPN).
                         </li>
                     @endif
-                
+
                     <li style="text-align: justify; font-size: 14px;">
                         Harga barang dimaksud butir (1) Lampiran V ini adalah franko
                         @if(@$lampiran5[0]->lokasi == 'UGM')
-                            Gudang Ugam                                                    
+                            Gudang Ugam
                         @elseif(@$lampiran5[0]->lokasi == 'UTAS')
                             Gudang Utas
                         @elseif(@$lampiran5[0]->lokasi == 'UMUM')
@@ -901,10 +901,10 @@
                         PIHAK KESATU Karawang.
                     </li>
                     <li style="text-align: justify; font-size: 14px;">
-                        Harga dimaksud pada butir (1) Lampiran V ini terdiri dari komponen-komponen harga satuan yang merupakan harga tetap dan tidak berubah oleh sebab apapun sampai dengan selesainya pelaksanaan jual beli dimaksud Pasal 12 Perjanjian ini.                        
+                        Harga dimaksud pada butir (1) Lampiran V ini terdiri dari komponen-komponen harga satuan yang merupakan harga tetap dan tidak berubah oleh sebab apapun sampai dengan selesainya pelaksanaan jual beli dimaksud Pasal 12 Perjanjian ini.
                     </li>
                 </ol>
-                
+
                 <div><br></div>
                 <div><br></div>
                 <table style="width: 100%;
@@ -927,7 +927,7 @@
                         </td>
                     </tr>
                 </table>
-                
+
             </div>
             {{-- end lampiran 5 --}}
 
@@ -942,13 +942,13 @@
             @endphp
             <div class="content">
                 <table style="border-collapse: collapse; width: 100%;" border="1">
-                    <tbody> 
+                    <tbody>
                         <tr>
                             <td style="width: 20%; font-size: 14px;"><b>LAMPIRAN VI</b></td>
                             <td style="width: 2%; font-size: 14px;"><b>:</b></td>
                             <td style="font-size: 14px;"><b>PEMBAYARAN</b></td>
                             <td style="font-size: 14px;"><b>Halaman : 1 / 1</b></td>
-                        </tr> 
+                        </tr>
                         <tr>
                             <td style="width: 13%; font-size: 14px;" rowspan="2"><b>PERIHAL</b></td>
                             <td rowspan="2" style="width: 2%; border: none; font-size: 14px;"><b> : </b></td>
@@ -974,13 +974,13 @@
                             {{-- lansung --}}
                             Pelaksanaan pembayaran oleh PIHAK KESATU kepada PIHAK KEDUA dilakukan {{ $lampiran6->lama_pembayaran }} ({{ terbilang($lampiran6->lama_pembayaran) }})
                             hari kerja setelah perangkat penagihan dinyatakan lengkap diterima oleh PIHAK KESATU yang
-                            terdiri antara lain : 
+                            terdiri antara lain :
                         @else
                             {{-- bertahap --}}
                             Pelaksanaan pembayaran oleh PIHAK KESATU kepada PIHAK KEDUA di tiap tahapan
                             pengirimannya dilakukan {{ @$lampiran6->lama_pembayaran }} ({{ terbilang(@$lampiran6->lama_pembayaran) }}) hari kerja setelah perangkat penagihan dinyatakan lengkap
                             diterima oleh PIHAK KESATU yang terdiri antara lain :
-                        @endif  
+                        @endif
                         <ol>
                             <li style="text-align: justify; font-size: 14px;">Kuitansi yang bermeterai cukup.</li>
                             <li style="text-align: justify; font-size: 14px;">Faktur Pajak.</li>
@@ -1020,7 +1020,7 @@
                         </td>
                     </tr>
                 </table>
-                
+
             </div>
             {{-- end lampiran 6 --}}
 
@@ -1035,7 +1035,7 @@
             @endphp
             <div class="content">
                 <table style="border-collapse: collapse; width: 100%;" border="1">
-                    <tbody>    
+                    <tbody>
                         <tr>
                             <td style="width: 20%; font-size: 14px;"><b>LAMPIRAN VII</b></td>
                             <td style="width: 2%; font-size: 14px;"><b>:</b></td>
@@ -1065,7 +1065,7 @@
                                 {!! $lampiran7->alamat_peruri !!}
                             </td>
                         </tr>
-                        
+
                         <tr>
                             <td style="text-align: justify; font-size: 14px;">
                                 <br><br>
@@ -1076,7 +1076,7 @@
                         </tr>
                     </table>
                 </div>
-                
+
                 <table style="width: 100%;
                         border-collapse: collapse;
                         margin-top: 20px;">
@@ -1097,7 +1097,7 @@
                         </td>
                     </tr>
                 </table>
-                
+
             </div>
             {{-- end lampiran 7 --}}
 

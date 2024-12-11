@@ -58,11 +58,10 @@ Route::middleware('auth')->group(
             [KontrakController::class, 'dataBarang']
         )->name('dataBarang');
         Route::get('/dataVendor/{no_vendor}', [KontrakController::class, 'vendor_data'])->name('Vendordata');
-
+        Route::get('/dummyVendor/{no_vendor}', [KontrakController::class, 'dummy_vendor'])->name('DummyVendor');
         // ====================================================DASHBOARD ========================================================================================
         // VIEW detail grafik KONTRAK BY STATUS
         Route::get('/contracts/status/{status}', [HomeController::class, 'viewByStatus'])->name('viewByStatus');
-
 
         // VIEW detail grafik KONTRAK BY STATUS JAMINAN
         Route::get('/contracts/status_jaminan/{statusJaminan}', [HomeController::class, 'viewByStatusJaminan'])->name('viewByStatusJaminan');
@@ -178,10 +177,16 @@ Route::middleware('auth')->group(
         Route::get('/showRevisiNotif/{id}', [KontrakController::class, 'showNotifRevisi'])->name('showNotifRevisi');
         // ===================================================================================================================================================
 
-        // edit lampiran oleh staff atau admin
+        // edit kontrak after revisi dari kasek,kadept,kadiv oleh staff atau admin
+        Route::get('/editKontrakReview/{id}', [KontrakController::class, 'editKontrakReview'])
+        ->name('editKontrakReview')
+        ->middleware('permission:view-editLampiran');
+        Route::put('/updateAfterReviewKontrak/{id}', [KontrakController::class, 'updateAfterReviewKontrak'])->name('updateAfterReviewKontrak');
+        Route::post('/updateKonsep', [KontrakController::class, 'storeupdateKonsep'])->name('submitUpdateKonsep');
+        
         Route::get('/updateLampiran/{id}', [KontrakController::class, 'updateLampiran'])
-            ->name('editLampiran')
-            ->middleware('permission:view-editLampiran');
+            ->name('editLampiran');
+            // ->middleware('permission:view-editLampiran');
 
         Route::post('/editLampiran1', [KontrakController::class, 'editLampiran1'])->name('submitEditLampiran1');
 
@@ -324,6 +329,11 @@ Route::middleware('auth')->group(
 
         // ROUTE VIEW KONTRAK YANG ON PROCESS
         Route::get('/kontrak-onprocess', [KontrakController::class, 'KontrakonProcess'])->name('KontrakonProcess');
+
+        //====================================================================================================================================================
+
+        // ROUTE VIEW LIST DATA KONTRAK
+        Route::get('/kontrak-all', [KontrakController::class, 'KontrakList'])->name('KontrakList');
 
         //====================================================================================================================================================
 

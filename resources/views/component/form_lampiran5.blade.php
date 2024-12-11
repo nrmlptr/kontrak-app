@@ -29,7 +29,6 @@
                 value="{{ $jenisKontrak }}"
                 disabled>
             </div>
-            {{-- <div id="khs-fields" class="form-group-row" style="display: {{ $jenisKontrak === 'Harga Satuan' ? 'block' : 'none' }}"> --}}
             <div class="form-group col-2" style="display: {{ $jenisKontrak === 'Harga Satuan' ? 'block' : 'none' }}" id="khs-fields" >
                 <label for="waktu_khs">Masa Berlaku KHS</label>
                 <input type="text" name="waktu_khs" class="form-control" id="waktu_khs" required>
@@ -67,12 +66,21 @@
                 <label for="total_keseluruhan">Total Keseluruhan</label>
                 <input style=" border: 2px solid #ff0000;" type="text" name="total_keseluruhan" class="form-control" required readonly>
             </div>
-            <button type="button" class="btn btn-block btn-secondary btn-lg" onclick="submit_Lampiran5()">Submit</button>
+            <button type="button" class="btn btn-block btn-secondary btn-lg" onclick="submit_Lampiran5()">Input</button>
         </div>
     </form>
 </div>
 @push('scripts')
     <script type="text/javascript">
+        // buat ilangin escape
+        function escapeHtml(unsafe) {
+            return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+        }
 
         // Fungsi untuk mengisi nilai input form dengan data barang
         function isiNilaiForm5(dataBarang) {
@@ -94,7 +102,7 @@
                 </div>
                 <div class="form-group col-4">
                     <label for="nama_barang">Nama Barang</label>
-                    <input type="text" name="nama_barang[]" placeholder="Nama Barang" value="${row.material_name}" id="nmbaranglampiran5" class="form-control" readonly required>
+                    <input type="text" name="nama_barang[]" placeholder="Nama Barang" value="${escapeHtml(row.material_name)}" id="nmbaranglampiran5" class="form-control" readonly required>
 
                 </div>
                 <div class="form-group col-1">
@@ -134,36 +142,6 @@
         }
 
         //===============================================================================================
-        // Fungsi untuk melakukan perhitungan nilai
-        // Inisialisasi totalKeseluruhan di luar fungsi
-        // var totalKeseluruhan = 0;
-
-        // $(document).on('input', 'input[name="jumlah[]"], input[name="harga_awal[]"], input[name="ppn[]"]', function() {
-        //     // Bersihkan nilai totalKeseluruhan
-        //     totalKeseluruhan = 0;
-
-        //     // Iterasi untuk setiap barang
-        //     $('input[name="harga_akhir[]"]').each(function() {
-        //         var totalHarga = 0;
-        //         var row = $(this).closest('.row');
-        //         var jumlah = parseInt(row.find('input[name="jumlah[]"]').val()) || 0;
-        //         var hargaAwal = parseInt(row.find('input[name="harga_awal[]"]').val()) || 0;
-        //         var ppn = parseInt(row.find('input[name="ppn[]"]').val()) || 0;    //set nilai default ppn
-
-        //         // Perhitungan total harga akhir untuk barang saat ini
-        //         totalHarga = (jumlah * hargaAwal) + ((jumlah * hargaAwal) * (ppn / 100));
-
-        //         // Mengisi nilai total harga akhir pada input harga_akhir
-        //         $(this).val(totalHarga.toFixed(2));
-
-        //         // Menambahkan total harga akhir barang saat ini ke totalKeseluruhan
-        //         totalKeseluruhan += totalHarga;
-        //     });
-
-        //     // Mengisi nilai total keseluruhan ke dalam input total_keseluruhan
-        //     $('input[name="total_keseluruhan"]').val(totalKeseluruhan.toFixed(2));
-        // });
-
         // FUNGSI HIDE FORM BATAS WAKTU KHS (HARGA SATUAN)
        document.addEventListener('DOMContentLoaded', function() {
             const jenisKontrakInput = document.getElementById('jenis_kontrak');
@@ -206,10 +184,6 @@
             $('input[name="total_keseluruhan"]').val(totalKeseluruhan.toFixed(2));
         }
 
-        // $(document).on('input', 'input[name="jumlah[]"], input[name="harga_awal[]"], input[name="ppn[]"]', function() {
-        //     hitungTotalHarga();
-        // });
-
         $(document).on('input', 'input[name="jumlah[]"], input[name="harga_awal[]"], #ppn', function() {
             hitungTotalHarga();
         });
@@ -227,9 +201,6 @@
                     $(".collapse").removeClass('show');
                     $('#collapseLampiran6').addClass('show');
                     console.log(result.message);
-                    // if (result.redirect) {
-                    //     window.location.href = result.redirect; // Mengarahkan ulang halaman ke halaman monitoring
-                    // }
                 }
             });
         }

@@ -34,9 +34,7 @@
                     <div class="card-body">
                         <p id="templateText"  align="justify">
                             yang dalam hal ini jabatannya selaku Direktur Utama dari dan oleh karena itu bertindak untuk dan atas nama <span class="highlight">PT. Kertas Padalarang</span> yang didirikan dengan Akta Notaris <span class="highlight">Nomor: 4 tanggal 1 April 1992 yang dibuat dihadapan Masri Husen S.H., Notaris di Bandung</span> dan telah diubah untuk terakhir kalinya dengan <span class="highlight">Akta Notaris Nomor: 152 tanggal 09 Desember 2021 yang dibuat oleh Ekaputri MS Respati, Sarjana Hukum, M.H, M.Kn, Notaris di Bandung</span> yang dibuat berdasarkan Hukum Negara RI, yang berkedudukan hukum di <span class="highlight">Jl. Cihaliwung No. 181, Padalarang, Bandung, Jawa Barat</span>, dengan Nomor Pokok Wajib Pajak (NPWP) Nomor: <span class="highlight">01.000.015.6-051.000</span> yang untuk selanjutnya dalam perbuatan hukum ini disebut sebagai : <br>
-                            <p align="center"><b>---------------------------------------- PIHAK KEDUA ------------------------------------</b></p>
                         </p>
-                        {{-- <button type="button" class="btn btn-secondary mt-2" onclick="copyTemplate()">Copy Template</button> --}}
                     </div>
                 </div>
             </div>
@@ -82,6 +80,7 @@
                                         @error('pihakname')
                                         <small style="color: red;">{{ $message }}</small>
                                         @enderror
+
                                     </div>
                                     <div class="form-group">
                                         <label for="npwp">No NPWP</label>
@@ -97,7 +96,7 @@
                                             @if (isset($data->vendortext) && $data->vendortext->akta)
                                                 {!! $data->vendortext->akta !!}
                                             @else
-                                                <p align="justify">yang dalam hal ini dalam jabatannya selaku Direktur dari dan oleh karena itu bertindak untuk dan atas nama PT. Danisa Eka Abadi, yang didirikan berdasarkan Akta Notaris Nomor : 04 tanggal 01 Juli 2020 yang dibuat oleh Notaris Aisyah Ratu Juliana Siregar, S.H., M.Kn. Notaris di Kota Sukabumi dan telah diubah untuk terakhir kalinya dengan Akta Notaris Nomor : 062 tanggal 04 Agustus 2023 yang dibuat oleh Notaris Dwi Suswanti, S.H., M.Kn. Notaris di Kota Cilegon yang dibuat berdasarkan Hukum Negara Republik Indonesia, yang berkedudukan hukum di Jalan Sultan Iskandar Muda No. 181 Kota Administrasi Jakarta Selatan, dengan Nomor Pokok Wajib Pajak (NPWP) Nomor: 95.258.793.9-013.000 yang untuk selanjutnya dalam perbuatan hukum ini disebut sebagai :</p><p align="center"><b>-------------------------------------------- PIHAK KEDUA -------------------------------------------</b><br></p>
+                                                <p align="justify">yang dalam hal ini dalam jabatannya selaku Direktur dari dan oleh karena itu bertindak untuk dan atas nama PT. Danisa Eka Abadi, yang didirikan berdasarkan Akta Notaris Nomor : 04 tanggal 01 Juli 2020 yang dibuat oleh Notaris Aisyah Ratu Juliana Siregar, S.H., M.Kn. Notaris di Kota Sukabumi dan telah diubah untuk terakhir kalinya dengan Akta Notaris Nomor : 062 tanggal 04 Agustus 2023 yang dibuat oleh Notaris Dwi Suswanti, S.H., M.Kn. Notaris di Kota Cilegon yang dibuat berdasarkan Hukum Negara Republik Indonesia, yang berkedudukan hukum di Jalan Sultan Iskandar Muda No. 181 Kota Administrasi Jakarta Selatan, dengan Nomor Pokok Wajib Pajak (NPWP) Nomor: 95.258.793.9-013.000 yang untuk selanjutnya dalam perbuatan hukum ini disebut sebagai :</p>
                                             @endif
                                         </textarea>
 
@@ -172,8 +171,11 @@
             }).fail(function(xhr, status, error) {
                 console.error("Failed to fetch NPWP data:", error);
             });
+
             // GET DATA PEJABAT VENDOR =========================================================================
             $.get(`/dataPejabatVendor/{{ $data->registration_no }}`, function(data) {
+                console.log(data);
+
                 // Pastikan bahwa respons yang diterima dapat diuraikan dengan benar sebagai JSON
                 try {
                     if (data.full_name) {
@@ -205,5 +207,21 @@
                 console.error("Failed to fetch Alamat Vendor data:", error);
             });
         });
+
+
+        // document.querySelector('form').addEventListener('submit', function (e) {
+        //     var pihaknameInput      = document.querySelector('input[name="pihakname"]');
+        //     pihaknameInput.value    = capitalizeWords(pihaknameInput.value);
+        // });
+
+        // function capitalizeWords(str) {
+        //     return str
+        //         .toLowerCase() // Mengubah semua huruf menjadi lowercase
+        //         .split(' ') // Memisahkan kata-kata
+        //         .map(function(word) {
+        //             return word.charAt(0).toUpperCase() + word.slice(1); // Huruf pertama besar, sisanya kecil
+        //         })
+        //         .join(' '); // Menggabungkan kembali string
+        // }
     </script>
 @endpush

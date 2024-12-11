@@ -1,5 +1,12 @@
 @extends('layout.main')
 @section('content')
+<style>
+    .table-info {
+    background-color: #d2abf1;
+    color: #0c0c0c;
+}
+
+</style>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -87,7 +94,11 @@
                                 </thead>
                                 <tbody align="center">
                                     @foreach($data as $d)
-                                        <tr>
+                                        @php
+                                            // Cek jika purchaseRequisitions lebih dari 1
+                                            $rowClass = count($d->purchaseRequisitions) > 1 ? 'table-info' : '';
+                                        @endphp
+                                        <tr class="{{ $rowClass }}">
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $d->purchasing_document_number }}</td>
                                             <td style="width: 12%;">{{ date('d-m-Y', strtotime($d->document_date)) }}</td>
