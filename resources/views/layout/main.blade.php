@@ -18,12 +18,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('lte/plugins/fontawesome-free/css/all.min.css') }}">
 
-    <!-- Ionicons -->
-    {{-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> --}}
-    {{-- <link rel="stylesheet" href="{{ asset('assets/ionicons.min.css') }}"> --}}
-
     <!-- select2 -->
-    {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
     <link rel="stylesheet" href="{{ asset('assets/select2.min.css') }}">
 
     <!-- Tempusdominus Bootstrap 4 -->
@@ -46,7 +41,6 @@
 
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('lte/plugins/summernote/summernote-bs4.min.css') }}">
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"> --}}
     <link rel="stylesheet" href="{{ asset('assets/summernote-0.8.18-dist/summernote.min.css') }}">
 
     {{-- datatables --}}
@@ -445,7 +439,6 @@
 
     <!-- select2 JS -->
     <script src="{{ asset('assets/select2.min.js') }}"></script>
-    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
 
     {{-- flasher --}}
     <script src="{{ asset('assets/flasher.min.js') }}"></script>

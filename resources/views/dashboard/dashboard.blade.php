@@ -167,7 +167,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                {{-- <div class="row">
                     <!-- Grafik pie chart -->
                     <div class="col-md-6 col-sm-6">
                         <div class="x_panel">
@@ -189,7 +189,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 {{-- <div class="row">
                     <div class="col-md-12 col-sm-12">
@@ -237,6 +237,9 @@
                         <!-- /.card -->
                     </div>
                 </div> --}}
+
+
+                
                 <!-- /.row (main row) -->
             </div><!-- /.container-fluid -->
         </section>
@@ -244,23 +247,14 @@
     </div>
 @endsection
 {{-- HIGHCHARTS --}}
-{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}
 <script src="{{ asset('lte/plugins/jquery/jquery.min.js') }}"></script>
-{{-- <script src="https://code.highcharts.com/highcharts.js"></script> --}}
 <script src="{{ asset('assets/Highcharts/code/highcharts.js') }}"></script>
-{{-- <script src="https://code.highcharts.com/modules/data.js"></script> --}}
 <script src="{{ asset('assets/Highcharts/code/modules/data.js') }}"></script>
-{{-- <script src="https://code.highcharts.com/modules/series-label.js"></script> --}}
 <script src="{{ asset('assets/Highcharts/code/modules/series-label.js') }}"></script>
-{{-- <script src="https://code.highcharts.com/modules/exporting.js"></script> --}}
 <script src="{{ asset('assets/Highcharts/code/modules/exporting.js') }}"></script>
-{{-- <script src="https://code.highcharts.com/modules/export-data.js"></script> --}}
 <script src="{{ asset('assets/Highcharts/code/modules/export-data.js') }}"></script>
-{{-- <script src="https://code.highcharts.com/modules/accessibility.js"></script> --}}
 <script src="{{ asset('assets/Highcharts/code/modules/accessibility.js') }}"></script>
-{{-- <script src="https://code.highcharts.com/highcharts-3d.js"></script> --}}
 <script src="{{ asset('assets/Highcharts/code/highcharts-3d.js') }}"></script>
-{{-- <script src="https://code.highcharts.com/modules/cylinder.js"></script> --}}
 <script src="{{ asset('assets/Highcharts/code/modules/cylinder.js') }}"></script>
 
 
@@ -609,72 +603,69 @@
     //         }]
     //     });
     // });
-    $(document).ready(function() {
-        // Hitung total untuk mendapatkan persentase
-        let totalPenunjukkanLangsung = {{ $dataPie['penunjukkan_langsung']['sesuai'] }} + {{ $dataPie['penunjukkan_langsung']['tidak_sesuai'] }};
-        let totalTenderTerbatas = {{ $dataPie['tender_terbatas']['sesuai'] }} + {{ $dataPie['tender_terbatas']['tidak_sesuai'] }};
 
-        Highcharts.chart('pie-chart-penunjukkan-langsung', {
-            chart: { type: 'pie' },
-            title: { text: 'Kesesuaian Proses Pengadaan (Penunjukkan Langsung)' },
-            series: [{
-                name: 'Kesesuaian',
-                colorByPoint: true,
-                data: [
-                    {
-                        name: 'Sesuai',
-                        y: {{ $dataPie['penunjukkan_langsung']['sesuai'] }},
-                        sliced: true, // Opsional, untuk memisahkan bagian
-                        selected: true // Opsional, untuk menandai bagian yang dipilih
-                    },
-                    {
-                        name: 'Tidak Sesuai',
-                        y: {{ $dataPie['penunjukkan_langsung']['tidak_sesuai'] }}
-                    }
-                ],
-                dataLabels: {
-                    enabled: true, // Aktifkan data labels
-                    format: '{point.name}: {point.y} ({point.percentage:.1f}%)', // Format yang diinginkan
-                    distance: 10 // Jarak label dari grafik
-                }
-            }],
-            tooltip: {
-                pointFormat: '<b>{point.name}: {point.y} ({point.percentage:.1f}%)</b>' // Format tooltip
-            }
-        });
+    // $(document).ready(function() {
+    //     // Hitung total untuk mendapatkan persentase
+    //     let totalPenunjukkanLangsung = {{ $dataPie['penunjukkan_langsung']['sesuai'] }} + {{ $dataPie['penunjukkan_langsung']['tidak_sesuai'] }};
+    //     let totalTenderTerbatas = {{ $dataPie['tender_terbatas']['sesuai'] }} + {{ $dataPie['tender_terbatas']['tidak_sesuai'] }};
 
-        Highcharts.chart('pie-chart-tender-terbatas', {
-            chart: { type: 'pie' },
-            title: { text: 'Kesesuaian Proses Pengadaan (Tender Terbatas)' },
-            series: [{
-                name: 'Kesesuaian',
-                colorByPoint: true,
-                data: [
-                    {
-                        name: 'Sesuai',
-                        y: {{ $dataPie['tender_terbatas']['sesuai'] }},
-                        sliced: true, // Opsional, untuk memisahkan bagian
-                        selected: true // Opsional, untuk menandai bagian yang dipilih
-                    },
-                    {
-                        name: 'Tidak Sesuai',
-                        y: {{ $dataPie['tender_terbatas']['tidak_sesuai'] }}
-                    }
-                ],
-                dataLabels: {
-                    enabled: true, // Aktifkan data labels
-                    format: '{point.name}: {point.y} ({point.percentage:.1f}%)', // Format yang diinginkan
-                    distance: 10 // Jarak label dari grafik
-                }
-            }],
-            tooltip: {
-                pointFormat: '<b>{point.name}: {point.y} ({point.percentage:.1f}%)</b>' // Format tooltip
-            }
-        });
-    });
+    //     Highcharts.chart('pie-chart-penunjukkan-langsung', {
+    //         chart: { type: 'pie' },
+    //         title: { text: 'Kesesuaian Proses Pengadaan (Penunjukkan Langsung)' },
+    //         series: [{
+    //             name: 'Kesesuaian',
+    //             colorByPoint: true,
+    //             data: [
+    //                 {
+    //                     name: 'Sesuai',
+    //                     y: {{ $dataPie['penunjukkan_langsung']['sesuai'] }},
+    //                     sliced: true, // Opsional, untuk memisahkan bagian
+    //                     selected: true // Opsional, untuk menandai bagian yang dipilih
+    //                 },
+    //                 {
+    //                     name: 'Tidak Sesuai',
+    //                     y: {{ $dataPie['penunjukkan_langsung']['tidak_sesuai'] }}
+    //                 }
+    //             ],
+    //             dataLabels: {
+    //                 enabled: true, // Aktifkan data labels
+    //                 format: '{point.name}: {point.y} ({point.percentage:.1f}%)', // Format yang diinginkan
+    //                 distance: 10 // Jarak label dari grafik
+    //             }
+    //         }],
+    //         tooltip: {
+    //             pointFormat: '<b>{point.name}: {point.y} ({point.percentage:.1f}%)</b>' // Format tooltip
+    //         }
+    //     });
 
-</script>
-
-<script>
+    //     Highcharts.chart('pie-chart-tender-terbatas', {
+    //         chart: { type: 'pie' },
+    //         title: { text: 'Kesesuaian Proses Pengadaan (Tender Terbatas)' },
+    //         series: [{
+    //             name: 'Kesesuaian',
+    //             colorByPoint: true,
+    //             data: [
+    //                 {
+    //                     name: 'Sesuai',
+    //                     y: {{ $dataPie['tender_terbatas']['sesuai'] }},
+    //                     sliced: true, // Opsional, untuk memisahkan bagian
+    //                     selected: true // Opsional, untuk menandai bagian yang dipilih
+    //                 },
+    //                 {
+    //                     name: 'Tidak Sesuai',
+    //                     y: {{ $dataPie['tender_terbatas']['tidak_sesuai'] }}
+    //                 }
+    //             ],
+    //             dataLabels: {
+    //                 enabled: true, // Aktifkan data labels
+    //                 format: '{point.name}: {point.y} ({point.percentage:.1f}%)', // Format yang diinginkan
+    //                 distance: 10 // Jarak label dari grafik
+    //             }
+    //         }],
+    //         tooltip: {
+    //             pointFormat: '<b>{point.name}: {point.y} ({point.percentage:.1f}%)</b>' // Format tooltip
+    //         }
+    //     });
+    // });
 
 </script>

@@ -58,12 +58,7 @@
             data: form.serialize(),
             success: function(result) {
                 $(".collapse").removeClass('show');
-                $('#collapseLampiran7').addClass('show');
-                console.log(result.message);
-                // if (result.redirect) {
-                //     window.location.href = result.redirect; // Mengarahkan ulang halaman ke halaman monitoring
-                // }
-            }
+                $('#collapseLampiran7').addClass('show');            }
         });
     }
 </script>

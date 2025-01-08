@@ -126,50 +126,37 @@
 @push('scripts')
     <script type="text/javascript">
 
-        // Fungsi untuk menghitung total keseluruhan
-        function calculateTotal() {
-            // Bersihkan nilai totalKeseluruhan
-            var totalKeseluruhan = 0;
+        // new code perhitungan
+        function calculateTotalBackend() {
+            // Serialisasi form data
+            var data = $('#inputLampiran5').serialize();
 
-            // Ambil nilai PPN dari input di luar loop
-            var ppn = parseInt($('#ppn').val()) || 0;
-
-            // Iterasi untuk setiap barang
-            $('input[name="harga_akhir[]"]').each(function() {
-                var totalHarga = 0;
-                var row = $(this).closest('.row');
-                var jumlah = parseInt(row.find('input[name="jumlah[]"]').val()) || 0;
-                var hargaAwal = parseInt(row.find('input[name="harga_awal[]"]').val()) || 0;
-
-                // Perhitungan total harga akhir untuk barang saat ini
-                totalHarga = (jumlah * hargaAwal) + ((jumlah * hargaAwal) * (ppn / 100));
-
-                // Mengisi nilai total harga akhir pada input harga_akhir
-                $(this).val(totalHarga.toFixed(2));
-
-                // Menambahkan total harga akhir barang saat ini ke totalKeseluruhan
-                totalKeseluruhan += totalHarga;
+            // Kirim data ke backend untuk perhitungan
+            $.ajax({
+                method: "POST",
+                url: "{{ route('calculateTotalLampiran5') }}", // Endpoint backend
+                data: data,
+                success: function(result) {
+                    // Masukkan hasil perhitungan dari backend ke input field
+                    $('input[name="harga_akhir[]"]').each(function(index) {
+                        $(this).val(result.data.harga_akhir[index].toFixed(2));
+                    });
+                    $('input[name="total_keseluruhan"]').val(result.data.total_keseluruhan.toFixed(2));
+                },
+                error: function(error) {
+                    console.error('Error perhitungan total', error);
+                }
             });
-
-            // Mengisi nilai total keseluruhan ke dalam input total_keseluruhan
-            $('input[name="total_keseluruhan"]').val(totalKeseluruhan.toFixed(2));
         }
 
-        // Event listener untuk input PPN di luar loop
-        $(document).on('input', '#ppn', function() {
-            // Panggil fungsi perhitungan setiap kali ada perubahan pada input PPN
-            calculateTotal();
+        // Event listener untuk input perubahan
+        $(document).on('input', '#ppn, input[name="jumlah[]"], input[name="harga_awal[]"]', function() {
+            calculateTotalBackend();
         });
 
-        // Event listener untuk input jumlah dan harga_awal
-        $(document).on('input', 'input[name="jumlah[]"], input[name="harga_awal[]"]', function() {
-            // Panggil fungsi perhitungan setiap kali ada perubahan pada input jumlah atau harga_awal
-            calculateTotal();
-        });
-
+        // Panggil fungsi saat dokumen siap
         $(document).ready(function () {
-            // Panggil fungsi perhitungan saat dokumen siap
-            calculateTotal();
+            calculateTotalBackend();
         });
 
 

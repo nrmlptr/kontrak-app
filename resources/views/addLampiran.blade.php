@@ -232,7 +232,7 @@
                         isiNilaiForm5(response);
 
                         // Panggil fungsi hitungTotalHarga setelah formulir selesai dimuat
-                        hitungTotalHarga();
+                        hitungTotalHargaBackend();
                         // data real api==============================================================
                         // $.get(`/dataVendor/${response[0].registration_no}`, function(data) {
                         //     // Setelah mendapatkan data, set nilai textarea

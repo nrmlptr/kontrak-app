@@ -190,11 +190,8 @@
 @push('scripts')
 {{-- select 2 --}}
 <link rel="stylesheet" href="{{ asset('assets/select2.min.css') }}">
-{{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" /> --}}
 <script src="{{ asset('assets/select2.min.js') }}"></script>
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script> --}}
 <script src="{{ asset('assets/summernote-0.8.18-dist/summernote.min.js') }}"></script>
-{{-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> --}}
 <script>
 
     $(document).ready(function() {

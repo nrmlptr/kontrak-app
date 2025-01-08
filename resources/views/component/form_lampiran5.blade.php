@@ -163,30 +163,34 @@
         });
 
         //========================================================================================================================
+        // new code perhitungan
+        function hitungTotalHargaBackend() {
+            var data = $('#inputLampiran5').serialize(); // Ambil data form
 
-        // after modified fungsi perhitungan harga
-        function hitungTotalHarga() {
-            var totalKeseluruhan = 0;
-            var ppn = parseInt($('#ppn').val()) || 11;  // Default PPN 11% jika tidak ada nilai yang dimasukkan
+            // Kirim data ke server menggunakan AJAX
+            $.ajax({
+                method: "POST",
+                url: "{{ route('calculateTotalLampiran5') }}", // Buat route untuk perhitungan
+                data: data,
+                success: function(result) {
+                    // Update nilai pada field total keseluruhan dan harga akhir
+                    $('input[name="harga_akhir[]"]').each(function(index) {
+                        $(this).val(result.data.harga_akhir[index].toFixed(2));
+                    });
 
-            $('input[name="harga_akhir[]"]').each(function() {
-                var totalHarga = 0;
-                var row = $(this).closest('.row');
-                var jumlah = parseInt(row.find('input[name="jumlah[]"]').val()) || 0;
-                var hargaAwal = parseInt(row.find('input[name="harga_awal[]"]').val()) || 0;
-                // var ppn = parseInt(row.find('input[name="ppn[]"]').val()) || parseInt(row.find('input[name="ppn[]"]').attr('data-ppn')) || 0;
-
-                totalHarga = (jumlah * hargaAwal) + ((jumlah * hargaAwal) * (ppn / 100));
-                $(this).val(totalHarga.toFixed(2));
-                totalKeseluruhan += totalHarga;
+                    $('input[name="total_keseluruhan"]').val(result.data.total_keseluruhan.toFixed(2));
+                },
+                error: function(err) {
+                    console.error('Perhitungan gagal', err);
+                }
             });
-
-            $('input[name="total_keseluruhan"]').val(totalKeseluruhan.toFixed(2));
         }
 
+        // Panggil fungsi setiap kali input berubah
         $(document).on('input', 'input[name="jumlah[]"], input[name="harga_awal[]"], #ppn', function() {
-            hitungTotalHarga();
+            hitungTotalHargaBackend();
         });
+
 
         //=========================================================================================================================
         // SUBMIT DATA

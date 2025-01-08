@@ -1138,7 +1138,6 @@
 
 
 @push('scripts')
-    {{-- <script src="{{ asset('lte/plugins/jquery/jquery.min.js') }}"></script> --}}
 
     <script type="text/javascript">
         // import Swal from 'sweetalert2';

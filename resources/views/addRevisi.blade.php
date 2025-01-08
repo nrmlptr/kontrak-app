@@ -84,7 +84,6 @@
     <!-- /.content -->
 </div>
 <!-- jQuery -->
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 <script src="{{ asset('lte/plugins/jquery/jquery.min.js') }}"></script>
 
 <!-- Script Anda -->
@@ -98,7 +97,7 @@
     function submitRevisi() {
         var formRevisi = $('#inputRevisi');
         // console.log(formRevisi);
-        
+
         $.ajax({
             method: 'POST',
             url: "{{ route('submitRevisi') }}",

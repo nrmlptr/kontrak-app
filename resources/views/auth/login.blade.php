@@ -93,7 +93,6 @@
     <!-- AdminLTE App -->
     <script src="{{ asset('lte/dist/js/adminlte.min.js') }}"></script>
     <script src="{{ asset('assets/sweetalert2@11.js') }}"></script>
-    {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
 
     <!-- notif gagal login -->
     @if($message = Session::get('failed'))

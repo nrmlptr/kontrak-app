@@ -1523,6 +1523,71 @@ class KontrakController extends Controller
         // return response()->json(['message' => 'Lampiran 5 Berhasil Dibuat', 'redirect' => route('indexKontrak')]);
     }
 
+    // fungsi hitung lampiran 5 harga ketika input
+    public function calculateTotalLampiran5(Request $request)
+    {
+        $data = $request->all(); // Ambil semua data dari request
+        $ppn = isset($data['ppn']) ? intval($data['ppn']) : 11; // Default PPN 11%
+        $totalKeseluruhan = 0;
+        $hargaAkhir = [];
+
+        foreach ($data['jumlah'] as $index => $jumlah) {
+            $hargaAwal = isset($data['harga_awal'][$index]) ? intval($data['harga_awal'][$index]) : 0;
+            $totalHarga = ($jumlah * $hargaAwal) + (($jumlah * $hargaAwal) * ($ppn / 100));
+            $hargaAkhir[] = $totalHarga;
+            $totalKeseluruhan += $totalHarga;
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'harga_akhir' => $hargaAkhir,
+                'total_keseluruhan' => $totalKeseluruhan,
+            ]
+        ]);
+    }
+
+    // ketika update
+    public function calculateTotalLampiran5Update(Request $request)
+    {
+        // Ambil data dari form
+        $data = $request->all();
+
+        // Default nilai PPN jika tidak diisi
+        $ppn = isset($data['ppn']) ? intval($data['ppn']) : 0;
+
+        // Variabel untuk menyimpan total keseluruhan dan harga akhir setiap barang
+        $totalKeseluruhan = 0;
+        $hargaAkhir = [];
+
+        if (isset($data['jumlah']) && isset($data['harga_awal'])) {
+            foreach ($data['jumlah'] as $index => $jumlah) {
+                $jumlah = intval($jumlah) ?? 0;
+                $hargaAwal = intval($data['harga_awal'][$index] ?? 0);
+
+                // Hitung total harga per barang
+                $totalHarga = ($jumlah * $hargaAwal) + (($jumlah * $hargaAwal) * ($ppn / 100));
+
+                // Simpan ke dalam array hasil
+                $hargaAkhir[] = $totalHarga;
+
+                // Tambahkan ke total keseluruhan
+                $totalKeseluruhan += $totalHarga;
+            }
+        }
+
+        // Kembalikan hasil sebagai JSON
+        return response()->json([
+            'status' => 'success',
+            'data' => [
+                'harga_akhir' => $hargaAkhir,
+                'total_keseluruhan' => $totalKeseluruhan
+            ]
+        ]);
+    }
+
+
+
     // METHOD INPUT LAMPIRAN 6 =================================================================================================
     public function storeLampiran6(Request $request)
     {

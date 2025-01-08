@@ -13,9 +13,9 @@
                     <br>
                     Kebayoran Baru
                     <br>
-                    Jakarta Selatan 12160
+                    Jakarta 12160
                     <br>
-                    Indonesia
+                    INDONESIA
                 </textarea>
             </div>
             <div class="form-group col-12">

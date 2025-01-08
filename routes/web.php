@@ -91,6 +91,9 @@ Route::middleware('auth')->group(
         Route::post('/Lampiran3', [KontrakController::class, 'storeLampiran3'])->name('submitLampiran3');
         Route::post('/Lampiran4', [KontrakController::class, 'storeLampiran4'])->name('submitLampiran4');
         Route::post('/Lampiran5', [KontrakController::class, 'storeLampiran5'])->name('submitLampiran5');
+        Route::post('/calculate-total-lampiran5', [KontrakController::class, 'calculateTotalLampiran5'])->name('calculateTotalLampiran5');
+        Route::post('/calculate-total-lampiran5-update', [KontrakController::class, 'calculateTotalLampiran5Update'])->name('calculateTotalLampiran5Update');
+
         Route::post('/Lampiran6', [KontrakController::class, 'storeLampiran6'])->name('submitLampiran6');
         Route::post('/Lampiran7', [KontrakController::class, 'storeLampiran7'])->name('submitLampiran7');
 
@@ -183,7 +186,7 @@ Route::middleware('auth')->group(
         ->middleware('permission:view-editLampiran');
         Route::put('/updateAfterReviewKontrak/{id}', [KontrakController::class, 'updateAfterReviewKontrak'])->name('updateAfterReviewKontrak');
         Route::post('/updateKonsep', [KontrakController::class, 'storeupdateKonsep'])->name('submitUpdateKonsep');
-        
+
         Route::get('/updateLampiran/{id}', [KontrakController::class, 'updateLampiran'])
             ->name('editLampiran');
             // ->middleware('permission:view-editLampiran');

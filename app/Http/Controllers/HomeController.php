@@ -396,6 +396,18 @@ class HomeController extends Controller
             $query->where('status_jaminan', 'LIKE', '%' . $request->status_jaminan . '%');
         }
 
+        if ($request->nama_pasal) {
+            $query->where('nama_pasal', 'LIKE', '%' . $request->nama_pasal . '%');
+        }
+
+        if($request->keterangan_pasal){
+            $query->where('keterangan_pasal', 'LIKE', '%' . $request->keterangan_pasal . '%');
+        }
+
+        IF($request->isi_pasal){
+            $request->where('isi_pasal', 'LIKE', '%' . $request->isi_pasal . '%');
+        }
+
         // Eksekusi query dan dapatkan hasil
         $dataPasal = $query->get();
 
